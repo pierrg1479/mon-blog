@@ -1,0 +1,112 @@
+---
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Générateur Claude</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 2rem;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 2rem; margin-bottom: 2rem; color: #22d3ee; }
+    textarea {
+      width: 100%;
+      padding: 1rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 1rem;
+      min-height: 120px;
+      margin-bottom: 1rem;
+    }
+    button {
+      padding: 1rem 2rem;
+      background: #22d3ee;
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 1rem;
+    }
+    button:hover { background: #06b6d4; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .secondary { background: #334155; color: #e2e8f0; }
+    #result {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 2rem;
+      margin-top: 2rem;
+      min-height: 400px;
+    }
+    .success {
+      background: #065f46;
+      color: #d1fae5;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    pre { white-space: pre-wrap; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 Générateur Claude</h1>
+    <textarea id="prompt" placeholder="Ex: Optimiser sa consommation de chauffage avec Tado"></textarea>
+    <button id="generate">Générer</button>
+    <button id="save" class="secondary">Générer et enregistrer</button>
+    <div id="notification"></div>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const prompt = document.getElementById('prompt');
+    const result = document.getElementById('result');
+    const notification = document.getElementById('notification');
+    const generateBtn = document.getElementById('generate');
+    const saveBtn = document.getElementById('save');
+
+    async function generate(saveToFile = false) {
+      if (!prompt.value.trim()) return alert('Entre un sujet');
+
+      generateBtn.disabled = true;
+      saveBtn.disabled = true;
+      result.innerHTML = '<div>⏳ Génération en cours...</div>';
+      notification.innerHTML = '';
+
+      try {
+        const response = await fetch('/api/generate-post', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: prompt.value, saveToFile })
+        });
+
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+
+        result.innerHTML = `<pre>${data.content}</pre>`;
+        if (data.saved) {
+          notification.innerHTML = `<div class="success">✅ Enregistré : ${data.filename}</div>`;
+        }
+      } catch (error) {
+        result.innerHTML = `<div style="color: #ef4444;">❌ ${error.message}</div>`;
+      } finally {
+        generateBtn.disabled = false;
+        saveBtn.disabled = false;
+      }
+    }
+
+    generateBtn.addEventListener('click', () => generate(false));
+    saveBtn.addEventListener('click', () => generate(true));
+  </script>
+</body>
+</html>
