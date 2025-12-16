@@ -3,6 +3,12 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+).slice(0, 3);
 ---
 
 <!doctype html>
@@ -20,6 +26,23 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 			<p>
 				Vous y trouverez des cas d'usage détaillés, du code prêt à adapter et des retours d'expérience honnêtes sur ce qui fonctionne… et sur ce qui fonctionne moins bien, le tout avec une obsession : optimiser sans compliquer.
 			</p>
+
+			<section class="latest-posts">
+				<h2>Dernières publications</h2>
+				<ul>
+					{posts.map((post) => (
+						<li>
+							<a href={`/blog/${post.slug}/`}>
+								<h3>{post.data.title}</h3>
+								<p class="date">
+									<FormattedDate date={post.data.pubDate} />
+								</p>
+								{post.data.description && <p class="description">{post.data.description}</p>}
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
 		</main>
 		<Footer />
 	</body>
@@ -44,5 +67,52 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	}
 	p {
 		margin-bottom: 1em;
+	}
+	.latest-posts {
+		margin-top: 3em;
+		padding-top: 2em;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+	.latest-posts h2 {
+		font-size: 2rem;
+		margin-bottom: 1em;
+	}
+	.latest-posts ul {
+		list-style-type: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 2em;
+	}
+	.latest-posts li {
+		border-bottom: 1px solid rgb(var(--gray-light));
+		padding-bottom: 1.5em;
+	}
+	.latest-posts li:last-child {
+		border-bottom: none;
+	}
+	.latest-posts a {
+		text-decoration: none;
+		color: inherit;
+		display: block;
+	}
+	.latest-posts h3 {
+		font-size: 1.5rem;
+		margin: 0 0 0.5em 0;
+		color: rgb(var(--black));
+		transition: color 0.2s;
+	}
+	.latest-posts a:hover h3 {
+		color: rgb(var(--accent));
+	}
+	.latest-posts .date {
+		font-size: 0.875rem;
+		color: rgb(var(--gray));
+		margin: 0 0 0.5em 0;
+	}
+	.latest-posts .description {
+		font-size: 1rem;
+		color: rgb(var(--gray-dark));
+		margin: 0;
 	}
 </style>
