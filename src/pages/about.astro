@@ -17,7 +17,10 @@ import Footer from '../components/Footer.astro';
 					<img src="/hannibal.jpg" alt="L'homme derrière le blog" />
 				</div>
 				<div class="prose">
-					<h1 class="title">L'homme derrière le blog 🫣</h1>
+					<div class="title">
+						<h1>L'homme derrière le blog 🫣</h1>
+						<hr />
+					</div>
 					<p>
 						👋 Passionné de domotique, d'optimisation du quotidien et de bricolage à la maison, j'ai d'abord voulu "juste" mieux gérer mon chauffage… puis j'ai mis le doigt dans Home Assistant, et je n'en suis jamais vraiment ressorti.
 					</p>
@@ -56,9 +59,17 @@ import Footer from '../components/Footer.astro';
 		color: rgb(var(--gray-dark));
 	}
 	.title {
-		margin-bottom: 1em;
+		margin-bottom: 2em;
 		padding: 1em 0;
 		text-align: center;
 		line-height: 1;
+	}
+	.title h1 {
+		margin: 0;
+	}
+	hr {
+		border-top: 1px solid rgb(var(--gray-light));
+		border-bottom: none;
+		margin-top: 2rem;
 	}
 </style>
