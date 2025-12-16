@@ -33,11 +33,16 @@ const posts = (await getCollection('blog')).sort(
 					{posts.map((post) => (
 						<li>
 							<a href={`/blog/${post.slug}/`}>
-								<h3>{post.data.title}</h3>
-								<p class="date">
-									<FormattedDate date={post.data.pubDate} />
-								</p>
-								{post.data.description && <p class="description">{post.data.description}</p>}
+								{post.data.heroImage && (
+									<img src={post.data.heroImage} alt={post.data.title} />
+								)}
+								<div class="content">
+									<h3>{post.data.title}</h3>
+									<p class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</p>
+									{post.data.description && <p class="description">{post.data.description}</p>}
+								</div>
 							</a>
 						</li>
 					))}
@@ -94,7 +99,19 @@ const posts = (await getCollection('blog')).sort(
 	.latest-posts a {
 		text-decoration: none;
 		color: inherit;
-		display: block;
+		display: flex;
+		gap: 1.5em;
+		align-items: flex-start;
+	}
+	.latest-posts img {
+		width: 200px;
+		height: 150px;
+		object-fit: cover;
+		border-radius: 8px;
+		flex-shrink: 0;
+	}
+	.latest-posts .content {
+		flex: 1;
 	}
 	.latest-posts h3 {
 		font-size: 1.5rem;
@@ -114,5 +131,14 @@ const posts = (await getCollection('blog')).sort(
 		font-size: 1rem;
 		color: rgb(var(--gray-dark));
 		margin: 0;
+	}
+	@media (max-width: 640px) {
+		.latest-posts a {
+			flex-direction: column;
+		}
+		.latest-posts img {
+			width: 100%;
+			height: auto;
+		}
 	}
 </style>
