@@ -153,3 +153,13 @@ hr {
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 }
+
+/* Dark mode styles */
+.dark {
+	--black: 255, 255, 255;
+	--gray-dark: 229, 231, 235;
+	--gray: 156, 163, 175;
+	--gray-light: 55, 65, 81;
+	background-color: rgb(17, 24, 39);
+	color: rgb(var(--gray-dark));
+}
