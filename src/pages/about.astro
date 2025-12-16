@@ -1,20 +1,64 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<Layout
-	title="L'homme derrière le blog 🫣"
-	description="À propos de The Optimization Guy"
-	pubDate={new Date('2024-01-01')}
-	heroImage="/hannibal.jpg"
->
-	<p>
-		👋 Passionné de domotique, d'optimisation du quotidien et de bricolage à la maison, j'ai d'abord voulu "juste" mieux gérer mon chauffage… puis j'ai mis le doigt dans Home Assistant, et je n'en suis jamais vraiment ressorti.
-	</p>
-	<p>
-		Ici, je partage ce que je mets en place chez moi : automatisations, intégrations, suivi de l'énergie et réglages fins pour le confort.
-	</p>
-	<p>
-		Vous trouverez des cas d'usage détaillés, du code prêt à adapter et des retours honnêtes sur ce qui fonctionne… et sur ce qui fonctionne moins bien, avec une obsession : optimiser sans compliquer.
-	</p>
-</Layout>
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead title="L'homme derrière le blog 🫣 | The Optimization Guy" description="À propos de The Optimization Guy" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<article>
+				<div class="hero-image">
+					<img src="/hannibal.jpg" alt="L'homme derrière le blog" />
+				</div>
+				<div class="prose">
+					<h1 class="title">L'homme derrière le blog 🫣</h1>
+					<p>
+						👋 Passionné de domotique, d'optimisation du quotidien et de bricolage à la maison, j'ai d'abord voulu "juste" mieux gérer mon chauffage… puis j'ai mis le doigt dans Home Assistant, et je n'en suis jamais vraiment ressorti.
+					</p>
+					<p>
+						Ici, je partage ce que je mets en place chez moi : automatisations, intégrations, suivi de l'énergie et réglages fins pour le confort.
+					</p>
+					<p>
+						Vous trouverez des cas d'usage détaillés, du code prêt à adapter et des retours honnêtes sur ce qui fonctionne… et sur ce qui fonctionne moins bien, avec une obsession : optimiser sans compliquer.
+					</p>
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+<style>
+	main {
+		width: calc(100% - 2em);
+		max-width: 100%;
+		margin: 0;
+	}
+	.hero-image {
+		width: 100%;
+	}
+	.hero-image img {
+		display: block;
+		margin: 0 auto;
+		border-radius: 12px;
+		box-shadow: var(--box-shadow);
+	}
+	.prose {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: auto;
+		padding: 1em;
+		color: rgb(var(--gray-dark));
+	}
+	.title {
+		margin-bottom: 1em;
+		padding: 1em 0;
+		text-align: center;
+		line-height: 1;
+	}
+</style>
