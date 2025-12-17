@@ -6,7 +6,9 @@ import ThemeToggle from './ThemeToggle.astro';
 
 <header>
         <nav class="nav">
-                <h2 class="brand"><a href="/">⚡ {SITE_TITLE}</a></h2>
+                <div class="nav-left">
+                        <h2 class="brand"><a href="/">⚡ {SITE_TITLE}</a></h2>
+                </div>
                 <div class="nav-center">
                         <div class="internal-links desktop">
                                 <HeaderLink href="/">Home</HeaderLink>
@@ -74,13 +76,17 @@ import ThemeToggle from './ThemeToggle.astro';
         }
         .nav {
                 display: grid;
-                grid-template-columns: auto 1fr auto;
+                grid-template-columns: 1fr auto 1fr;
                 align-items: center;
                 padding: 1em 0;
                 gap: 1.5em;
         }
+        .nav-left {
+                justify-self: start;
+        }
         .nav-center {
                 display: flex;
+                justify-self: center;
                 justify-content: center;
         }
         h2 {
@@ -99,6 +105,7 @@ import ThemeToggle from './ThemeToggle.astro';
                 display: flex;
                 align-items: center;
                 gap: 0.75em;
+                justify-self: end;
         }
         .social-links {
                 display: flex;
