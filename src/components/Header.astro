@@ -7,13 +7,15 @@ import ThemeToggle from './ThemeToggle.astro';
 <header>
         <nav class="nav">
                 <h2 class="brand"><a href="/">⚡ {SITE_TITLE}</a></h2>
-                <div class="internal-links desktop">
-                        <HeaderLink href="/">Home</HeaderLink>
-                        <HeaderLink href="/about">A propos</HeaderLink>
-                        <HeaderLink href="/contact">Contact</HeaderLink>
+                <div class="nav-center">
+                        <div class="internal-links desktop">
+                                <HeaderLink href="/">Home</HeaderLink>
+                                <HeaderLink href="/about">A propos</HeaderLink>
+                                <HeaderLink href="/contact">Contact</HeaderLink>
+                        </div>
                 </div>
                 <div class="nav-right">
-                        <div class="theme-toggle-wrapper">
+                        <div class="theme-toggle-wrapper social-links">
                                 <ThemeToggle />
                         </div>
                         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">
@@ -77,6 +79,10 @@ import ThemeToggle from './ThemeToggle.astro';
                 padding: 1em 0;
                 gap: 1.5em;
         }
+        .nav-center {
+                display: flex;
+                justify-content: center;
+        }
         h2 {
                 margin: 0;
                 font-size: 1em;
@@ -93,6 +99,11 @@ import ThemeToggle from './ThemeToggle.astro';
                 display: flex;
                 align-items: center;
                 gap: 0.75em;
+        }
+        .social-links {
+                display: flex;
+                gap: 0.5em;
+                align-items: center;
         }
         .internal-links {
                 display: flex;
