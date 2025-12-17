@@ -2,7 +2,7 @@
 title: 'Guide complet de la syntaxe Markdown'
 description: 'Exemple de toutes les possibilités'
 pubDate: 'Dec 17 2024'
-heroImage: '/hannibal.jpg'  # ← Utilise une vraie image
+heroImage: '../../assets/blog-placeholder-2.jpg'  # ← Différente image
 ---
 
 Cet article présente l'ensemble de la syntaxe Markdown de base ainsi que des extensions courantes.
