@@ -5,88 +5,203 @@ import ThemeToggle from './ThemeToggle.astro';
 ---
 
 <header>
-	<nav>
-		<h2><a href="/">⚡ The Optimization Guy</a></h2>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/about">A propos</HeaderLink>
-			<HeaderLink href="/contact">Contact</HeaderLink>
-		</div>
-		<div class="social-links">
-			<ThemeToggle />
-		</div>
-	</nav>
+        <nav class="nav">
+                <h2 class="brand"><a href="/">⚡ {SITE_TITLE}</a></h2>
+                <div class="internal-links desktop">
+                        <HeaderLink href="/">Home</HeaderLink>
+                        <HeaderLink href="/about">A propos</HeaderLink>
+                        <HeaderLink href="/contact">Contact</HeaderLink>
+                </div>
+                <div class="actions">
+                        <div class="theme-toggle-wrapper">
+                                <ThemeToggle />
+                        </div>
+                        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">
+                                <span class="sr-only">Ouvrir le menu</span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                                <span class="bar"></span>
+                        </button>
+                </div>
+        </nav>
+        <div id="mobile-menu" class="mobile-menu" data-open="false">
+                <div class="internal-links">
+                        <HeaderLink href="/">Home</HeaderLink>
+                        <HeaderLink href="/about">A propos</HeaderLink>
+                        <HeaderLink href="/contact">Contact</HeaderLink>
+                </div>
+        </div>
 </header>
+<script>
+        const toggleButton = document.querySelector('.menu-toggle');
+        const mobileMenu = document.querySelector('#mobile-menu');
+        const mobileLinks = mobileMenu?.querySelectorAll('a');
+
+        const setMenuState = (isOpen: boolean) => {
+                if (!toggleButton || !mobileMenu) return;
+                toggleButton.setAttribute('aria-expanded', String(isOpen));
+                mobileMenu.dataset.open = String(isOpen);
+                mobileMenu.classList.toggle('open', isOpen);
+                document.body.classList.toggle('no-scroll', isOpen);
+        };
+
+        toggleButton?.addEventListener('click', () => {
+                const isOpen = mobileMenu?.classList.contains('open');
+                setMenuState(!isOpen);
+        });
+
+        mobileLinks?.forEach((link) =>
+                link.addEventListener('click', () => {
+                        setMenuState(false);
+                })
+        );
+</script>
 <style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	:global(.dark) header {
-		background: rgb(17, 24, 39);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-		flex: 1;
-	}
-	h2 a {
-		text-decoration: none;
-		color: rgb(var(--black));
-	}
-	:global(.dark) h2 a {
-		color: rgb(255, 255, 255);
-	}
-	nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 1em 0;
-	}
-	.internal-links {
-		display: flex;
-		gap: 1em;
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
-	}
-	.internal-links a {
-		padding: 1em 0.5em;
-		color: rgb(var(--black));
-		border-bottom: 4px solid transparent;
-		text-decoration: none;
-	}
-	:global(.dark) .internal-links a {
-		color: rgb(255, 255, 255);
-	}
-	.internal-links a.active {
-		text-decoration: none;
-		border-bottom-color: rgb(var(--accent));
-	}
-	.social-links {
-		flex: 1;
-		display: flex;
-		gap: 0.5em;
-		justify-content: flex-end;
-		align-items: center;
-	}
-	.social-links a {
-		display: flex;
-		padding: 0;
-		border: none;
-	}
-	.social-links svg path {
-		fill: rgb(0, 0, 0);
-	}
-	:global(.dark) .social-links svg path {
-		fill: rgb(255, 255, 255);
-	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
-	}
+        header {
+                margin: 0;
+                padding: 0 1em;
+                background: white;
+                box-shadow: 0 2px 8px rgba(var(--black), 5%);
+                position: sticky;
+                top: 0;
+                z-index: 10;
+        }
+        :global(.dark) header {
+                background: rgb(17, 24, 39);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .nav {
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                align-items: center;
+                padding: 1em 0;
+                gap: 1.5em;
+        }
+        h2 {
+                margin: 0;
+                font-size: 1em;
+        }
+        h2 a {
+                text-decoration: none;
+                color: rgb(var(--black));
+                font-weight: 700;
+        }
+        :global(.dark) h2 a {
+                color: rgb(255, 255, 255);
+        }
+        .internal-links {
+                display: flex;
+                gap: 1em;
+                align-items: center;
+                justify-content: center;
+        }
+        .internal-links a {
+                padding: 0.6em 0.5em;
+                color: rgb(var(--black));
+                border-bottom: 4px solid transparent;
+                text-decoration: none;
+        }
+        :global(.dark) .internal-links a {
+                color: rgb(255, 255, 255);
+        }
+        .internal-links a.active {
+                text-decoration: none;
+                border-bottom-color: rgb(var(--accent));
+        }
+        .actions {
+                display: flex;
+                gap: 0.75em;
+                align-items: center;
+        }
+        .theme-toggle-wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+        }
+        .menu-toggle {
+                display: none;
+                flex-direction: column;
+                justify-content: center;
+                gap: 4px;
+                width: 42px;
+                height: 42px;
+                padding: 10px;
+                border-radius: 50%;
+                border: 1px solid rgba(var(--black), 10%);
+                background: transparent;
+                cursor: pointer;
+        }
+        :global(.dark) .menu-toggle {
+                border-color: rgba(255, 255, 255, 0.16);
+        }
+        .menu-toggle .bar {
+                width: 100%;
+                height: 2px;
+                background: rgb(var(--black));
+                border-radius: 3px;
+                display: block;
+        }
+        :global(.dark) .menu-toggle .bar {
+                background: white;
+        }
+        .mobile-menu {
+                display: none;
+                flex-direction: column;
+                gap: 1em;
+                padding: 0 0 1em;
+                border-bottom: 1px solid rgba(var(--black), 8%);
+        }
+        :global(.dark) .mobile-menu {
+                border-bottom-color: rgba(255, 255, 255, 0.12);
+        }
+        .mobile-menu .internal-links {
+                flex-direction: column;
+                align-items: center;
+        }
+        .mobile-menu .internal-links a {
+                width: 100%;
+                padding: 0.5em 0.25em;
+        }
+        .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+        }
+        @media (max-width: 900px) {
+                .nav {
+                        padding: 0.75em 0;
+                }
+                .desktop {
+                        display: none;
+                }
+                .actions {
+                        justify-content: flex-end;
+                }
+                .menu-toggle {
+                        display: flex;
+                }
+                .mobile-menu {
+                        display: none;
+                }
+                .mobile-menu.open {
+                        display: flex;
+                }
+        }
+        @media (min-width: 901px) {
+                .mobile-menu {
+                        display: none !important;
+                }
+                .menu-toggle {
+                        display: none;
+                }
+        }
+        :global(body.no-scroll) {
+                overflow: hidden;
+        }
 </style>
