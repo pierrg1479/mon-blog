@@ -1,0 +1,61 @@
+---
+const repo = import.meta.env.PUBLIC_GISCUS_REPO;
+const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
+const category = import.meta.env.PUBLIC_GISCUS_CATEGORY;
+const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
+const mapping = import.meta.env.PUBLIC_GISCUS_MAPPING ?? 'pathname';
+const strict = import.meta.env.PUBLIC_GISCUS_STRICT ?? '1';
+const reactionsEnabled = import.meta.env.PUBLIC_GISCUS_REACTIONS_ENABLED ?? '1';
+const emitMetadata = import.meta.env.PUBLIC_GISCUS_EMIT_METADATA ?? '0';
+const inputPosition = import.meta.env.PUBLIC_GISCUS_INPUT_POSITION ?? 'bottom';
+const theme = import.meta.env.PUBLIC_GISCUS_THEME ?? 'preferred_color_scheme';
+const lang = import.meta.env.PUBLIC_GISCUS_LANG ?? 'fr';
+
+const requiredKeys = ['PUBLIC_GISCUS_REPO', 'PUBLIC_GISCUS_REPO_ID', 'PUBLIC_GISCUS_CATEGORY', 'PUBLIC_GISCUS_CATEGORY_ID'];
+const missingKeys = requiredKeys.filter((key) => !import.meta.env[key]);
+const giscusConfigured = missingKeys.length === 0;
+const showSetupWarning = !giscusConfigured && import.meta.env.DEV;
+---
+<section class="comments">
+        <h2>Commentaires</h2>
+        {giscusConfigured && (
+                <script
+                        src="https://giscus.app/client.js"
+                        data-repo={repo}
+                        data-repo-id={repoId}
+                        data-category={category}
+                        data-category-id={categoryId}
+                        data-mapping={mapping}
+                        data-strict={strict}
+                        data-reactions-enabled={reactionsEnabled}
+                        data-emit-metadata={emitMetadata}
+                        data-input-position={inputPosition}
+                        data-theme={theme}
+                        data-lang={lang}
+                        crossorigin="anonymous"
+                        async>
+                </script>
+        )}
+
+        {showSetupWarning && (
+                <p class="warning">
+                        Configurez Giscus via les variables d'environnement PUBLIC_GISCUS_* pour activer les commentaires ({missingKeys.join(', ')} manquantes).
+                </p>
+        )}
+</section>
+
+<style>
+        .comments {
+                width: 720px;
+                max-width: calc(100% - 2em);
+                margin: 2em auto 0;
+                padding: 1.5em 1em;
+        }
+        .comments h2 {
+                margin: 0 0 1em;
+        }
+        .warning {
+                margin: 0;
+                color: rgb(var(--accent));
+        }
+</style>
