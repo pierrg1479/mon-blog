@@ -12,7 +12,7 @@ import ThemeToggle from './ThemeToggle.astro';
                         <HeaderLink href="/about">A propos</HeaderLink>
                         <HeaderLink href="/contact">Contact</HeaderLink>
                 </div>
-                <div class="actions">
+                <div class="nav-right">
                         <div class="theme-toggle-wrapper">
                                 <ThemeToggle />
                         </div>
@@ -89,6 +89,11 @@ import ThemeToggle from './ThemeToggle.astro';
         :global(.dark) h2 a {
                 color: rgb(255, 255, 255);
         }
+        .nav-right {
+                display: flex;
+                align-items: center;
+                gap: 0.75em;
+        }
         .internal-links {
                 display: flex;
                 gap: 1em;
@@ -107,11 +112,6 @@ import ThemeToggle from './ThemeToggle.astro';
         .internal-links a.active {
                 text-decoration: none;
                 border-bottom-color: rgb(var(--accent));
-        }
-        .actions {
-                display: flex;
-                gap: 0.75em;
-                align-items: center;
         }
         .theme-toggle-wrapper {
                 display: flex;
@@ -180,7 +180,7 @@ import ThemeToggle from './ThemeToggle.astro';
                 .desktop {
                         display: none;
                 }
-                .actions {
+                .nav-right {
                         justify-content: flex-end;
                 }
                 .menu-toggle {
