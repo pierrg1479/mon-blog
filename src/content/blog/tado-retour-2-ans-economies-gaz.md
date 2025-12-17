@@ -1,8 +1,8 @@
 ---
 title: 'Tado : ce que j''ai vraiment économisé sur ma facture de gaz'
-description: 'Retour d''expérience après 2 ans avec Tado : analyse détaillée de mes économies réelles, rentabilité de l''installation et prochaines étapes avec Home Assistant'
+description: 'Retour d''expérience après 2 ans avec Tado'
 pubDate: 'Dec 07 2023'
-heroImage: '../../assets/blog-placeholder-1.jpg'
+heroImage: '/hannibal.jpg'  # ← Chemin absolu depuis public/
 ---
 
 De mon côté, je voulais juste répondre à une question concrète : **est-ce que ça baisse vraiment ma consommation de gaz, chiffres à l'appui ?**
