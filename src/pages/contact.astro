@@ -1,0 +1,61 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead title={`Contact - ${SITE_TITLE}`} description="Contactez The Optimization Guy" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Contact</h1>
+			<p>Une question, une idée, un projet ? N'hésitez pas à me contacter !</p>
+			
+			<div class="tally-container">
+				<iframe 
+					src="https://tally.so/embed/NprMzQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+					width="100%" 
+					height="600" 
+					frameborder="0" 
+					marginheight="0" 
+					marginwidth="0" 
+					title="Contact">
+				</iframe>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: rgb(var(--gray-dark));
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	h1 {
+		font-size: 3rem;
+		font-weight: 700;
+		line-height: 1;
+		margin-bottom: 0.5em;
+		margin-top: 1em;
+	}
+	p {
+		margin-bottom: 2em;
+	}
+	.tally-container {
+		width: 100%;
+		min-height: 600px;
+	}
+	.tally-container iframe {
+		border: none;
+	}
+</style>
