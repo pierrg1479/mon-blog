@@ -32,7 +32,7 @@ const posts = (await getCollection('blog')).sort(
 				<ul>
 					{posts.map((post) => (
 						<li>
-							<a href={`/blog/${post.id.replace(".md", "")}/`}>
+							<a href={`/blog/${post.id.replace('.md', '')}/`}>
 								<h3>{post.data.title}</h3>
 								<p class="date">
 									<FormattedDate date={post.data.pubDate} />
@@ -74,8 +74,9 @@ const posts = (await getCollection('blog')).sort(
 		border-top: 1px solid rgb(var(--gray-light));
 	}
 	.latest-posts h2 {
-		font-size: 2rem;
-		margin-bottom: 1em;
+		font-size: 1.2em;
+		font-weight: 700;
+		margin-bottom: 1.5em;
 	}
 	.latest-posts ul {
 		list-style-type: none;
@@ -97,7 +98,8 @@ const posts = (await getCollection('blog')).sort(
 		display: block;
 	}
 	.latest-posts h3 {
-		font-size: 1.5rem;
+		font-size: 1.1em;
+		font-weight: 700;
 		margin: 0 0 0.5em 0;
 		color: rgb(var(--black));
 		transition: color 0.2s;
@@ -106,12 +108,13 @@ const posts = (await getCollection('blog')).sort(
 		color: rgb(var(--accent));
 	}
 	.latest-posts .date {
-		font-size: 0.875rem;
+		font-size: 0.875em;
 		color: rgb(var(--gray));
 		margin: 0 0 0.5em 0;
 	}
 	.latest-posts .description {
-		font-size: 1rem;
+		font-size: 1em;
+		line-height: 1.6;
 		color: rgb(var(--gray-dark));
 		margin: 0;
 	}
