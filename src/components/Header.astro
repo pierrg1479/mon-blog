@@ -95,11 +95,11 @@ import ThemeToggle from './ThemeToggle.astro';
 		padding: 0;
 		border: none;
 	}
-	.social-links svg {
-		color: rgb(var(--black));
+	.social-links svg path {
+		fill: rgb(0, 0, 0);
 	}
-	:global(.dark) .social-links svg {
-		color: rgb(255, 255, 255);
+	:global(.dark) .social-links svg path {
+		fill: rgb(255, 255, 255);
 	}
 	@media (max-width: 720px) {
 		.social-links {
