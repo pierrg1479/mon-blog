@@ -24,6 +24,34 @@ const posts = (await getCollection('blog')).sort(
 				Je partage ici ce que je mets en place chez moi en matière de domotique : automatisations, intégrations Home Assistant, suivi de l'énergie et amélioration du confort au quotidien.
 			</p>
 			<p>
+				Vous y trouverez des cas d'usag
+cat > /tmp/temp_index.astro << 'EOF'
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+).slice(0, 3);
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>👋 Optimization Lovers!</h1>
+			<p>
+				Je partage ici ce que je mets en place chez moi en matière de domotique : automatisations, intégrations Home Assistant, suivi de l'énergie et amélioration du confort au quotidien.
+			</p>
+			<p>
 				Vous y trouverez des cas d'usage détaillés, du code prêt à adapter et des retours d'expérience honnêtes sur ce qui fonctionne… et sur ce qui fonctionne moins bien, le tout avec une obsession : optimiser sans compliquer.
 			</p>
 
@@ -32,7 +60,7 @@ const posts = (await getCollection('blog')).sort(
 				<ul>
 					{posts.map((post) => (
 						<li>
-							<a href={`/blog/blog/${post.slug}/`}>
+							<a href={`/blog/${post.slug}/`}>
 								<h3>{post.data.title}</h3>
 								<p class="date">
 									<FormattedDate date={post.data.pubDate} />
