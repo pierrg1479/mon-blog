@@ -12,7 +12,7 @@ const theme = import.meta.env.PUBLIC_GISCUS_THEME ?? 'preferred_color_scheme';
 const lang = import.meta.env.PUBLIC_GISCUS_LANG ?? 'fr';
 
 const requiredKeys = ['PUBLIC_GISCUS_REPO', 'PUBLIC_GISCUS_REPO_ID', 'PUBLIC_GISCUS_CATEGORY', 'PUBLIC_GISCUS_CATEGORY_ID'];
-const missingKeys = requiredKeys.filter((key) => !import.meta.env[key]);
+const missingKeys = requiredKeys.filter((key) => !import.meta.env[key]?.toString().trim());
 const giscusConfigured = missingKeys.length === 0;
 const showSetupWarning = !giscusConfigured && import.meta.env.DEV;
 ---
