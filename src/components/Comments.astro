@@ -1,0 +1,56 @@
+---
+const repo = import.meta.env.PUBLIC_GISCUS_REPO;
+const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
+const category = import.meta.env.PUBLIC_GISCUS_CATEGORY;
+const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
+
+const giscusConfigured = repo && repoId && category && categoryId;
+---
+<section class="comments">
+        <h2>Commentaires</h2>
+        {giscusConfigured ? (
+                <>
+                        <div id="giscus_thread"></div>
+                        <script is:inline>
+                                const config = JSON.parse('{JSON.stringify({ repo, repoId, category, categoryId })}');
+                                const container = document.getElementById('giscus_thread');
+                                if (container && !container.querySelector('iframe')) {
+                                        const script = document.createElement('script');
+                                        script.src = 'https://giscus.app/client.js';
+                                        script.setAttribute('data-repo', config.repo);
+                                        script.setAttribute('data-repo-id', config.repoId);
+                                        script.setAttribute('data-category', config.category);
+                                        script.setAttribute('data-category-id', config.categoryId);
+                                        script.setAttribute('data-mapping', 'pathname');
+                                        script.setAttribute('data-strict', '1');
+                                        script.setAttribute('data-reactions-enabled', '1');
+                                        script.setAttribute('data-emit-metadata', '0');
+                                        script.setAttribute('data-input-position', 'bottom');
+                                        script.setAttribute('data-theme', 'preferred_color_scheme');
+                                        script.setAttribute('data-lang', 'fr');
+                                        script.setAttribute('crossorigin', 'anonymous');
+                                        script.async = true;
+                                        container.appendChild(script);
+                                }
+                        </script>
+                </>
+        ) : (
+                <p class="warning">Configurez Giscus via les variables d'environnement PUBLIC_GISCUS_* pour activer les commentaires.</p>
+        )}
+</section>
+
+<style>
+        .comments {
+                width: 720px;
+                max-width: calc(100% - 2em);
+                margin: 2em auto 0;
+                padding: 1.5em 1em;
+        }
+        .comments h2 {
+                margin: 0 0 1em;
+        }
+        .warning {
+                margin: 0;
+                color: rgb(var(--accent));
+        }
+</style>

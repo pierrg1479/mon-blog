@@ -40,6 +40,17 @@ The `src/content/` directory contains "collections" of related Markdown and MDX 
 
 Any static assets, like images, can be placed in the `public/` directory.
 
+## 💬 Activer les commentaires avec Giscus
+
+Le site embarque désormais une intégration [Giscus](https://giscus.app/) pour permettre aux lecteurs de publier des commentaires via les discussions GitHub. Définissez les variables d'environnement suivantes (par exemple dans un fichier `.env`) avant de lancer le site :
+
+- `PUBLIC_GISCUS_REPO` : dépôt GitHub au format `owner/repo`.
+- `PUBLIC_GISCUS_REPO_ID` : identifiant du dépôt, récupéré dans le panneau d'installation Giscus.
+- `PUBLIC_GISCUS_CATEGORY` : nom de la catégorie de discussions dédiée aux commentaires.
+- `PUBLIC_GISCUS_CATEGORY_ID` : identifiant de cette catégorie.
+
+Une fois ces valeurs renseignées, une section « Commentaires » apparaîtra sous chaque article et permettra aux visiteurs de publier et consulter les échanges.
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
