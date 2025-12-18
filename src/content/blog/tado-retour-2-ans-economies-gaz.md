@@ -73,10 +73,10 @@ Ce déséquilibre permanent entre confort et consommation a été le point de d�
 
 | **Matériel** | **Prix total** |
 | --- | --- |
-| **Modification de 4 robinets de radiateur (intervention plombier)** | 472€ |
-| **9 têtes thermostatiques Tado V3+** | 402€ |
-| **1 thermostat Tado V3+ filaire** | 110€ |
-| **8 mois d'abonnement à l'option Auto-Assist** | 32€ |
+| Modification de 4 robinets de radiateur (intervention plombier) | 472€ |
+| 9 têtes thermostatiques Tado V3+ | 402€ |
+| 1 thermostat Tado V3+ filaire | 110€ |
+| 8 mois d'abonnement à l'option Auto-Assist | 32€ |
 | **Total** | **1016€** |
 
 ## 📊 Impact de Tado sur ma consommation de gaz
