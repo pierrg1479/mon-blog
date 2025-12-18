@@ -7,7 +7,7 @@ import ThemeToggle from './ThemeToggle.astro';
 <header>
 	<nav class="nav">
 		<div class="nav-left">
-			<h2 class="brand"><a href="/">⚡ {SITE_TITLE}</a></h2>
+			<a href="/" class="brand">⚡ {SITE_TITLE}</a>
 		</div>
 		<div class="nav-center">
 			<div class="internal-links desktop">
@@ -99,17 +99,14 @@ import ThemeToggle from './ThemeToggle.astro';
 		gap: 0.75em;
 	}
 	
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
-	h2 a {
+	.brand {
 		text-decoration: none;
 		color: rgb(var(--black));
 		font-weight: 700;
+		font-size: 1em;
 		white-space: nowrap;
 	}
-	:global(.dark) h2 a {
+	:global(.dark) .brand {
 		color: rgb(255, 255, 255);
 	}
 	
