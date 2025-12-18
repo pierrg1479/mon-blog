@@ -75,22 +75,28 @@ import ThemeToggle from './ThemeToggle.astro';
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 	}
 	.nav {
-		display: grid;
-		grid-template-columns: 1fr auto 1fr;
+		display: flex;
+		justify-content: space-between;
 		align-items: center;
 		padding: 1em 0;
 		width: 100%;
 		max-width: 1200px;
 		margin: 0 auto;
-		gap: 1rem;
+		position: relative;
 	}
 	.nav-left {
-		justify-self: start;
+		flex: 0 0 auto;
 	}
 	.nav-center {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
 		display: flex;
-		justify-self: center;
 		justify-content: center;
+	}
+	.nav-right {
+		flex: 0 0 auto;
+		margin-left: auto;
 	}
 	h2 {
 		margin: 0;
@@ -201,17 +207,14 @@ import ThemeToggle from './ThemeToggle.astro';
 	}
 	@media (max-width: 900px) {
 		.nav {
-			grid-template-columns: auto 1fr auto;
 			padding: 0.75em 0;
+		}
+		.nav-center {
+			position: static;
+			transform: none;
 		}
 		.desktop {
 			display: none;
-		}
-		.nav-center {
-			justify-self: end;
-		}
-		.nav-right {
-			justify-content: flex-end;
 		}
 		.menu-toggle {
 			display: flex;
