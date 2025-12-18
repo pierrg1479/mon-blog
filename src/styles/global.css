@@ -217,12 +217,12 @@ pre > code {
 }
 blockquote {
         margin: 1.5rem 0;
-        padding: 1rem 1.25rem;
+        padding: 0.35rem 0 0.35rem 1.25rem;
         border-left: 4px solid rgb(var(--accent));
         background: transparent;
         color: rgb(var(--black));
-        font-size: 1.05em;
-        font-style: normal;
+        font-size: 1.333em;
+        font-style: italic;
 }
 
 blockquote p {
