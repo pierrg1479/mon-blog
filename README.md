@@ -49,6 +49,8 @@ Le site embarque désormais une intégration [Giscus](https://giscus.app/) pour 
 - `PUBLIC_GISCUS_CATEGORY` ou `GISCUS_CATEGORY` : nom de la catégorie de discussions dédiée aux commentaires.
 - `PUBLIC_GISCUS_CATEGORY_ID` ou `GISCUS_CATEGORY_ID` : identifiant de cette catégorie.
 
+Utilisez un seul préfixe (PUBLIC_ ou sans préfixe) pour éviter des configurations incohérentes.
+
 Une fois ces valeurs renseignées, une section « Commentaires » apparaîtra sous chaque article et permettra aux visiteurs de publier et consulter les échanges.
 
 ## 🧞 Commands
