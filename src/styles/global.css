@@ -216,10 +216,21 @@ pre > code {
 	all: unset;
 }
 blockquote {
+        margin: 1.5rem 0;
+        padding: 0.35rem 0 0.35rem 1.25rem;
         border-left: 4px solid rgb(var(--accent));
-        padding: 0 0 0 20px;
-        margin: 0px;
+        background: transparent;
+        color: rgb(var(--black));
         font-size: 1.333em;
+        font-style: italic;
+}
+
+blockquote p {
+        margin: 0.45em 0;
+}
+
+blockquote p:last-child {
+        margin-bottom: 0;
 }
 
 .callout {
