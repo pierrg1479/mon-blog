@@ -122,14 +122,17 @@ input {
 /* Tables */
 table {
 	width: 100%;
-	border-collapse: collapse;
+	border-collapse: separate;
+	border-spacing: 0;
 	margin: 1.5rem 0;
-	font-size: 0.875rem;
+	font-size: 1rem;
+	border: 1px solid rgb(var(--gray-light));
+	border-radius: 8px;
+	overflow: hidden;
 }
 
 thead {
 	background-color: rgb(var(--gray-light));
-	border-bottom: 2px solid rgb(var(--gray));
 }
 
 .dark thead {
@@ -141,6 +144,7 @@ thead th {
 	text-align: left;
 	font-weight: 600;
 	color: rgb(var(--black));
+	border-bottom: 2px solid rgb(var(--gray));
 }
 
 tbody tr {
