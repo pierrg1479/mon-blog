@@ -84,6 +84,8 @@ import ThemeToggle from './ThemeToggle.astro';
 	}
 	.nav-left {
 		flex: 0 0 auto;
+		position: relative;
+		z-index: 1;
 	}
 	.nav-center {
 		position: absolute;
@@ -91,10 +93,6 @@ import ThemeToggle from './ThemeToggle.astro';
 		transform: translateX(-50%);
 		display: flex;
 		justify-content: center;
-	}
-	.nav-right {
-		flex: 0 0 auto;
-		margin-left: auto;
 	}
 	h2 {
 		margin: 0;
@@ -113,7 +111,10 @@ import ThemeToggle from './ThemeToggle.astro';
 		display: flex;
 		align-items: center;
 		gap: 0.75em;
-		justify-self: end;
+		flex: 0 0 auto;
+		margin-left: auto;
+		position: relative;
+		z-index: 1;
 	}
 	.theme-toggle {
 		display: flex;
