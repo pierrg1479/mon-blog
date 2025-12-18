@@ -259,6 +259,11 @@ blockquote p:last-child {
         transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.prose details:hover {
+        border-color: rgba(var(--accent), 0.5);
+        box-shadow: 0 4px 12px rgba(var(--gray), 0.16);
+}
+
 .prose details[open] {
         border-color: rgba(var(--accent), 0.6);
         box-shadow: 0 6px 16px rgba(var(--gray), 0.18);
@@ -275,6 +280,8 @@ blockquote p:last-child {
         color: rgb(var(--black));
         list-style: none;
         user-select: none;
+        background: linear-gradient(180deg, #f7f8fb, #eef1f7);
+        border-radius: 10px;
 }
 
 .prose summary::-webkit-details-marker {
