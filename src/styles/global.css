@@ -96,8 +96,7 @@ h5 {
 	font-size: 1.25em;
 }
 
-/* Trait décoratif pour H1 et H2 dans les articles */
-.prose h1,
+/* Trait décoratif uniquement pour H2 dans les articles */
 .prose h2 {
 	padding-left: 1rem;
 	border-left: 4px solid #ffd04d;
