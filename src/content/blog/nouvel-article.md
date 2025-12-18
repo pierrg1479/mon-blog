@@ -147,3 +147,30 @@ Terme 2
 \*Ce texte n'est pas en italique\*
 
 \[Ce texte n'est pas un lien\]
+
+## Blocs informatifs
+
+<div class="callout callout--note">
+  <p class="callout__title">Note</p>
+  <p class="callout__content">Ceci est une note pour attirer l'attention sur un détail important.</p>
+</div>
+
+<div class="callout callout--tip">
+  <p class="callout__title">Tip</p>
+  <p class="callout__content">Voici un conseil pratique pour améliorer votre expérience.</p>
+</div>
+
+<div class="callout callout--important">
+  <p class="callout__title">Important</p>
+  <p class="callout__content">Une information essentielle à ne pas manquer.</p>
+</div>
+
+<div class="callout callout--warning">
+  <p class="callout__title">Warning</p>
+  <p class="callout__content">Cette mise en garde souligne un risque potentiel.</p>
+</div>
+
+<div class="callout callout--caution">
+  <p class="callout__title">Caution</p>
+  <p class="callout__content">Soyez prudent avant de poursuivre cette action.</p>
+</div>

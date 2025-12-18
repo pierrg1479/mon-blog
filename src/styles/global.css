@@ -216,10 +216,58 @@ pre > code {
 	all: unset;
 }
 blockquote {
-	border-left: 4px solid rgb(var(--accent));
-	padding: 0 0 0 20px;
-	margin: 0px;
-	font-size: 1.333em;
+        border-left: 4px solid rgb(var(--accent));
+        padding: 0 0 0 20px;
+        margin: 0px;
+        font-size: 1.333em;
+}
+
+.callout {
+        margin: 1.5rem 0;
+        padding: 1.25rem 1.5rem;
+        border-radius: 14px;
+        border-left: 6px solid transparent;
+        background: rgba(var(--gray-light), 0.45);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.callout__title {
+        margin: 0 0 0.35rem 0;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgb(var(--black));
+}
+
+.callout__content {
+        margin: 0;
+        color: rgb(var(--gray-dark));
+}
+
+.callout--note {
+        background: #e7f3ff;
+        border-color: #4a90e2;
+}
+
+.callout--tip {
+        background: #e9f7ef;
+        border-color: #27ae60;
+}
+
+.callout--important {
+        background: #e8f1ff;
+        border-color: #3b82f6;
+}
+
+.callout--warning {
+        background: #fff7e6;
+        border-color: #f2c94c;
+}
+
+.callout--caution {
+        background: #fff0e6;
+        border-color: #f2994a;
 }
 hr {
 	border: none;
