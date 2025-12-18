@@ -256,7 +256,7 @@ blockquote p:last-child {
         border-radius: 10px;
         background: linear-gradient(180deg, #f9fafb, #f5f7fa);
         box-shadow: 0 2px 8px rgba(var(--gray), 0.15);
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .prose details:hover {
@@ -264,9 +264,15 @@ blockquote p:last-child {
         box-shadow: 0 4px 12px rgba(var(--gray), 0.16);
 }
 
+.prose details:focus-within {
+        outline: 2px solid rgba(var(--accent), 0.25);
+        outline-offset: 2px;
+}
+
 .prose details[open] {
         border-color: rgba(var(--accent), 0.6);
         box-shadow: 0 6px 16px rgba(var(--gray), 0.18);
+        background: linear-gradient(180deg, #fcfdff, #f7f9ff);
 }
 
 .prose summary {
@@ -282,6 +288,16 @@ blockquote p:last-child {
         user-select: none;
         background: linear-gradient(180deg, #f7f8fb, #eef1f7);
         border-radius: 10px;
+        transition: background 0.2s ease, color 0.2s ease;
+}
+
+.prose summary:hover {
+        background: linear-gradient(180deg, #f1f4fb, #e6ebf5);
+}
+
+.prose summary:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(var(--accent), 0.25);
 }
 
 .prose summary::-webkit-details-marker {
@@ -301,6 +317,33 @@ blockquote p:last-child {
 
 .prose details > *:not(summary) {
         padding: 0 1.1rem 1.1rem;
+}
+
+.dark .prose details {
+        border-color: rgba(var(--gray-light), 0.3);
+        background: rgb(var(--gray-dark));
+}
+
+.dark .prose details:hover {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
+}
+
+.dark .prose details[open] {
+        background: linear-gradient(180deg, #1e2633, #171d27);
+        border-color: rgba(var(--accent), 0.45);
+}
+
+.dark .prose summary {
+        background: linear-gradient(180deg, #222a38, #1b2230);
+        color: rgb(var(--gray-light));
+}
+
+.dark .prose summary:hover {
+        background: linear-gradient(180deg, #2a3240, #212837);
+}
+
+.dark .prose summary::after {
+        color: rgb(var(--accent));
 }
 
 .callout {
@@ -351,30 +394,4 @@ blockquote p:last-child {
         border-color: #f2994a;
 }
 hr {
-	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
-}
-.dark hr {
-	border-top-color: rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
-}
-.sr-only {
-	border: 0;
-	padding: 0;
-	margin: 0;
-	position: absolute !important;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
-	clip: rect(1px 1px 1px 1px);
-	clip: rect(1px, 1px, 1px, 1px);
-	clip-path: inset(50%);
-	white-space: nowrap;
-}
+	bor
