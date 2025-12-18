@@ -1,18 +1,20 @@
 ---
-const repo = import.meta.env.PUBLIC_GISCUS_REPO;
-const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
-const category = import.meta.env.PUBLIC_GISCUS_CATEGORY;
-const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
-const mapping = import.meta.env.PUBLIC_GISCUS_MAPPING ?? 'pathname';
-const strict = import.meta.env.PUBLIC_GISCUS_STRICT ?? '1';
-const reactionsEnabled = import.meta.env.PUBLIC_GISCUS_REACTIONS_ENABLED ?? '1';
-const emitMetadata = import.meta.env.PUBLIC_GISCUS_EMIT_METADATA ?? '0';
-const inputPosition = import.meta.env.PUBLIC_GISCUS_INPUT_POSITION ?? 'bottom';
-const theme = import.meta.env.PUBLIC_GISCUS_THEME ?? 'preferred_color_scheme';
-const lang = import.meta.env.PUBLIC_GISCUS_LANG ?? 'fr';
+const sanitizeEnv = (key) => import.meta.env[key]?.toString().trim() || undefined;
+
+const repo = sanitizeEnv('PUBLIC_GISCUS_REPO');
+const repoId = sanitizeEnv('PUBLIC_GISCUS_REPO_ID');
+const category = sanitizeEnv('PUBLIC_GISCUS_CATEGORY');
+const categoryId = sanitizeEnv('PUBLIC_GISCUS_CATEGORY_ID');
+const mapping = sanitizeEnv('PUBLIC_GISCUS_MAPPING') ?? 'pathname';
+const strict = sanitizeEnv('PUBLIC_GISCUS_STRICT') ?? '1';
+const reactionsEnabled = sanitizeEnv('PUBLIC_GISCUS_REACTIONS_ENABLED') ?? '1';
+const emitMetadata = sanitizeEnv('PUBLIC_GISCUS_EMIT_METADATA') ?? '0';
+const inputPosition = sanitizeEnv('PUBLIC_GISCUS_INPUT_POSITION') ?? 'bottom';
+const theme = sanitizeEnv('PUBLIC_GISCUS_THEME') ?? 'preferred_color_scheme';
+const lang = sanitizeEnv('PUBLIC_GISCUS_LANG') ?? 'fr';
 
 const requiredKeys = ['PUBLIC_GISCUS_REPO', 'PUBLIC_GISCUS_REPO_ID', 'PUBLIC_GISCUS_CATEGORY', 'PUBLIC_GISCUS_CATEGORY_ID'];
-const missingKeys = requiredKeys.filter((key) => !import.meta.env[key]?.toString().trim());
+const missingKeys = requiredKeys.filter((key) => !sanitizeEnv(key));
 const giscusConfigured = missingKeys.length === 0;
 const showSetupWarning = !giscusConfigured && import.meta.env.DEV;
 ---

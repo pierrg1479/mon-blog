@@ -42,7 +42,7 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 ## 💬 Activer les commentaires avec Giscus
 
-La section « Commentaires » est rendue par `src/components/Comments.astro`. Elle affiche le widget Giscus uniquement si les variables `PUBLIC_GISCUS_*` ci-dessous sont définies (un avertissement détaillant les variables manquantes n'apparaît qu'en environnement de développement). Par défaut, si les variables sont présentes, le message de fallback n'est plus rendu et le formulaire Giscus apparaît sous chaque article.
+La section « Commentaires » est rendue par `src/components/Comments.astro`. Elle affiche le widget Giscus uniquement si les variables `PUBLIC_GISCUS_*` ci-dessous sont définies (un avertissement détaillant les variables manquantes n'apparaît qu'en environnement de développement). Par défaut, si les variables sont présentes, le message de fallback n'est plus rendu et le formulaire Giscus apparaît sous chaque article. Les valeurs sont lues telles quelles côté client : évitez les guillemets ou espaces superflus dans les fichiers `.env`.
 
 ### Variables requises
 
