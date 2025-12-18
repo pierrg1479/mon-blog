@@ -42,7 +42,7 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 ## 💬 Activer les commentaires avec Giscus
 
-Le site embarque désormais une intégration [Giscus](https://giscus.app/) pour permettre aux lecteurs de publier des commentaires via les discussions GitHub. Définissez les variables d'environnement suivantes (par exemple dans un fichier `.env`) avant de lancer le site :
+Le site embarque désormais une intégration [Giscus](https://giscus.app/) pour permettre aux lecteurs de publier des commentaires via les discussions GitHub. Définissez les variables d'environnement suivantes (par exemple dans un fichier `.env`, inspiré du `.env.example`) avant de lancer le site :
 
 - `PUBLIC_GISCUS_REPO` : dépôt GitHub au format `owner/repo`.
 - `PUBLIC_GISCUS_REPO_ID` : identifiant du dépôt, récupéré dans le panneau d'installation Giscus.
