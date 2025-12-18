@@ -122,6 +122,19 @@ Voici une phrase avec une note de bas de page[^1].
 
 [^1]: Ceci est la note de bas de page.
 
+## Bloc dépliable
+
+<details>
+  <summary>Click to expand details</summary>
+  <p>This is the collapsed detailed content.</p>
+  <p>You can include any Markdown syntax here:</p>
+  <ul>
+    <li>List item</li>
+    <li><strong>Bold text</strong></li>
+    <li><code>Code</code></li>
+  </ul>
+</details>
+
 ## Emoji
 
 :smile: :rocket: :house: :bulb:
