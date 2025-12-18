@@ -1,8 +1,10 @@
 ---
-const repo = import.meta.env.PUBLIC_GISCUS_REPO;
-const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
-const category = import.meta.env.PUBLIC_GISCUS_CATEGORY;
-const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
+// Support both PUBLIC_ and server-only GISCUS_* variables to avoid confusion.
+const repo = import.meta.env.PUBLIC_GISCUS_REPO ?? import.meta.env.GISCUS_REPO;
+const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID ?? import.meta.env.GISCUS_REPO_ID;
+const category = import.meta.env.PUBLIC_GISCUS_CATEGORY ?? import.meta.env.GISCUS_CATEGORY;
+const categoryId =
+        import.meta.env.PUBLIC_GISCUS_CATEGORY_ID ?? import.meta.env.GISCUS_CATEGORY_ID;
 
 const giscusConfigured = repo && repoId && category && categoryId;
 ---
@@ -26,7 +28,7 @@ const giscusConfigured = repo && repoId && category && categoryId;
                         async>
                 </script>
         ) : (
-                <p class="warning">Configurez Giscus via les variables d'environnement PUBLIC_GISCUS_* pour activer les commentaires.</p>
+<p class="warning">Configurez Giscus via une seule série de variables d'environnement PUBLIC_GISCUS_* ou GISCUS_* pour activer les commentaires.</p>
         )}
 </section>
 
