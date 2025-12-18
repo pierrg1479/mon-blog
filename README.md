@@ -42,11 +42,11 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 ## 💬 Activer les commentaires avec Giscus
 
-Le site embarque une intégration [Giscus](https://giscus.app/) pour permettre aux lecteurs de publier des commentaires via les discussions GitHub. La section « Commentaires » est rendue par `src/components/Comments.astro`. Elle affiche le widget Giscus uniquement si les variables `PUBLIC_GISCUS_*` ci-dessous sont définies (un avertissement détaillant les variables manquantes n'apparaît qu'en environnement de développement). Par défaut, si les variables sont présentes, le message de fallback n'est plus rendu et le formulaire Giscus apparaît sous chaque article. Les valeurs sont lues telles quelles côté client : évitez les guillemets ou espaces superflus dans les fichiers `.env`.
+Le site embarque une intégration [Giscus](https://giscus.app/) pour permettre aux lecteurs de publier des commentaires via les discussions GitHub. La section « Commentaires » est rendue par `src/components/Comments.astro`. Si vous définissez les variables `PUBLIC_GISCUS_*` requises, le widget Giscus apparaît sous chaque article (sinon, un avertissement n'est visible qu'en mode développement). Les valeurs sont lues telles quelles côté client : évitez les guillemets ou espaces superflus dans les fichiers `.env`.
 
 ### Variables requises
 
-Créez un fichier `.env.local` à partir du modèle `.env.example` et remplissez les valeurs fournies par [giscus.app](https://giscus.app/). Toutes les variables sont préfixées par `PUBLIC_` pour être accessibles côté client dans Astro.
+Créez un fichier `.env.local` à partir du modèle `.env.example` et remplissez les valeurs fournies par [giscus.app](https://giscus.app/). Toutes les variables sont préfixées par `PUBLIC_` pour être accessibles côté client dans Astro. Renseignez au minimum :
 
 - `PUBLIC_GISCUS_REPO` : dépôt GitHub au format `owner/repo`.
 - `PUBLIC_GISCUS_REPO_ID` : identifiant du dépôt (repo ID) affiché sur giscus.app.
