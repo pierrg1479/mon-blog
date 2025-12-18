@@ -250,6 +250,58 @@ blockquote p:last-child {
         color: rgb(var(--gray));
 }
 
+.prose details {
+        margin: 1.5rem 0;
+        border: 1px solid rgb(var(--gray-light));
+        border-radius: 10px;
+        background: #fff;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.prose details:hover {
+        border-color: rgba(var(--accent), 0.5);
+        box-shadow: 0 2px 10px rgba(var(--gray), 0.14);
+}
+
+.prose details[open] {
+        border-color: rgba(var(--accent), 0.6);
+        box-shadow: 0 4px 12px rgba(var(--gray), 0.12);
+}
+
+.prose summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding: 0.95rem 1.1rem;
+        cursor: pointer;
+        font-weight: 700;
+        color: rgb(var(--black));
+        list-style: none;
+        user-select: none;
+        background: linear-gradient(180deg, #f7f8fb, #eef1f7);
+        border-radius: 10px;
+}
+
+.prose summary::-webkit-details-marker {
+        display: none;
+}
+
+.prose summary::after {
+        content: '\25be';
+        font-size: 0.95em;
+        color: rgb(var(--accent-dark));
+        transition: transform 0.2s ease;
+}
+
+.prose details[open] summary::after {
+        transform: rotate(-180deg);
+}
+
+.prose details > *:not(summary) {
+        padding: 0 1.1rem 1.1rem;
+}
+
 .callout {
         margin: 1.5rem 0;
         padding: 1.25rem 1.5rem;
