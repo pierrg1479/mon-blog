@@ -216,13 +216,23 @@ pre > code {
 	all: unset;
 }
 blockquote {
-        margin: 1.5rem 0;
-        padding: 0.35rem 0 0.35rem 1.25rem;
-        border-left: 4px solid rgb(var(--accent));
-        background: transparent;
-        color: rgb(var(--black));
-        font-size: 1.333em;
+        margin: 2rem 0;
+        padding: 0.75rem 0 0.75rem 1.25rem;
+        border-left: 3px solid rgb(var(--accent));
+        background: linear-gradient(
+                90deg,
+                rgba(var(--accent-light), 0.18),
+                rgba(var(--accent-light), 0.03)
+        );
+        color: rgb(var(--gray-dark));
+        font-size: 1.15em;
         font-style: italic;
+        line-height: 1.6;
+}
+
+.dark blockquote {
+        background: rgba(var(--gray-light), 0.2);
+        color: rgb(var(--black));
 }
 
 blockquote p {
@@ -230,7 +240,9 @@ blockquote p {
 }
 
 blockquote p:last-child {
+        margin-top: 0.9em;
         margin-bottom: 0;
+        color: rgb(var(--gray));
 }
 
 .callout {
