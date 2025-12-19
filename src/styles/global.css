@@ -138,6 +138,7 @@ table {
         border-spacing: 0;
         margin: 1.5rem 0;
         border: 1px solid rgb(var(--gray-light));
+        border-top: 3px solid #ffd04d;
         border-radius: 8px;
         overflow: hidden;
 }
@@ -155,7 +156,7 @@ thead th {
 	text-align: left;
 	font-weight: 600;
 	color: rgb(var(--black));
-	border-bottom: 2px solid rgb(var(--gray));
+	border-bottom: 2px solid #ffd04d;
 }
 
 tbody tr {
@@ -197,7 +198,7 @@ td[align="right"] {
 
 /* Hover */
 tbody tr:hover {
-	background-color: rgba(var(--gray-light), 0.3);
+	background: linear-gradient(90deg, rgba(255, 208, 77, 0.12), rgba(255, 208, 77, 0.03));
 }
 
 img {
