@@ -11,9 +11,18 @@ import ThemeToggle from './ThemeToggle.astro';
 		</div>
 		<div class="nav-center">
 			<div class="internal-links desktop">
-				<HeaderLink href="/">Home</HeaderLink>
-				<HeaderLink href="/about">A propos</HeaderLink>
-				<HeaderLink href="/contact">Contact</HeaderLink>
+				<HeaderLink href="/">
+					<span class="nav-icon" aria-hidden="true">🏠</span>
+					Home
+				</HeaderLink>
+				<HeaderLink href="/about">
+					<span class="nav-icon" aria-hidden="true">ℹ️</span>
+					A propos
+				</HeaderLink>
+				<HeaderLink href="/contact">
+					<span class="nav-icon" aria-hidden="true">✉️</span>
+					Contact
+				</HeaderLink>
 			</div>
 		</div>
 		<div class="nav-right">
@@ -30,9 +39,18 @@ import ThemeToggle from './ThemeToggle.astro';
 	</nav>
 	<div id="mobile-menu" class="mobile-menu" data-open="false">
 		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/about">A propos</HeaderLink>
-			<HeaderLink href="/contact">Contact</HeaderLink>
+			<HeaderLink href="/">
+				<span class="nav-icon" aria-hidden="true">🏠</span>
+				Home
+			</HeaderLink>
+			<HeaderLink href="/about">
+				<span class="nav-icon" aria-hidden="true">ℹ️</span>
+				A propos
+			</HeaderLink>
+			<HeaderLink href="/contact">
+				<span class="nav-icon" aria-hidden="true">✉️</span>
+				Contact
+			</HeaderLink>
 		</div>
 	</div>
 </header>
@@ -120,6 +138,14 @@ import ThemeToggle from './ThemeToggle.astro';
 		gap: 1.5em;
 		align-items: center;
 		justify-content: center;
+	}
+	.internal-links .nav-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		margin-right: 0.4em;
+		font-size: 0.95em;
+		line-height: 1;
 	}
 	.internal-links a {
 		padding: 0.5em 0;
