@@ -1,0 +1,125 @@
+/* Giscus Custom Theme - The Optimization Guy */
+/* Compatible avec le thème clair et sombre */
+
+.giscus, .giscus-frame {
+  /* Couleurs principales */
+  --color-accent-fg: #ffd04d;
+  --color-accent-emphasis: #ffba08;
+
+  /* Arrière-plans */
+  --color-canvas-default: transparent;
+  --color-canvas-subtle: rgba(0, 0, 0, 0.02);
+
+  /* Bordures */
+  --color-border-default: #e5e7eb;
+  --color-border-muted: #f3f4f6;
+
+  /* Texte */
+  --color-fg-default: #1f2937;
+  --color-fg-muted: #6b7280;
+  --color-fg-subtle: #9ca3af;
+
+  /* Boutons */
+  --color-btn-bg: #ffffff;
+  --color-btn-border: #e5e7eb;
+  --color-btn-text: #1f2937;
+  --color-btn-hover-bg: #f9fafb;
+  --color-btn-hover-border: #d1d5db;
+
+  /* Bouton primaire (avec ton jaune) */
+  --color-btn-primary-bg: #ffd04d;
+  --color-btn-primary-text: #1f2937;
+  --color-btn-primary-border: #ffd04d;
+  --color-btn-primary-hover-bg: #ffba08;
+  --color-btn-primary-hover-border: #ffba08;
+}
+
+/* Dark mode */
+[data-theme="dark"] .giscus,
+[data-theme="dark"] .giscus-frame {
+  --color-accent-fg: #ffd04d;
+  --color-accent-emphasis: #ffba08;
+
+  --color-canvas-default: transparent;
+  --color-canvas-subtle: rgba(255, 255, 255, 0.05);
+
+  --color-border-default: #374151;
+  --color-border-muted: #1f2937;
+
+  --color-fg-default: #f9fafb;
+  --color-fg-muted: #d1d5db;
+  --color-fg-subtle: #9ca3af;
+
+  --color-btn-bg: #1f2937;
+  --color-btn-border: #374151;
+  --color-btn-text: #f9fafb;
+  --color-btn-hover-bg: #374151;
+  --color-btn-hover-border: #4b5563;
+
+  --color-btn-primary-bg: #ffd04d;
+  --color-btn-primary-text: #1f2937;
+  --color-btn-primary-border: #ffd04d;
+  --color-btn-primary-hover-bg: #ffba08;
+  --color-btn-primary-hover-border: #ffba08;
+}
+
+/* Personnalisation des éléments */
+.giscus .gsc-comment-box-tabs {
+  border-radius: 8px 8px 0 0;
+}
+
+.giscus .gsc-comment-box-textarea {
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.giscus .gsc-comment {
+  border-radius: 8px;
+  border: 1px solid var(--color-border-default);
+}
+
+.giscus .gsc-comment-author {
+  color: var(--color-accent-fg);
+  font-weight: 600;
+}
+
+.giscus .gsc-reactions {
+  border-radius: 8px;
+}
+
+.giscus .gsc-reactions-button {
+  border-radius: 6px;
+}
+
+.giscus .gsc-reaction-count {
+  color: var(--color-accent-fg);
+  font-weight: 600;
+}
+
+/* Boutons avec bordures arrondies */
+.giscus button {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Liens */
+.giscus a {
+  color: var(--color-accent-fg);
+  text-decoration: none;
+}
+
+.giscus a:hover {
+  text-decoration: underline;
+}
+
+/* Avatar */
+.giscus .gsc-comment-avatar {
+  border-radius: 8px;
+}
+
+/* Code blocks dans les commentaires */
+.giscus pre,
+.giscus code {
+  border-radius: 6px;
+}
