@@ -84,5 +84,64 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
                         </article>
                 </main>
 		<Footer />
+		<script>
+			// Génération automatique du sommaire
+			document.addEventListener('DOMContentLoaded', function() {
+				const article = document.querySelector('.prose');
+				if (!article) return;
+
+				const headings = article.querySelectorAll('h2, h3, h4');
+				if (headings.length === 0) return;
+
+				const toc = document.createElement('details');
+				toc.className = 'toc';
+
+				const summary = document.createElement('summary');
+				summary.textContent = 'Sommaire';
+				toc.appendChild(summary);
+
+				const tocContent = document.createElement('div');
+				tocContent.className = 'toc-content';
+
+				const tocList = document.createElement('ul');
+				tocList.className = 'toc-list';
+
+				headings.forEach((heading, index) => {
+					if (!heading.id) {
+						const headingText = heading.textContent
+							.toLowerCase()
+							.replace(/[^a-z0-9]+/g, '-')
+							.replace(/(^-|-$)/g, '');
+						heading.id = headingText || `heading-${index}`;
+					}
+
+					const li = document.createElement('li');
+					li.className = `toc-${heading.tagName.toLowerCase()}`;
+
+					const link = document.createElement('a');
+					link.href = `#${heading.id}`;
+					link.textContent = heading.textContent;
+
+					link.addEventListener('click', function(e) {
+						e.preventDefault();
+						heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+						history.pushState(null, null, `#${heading.id}`);
+					});
+
+					li.appendChild(link);
+					tocList.appendChild(li);
+				});
+
+				tocContent.appendChild(tocList);
+				toc.appendChild(tocContent);
+
+				const firstParagraph = article.querySelector('p');
+				if (firstParagraph) {
+					firstParagraph.after(toc);
+				} else {
+					article.insertBefore(toc, article.firstChild);
+				}
+			});
+		</script>
 	</body>
 </html>
