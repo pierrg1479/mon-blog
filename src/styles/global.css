@@ -131,6 +131,10 @@ input {
 	font-size: 16px;
 }
 
+ul li::marker {
+	color: #ffd04d;
+}
+
 /* Tables */
 table {
         width: 100%;
@@ -326,7 +330,7 @@ blockquote p:last-child {
 .prose details ul,
 .prose details ol {
         margin: 0.5em 0;
-        padding-left: 4rem;
+        padding-left: 3rem;
 }
 
 .prose details li {
