@@ -564,6 +564,34 @@ hr {
 		padding: 1em;
 	}
 }
+
+/* Réduction de l'espacement entre paragraphes et listes */
+.prose p + ul,
+.prose p + ol {
+	margin-top: 0.5rem;
+}
+
+.prose ul + p,
+.prose ol + p {
+	margin-top: 0.75rem;
+}
+
+.prose ul li,
+.prose ol li {
+	margin-bottom: 0.25rem;
+}
+
+.prose ul li:last-child,
+.prose ol li:last-child {
+	margin-bottom: 0;
+}
+
+.prose ul,
+.prose ol {
+	margin-top: 0.5rem;
+	margin-bottom: 1rem;
+}
+
 .sr-only {
 	border: 0;
 	padding: 0;
