@@ -93,6 +93,13 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				const headings = article.querySelectorAll('h2, h3, h4');
 				if (headings.length === 0) return;
 
+				// Filtrer les headings pour exclure "Commentaires"
+				const filteredHeadings = Array.from(headings).filter(heading => {
+					return heading.textContent.trim().toLowerCase() !== 'commentaires';
+				});
+
+				if (filteredHeadings.length === 0) return;
+
 				const toc = document.createElement('details');
 				toc.className = 'toc';
 
@@ -106,7 +113,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				const tocList = document.createElement('ul');
 				tocList.className = 'toc-list';
 
-				headings.forEach((heading, index) => {
+				filteredHeadings.forEach((heading, index) => {
 					if (!heading.id) {
 						const headingText = heading.textContent
 							.toLowerCase()
