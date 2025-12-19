@@ -11,6 +11,13 @@ import Comments from '../components/Comments.astro';
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+
+const isSameDay = (left: Date, right: Date) =>
+	left.getFullYear() === right.getFullYear() &&
+	left.getMonth() === right.getMonth() &&
+	left.getDate() === right.getDate();
+
+const showUpdatedDate = updatedDate && !isSameDay(pubDate, updatedDate);
 ---
 
 <html lang="en">
@@ -67,12 +74,13 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				<div class="prose">
 					<div class="title">
 						<div class="date">
-							<FormattedDate date={pubDate} />
+							Publié le <FormattedDate date={pubDate} />
 							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
+								showUpdatedDate && (
+									<span class="last-updated-on">
+										{' '}
+										• Mis à jour le <FormattedDate date={updatedDate} />
+									</span>
 								)
 							}
 						</div>
