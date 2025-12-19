@@ -296,6 +296,102 @@ blockquote p:last-child {
         color: rgb(var(--gray));
 }
 
+/* Sommaire */
+.prose .toc {
+        margin: 2rem 0;
+        border: 1px solid rgb(var(--gray-light));
+        border-left: 4px solid #ffd04d;
+        border-radius: 8px;
+        background: linear-gradient(180deg, #f9fafb, #f5f7fa);
+        box-shadow: 0 2px 8px rgba(var(--gray), 0.12);
+}
+
+.prose .toc summary {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 1.25rem;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1.1em;
+        color: rgb(var(--black));
+        list-style: none;
+        user-select: none;
+}
+
+.prose .toc summary::before {
+        content: '📑';
+        font-size: 1.2em;
+}
+
+.prose .toc summary::-webkit-details-marker {
+        display: none;
+}
+
+.prose .toc summary::after {
+        content: '▼';
+        margin-left: auto;
+        font-size: 0.7em;
+        color: #ffd04d;
+        transition: transform 0.2s ease;
+}
+
+.prose .toc[open] summary::after {
+        transform: rotate(-180deg);
+}
+
+.prose .toc-content {
+        padding: 0 1.25rem 1.25rem;
+}
+
+.prose .toc-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+}
+
+.prose .toc-list li {
+        margin: 0.35em 0;
+}
+
+.prose .toc-list a {
+        color: rgb(var(--gray-dark));
+        text-decoration: none;
+        display: block;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+}
+
+.prose .toc-list a:hover {
+        background: rgba(255, 208, 77, 0.15);
+        color: rgb(var(--black));
+        padding-left: 0.75rem;
+}
+
+/* Indentation par niveau */
+.prose .toc-list .toc-h2 {
+        padding-left: 0;
+}
+
+.prose .toc-list .toc-h3 {
+        padding-left: 1.5rem;
+}
+
+.prose .toc-list .toc-h4 {
+        padding-left: 3rem;
+}
+
+/* Dark mode pour sommaire */
+.dark .prose .toc {
+        background: rgb(var(--gray-dark));
+        border-color: rgba(var(--gray-light), 0.3);
+}
+
+.dark .prose .toc-list a {
+        color: rgb(var(--gray-dark));
+}
+
 .prose details {
         margin: 1.5rem 0;
         border: 1px solid rgb(var(--gray-light));
