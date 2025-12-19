@@ -171,7 +171,6 @@ import ThemeToggle from './ThemeToggle.astro';
 		justify-content: center;
 		margin-right: 0.4em;
 		color: #9ca3af;
-		line-height: 1;
 	}
 	.internal-links .nav-icon svg {
 		width: 1em;
@@ -179,6 +178,7 @@ import ThemeToggle from './ThemeToggle.astro';
 		stroke: currentColor;
 		stroke-width: 1.8;
 		fill: none;
+		display: block;
 	}
 	.internal-links a {
 		padding: 0.5em 0;
@@ -187,6 +187,8 @@ import ThemeToggle from './ThemeToggle.astro';
 		text-decoration: none;
 		font-weight: 500;
 		transition: border-color 0.2s ease;
+		display: inline-flex;
+		align-items: center;
 	}
 	:global(.dark) .internal-links a {
 		color: rgb(255, 255, 255);
