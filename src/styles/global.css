@@ -384,8 +384,17 @@ blockquote p:last-child {
 
 /* Dark mode pour sommaire */
 .dark .prose .toc {
-        background: rgb(var(--gray-dark));
-        border-color: rgba(var(--gray-light), 0.3);
+        background: rgb(var(--gray-light));
+        border-color: rgba(var(--gray), 0.45);
+}
+
+.dark .prose .toc summary {
+        background: linear-gradient(180deg, #202837, #171e2a);
+        color: rgb(var(--gray-dark));
+}
+
+.dark .prose .toc summary::after {
+        color: rgb(var(--accent));
 }
 
 .dark .prose .toc-list a {
@@ -491,7 +500,7 @@ blockquote p:last-child {
 
 .dark .prose summary {
         background: linear-gradient(180deg, #222a38, #1b2230);
-        color: rgb(var(--gray-light));
+        color: rgb(var(--gray-dark));
 }
 
 .dark .prose summary:hover {
@@ -548,6 +557,44 @@ blockquote p:last-child {
 .callout--caution {
         background: #fff0e6;
         border-color: #f2994a;
+}
+
+.dark .callout {
+        background: rgba(var(--gray-light), 0.4);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dark .callout__title {
+        color: rgb(var(--gray-dark));
+}
+
+.dark .callout__content {
+        color: rgb(var(--gray-dark));
+}
+
+.dark .callout--note {
+        background: rgba(30, 64, 175, 0.22);
+        border-color: #60a5fa;
+}
+
+.dark .callout--tip {
+        background: rgba(22, 101, 52, 0.25);
+        border-color: #34d399;
+}
+
+.dark .callout--important {
+        background: rgba(37, 99, 235, 0.25);
+        border-color: #93c5fd;
+}
+
+.dark .callout--warning {
+        background: rgba(161, 98, 7, 0.22);
+        border-color: #fcd34d;
+}
+
+.dark .callout--caution {
+        background: rgba(154, 52, 18, 0.22);
+        border-color: #fdba74;
 }
 hr {
 	border: none;
