@@ -326,7 +326,7 @@ blockquote p:last-child {
 .prose details ul,
 .prose details ol {
         margin: 0.5em 0;
-        padding-left: 1.5rem;
+        padding-left: 3rem;
 }
 
 .prose details li {
