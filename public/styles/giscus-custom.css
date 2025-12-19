@@ -1,0 +1,181 @@
+/* Giscus Custom Theme - The Optimization Guy */
+/* Design clean sans bordures disgracieuses */
+
+.giscus, .giscus-frame {
+  /* Couleurs principales */
+  --color-accent-fg: #ffd04d;
+  --color-accent-emphasis: #ffba08;
+
+  /* Arrière-plans */
+  --color-canvas-default: transparent;
+  --color-canvas-subtle: #f9fafb;
+
+  /* Bordures - légères et subtiles */
+  --color-border-default: #f3f4f6;
+  --color-border-muted: #f9fafb;
+
+  /* Texte */
+  --color-fg-default: #1f2937;
+  --color-fg-muted: #6b7280;
+  --color-fg-subtle: #9ca3af;
+
+  /* Boutons */
+  --color-btn-bg: #ffffff;
+  --color-btn-border: #e5e7eb;
+  --color-btn-text: #1f2937;
+  --color-btn-hover-bg: #f9fafb;
+  --color-btn-hover-border: #d1d5db;
+
+  /* Bouton primaire */
+  --color-btn-primary-bg: #ffd04d;
+  --color-btn-primary-text: #1f2937;
+  --color-btn-primary-border: transparent;
+  --color-btn-primary-hover-bg: #ffba08;
+  --color-btn-primary-hover-border: transparent;
+}
+
+/* Dark mode */
+[data-theme="dark"] .giscus,
+[data-theme="dark"] .giscus-frame {
+  --color-accent-fg: #ffd04d;
+  --color-accent-emphasis: #ffba08;
+
+  --color-canvas-default: transparent;
+  --color-canvas-subtle: #1f2937;
+
+  --color-border-default: #2d3748;
+  --color-border-muted: #1f2937;
+
+  --color-fg-default: #f9fafb;
+  --color-fg-muted: #d1d5db;
+  --color-fg-subtle: #9ca3af;
+
+  --color-btn-bg: #1f2937;
+  --color-btn-border: #374151;
+  --color-btn-text: #f9fafb;
+  --color-btn-hover-bg: #374151;
+  --color-btn-hover-border: #4b5563;
+
+  --color-btn-primary-bg: #ffd04d;
+  --color-btn-primary-text: #1f2937;
+  --color-btn-primary-border: transparent;
+  --color-btn-primary-hover-bg: #ffba08;
+  --color-btn-primary-hover-border: transparent;
+}
+
+/* Supprimer la grosse bordure noire moche */
+.giscus .gsc-comment-box,
+.giscus .gsc-comment-box-main {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Textarea avec style subtil */
+.giscus .gsc-comment-box-textarea,
+.giscus textarea {
+  border-radius: 8px;
+  border: 1px solid #e5e7eb !important;
+  font-family: inherit;
+  background: #ffffff;
+  padding: 12px;
+}
+
+[data-theme="dark"] .giscus .gsc-comment-box-textarea,
+[data-theme="dark"] .giscus textarea {
+  border: 1px solid #374151 !important;
+  background: #1f2937;
+}
+
+/* Tabs sans bordure */
+.giscus .gsc-comment-box-tabs {
+  border: none !important;
+  border-radius: 0;
+  margin-bottom: 12px;
+}
+
+/* Commentaires avec style subtil */
+.giscus .gsc-comment {
+  border-radius: 8px;
+  border: 1px solid #f3f4f6 !important;
+  background: #f9fafb;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+[data-theme="dark"] .giscus .gsc-comment {
+  border: 1px solid #2d3748 !important;
+  background: #1f2937;
+}
+
+/* Auteur en jaune */
+.giscus .gsc-comment-author {
+  color: #ffd04d !important;
+  font-weight: 600;
+}
+
+/* Bouton GitHub clean */
+.giscus .gsc-comment-box-button,
+.giscus button {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.giscus button:hover {
+  transform: translateY(-1px);
+}
+
+/* Bouton primaire avec le jaune */
+.giscus .gsc-comment-box-button-primary,
+.giscus button[type="submit"] {
+  background: #ffd04d !important;
+  color: #1f2937 !important;
+  border: none !important;
+  font-weight: 600;
+}
+
+.giscus .gsc-comment-box-button-primary:hover,
+.giscus button[type="submit"]:hover {
+  background: #ffba08 !important;
+}
+
+/* Liens */
+.giscus a {
+  color: #ffd04d;
+  text-decoration: none;
+}
+
+.giscus a:hover {
+  text-decoration: underline;
+}
+
+/* Réactions */
+.giscus .gsc-reactions {
+  border-radius: 8px;
+  border: none;
+}
+
+.giscus .gsc-reactions-button {
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+
+[data-theme="dark"] .giscus .gsc-reactions-button {
+  border-color: #374151;
+}
+
+.giscus .gsc-reaction-count {
+  color: #ffd04d;
+  font-weight: 600;
+}
+
+/* Avatar arrondi */
+.giscus .gsc-comment-avatar {
+  border-radius: 8px;
+}
+
+/* Timeline */
+.giscus .gsc-timeline {
+  border: none !important;
+}

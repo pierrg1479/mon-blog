@@ -21,10 +21,53 @@ const giscusConfigured = repo && repoId && category && categoryId;
                         data-reactions-enabled="1"
                         data-emit-metadata="0"
                         data-input-position="bottom"
-                        data-theme="preferred_color_scheme"
+                        data-theme="/styles/giscus-custom.css"
                         data-lang="fr"
                         crossorigin="anonymous"
                         async>
+                </script>
+                <script is:inline>
+                        function syncGiscusTheme() {
+                                const theme =
+                                        document.documentElement.getAttribute("data-theme") || "light";
+                                const iframe = document.querySelector("iframe.giscus-frame");
+
+                                if (iframe) {
+                                        iframe.contentWindow.postMessage(
+                                                {
+                                                        giscus: {
+                                                                setConfig: {
+                                                                        theme:
+                                                                                theme === "dark"
+                                                                                        ? "/styles/giscus-custom.css"
+                                                                                        : "/styles/giscus-custom.css",
+                                                                },
+                                                        },
+                                                },
+                                                "https://giscus.app",
+                                        );
+                                }
+                        }
+
+                        const observer = new MutationObserver((mutations) => {
+                                mutations.forEach((mutation) => {
+                                        if (
+                                                mutation.type === "attributes" &&
+                                                mutation.attributeName === "data-theme"
+                                        ) {
+                                                syncGiscusTheme();
+                                        }
+                                });
+                        });
+
+                        observer.observe(document.documentElement, {
+                                attributes: true,
+                                attributeFilter: ["data-theme"],
+                        });
+
+                        window.addEventListener("load", () => {
+                                setTimeout(syncGiscusTheme, 1000);
+                        });
                 </script>
         ) : (
 <p class="warning">Configurez Giscus via une seule série de variables d'environnement PUBLIC_GISCUS_* ou GISCUS_* pour activer les commentaires.</p>
