@@ -568,7 +568,7 @@ hr {
 /* Réduction de l'espacement entre paragraphes et listes */
 .prose p + ul,
 .prose p + ol {
-	margin-top: 0.5rem;
+	margin-top: 0.25rem;
 }
 
 .prose ul + p,
@@ -588,7 +588,7 @@ hr {
 
 .prose ul,
 .prose ol {
-	margin-top: 0.5rem;
+	margin-top: 0.25rem;
 	margin-bottom: 1rem;
 }
 
