@@ -11,9 +11,31 @@ import ThemeToggle from './ThemeToggle.astro';
 		</div>
 		<div class="nav-center">
 			<div class="internal-links desktop">
-				<HeaderLink href="/">Home</HeaderLink>
-				<HeaderLink href="/about">A propos</HeaderLink>
-				<HeaderLink href="/contact">Contact</HeaderLink>
+				<HeaderLink href="/">
+					<span class="nav-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+							<path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" />
+						</svg>
+					</span>
+					Home
+				</HeaderLink>
+				<HeaderLink href="/about">
+					<span class="nav-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+							<path d="M12 7.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm-2 5.5h4v6h-4v-6Z" />
+							<path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18Z" />
+						</svg>
+					</span>
+					A propos
+				</HeaderLink>
+				<HeaderLink href="/contact">
+					<span class="nav-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+							<path d="M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Zm0 2 8 5 8-5" />
+						</svg>
+					</span>
+					Contact
+				</HeaderLink>
 			</div>
 		</div>
 		<div class="nav-right">
@@ -30,9 +52,31 @@ import ThemeToggle from './ThemeToggle.astro';
 	</nav>
 	<div id="mobile-menu" class="mobile-menu" data-open="false">
 		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/about">A propos</HeaderLink>
-			<HeaderLink href="/contact">Contact</HeaderLink>
+			<HeaderLink href="/">
+				<span class="nav-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+						<path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" />
+					</svg>
+				</span>
+				Home
+			</HeaderLink>
+			<HeaderLink href="/about">
+				<span class="nav-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+						<path d="M12 7.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm-2 5.5h4v6h-4v-6Z" />
+						<path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18Z" />
+					</svg>
+				</span>
+				A propos
+			</HeaderLink>
+			<HeaderLink href="/contact">
+				<span class="nav-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+						<path d="M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Zm0 2 8 5 8-5" />
+					</svg>
+				</span>
+				Contact
+			</HeaderLink>
 		</div>
 	</div>
 </header>
@@ -120,6 +164,21 @@ import ThemeToggle from './ThemeToggle.astro';
 		gap: 1.5em;
 		align-items: center;
 		justify-content: center;
+	}
+	.internal-links .nav-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		margin-right: 0.4em;
+		color: #9ca3af;
+		line-height: 1;
+	}
+	.internal-links .nav-icon svg {
+		width: 1em;
+		height: 1em;
+		stroke: currentColor;
+		stroke-width: 1.8;
+		fill: none;
 	}
 	.internal-links a {
 		padding: 0.5em 0;
