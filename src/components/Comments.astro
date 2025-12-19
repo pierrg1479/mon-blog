@@ -9,7 +9,6 @@ const categoryId =
 const giscusConfigured = repo && repoId && category && categoryId;
 ---
 <section class="comments">
-        <h2>Commentaires</h2>
         {giscusConfigured ? (
                 <script
                         src="https://giscus.app/client.js"
@@ -38,9 +37,6 @@ const giscusConfigured = repo && repoId && category && categoryId;
                 max-width: calc(100% - 2em);
                 margin: 2em auto 0;
                 padding: 1.5em 1em;
-        }
-        .comments h2 {
-                margin: 0 0 1em;
         }
         .warning {
                 margin: 0;
