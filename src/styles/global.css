@@ -135,6 +135,48 @@ ul li::marker {
 	color: #ffd04d;
 }
 
+.prose ol {
+        counter-reset: item;
+        list-style: none;
+        padding-left: 0;
+}
+
+.prose ol li {
+        counter-increment: item;
+        position: relative;
+        padding-left: 2.5rem;
+        margin-bottom: 0.5em;
+}
+
+.prose ol li::before {
+        content: counter(item);
+        position: absolute;
+        left: 0;
+        top: 0.15em;
+        width: 1.5em;
+        height: 1.5em;
+        background: #ffd04d;
+        color: #0f1219;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.85em;
+}
+
+/* Listes imbriquées - niveau 2 */
+.prose ol ol li::before {
+        background: #f7e2aa;
+        color: #0f1219;
+}
+
+/* Listes imbriquées - niveau 3 */
+.prose ol ol ol li::before {
+        background: rgb(var(--gray-dark));
+        color: white;
+}
+
 /* Tables */
 table {
         width: 100%;
@@ -330,7 +372,7 @@ blockquote p:last-child {
 .prose details ul,
 .prose details ol {
         margin: 0.5em 0;
-        padding-left: 4rem;
+        padding-left: 3rem;
 }
 
 .prose details li {
