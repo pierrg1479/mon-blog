@@ -76,6 +76,9 @@ D'abord, je ne pouvais **pas piloter le chauffage à distance**. La chaudière s
 Le vrai gros problème est apparu avec **l'installation du poêle à bois**. Le thermostat général de la chaudière se trouvait dans la pièce de vie, exactement là où se trouve aussi le poêle. Quand le poêle chauffait bien le salon, le thermostat détectait une température suffisante et coupait le chauffage, alors que les chambres restaient froides.
 
 > En pratique, avec **un seul thermostat pour toute la maison**, je devais choisir entre un salon confortable et des chambres froides, ou des chambres agréables mais un salon surchauffé et de l'énergie gaspillée.
+>
+> — The Optimization Guy
+
 
 Ce déséquilibre permanent entre confort et consommation a été le point de départ de ma réflexion pour revoir complètement la façon dont notre chauffage était piloté.
 
