@@ -98,7 +98,7 @@ L'installation Tado me permet de réduire d'environ **26 %** ma consommation de 
 
 <div class="callout callout--note">
   <p class="callout__title">A noter</p>
-  <p class="callout__content">Pour tous les calculs de cet article, j'ai utilisé un prix de **0,0896€ TTC par kWh de gaz**.</p>
+  <p class="callout__content">Pour tous les calculs de cet article, j'ai utilisé un prix de <strong>0,0896€ TTC par kWh de gaz</strong>strong>.</p>
 </div>
 
 ### Économies en euros par année
