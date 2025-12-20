@@ -9,12 +9,27 @@ import Comments from '../components/Comments.astro';
 import ShareButtons from '../components/ShareButtons.astro';
 import ArticleMeta from '../components/ArticleMeta.astro';
 import ReadingProgress from '../components/ReadingProgress.astro';
+import ArticleSchema from '../components/ArticleSchema.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	content: string;
 };
 
 const { title, description, pubDate, updatedDate, heroImage, content } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+
+const heroImageSource = heroImage
+	? typeof heroImage === 'string'
+		? heroImage
+		: heroImage.src
+	: undefined;
+
+const schemaImage = heroImageSource
+	? heroImageSource.startsWith('http')
+		? heroImageSource
+		: new URL(heroImageSource, Astro.site).href
+	: undefined;
 
 const isSameDay = (left: Date, right: Date) =>
 	left.getFullYear() === right.getFullYear() &&
@@ -27,6 +42,14 @@ const showUpdatedDate = updatedDate && !isSameDay(pubDate, updatedDate);
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
+		<ArticleSchema
+			title={title}
+			description={description}
+			datePublished={pubDate}
+			dateModified={updatedDate}
+			image={schemaImage}
+			canonicalUrl={canonicalUrl}
+		/>
 		<style>
 			main {
 				width: calc(100% - 2em);
