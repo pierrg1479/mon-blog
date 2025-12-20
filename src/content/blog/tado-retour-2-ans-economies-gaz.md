@@ -123,9 +123,11 @@ Au total, depuis l'installation de Tado, cela représente environ **566 € d'é
 - **Économies déjà réalisées en deux hivers** : **≈ 566€**
 - **Reste à amortir** : environ **450€**
 
-En prenant comme base l'année 2025 (environ **336€ d'économies par an**) et sans hausse du prix du gaz, l'installation devrait être **rentabilisée en un peu moins de 4 saisons de chauffage**.
+<div class="callout callout--tip">
+  <p class="callout__title">Tip</p>
+  <p class="callout__content">En prenant comme base l'année 2025 (environ <strong>336€ d'économies par an</strong>strong>) et sans hausse du prix du gaz, l'installation devrait être <strong>rentabilisée en un peu moins de 4 saisons de chauffage</strong>strong>.<br/>Comme deux hivers sont déjà passés, il me manque donc **encore 1 à 2 hivers** pour que j'ai entièrement financé mon installation.</p>
+</div>
 
-Comme deux hivers sont déjà passés, il me manque donc **encore 1 à 2 hivers** pour que j'ai entièrement financé mon installation.
 
 ## 💸 Ce qui pourrait dégrader la rentabilité dans le temps
 
