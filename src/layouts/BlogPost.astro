@@ -8,6 +8,7 @@ import Header from '../components/Header.astro';
 import Comments from '../components/Comments.astro';
 import ShareButtons from '../components/ShareButtons.astro';
 import ArticleMeta from '../components/ArticleMeta.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	content: string;
@@ -68,6 +69,7 @@ const showUpdatedDate = updatedDate && !isSameDay(pubDate, updatedDate);
 	</head>
 
 	<body>
+		<ReadingProgress />
 		<Header />
 		<main>
 			<article>
