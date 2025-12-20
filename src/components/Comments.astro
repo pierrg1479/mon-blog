@@ -21,15 +21,24 @@ const giscusConfigured = repo && repoId && category && categoryId;
                         data-reactions-enabled="1"
                         data-emit-metadata="0"
                         data-input-position="bottom"
-                        data-theme="/styles/giscus-custom.css"
+                        data-theme="https://theoptimizationguy.com/giscus-light.css"
                         data-lang="fr"
                         crossorigin="anonymous"
                         async>
                 </script>
                 <script is:inline>
+                        function resolveGiscusThemeUrl() {
+                                const htmlTheme = document.documentElement.getAttribute("data-theme");
+                                const prefersDark = window.matchMedia("(prefers-color-scheme: dark)")
+                                        .matches;
+                                const theme = htmlTheme ?? (prefersDark ? "dark" : "light");
+                                return theme === "dark"
+                                        ? "https://theoptimizationguy.com/giscus-dark.css"
+                                        : "https://theoptimizationguy.com/giscus-light.css";
+                        }
+
                         function syncGiscusTheme() {
-                                const theme =
-                                        document.documentElement.getAttribute("data-theme") || "light";
+                                const themeUrl = resolveGiscusThemeUrl();
                                 const iframe = document.querySelector("iframe.giscus-frame");
 
                                 if (iframe) {
@@ -37,10 +46,7 @@ const giscusConfigured = repo && repoId && category && categoryId;
                                                 {
                                                         giscus: {
                                                                 setConfig: {
-                                                                        theme:
-                                                                                theme === "dark"
-                                                                                        ? "/styles/giscus-custom.css"
-                                                                                        : "/styles/giscus-custom.css",
+                                                                        theme: themeUrl,
                                                                 },
                                                         },
                                                 },
@@ -64,6 +70,10 @@ const giscusConfigured = repo && repoId && category && categoryId;
                                 attributes: true,
                                 attributeFilter: ["data-theme"],
                         });
+
+                        window
+                                .matchMedia("(prefers-color-scheme: dark)")
+                                .addEventListener("change", syncGiscusTheme);
 
                         window.addEventListener("load", () => {
                                 setTimeout(syncGiscusTheme, 1000);

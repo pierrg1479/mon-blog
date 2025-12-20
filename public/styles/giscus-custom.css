@@ -35,32 +35,34 @@
 }
 
 /* Dark mode */
-[data-theme="dark"] .giscus,
-[data-theme="dark"] .giscus-frame {
-  --color-accent-fg: #ffd04d;
-  --color-accent-emphasis: #ffba08;
-  
-  --color-canvas-default: transparent;
-  --color-canvas-subtle: transparent;
-  
-  --color-border-default: #374151;
-  --color-border-muted: #2d3748;
-  
-  --color-fg-default: #f9fafb;
-  --color-fg-muted: #d1d5db;
-  --color-fg-subtle: #9ca3af;
-  
-  --color-btn-bg: transparent;
-  --color-btn-border: #374151;
-  --color-btn-text: #f9fafb;
-  --color-btn-hover-bg: #1f2937;
-  --color-btn-hover-border: #ffd04d;
-  
-  --color-btn-primary-bg: #ffd04d;
-  --color-btn-primary-text: #1f2937;
-  --color-btn-primary-border: #ffd04d;
-  --color-btn-primary-hover-bg: #ffba08;
-  --color-btn-primary-hover-border: #ffba08;
+@media (prefers-color-scheme: dark) {
+  .giscus,
+  .giscus-frame {
+    --color-accent-fg: #ffd04d;
+    --color-accent-emphasis: #ffba08;
+    
+    --color-canvas-default: transparent;
+    --color-canvas-subtle: transparent;
+    
+    --color-border-default: #374151;
+    --color-border-muted: #2d3748;
+    
+    --color-fg-default: #f9fafb;
+    --color-fg-muted: #d1d5db;
+    --color-fg-subtle: #9ca3af;
+    
+    --color-btn-bg: transparent;
+    --color-btn-border: #374151;
+    --color-btn-text: #f9fafb;
+    --color-btn-hover-bg: #1f2937;
+    --color-btn-hover-border: #ffd04d;
+    
+    --color-btn-primary-bg: #ffd04d;
+    --color-btn-primary-text: #1f2937;
+    --color-btn-primary-border: #ffd04d;
+    --color-btn-primary-hover-bg: #ffba08;
+    --color-btn-primary-hover-border: #ffba08;
+  }
 }
 
 /* Container principal - propre et aéré */
@@ -94,15 +96,17 @@
   margin-bottom: -1px;
 }
 
-[data-theme="dark"] .giscus .gsc-comment-box-tab {
+@media (prefers-color-scheme: dark) {
+  .giscus .gsc-comment-box-tab {
   border-color: #374151 !important;
   color: #9ca3af !important;
 }
 
-[data-theme="dark"] .giscus .gsc-comment-box-tab-active {
+  .giscus .gsc-comment-box-tab-active {
   background: #1f2937 !important;
   color: #f9fafb !important;
   border-bottom-color: #1f2937 !important;
+  }
 }
 
 /* Zone de texte principale */
@@ -115,10 +119,12 @@
   padding: 1rem !important;
 }
 
-[data-theme="dark"] .giscus .gsc-comment-box,
-[data-theme="dark"] .gsc-comment-box-main {
-  border-color: #374151 !important;
-  background: #1f2937 !important;
+@media (prefers-color-scheme: dark) {
+  .giscus .gsc-comment-box,
+  .gsc-comment-box-main {
+    border-color: #374151 !important;
+    background: #1f2937 !important;
+  }
 }
 
 /* Textarea optimisée */
@@ -158,8 +164,10 @@
   border: 1px solid #e5e7eb !important;
 }
 
-[data-theme="dark"] .giscus button {
-  border-color: #374151 !important;
+@media (prefers-color-scheme: dark) {
+  .giscus button {
+    border-color: #374151 !important;
+  }
 }
 
 .giscus button:hover {
