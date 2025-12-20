@@ -1,0 +1,157 @@
+---
+interface Props {
+	title: string;
+	publishDate: Date;
+	content: string;
+	url?: string;
+}
+
+const { title, publishDate, content, url } = Astro.props;
+
+const articleUrl = url || new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
+
+const prompt = `Résume cet article de manière concise, en listant les points clés à retenir. Titre : ${title} — URL : ${articleUrl}`;
+const encodedPrompt = encodeURIComponent(prompt);
+const chatGPTUrl = `https://chat.openai.com/?q=${encodedPrompt}`;
+
+const calculateReadingTime = (text: string): number => {
+	const cleanText = text
+		.replace(/```[\s\S]*?```/g, '')
+		.replace(/`[^`]+`/g, '')
+		.replace(/!\[.*?\]\(.*?\)/g, '')
+		.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
+		.replace(/[#*_~`]/g, '')
+		.replace(/\s+/g, ' ')
+		.trim();
+
+	const words = cleanText ? cleanText.split(/\s+/).length : 0;
+	const minutes = Math.ceil(words / 200);
+
+	return Math.max(1, minutes);
+};
+
+const formattedDate = new Intl.DateTimeFormat('fr-FR', {
+	day: 'numeric',
+	month: 'short',
+	year: 'numeric',
+}).format(publishDate);
+
+const readingTime = calculateReadingTime(content);
+---
+
+<div class="article-meta" aria-label="Métadonnées de l'article">
+	<span class="meta-item">Publié le {formattedDate}</span>
+	<span class="meta-separator" aria-hidden="true">·</span>
+	<span class="meta-item">{readingTime} min de lecture</span>
+	<span class="meta-separator" aria-hidden="true">·</span>
+	<a
+		href={chatGPTUrl}
+		target="_blank"
+		rel="noopener noreferrer"
+		class="ai-chip"
+		aria-label="Résumé IA"
+	>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="ai-chip-icon"
+		>
+			<path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z" />
+			<path d="M19 13l.9 2.7L22 16l-2.1.3L19 19l-.9-2.7L16 16l2.1-.3L19 13z" />
+			<path d="M5 13l.9 2.7L8 16l-2.1.3L5 19l-.9-2.7L2 16l2.1-.3L5 13z" />
+		</svg>
+		<span>Résumé IA</span>
+	</a>
+</div>
+
+<style>
+	.article-meta {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		margin: 0.75rem 0 1.25rem;
+		color: #6b7280;
+		font-size: 0.9rem;
+	}
+
+	[data-theme='dark'] .article-meta {
+		color: #9ca3af;
+	}
+
+	.meta-item {
+		white-space: nowrap;
+	}
+
+	.meta-separator {
+		color: currentColor;
+	}
+
+	.ai-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 6px 12px;
+		border: 1px solid #e5e7eb;
+		border-radius: 999px;
+		font-size: 0.85rem;
+		color: inherit;
+		text-decoration: none;
+		transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease,
+			border-color 0.15s ease;
+	}
+
+	[data-theme='dark'] .ai-chip {
+		border-color: #374151;
+	}
+
+	.ai-chip-icon {
+		width: 14px;
+		height: 14px;
+		flex-shrink: 0;
+		transition: transform 0.2s ease;
+	}
+
+	.ai-chip:hover {
+		background: #ffd04d;
+		border-color: #ffd04d;
+		transform: translateY(-1px);
+		box-shadow: 0 4px 12px rgba(255, 208, 77, 0.35);
+	}
+
+	.ai-chip:focus-visible {
+		outline: 2px solid #ffd04d;
+		outline-offset: 2px;
+	}
+
+	.ai-chip:active {
+		transform: translateY(0) scale(0.98);
+	}
+
+	@media (hover: hover) {
+		.ai-chip:hover .ai-chip-icon {
+			transform: rotate(12deg);
+		}
+	}
+
+	@media (max-width: 480px) {
+		.article-meta {
+			flex-direction: column;
+			gap: 0.35rem;
+		}
+
+		.meta-item {
+			white-space: normal;
+		}
+
+		.meta-separator {
+			display: none;
+		}
+	}
+</style>

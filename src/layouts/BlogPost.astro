@@ -4,15 +4,16 @@ import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import AuthorBox from '../components/AuthorBox.astro';
 import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import Comments from '../components/Comments.astro';
 import ShareButtons from '../components/ShareButtons.astro';
-import AIResume from '../components/AIResume.astro';
+import ArticleMeta from '../components/ArticleMeta.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+	content: string;
+};
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, content } = Astro.props;
 
 const isSameDay = (left: Date, right: Date) =>
 	left.getFullYear() === right.getFullYear() &&
@@ -75,21 +76,21 @@ const showUpdatedDate = updatedDate && !isSameDay(pubDate, updatedDate);
 				</div>
 				<div class="prose">
 					<div class="title">
-						<div class="date">
-							Publié le <FormattedDate date={pubDate} />
-							{
-								showUpdatedDate && (
-									<span class="last-updated-on">
-										{' '}
-										• Mis à jour le <FormattedDate date={updatedDate} />
-									</span>
-								)
-							}
-						</div>
+						{showUpdatedDate && (
+							<div class="date">
+								<span class="last-updated-on">
+									Mis à jour le {new Intl.DateTimeFormat('fr-FR', {
+										day: 'numeric',
+										month: 'short',
+										year: 'numeric',
+									}).format(updatedDate)}
+								</span>
+							</div>
+						)}
 						<h1>{title}</h1>
+						<ArticleMeta title={title} publishDate={pubDate} content={content} />
 						<hr />
 					</div>
-					<AIResume title={title} />
 					<slot />
 					<ShareButtons title={title} />
 					<AuthorBox />
