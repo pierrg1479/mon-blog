@@ -11,8 +11,8 @@
   --color-accent-emphasis: #ffd04d;
 
   /* Arrière-plans */
-  --color-canvas-default: #0f172a;
-  --color-canvas-subtle: #111827;
+  --color-canvas-default: transparent;
+  --color-canvas-subtle: rgba(17, 24, 39, 0.6);
 
   /* Bordures subtiles */
   --color-border-default: rgba(255, 208, 77, 0.2);

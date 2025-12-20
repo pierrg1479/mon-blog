@@ -11,8 +11,8 @@
   --color-accent-emphasis: #ffd04d;
 
   /* Arrière-plans */
-  --color-canvas-default: #ffffff;
-  --color-canvas-subtle: #ffffff;
+  --color-canvas-default: transparent;
+  --color-canvas-subtle: transparent;
 
   /* Bordures subtiles */
   --color-border-default: rgba(255, 208, 77, 0.2);
@@ -56,7 +56,7 @@
 .giscus .gsc-comment-box,
 .giscus .gsc-comment-box-main {
   border-color: rgba(255, 208, 77, 0.2) !important;
-  background: var(--color-canvas-default) !important;
+  background: white !important;
 }
 
 /* Boutons de réaction */
