@@ -4,8 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel/serverless';
 
 export default defineConfig({
-  site: 'https://the-optimization-guy.vercel.app',
-  integrations: [mdx(), sitemap()],
-  output: 'server',
-  adapter: vercel()
+	site: 'https://theoptimizationguy.com',
+	integrations: [mdx(), sitemap()],
+	output: 'server',
+	adapter: vercel(),
 });
