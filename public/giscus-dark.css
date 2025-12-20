@@ -57,7 +57,7 @@
 .giscus .gsc-comment-box,
 .giscus .gsc-comment-box-main {
   border-color: rgba(255, 208, 77, 0.2) !important;
-  background: rgba(17, 24, 39, 0.6) !important;
+  background: var(--color-canvas-subtle) !important;
 }
 
 /* Boutons de réaction */

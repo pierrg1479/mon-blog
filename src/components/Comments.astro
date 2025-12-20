@@ -21,7 +21,7 @@ const giscusConfigured = repo && repoId && category && categoryId;
                         data-reactions-enabled="1"
                         data-emit-metadata="0"
                         data-input-position="bottom"
-                        data-theme="https://theoptimizationguy.com/giscus-light.css"
+                        data-theme="https://the-optimization-guy.vercel.app/giscus-light.css"
                         data-lang="fr"
                         crossorigin="anonymous"
                         async>
@@ -33,8 +33,8 @@ const giscusConfigured = repo && repoId && category && categoryId;
                                         .matches;
                                 const theme = htmlTheme ?? (prefersDark ? "dark" : "light");
                                 return theme === "dark"
-                                        ? "https://theoptimizationguy.com/giscus-dark.css"
-                                        : "https://theoptimizationguy.com/giscus-light.css";
+                                        ? "https://the-optimization-guy.vercel.app/giscus-dark.css"
+                                        : "https://the-optimization-guy.vercel.app/giscus-light.css";
                         }
 
                         function syncGiscusTheme() {
