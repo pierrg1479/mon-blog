@@ -110,7 +110,6 @@ Pour mesurer l'effet de Tado, je pars de **l'année 2023**, avec poêle à bois 
 - **Année 2024 – Thermostat + 1 tête thermostatique**
   → 11 374 kWh
   → Soit **2 560 kWh économisés vs 2023**, environ **229 €** sur la saison.
-
 - **Année 2025 – Têtes partout + Auto-Assist**
   → 10 182 kWh
   → Soit **3 752 kWh économisés vs 2023**, environ **336 €** sur la saison.
