@@ -7,7 +7,8 @@ interface Props {
 }
 
 const { title, url } = Astro.props;
-const shareUrl = url || new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
+const baseUrl = Astro.url?.origin || Astro.site?.origin || Astro.site?.href;
+const shareUrl = url || new URL(Astro.url.pathname, baseUrl).href;
 const encodedUrl = encodeURIComponent(shareUrl);
 const encodedTitle = encodeURIComponent(title);
 
@@ -222,11 +223,12 @@ const whatsappUrl = `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`;
   /* Bouton copier - style spécial */
   .share-button.copy {
     position: relative;
-    background: transparent;
+    background: #f9fafb;
     border: 1px solid #e5e7eb;
   }
 
   [data-theme='dark'] .share-button.copy {
+    background: #1f2937;
     border-color: #374151;
   }
 
