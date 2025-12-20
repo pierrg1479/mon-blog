@@ -1,0 +1,57 @@
+<div class="rp" aria-hidden="true">
+	<div class="rp__bar"></div>
+</div>
+
+<style>
+	.rp {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		z-index: 9999;
+		pointer-events: none;
+	}
+
+	.rp__bar {
+		width: 100%;
+		height: 100%;
+		background: #ffd04d;
+		opacity: 0.95;
+		transform: scaleX(0);
+		transform-origin: left center;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.rp__bar {
+			opacity: 0.9;
+		}
+	}
+</style>
+
+<script is:inline>
+	const bar = document.querySelector('.rp__bar');
+	if (bar) {
+		let ticking = false;
+
+		const updateProgress = () => {
+			const doc = document.documentElement;
+			const scrollTop = doc.scrollTop || document.body.scrollTop;
+			const scrollHeight = doc.scrollHeight - window.innerHeight;
+			const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
+			bar.style.transform = `scaleX(${progress})`;
+			ticking = false;
+		};
+
+		const onScroll = () => {
+			if (!ticking) {
+				window.requestAnimationFrame(updateProgress);
+				ticking = true;
+			}
+		};
+
+		window.addEventListener('scroll', onScroll, { passive: true });
+		window.addEventListener('resize', onScroll, { passive: true });
+		updateProgress();
+	}
+</script>
