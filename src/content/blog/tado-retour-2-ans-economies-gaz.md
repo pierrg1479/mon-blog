@@ -14,7 +14,7 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
 ## 🔍 Mon système de chauffage et les équipements en place
 
 <details>
-  <summary>**Chaudière gaz ELM LEBLANC EGALIS**</summary>
+  <summary>Chaudière gaz ELM LEBLANC EGALIS</summary>
   <p>Je chauffe mon logement au gaz avec une chaudière murale ELM Leblanc Égalis. Avant Tado, la régulation se faisait donc de façon « classique » :</p>
   <ul>
     <li>la chaudière ajustait sa température d'eau en fonction de la température extérieure via une sonde extérieure</li>
@@ -23,13 +23,13 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
 </details>
 
 <details>
-  <summary>****Poêle à bois**</summary>
+  <summary>Poêle à bois</summary>
   <p>J'ai aussi un poêle à bois utilisé en chauffage d'appoint. Il fonctionne principalement le soir et le week-end, d'**octobre à avril.** Sur cette période, je consomme en moyenne **3 à 4 stères de bois,** ce qui réduit d'autant le recours à la chaudière gaz quand il est en service.
 </p>
 </details>
 
 <details>
-  <summary>**Thermostat Tado V3+ filaire**</summary>
+  <summary>Thermostat Tado V3+ filaire</summary>
   <p>C'est lui qui pilote désormais la chaudière. Il est relié physiquement à la chaudière et remplace l'ancien thermostat.Concrètement, Tado peut :</p>
   <ul>
     <li>adapter les plages horaires,</li>
@@ -39,7 +39,7 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
 </details>
 
 <details>
-  <summary>**Têtes thermostatiques Tado V3+**</summary>
+  <summary>Têtes thermostatiques Tado V3+</summary>
   <p>Elles remplacent aujourd'hui les têtes manuelles sur l'ensemble de mes radiateurs (sauf un seul pour conserver une circulation dans le réseau d'eau). Leur rôle :</p>
   <ul>
     <li>réguler la température pièce par pièce,</li>
@@ -49,7 +49,7 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
 </details>
 
 <details>
-  <summary>**Option Auto-Assist Tado**</summary>
+  <summary>Option Auto-Assist Tado</summary>
   <p>J'utilise aussi l'option payante Auto-Assist (3,99€/mois). Elle automatise notamment :</p>
   <ul>
     <li>la gestion de la détection de présence (géolocalisation),</li>
