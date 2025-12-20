@@ -22,34 +22,41 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
   </ul>
 </details>
 
-**Poêle à bois**
+<details>
+  <summary>****Poêle à bois**</summary>
+  <p>J'ai aussi un poêle à bois utilisé en chauffage d'appoint. Il fonctionne principalement le soir et le week-end, d'**octobre à avril.** Sur cette période, je consomme en moyenne **3 à 4 stères de bois,** ce qui réduit d'autant le recours à la chaudière gaz quand il est en service.
+</p>
+</details>
 
-J'ai aussi un poêle à bois utilisé en chauffage d'appoint. Il fonctionne principalement le soir et le week-end, d'**octobre à avril.** Sur cette période, je consomme en moyenne **3 à 4 stères de bois,** ce qui réduit d'autant le recours à la chaudière gaz quand il est en service.
+<details>
+  <summary>**Thermostat Tado V3+ filaire**</summary>
+  <p>C'est lui qui pilote désormais la chaudière. Il est relié physiquement à la chaudière et remplace l'ancien thermostat.Concrètement, Tado peut :</p>
+  <ul>
+    <li>adapter les plages horaires,</li>
+    <li>moduler la demande de chauffage en fonction de la température mesurée,</li>
+    <li>couper plus tôt ou prolonger un peu le chauffage selon l'inertie du logement.</li>
+  </ul>
+</details>
 
-**Thermostat Tado V3+ filaire**
+<details>
+  <summary>**Têtes thermostatiques Tado V3+**</summary>
+  <p>Elles remplacent aujourd'hui les têtes manuelles sur l'ensemble de mes radiateurs (sauf un seul pour conserver une circulation dans le réseau d'eau). Leur rôle :</p>
+  <ul>
+    <li>réguler la température pièce par pièce,</li>
+    <li>éviter de surchauffer les pièces peu utilisées,</li>
+    <li>fermer automatiquement un radiateur quand la consigne est atteinte.</li>
+  </ul>
+</details>
 
-C'est lui qui pilote désormais la chaudière. Il est relié physiquement à la chaudière et remplace l'ancien thermostat.
-
-Concrètement, Tado peut :
-- adapter les plages horaires,
-- moduler la demande de chauffage en fonction de la température mesurée,
-- couper plus tôt ou prolonger un peu le chauffage selon l'inertie du logement.
-
-**Têtes thermostatiques Tado V3+**
-
-Elles remplacent aujourd'hui les têtes manuelles sur l'ensemble de mes radiateurs (sauf un seul pour conserver une circulation dans le réseau d'eau).
-
-Leur rôle :
-- réguler la température pièce par pièce,
-- éviter de surchauffer les pièces peu utilisées,
-- fermer automatiquement un radiateur quand la consigne est atteinte.
-
-**Option Auto-Assist Tado**
-
-J'utilise aussi l'option payante Auto-Assist (3,99€/mois). Elle automatise notamment :
-- la gestion de la détection de présence (géolocalisation),
-- l'ouverture des fenêtres (coupure du chauffage quand une fenêtre est détectée ouverte),
-- certains ajustements fins sans que j'aie à intervenir.
+<details>
+  <summary>**Option Auto-Assist Tado**</summary>
+  <p>J'utilise aussi l'option payante Auto-Assist (3,99€/mois). Elle automatise notamment :</p>
+  <ul>
+    <li>la gestion de la détection de présence (géolocalisation),</li>
+    <li>l'ouverture des fenêtres (coupure du chauffage quand une fenêtre est détectée ouverte),</li>
+    <li>certains ajustements fins sans que j'aie à intervenir.</li>
+  </ul>
+</details>
 
 ## 🧗 Les grandes étapes de mon installation
 
