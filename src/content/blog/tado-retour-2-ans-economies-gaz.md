@@ -13,8 +13,6 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
 
 ## 🔍 Mon système de chauffage et les équipements en place
 
-## Bloc dépliable
-
 <details>
   <summary>**Chaudière gaz ELM LEBLANC EGALIS**</summary>
   <p>Je chauffe mon logement au gaz avec une chaudière murale ELM Leblanc Égalis. Avant Tado, la régulation se faisait donc de façon « classique » :</p>
