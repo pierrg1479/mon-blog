@@ -7,7 +7,8 @@ interface Props {
 }
 
 const { title, url } = Astro.props;
-const shareUrl = url || new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
+const baseUrl = Astro.url?.origin || Astro.site?.origin || Astro.site?.href;
+const shareUrl = url || new URL(Astro.url.pathname, baseUrl).href;
 const encodedUrl = encodeURIComponent(shareUrl);
 const encodedTitle = encodeURIComponent(title);
 
