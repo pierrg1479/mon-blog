@@ -7,8 +7,7 @@ interface Props {
 }
 
 const { title, url } = Astro.props;
-const baseUrl = Astro.url?.origin || Astro.site?.origin || Astro.site?.href;
-const shareUrl = url || new URL(Astro.url.pathname, baseUrl).href;
+const shareUrl = url || Astro.url.href;
 const encodedUrl = encodeURIComponent(shareUrl);
 const encodedTitle = encodeURIComponent(title);
 
@@ -55,7 +54,7 @@ const whatsappUrl = `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`;
       </svg>
     </button>
 
-    <a
+    
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
@@ -67,7 +66,7 @@ const whatsappUrl = `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`;
       </svg>
     </a>
 
-    <a
+    
       href={twitterUrl}
       target="_blank"
       rel="noopener noreferrer"
@@ -79,7 +78,7 @@ const whatsappUrl = `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`;
       </svg>
     </a>
 
-    <a
+    
       href={redditUrl}
       target="_blank"
       rel="noopener noreferrer"
@@ -91,7 +90,7 @@ const whatsappUrl = `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`;
       </svg>
     </a>
 
-    <a
+    
       href={facebookUrl}
       target="_blank"
       rel="noopener noreferrer"
@@ -126,9 +125,6 @@ const whatsappUrl = `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`;
     });
   });
 </script>
-
-  </div>
-</div>
 
 <style>
   .share-buttons {
