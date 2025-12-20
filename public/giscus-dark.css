@@ -1,0 +1,94 @@
+/*
+  Thème sombre personnalisé pour Giscus
+  Ajusté pour la lisibilité sur fond sombre.
+*/
+
+:root,
+.giscus,
+.giscus-frame {
+  /* Couleurs principales */
+  --color-accent-fg: #ffd04d;
+  --color-accent-emphasis: #ffd04d;
+
+  /* Arrière-plans */
+  --color-canvas-default: transparent;
+  --color-canvas-subtle: rgba(17, 24, 39, 0.6);
+
+  /* Bordures subtiles */
+  --color-border-default: rgba(255, 208, 77, 0.2);
+  --color-border-muted: rgba(255, 208, 77, 0.1);
+
+  /* Texte */
+  --color-fg-default: #f9fafb;
+  --color-fg-muted: #d1d5db;
+  --color-fg-subtle: #9ca3af;
+
+  /* Liens et éléments interactifs */
+  --color-link: #ffd04d;
+
+  /* Boutons */
+  --color-btn-bg: transparent;
+  --color-btn-border: rgba(255, 208, 77, 0.2);
+  --color-btn-text: #f9fafb;
+  --color-btn-hover-bg: rgba(255, 208, 77, 0.1);
+  --color-btn-hover-border: rgba(255, 208, 77, 0.2);
+
+  /* Bouton principal (submit) */
+  --color-btn-primary-bg: #ffd04d;
+  --color-btn-primary-text: #000;
+  --color-btn-primary-border: #ffd04d;
+  --color-btn-primary-hover-bg: #e6bb45;
+  --color-btn-primary-hover-border: #e6bb45;
+}
+
+/* Tabs (Sign in / Comment) */
+.giscus .gsc-comment-box-tab {
+  border-color: rgba(255, 208, 77, 0.2) !important;
+  color: #d1d5db !important;
+}
+
+.giscus .gsc-comment-box-tab-active {
+  border-bottom-color: #ffd04d !important;
+  color: #f9fafb !important;
+  background: rgba(17, 24, 39, 0.6) !important;
+}
+
+/* Zone de commentaire */
+.giscus .gsc-comment-box,
+.giscus .gsc-comment-box-main {
+  border-color: rgba(255, 208, 77, 0.2) !important;
+  background: var(--color-canvas-subtle) !important;
+}
+
+/* Boutons de réaction */
+.giscus .gsc-reactions-button:hover {
+  background: rgba(255, 208, 77, 0.1) !important;
+  border-color: rgba(255, 208, 77, 0.2) !important;
+}
+
+/* Bouton Commenter */
+.giscus .gsc-comment-box-button-primary,
+.giscus button[type="submit"] {
+  background: #ffd04d !important;
+  color: #000 !important;
+  border-color: #ffd04d !important;
+}
+
+.giscus .gsc-comment-box-button-primary:hover,
+.giscus button[type="submit"]:hover {
+  background: #e6bb45 !important;
+  border-color: #e6bb45 !important;
+}
+
+/* Bouton Reply */
+.giscus .gsc-reply-button:hover {
+  background: rgba(255, 208, 77, 0.1) !important;
+}
+
+/* Focus states */
+.giscus textarea:focus,
+.giscus input:focus,
+.giscus button:focus-visible {
+  outline: 2px solid rgba(255, 208, 77, 0.2) !important;
+  outline-offset: 2px;
+}
