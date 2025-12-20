@@ -164,4 +164,4 @@ De mon côté, la prochaine étape sera de **remplacer Auto-Assist par des autom
 
 ---
 
-**Cet article n'est pas sponsorisé**. Je ne suis lié d'aucune façon à Tado et je ne touche aucune commission sur les produits mentionnés. Je partage simplement mon retour d'expérience basé sur ma propre installation.
+<em>**Cet article n'est pas sponsorisé**. Je ne suis lié d'aucune façon à Tado et je ne touche aucune commission sur les produits mentionnés. Je partage simplement mon retour d'expérience basé sur ma propre installation.</em>
