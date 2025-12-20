@@ -96,7 +96,10 @@ Ce déséquilibre permanent entre confort et consommation a été le point de d�
 
 L'installation Tado me permet de réduire d'environ **26 %** ma consommation de gaz. La vraie question devient : **est-ce que les dépenses engagées sont réellement rentabilisées, et en combien de temps ?**
 
-Pour tous les calculs de cet article, j'ai utilisé un prix de **0,0896€ TTC par kWh de gaz**.
+<div class="callout callout--note">
+  <p class="callout__title">A noter</p>
+  <p class="callout__content">Pour tous les calculs de cet article, j'ai utilisé un prix de **0,0896€ TTC par kWh de gaz**.</p>
+</div>
 
 ### Économies en euros par année
 
