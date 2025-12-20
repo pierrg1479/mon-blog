@@ -7,6 +7,7 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import Comments from '../components/Comments.astro';
+import ShareButtons from '../components/ShareButtons.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -89,6 +90,7 @@ const showUpdatedDate = updatedDate && !isSameDay(pubDate, updatedDate);
 					</div>
 					<slot />
 					<AuthorBox />
+					<ShareButtons title={title} />
 					<Comments />
 				</div>
 			</article>
