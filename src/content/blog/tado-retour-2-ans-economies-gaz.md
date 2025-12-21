@@ -77,18 +77,21 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
 
 ## ❓Pourquoi j'ai dû repenser complètement le pilotage du chauffage
 
-Avant, mon chauffage fonctionnait, mais j'avais deux problèmes principaux.
+Avant, mon chauffage fonctionnait, mais j’avais deux problèmes principaux.
 
-D'abord, je ne pouvais **pas piloter le chauffage à distance**. La chaudière suivait uniquement un **calendrier figé** : mêmes horaires, mêmes températures, tous les jours. Si nous rentrions plus tôt que prévu, la maison restait froide. Si nous partions à l'improviste pour le week-end, le chauffage continuait comme si nous étions là.
+D’abord, je ne pouvais **pas piloter le chauffage à distance**. La chaudière suivait uniquement un **calendrier figé** : mêmes horaires, mêmes températures, tous les jours. Si nous rentrions plus tôt que prévu, la maison restait froide. Si nous partions à l’improviste pour le week-end, le chauffage continuait comme si nous étions là. La seule solution était de toucher manuellement au thermostat, ce qui n’est pas vraiment ce qu’on peut appeler du “confort moderne”.
 
-Le vrai gros problème est apparu avec **l'installation du poêle à bois**. Le thermostat général de la chaudière se trouvait dans la pièce de vie, exactement là où se trouve aussi le poêle. Quand le poêle chauffait bien le salon, le thermostat détectait une température suffisante et coupait le chauffage, alors que les chambres restaient froides.
+Le vrai gros problème est apparu avec **l’installation du poêle à bois**. Le thermostat général de la chaudière se trouvait dans la pièce de vie, exactement là où se trouve aussi le poêle. Quand le poêle chauffait bien le salon, le thermostat détectait une température suffisante et coupait le chauffage, alors que les chambres restaient froides. Si je déplaçais le thermostat dans une chambre pour avoir chaud la nuit, c’était l’effet inverse : la chaudière se mettait à chauffer pour atteindre la bonne température dans les chambres, mais les radiateurs du salon continuaient à tourner alors qu’il faisait déjà largement assez chaud grâce au poêle.
 
 > En pratique, avec **un seul thermostat pour toute la maison**, je devais choisir entre un salon confortable et des chambres froides, ou des chambres agréables mais un salon surchauffé et de l'énergie gaspillée.
 >
 > — The Optimization Guy
 
-
 Ce déséquilibre permanent entre confort et consommation a été le point de départ de ma réflexion pour revoir complètement la façon dont notre chauffage était piloté.
+
+<div class="callout callout--note">
+  <p class="callout__content">ℹ️ Avec Tado, les têtes thermostatiques ne se contentent pas de fermer ou ouvrir le radiateur localement. Dans ma configuration, elles peuvent aussi demander de la chaleur à la chaudière lorsqu’il y a un écart de température dans leur pièce. Le thermostat central n’est donc plus le seul à décider du lancement du chauffage. C’est ce qui fait toute la différence par rapport à des têtes thermostatiques classiques associées à un simple thermostat d’ambiance : chaque pièce a réellement son mot à dire sur le fonctionnement de la chaudière.</p>
+</div>
 
 ## 💰Combien m'a vraiment coûté l'installation Tado ?
 
@@ -99,6 +102,12 @@ Ce déséquilibre permanent entre confort et consommation a été le point de d�
 | 1 thermostat Tado V3+ filaire | 110€ |
 | 8 mois d'abonnement à l'option Auto-Assist | 32€ |
 | **Total** | **1016€** |
+
+<div class="callout callout--warning">
+  <p class="callout__content">👨‍🔧 Pour pouvoir installer des têtes thermostatiques sur tous les radiateurs, j’ai dû faire intervenir un plombier. Il a remplacé les robinets de 4 radiateurs situés dans le salon, la salle à manger et le bureau. Ces radiateurs étaient auparavant équipés de robinets standards, non compatibles avec les têtes thermostatiques Tado.</p>
+</div>
+
+
 
 ## 📊 Impact de Tado sur ma consommation de gaz
 
