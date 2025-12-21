@@ -70,6 +70,11 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
 | Juillet 2024 | Installation de têtes thermostatiques Tado sur l'ensemble des radiateurs de la maison |
 | Octobre 2024 | Activation d'Auto-Assist Tado |
 
+<div class="callout callout--warning">
+  <p class="callout__title">Qu’est ce qu’Auto-Assist Tado ?</p>
+  <p class="callout__content">Auto-Assist est un abonnement payant (3,99€/mois) proposé par Tado. Il automatise certaines fonctions intelligentes : réduction du chauffage quand vous quittez la maison, prise en compte des fenêtres ouvertes, retour automatique au planning normal. Sans Auto-Assist, l’application vous envoie des notifications et c’est à vous de valider les actions. Avec Auto-Assist, Tado s’en charge à votre place pour améliorer confort et économies.</p>
+</div>
+
 ## ❓Pourquoi j'ai dû repenser complètement le pilotage du chauffage
 
 Avant, mon chauffage fonctionnait, mais j'avais deux problèmes principaux.
