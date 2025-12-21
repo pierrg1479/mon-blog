@@ -58,7 +58,7 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
   </ul>
 </details>
 <div class="callout callout--warning">
-  <p class="callout__content">C’est à partir de cette configuration (chaudière gaz avec sonde extérieure, puis ajout progressif de Tado V3+ : thermostat, têtes thermostatiques et Auto-Assist) que j’ai analysé ma consommation de gaz et mes économies réelles.</p>
+  <p class="callout__content">👉 C’est à partir de cette configuration (chaudière gaz avec sonde extérieure, puis ajout progressif de Tado V3+ : thermostat, têtes thermostatiques et Auto-Assist) que j’ai analysé ma consommation de gaz et mes économies réelles.</p>
 </div>
 
 ## 🧗 Les grandes étapes de mon installation
@@ -85,7 +85,7 @@ Le vrai gros problème est apparu avec **l’installation du poêle à bois**. L
 
 > En pratique, avec **un seul thermostat pour toute la maison**, je devais choisir entre un salon confortable et des chambres froides, ou des chambres agréables mais un salon surchauffé et de l'énergie gaspillée.
 >
-> — The Optimization Guy
+> Pierre
 
 Ce déséquilibre permanent entre confort et consommation a été le point de départ de ma réflexion pour revoir complètement la façon dont notre chauffage était piloté.
 
@@ -110,6 +110,27 @@ Ce déséquilibre permanent entre confort et consommation a été le point de d�
 
 
 ## 📊 Impact de Tado sur ma consommation de gaz
+> 🌡️ **À quelles températures je chauffe ?**
+> 
+> 
+> Pour pouvoir comparer avec votre propre situation, voici mes réglages de chauffage :
+> 
+> - **Pièces de vie (salon, cuisine, salle à manger)** :
+>     
+>     19 °C pendant les périodes d’occupation, **18 °C le reste du temps**.
+>     
+> - **Chambres** :
+>     
+>     18 °C le soir et la nuit quand elles sont utilisées, **16,5 °C sinon**.
+>     
+> - **Bureau** :
+>     
+>     Je suis en full remote, donc mon bureau est chauffé à **19 °C en journée la semaine**.
+>     
+> 
+> Mes économies sont donc calculées avec ces températures-là : si vous chauffez plus ou moins, vos résultats pourront être différents.
+>
+
 
 L'installation Tado me permet de réduire d'environ **26 %** ma consommation de gaz. La vraie question devient : **est-ce que les dépenses engagées sont réellement rentabilisées, et en combien de temps ?**
 
