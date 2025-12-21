@@ -175,9 +175,9 @@ const showUpdatedDate = updatedDate && !isSameDay(pubDate, updatedDate);
 				tocContent.appendChild(tocList);
 				toc.appendChild(tocContent);
 
-				const firstParagraph = article.querySelector('p');
-				if (firstParagraph) {
-					firstParagraph.after(toc);
+				const titleBlock = article.querySelector('.title');
+				if (titleBlock) {
+					titleBlock.after(toc);
 				} else {
 					article.insertBefore(toc, article.firstChild);
 				}
