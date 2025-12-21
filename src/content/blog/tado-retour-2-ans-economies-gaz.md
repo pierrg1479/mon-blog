@@ -57,6 +57,9 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
     <li>certains ajustements fins sans que j'aie à intervenir.</li>
   </ul>
 </details>
+<div class="callout callout--warning">
+  <p class="callout__content">C’est à partir de cette configuration (chaudière gaz avec sonde extérieure, puis ajout progressif de Tado V3+ : thermostat, têtes thermostatiques et Auto-Assist) que j’ai analysé ma consommation de gaz et mes économies réelles.</p>
+</div>
 
 ## 🧗 Les grandes étapes de mon installation
 
