@@ -299,29 +299,30 @@ blockquote p:last-child {
 /* Sommaire */
 .prose .toc {
         margin: 2rem 0;
-        border: 1px solid rgb(var(--gray-light));
+        border: 1px solid rgba(var(--gray), 0.18);
         border-left: 4px solid #ffd04d;
-        border-radius: 8px;
-        background: linear-gradient(180deg, #f9fafb, #f5f7fa);
-        box-shadow: 0 2px 8px rgba(var(--gray), 0.12);
+        border-radius: 10px;
+        background: linear-gradient(180deg, #fafbfd, #f6f7fb);
+        box-shadow: 0 1px 4px rgba(var(--gray), 0.1);
 }
 
 .prose .toc summary {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        padding: 1rem 1.25rem;
+        padding: 0.9rem 1.1rem;
         cursor: pointer;
-        font-weight: 700;
-        font-size: 1.1em;
-        color: rgb(var(--black));
+        font-weight: 600;
+        font-size: 1rem;
+        color: rgb(var(--gray-dark));
         list-style: none;
         user-select: none;
+        justify-content: flex-start;
 }
 
 .prose .toc summary::before {
         content: '📑';
-        font-size: 1.2em;
+        font-size: 1rem;
 }
 
 .prose .toc summary::-webkit-details-marker {
@@ -331,8 +332,8 @@ blockquote p:last-child {
 .prose .toc summary::after {
         content: '▼';
         margin-left: auto;
-        font-size: 0.7em;
-        color: #ffd04d;
+        font-size: 0.65em;
+        color: rgba(var(--accent), 0.8);
         transition: transform 0.2s ease;
 }
 
