@@ -181,11 +181,29 @@
   
   .prose blockquote {
     margin: 2.5rem 0;
-    padding: 1.75rem 2rem;
-    border-left: 4px solid var(--accent, #ffd04d);
-    background: linear-gradient(to right, rgba(255, 208, 77, 0.08), rgba(255, 208, 77, 0.02));
-    border-radius: 0 12px 12px 0;
+    padding: 2.25rem 2.75rem;
+    border-left: 6px solid var(--accent, #ffd04d);
+    background: #fff9ef;
+    border-radius: 0;
     font-style: italic;
+    color: #374151;
+    font-size: 1.25rem;
+    line-height: 1.8;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+  }
+
+  .prose blockquote p {
+    margin: 0;
+  }
+
+  .prose blockquote p + p {
+    margin-top: 1.5rem;
+  }
+
+  .prose blockquote p:last-child {
+    color: #6b7280;
+    font-size: 1rem;
+    font-style: normal;
   }
   
   .prose table {
