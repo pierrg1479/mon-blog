@@ -323,7 +323,17 @@
 @media (max-width: 767px) {
   .prose details:not(.toc),
   .prose .toc {
-    padding: 1.25rem;
+    margin: 2rem 0;
+    padding: 1.25rem 1rem;
+    border-radius: 12px;
+  }
+
+  .prose .toc .toc-content {
+    padding: 1.25rem 1rem;
+  }
+
+  .prose .toc summary {
+    font-size: 1.1rem;
   }
   
   .article-meta .ai-chip {
