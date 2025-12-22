@@ -15,7 +15,7 @@ const blog = defineCollection({
 			heroImage: image().optional(),
 			author: z.object({
 				name: z.string(),
-				avatar: image(),
+				avatar: z.string(),
 			}),
 		}),
 });

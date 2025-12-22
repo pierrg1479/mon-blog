@@ -66,6 +66,13 @@ const readingTime = calculateReadingTime(content);
 const articleUrl = new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
 const prompt = `Résume cet article de manière concise, en listant les points clés à retenir. Titre : ${title} — URL : ${articleUrl}`;
 const chatGPTUrl = `https://chat.openai.com/?q=${encodeURIComponent(prompt)}`;
+
+const authorName = author?.name || 'Pierre';
+const authorAvatar = author?.avatar
+	? typeof author.avatar === 'string'
+		? author.avatar
+		: author.avatar.src
+	: '/hannibal-cercle.png';
 ---
 
 <html lang="en">
@@ -96,7 +103,14 @@ const chatGPTUrl = `https://chat.openai.com/?q=${encodeURIComponent(prompt)}`;
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				overflow: visible;
+			}
+
+			.hero-media {
+				position: absolute;
+				inset: 0;
 				overflow: hidden;
+				z-index: 1;
 			}
 
 			.hero-image {
@@ -277,30 +291,30 @@ const chatGPTUrl = `https://chat.openai.com/?q=${encodeURIComponent(prompt)}`;
 		<main>
 			<article>
 				<div class="hero-header">
-					{heroImage && (
-						<Image
-							width={1600}
-							height={900}
-							src={heroImage}
-							alt={title}
-							class="hero-image"
-							loading="eager"
-						/>
-					)}
-					<div class="hero-overlay"></div>
+					<div class="hero-media">
+						{heroImage && (
+							<Image
+								width={1600}
+								height={900}
+								src={heroImage}
+								alt={title}
+								class="hero-image"
+								loading="eager"
+							/>
+						)}
+						<div class="hero-overlay"></div>
+					</div>
 					<div class="hero-content">
 						<h1 class="hero-title">{title}</h1>
 						<div class="hero-meta">
 							<div class="meta-info">
-								<Image
-									width={32}
-									height={32}
-									src={author.avatar}
-									alt={author.name}
+								<img
+									src={authorAvatar}
+									alt={authorName}
 									class="author-avatar"
 									loading="lazy"
 								/>
-								<span class="author-name">{author.name}</span>
+								<span class="author-name">{authorName}</span>
 								<span class="separator" aria-hidden="true">
 									·
 								</span>

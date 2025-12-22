@@ -5,7 +5,7 @@ pubDate: 'Dec 17 2024'
 heroImage: '../../assets/blog-placeholder-2.jpg'  # ← Différente image
 author:
   name: Pierre
-  avatar: '../../assets/blog-placeholder-about.jpg'
+  avatar: '/hannibal-cercle.png'
 ---
 
 Cet article présente l'ensemble de la syntaxe Markdown de base ainsi que des extensions courantes.

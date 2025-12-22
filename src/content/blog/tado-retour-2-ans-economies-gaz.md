@@ -5,7 +5,7 @@ pubDate: 'Dec 07 2023'
 heroImage: '../../assets/tado-combien-economie.jpg' # Image principale
 author:
   name: Pierre
-  avatar: '../../assets/blog-placeholder-about.jpg'
+  avatar: '/hannibal-cercle.png'
 ---
 
 De mon côté, je voulais juste répondre à une question concrète : **est-ce que ça baisse vraiment ma consommation de gaz, chiffres à l'appui ?**
