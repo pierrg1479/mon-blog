@@ -7,7 +7,6 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Comments from '../components/Comments.astro';
 import ShareButtons from '../components/ShareButtons.astro';
-import ArticleMeta from '../components/ArticleMeta.astro';
 import ReadingProgress from '../components/ReadingProgress.astro';
 import ArticleSchema from '../components/ArticleSchema.astro';
 import '../styles/article-ultra-clean.css';
@@ -39,6 +38,34 @@ const isSameDay = (left: Date, right: Date) =>
 	left.getDate() === right.getDate();
 
 const showUpdatedDate = updatedDate && !isSameDay(pubDate, updatedDate);
+
+const formattedDate = new Intl.DateTimeFormat('fr-FR', {
+	day: 'numeric',
+	month: 'short',
+	year: 'numeric',
+}).format(pubDate);
+
+const calculateReadingTime = (text: string): number => {
+	const cleanText = text
+		.replace(/```[\s\S]*?```/g, '')
+		.replace(/`[^`]+`/g, '')
+		.replace(/!\[.*?\]\(.*?\)/g, '')
+		.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
+		.replace(/[#*_~`]/g, '')
+		.replace(/\s+/g, ' ')
+		.trim();
+
+	const words = cleanText ? cleanText.split(/\s+/).length : 0;
+	const minutes = Math.ceil(words / 200);
+
+	return Math.max(1, minutes);
+};
+
+const readingTime = calculateReadingTime(content);
+
+const articleUrl = new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
+const prompt = `Résume cet article de manière concise, en listant les points clés à retenir. Titre : ${title} — URL : ${articleUrl}`;
+const chatGPTUrl = `https://chat.openai.com/?q=${encodeURIComponent(prompt)}`;
 ---
 
 <html lang="en">
@@ -60,15 +87,148 @@ const showUpdatedDate = updatedDate && !isSameDay(pubDate, updatedDate);
 				max-width: 100%;
 				margin: 0;
 			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
+			.hero-header {
+				position: relative;
+				height: 60vh;
+				min-height: 500px;
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				overflow: hidden;
 			}
-			.date {
-				margin-bottom: 0.5em;
+
+			.hero-image {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				z-index: 1;
+			}
+
+			.hero-overlay {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(
+					180deg,
+					rgba(0, 0, 0, 0.3) 0%,
+					rgba(0, 0, 0, 0.6) 100%
+				);
+				z-index: 2;
+			}
+
+			.hero-content {
+				position: relative;
+				z-index: 3;
+				text-align: center;
+				color: white;
+				max-width: 800px;
+				padding: 0 2rem;
+			}
+
+			.hero-title {
+				font-size: clamp(2.5rem, 5vw, 4rem);
+				font-weight: 800;
+				margin: 0 0 1rem 0;
+				color: #ffffff;
+				text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+				line-height: 1.1;
+			}
+
+			.hero-meta {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.75rem;
+				font-size: 1rem;
+				opacity: 0.95;
+				text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+				flex-wrap: wrap;
+			}
+
+			.ai-resume-badge {
+				position: absolute;
+				top: 2rem;
+				right: 2rem;
+				z-index: 4;
+				background: rgba(255, 255, 255, 0.92);
+				color: #374151;
+				padding: 0.6rem 1.4rem;
+				border-radius: 50px;
+				border: 1px solid rgba(148, 163, 184, 0.5);
+				font-weight: 500;
+				font-size: 0.95rem;
+				cursor: pointer;
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				backdrop-filter: blur(10px);
+				transition: all 0.3s ease;
+				text-decoration: none;
+				box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+			}
+
+			.ai-resume-badge:hover {
+				background: rgba(255, 255, 255, 0.98);
+				transform: translateY(-1px);
+				box-shadow: 0 8px 22px rgba(15, 23, 42, 0.18);
+			}
+
+			.ai-resume-badge:focus-visible {
+				outline: 2px solid rgba(255, 255, 255, 0.9);
+				outline-offset: 2px;
+			}
+
+			.ai-resume-icon {
+				width: 18px;
+				height: 18px;
+			}
+
+			.article-content {
+				background: white;
+				margin: -3rem auto 0;
+				position: relative;
+				z-index: 5;
+				max-width: 800px;
+				padding: 3rem 2rem;
+				border-radius: 1rem 1rem 0 0;
+				box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
+			}
+
+			[data-theme='dark'] .article-content {
+				background: #0f172a;
+				box-shadow: 0 -4px 30px rgba(15, 23, 42, 0.65);
+			}
+
+			.article-updated {
+				margin-bottom: 1.5rem;
 				color: rgb(var(--gray));
-			}
-			.last-updated-on {
 				font-style: italic;
+				text-align: center;
+			}
+
+			@media (max-width: 768px) {
+				.hero-header {
+					height: 50vh;
+					min-height: 400px;
+				}
+
+				.ai-resume-badge {
+					top: 1rem;
+					right: 1rem;
+					padding: 0.6rem 1.2rem;
+					font-size: 0.85rem;
+				}
+
+				.article-content {
+					margin: -2rem 1rem 0;
+					padding: 2rem 1.5rem;
+				}
 			}
 		</style>
 	</head>
@@ -78,32 +238,67 @@ const showUpdatedDate = updatedDate && !isSameDay(pubDate, updatedDate);
 		<Header />
 		<main>
 			<article>
-				<div class="prose">
+				<div class="hero-header">
 					{heroImage && (
-						<div class="hero-image">
-							<Image width={1020} height={510} src={heroImage} alt="" />
-						</div>
+						<Image
+							width={1600}
+							height={900}
+							src={heroImage}
+							alt={title}
+							class="hero-image"
+							loading="eager"
+						/>
 					)}
-					<div class="title">
+					<div class="hero-overlay"></div>
+					<div class="hero-content">
+						<h1 class="hero-title">{title}</h1>
+						<div class="hero-meta">
+							<span>Publié le {formattedDate}</span>
+							<span aria-hidden="true">·</span>
+							<span>{readingTime} min de lecture</span>
+						</div>
+					</div>
+					<a
+						class="ai-resume-badge"
+						href={chatGPTUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="ai-resume-icon"
+						>
+							<path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z" />
+							<path d="M19 13l.9 2.7L22 16l-2.1.3L19 19l-.9-2.7L16 16l2.1-.3L19 13z" />
+							<path d="M5 13l.9 2.7L8 16l-2.1.3L5 19l-.9-2.7L2 16l2.1-.3L5 13z" />
+						</svg>
+						Résumé IA
+					</a>
+				</div>
+
+				<div class="article-content">
+					<div class="prose">
 						{showUpdatedDate && (
-							<div class="date">
-								<span class="last-updated-on">
-									Mis à jour le {new Intl.DateTimeFormat('fr-FR', {
-										day: 'numeric',
-										month: 'short',
-										year: 'numeric',
-									}).format(updatedDate)}
-								</span>
+							<div class="article-updated">
+								Mis à jour le{' '}
+								{new Intl.DateTimeFormat('fr-FR', {
+									day: 'numeric',
+									month: 'short',
+									year: 'numeric',
+								}).format(updatedDate)}
 							</div>
 						)}
-						<h1>{title}</h1>
-						<ArticleMeta title={title} publishDate={pubDate} content={content} />
-						<hr />
+						<slot />
+						<ShareButtons title={title} />
+						<AuthorBox />
+						<Comments />
 					</div>
-					<slot />
-					<ShareButtons title={title} />
-					<AuthorBox />
-					<Comments />
 				</div>
 			</article>
 		</main>
