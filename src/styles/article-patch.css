@@ -177,10 +177,14 @@
 .prose .callout__title {
   font-weight: 700;
   font-size: 1.0625rem;
-  margin-bottom: 0.75rem;
+  margin: 0 0 0.75rem 0;
   display: flex;
   align-items: center;
   gap: 0.625rem;
+}
+
+.prose .callout__content {
+  margin: 0;
 }
 
 .prose .callout__title::before {
