@@ -239,6 +239,14 @@
     user-select: none;
     list-style: none;
   }
+
+  .prose details summary::marker {
+    content: "";
+  }
+
+  .prose details summary::-webkit-details-marker {
+    display: none;
+  }
   
   .prose details summary::before {
     content: "▶";
