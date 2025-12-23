@@ -1,0 +1,322 @@
+/* Layout 2 colonnes + Typography premium */
+
+@media (min-width: 1024px) {
+  article .prose {
+    position: relative;
+  }
+  
+  .hero-image {
+    float: left;
+    width: 42%;
+    margin: 0.25rem 3rem 2rem 0;
+    max-height: 420px;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hero-image:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 15px 30px rgba(0, 0, 0, 0.12);
+  }
+  
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .title {
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+  
+  .title h1 {
+    margin: 0 0 1.25rem 0;
+    font-size: 2.75rem;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--black, #111827);
+  }
+  
+  .dark .title h1 {
+    color: #ffffff;
+  }
+  
+  .title .article-meta {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+  }
+  
+  .dark .title .article-meta {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .title hr {
+    display: none;
+  }
+  
+  .prose > p:first-of-type {
+    clear: both;
+    margin-top: 2.5rem;
+    font-size: 1.1875rem;
+    line-height: 1.75;
+    color: var(--gray-dark, #374151);
+  }
+  
+  .dark .prose > p:first-of-type {
+    color: #d1d5db;
+  }
+  
+  .prose > h2:first-of-type {
+    clear: both;
+    margin-top: 2.5rem;
+  }
+}
+
+.article-meta {
+  font-size: 0.9375rem;
+  color: var(--gray, #6b7280);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-weight: 500;
+}
+
+.article-meta .meta-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.article-meta .meta-separator {
+  opacity: 0.4;
+  font-weight: 300;
+}
+
+@media (min-width: 1024px) {
+  .prose {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--gray-dark, #374151);
+  }
+  
+  .dark .prose {
+    color: #e5e7eb;
+  }
+  
+  .prose p {
+    margin-bottom: 1.75rem;
+  }
+  
+  .prose h2 {
+    margin-top: 3.5rem;
+    margin-bottom: 1.75rem;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--black, #111827);
+    scroll-margin-top: 100px;
+  }
+  
+  .dark .prose h2 {
+    color: #ffffff;
+  }
+  
+  .prose h3 {
+    margin-top: 2.75rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.625rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--black, #111827);
+  }
+  
+  .prose h4 {
+    margin-top: 2.25rem;
+    margin-bottom: 1.25rem;
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: var(--black, #111827);
+  }
+  
+  .prose strong {
+    font-weight: 700;
+    color: var(--black, #111827);
+  }
+  
+  .dark .prose strong {
+    color: #ffffff;
+  }
+  
+  .prose a {
+    color: var(--accent, #ffd04d);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  
+  .prose a:hover {
+    border-bottom-color: var(--accent, #ffd04d);
+  }
+  
+  .prose ul, .prose ol {
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+  }
+  
+  .prose li {
+    margin-bottom: 0.875rem;
+    line-height: 1.75;
+  }
+  
+  .prose blockquote {
+    margin: 2.5rem 0;
+    padding: 2.25rem 2.75rem;
+    border-left: 6px solid var(--accent, #ffd04d);
+    background: #fff9ef;
+    border-radius: 0;
+    font-style: italic;
+    color: #374151;
+    font-size: 1.25rem;
+    line-height: 1.8;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+  }
+
+  .prose blockquote p {
+    margin: 0;
+  }
+
+  .prose blockquote p + p {
+    margin-top: 1.5rem;
+  }
+
+  .prose blockquote p:last-child {
+    color: #6b7280;
+    font-size: 1rem;
+    font-style: normal;
+  }
+
+  .dark .prose blockquote {
+    background: rgba(15, 23, 42, 0.9);
+    color: #e2e8f0;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
+  }
+
+  .dark .prose blockquote p:last-child {
+    color: #94a3b8;
+  }
+  
+  .prose table {
+    margin: 2.5rem 0;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .prose table th {
+    background: rgba(0, 0, 0, 0.03);
+    padding: 1.125rem 1.25rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray-dark, #374151);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .prose table td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  
+  .prose table tr:hover {
+    background: rgba(0, 0, 0, 0.02);
+  }
+  
+  .prose img {
+    border-radius: 12px;
+    margin: 2.5rem auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.08);
+    max-width: 100%;
+  }
+  
+  .prose details {
+    margin: 2rem 0;
+    padding: 1.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.02);
+  }
+  
+  .prose details summary {
+    cursor: pointer;
+    font-weight: 700;
+    user-select: none;
+    list-style: none;
+  }
+
+  .prose details summary::marker {
+    content: "";
+  }
+
+  .prose details summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  .prose details summary::before {
+    content: "▶";
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .prose details[open] summary::before {
+    transform: rotate(90deg);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-image {
+    max-height: 360px;
+    border-radius: 16px;
+    margin-bottom: 2.5rem;
+  }
+  
+  .title h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-image {
+    margin-bottom: 1.75rem;
+    border-radius: 12px;
+  }
+  
+  .title h1 {
+    font-size: 2rem;
+  }
+  
+  .prose {
+    font-size: 1rem;
+  }
+}
+
+.prose * {
+  transition-property: color, background-color, border-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}

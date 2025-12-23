@@ -1,0 +1,64 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	image?: string;
+	datePublished: Date | string;
+	dateModified?: Date | string;
+	author?: {
+		name: string;
+		url?: string;
+	};
+	canonicalUrl: string;
+}
+
+const {
+	title,
+	description,
+	image,
+	datePublished,
+	dateModified,
+	author = { name: 'Pierre', url: 'https://theoptimizationguy.com' },
+	canonicalUrl,
+} = Astro.props;
+
+const publisher = {
+	'@type': 'Organization',
+	name: 'The Optimization Guy',
+	logo: {
+		'@type': 'ImageObject',
+		url: new URL('/hannibal-cercle.png', Astro.site).href,
+	},
+};
+
+const defaultImage = new URL('/hannibal.jpg', Astro.site).href;
+
+const schema = {
+	'@context': 'https://schema.org',
+	'@type': 'Article',
+	headline: title,
+	description,
+	image: image || defaultImage,
+	datePublished:
+		typeof datePublished === 'string' ? datePublished : datePublished.toISOString(),
+	dateModified: dateModified
+		? typeof dateModified === 'string'
+			? dateModified
+			: dateModified.toISOString()
+		: typeof datePublished === 'string'
+			? datePublished
+			: datePublished.toISOString(),
+	author: {
+		'@type': 'Person',
+		name: author.name,
+		...(author.url && { url: author.url }),
+	},
+	publisher,
+	mainEntityOfPage: {
+		'@type': 'WebPage',
+		'@id': canonicalUrl,
+	},
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
