@@ -98,8 +98,6 @@ h5 {
 
 /* Trait décoratif uniquement pour H2 dans les articles */
 .prose h2 {
-        padding-left: 1rem;
-        border-left: 4px solid #ffd04d;
         margin-bottom: 0.5em;
 }
 
