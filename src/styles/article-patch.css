@@ -56,9 +56,9 @@
 .prose .toc {
   margin: 2.25rem 0;
   padding: 1.25rem;
-  border: 2px solid #ffd04d;
+  border: none;
   border-radius: 10px;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.03);
 }
 
 .prose .toc summary {
@@ -82,21 +82,26 @@
 }
 
 .prose .toc summary::before {
-  content: "▶";
-  font-size: 0.8rem;
-  transition: transform 0.3s ease;
+  content: "📋";
+  font-size: 1rem;
+  margin-right: 0.5rem;
   color: var(--gray, #6b7280);
 }
 
 .prose .toc[open] summary::before {
-  transform: rotate(90deg);
+  content: "📋";
 }
 
 .prose .toc summary::after {
-  content: "📋";
-  font-size: 1rem;
+  content: "▶";
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
   margin-left: auto;
   color: var(--gray, #6b7280);
+}
+
+.prose .toc[open] summary::after {
+  transform: rotate(90deg);
 }
 
 .prose .toc .toc-content {
@@ -296,10 +301,13 @@
 }
 
 /* Dark mode */
-.dark .prose details:not(.toc),
+.dark .prose details:not(.toc) {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
 .dark .prose .toc {
-  border-color: rgba(255, 208, 77, 0.4);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .dark .prose .toc .toc-list a {
