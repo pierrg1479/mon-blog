@@ -56,9 +56,9 @@
 .prose .toc {
   margin: 2.25rem 0;
   padding: 1.25rem;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 2px solid #ffd04d;
   border-radius: 10px;
-  background: rgba(0, 0, 0, 0.015);
+  background: transparent;
 }
 
 .prose .toc summary {
@@ -298,8 +298,8 @@
 /* Dark mode */
 .dark .prose details:not(.toc),
 .dark .prose .toc {
-  border-color: rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 208, 77, 0.4);
+  background: transparent;
 }
 
 .dark .prose .toc .toc-list a {
