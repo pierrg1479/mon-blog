@@ -55,10 +55,10 @@
 /* Sommaire */
 .prose .toc {
   margin: 2.25rem 0;
-  padding: 1.25rem;
+  padding: 0;
   border: none;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.03);
+  border-radius: 0;
+  background: transparent;
 }
 
 .prose .toc summary {
@@ -71,6 +71,9 @@
   gap: 0.75rem;
   justify-content: flex-start;
   color: var(--gray-dark, #374151);
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
 }
 
 .prose .toc summary::marker {
@@ -306,7 +309,7 @@
   background: rgba(255, 255, 255, 0.03);
 }
 
-.dark .prose .toc {
+.dark .prose .toc summary {
   background: rgba(255, 255, 255, 0.05);
 }
 
@@ -329,19 +332,23 @@
 
 /* Responsive */
 @media (max-width: 767px) {
-  .prose details:not(.toc),
-  .prose .toc {
+  .prose details:not(.toc) {
     margin: 2rem 0;
     padding: 1.25rem 1rem;
     border-radius: 12px;
   }
 
-  .prose .toc .toc-content {
-    padding: 1.25rem 1rem;
+  .prose .toc {
+    margin: 2rem 0;
   }
 
   .prose .toc summary {
+    padding: 1.25rem 1rem;
     font-size: 1.1rem;
+  }
+
+  .prose .toc .toc-content {
+    padding: 1.25rem 1rem;
   }
   
   .article-meta .ai-chip {
