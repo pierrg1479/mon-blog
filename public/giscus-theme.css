@@ -8,7 +8,7 @@
   /* Surfaces */
   --gsc-background: transparent;
   --gsc-foreground: #0f172a;
-  --gsc-muted: #475569;
+  --gsc-muted: #4b5563;
 
   /* Borders */
   --gsc-border: rgba(15, 23, 42, 0.12);
@@ -20,12 +20,12 @@
   --gsc-input-placeholder: rgba(15, 23, 42, 0.45);
 
   /* Accent */
-  --gsc-accent: #2563eb;
-  --gsc-accent-hover: #1d4ed8;
+  --gsc-accent: #ffd04d;
+  --gsc-accent-hover: #c18b00;
 
   /* Badges */
-  --gsc-badge-background: rgba(37, 99, 235, 0.12);
-  --gsc-badge-foreground: #1d4ed8;
+  --gsc-badge-background: rgba(255, 208, 77, 0.18);
+  --gsc-badge-foreground: #997d24;
 
   /* Code */
   --gsc-code-background: rgba(15, 23, 42, 0.06);
@@ -39,21 +39,21 @@
     color-scheme: dark;
 
     --gsc-background: transparent;
-    --gsc-foreground: rgba(255, 255, 255, 0.92);
-    --gsc-muted: rgba(255, 255, 255, 0.62);
+    --gsc-foreground: #e5e7eb;
+    --gsc-muted: #9ca3af;
 
-    --gsc-border: rgba(255, 255, 255, 0.12);
+    --gsc-border: rgba(229, 231, 235, 0.16);
 
-    --gsc-input-background: rgba(255, 255, 255, 0.06);
-    --gsc-input-foreground: rgba(255, 255, 255, 0.92);
-    --gsc-input-border: rgba(255, 255, 255, 0.14);
-    --gsc-input-placeholder: rgba(255, 255, 255, 0.42);
+    --gsc-input-background: #0f172a;
+    --gsc-input-foreground: #e5e7eb;
+    --gsc-input-border: rgba(229, 231, 235, 0.22);
+    --gsc-input-placeholder: rgba(229, 231, 235, 0.55);
 
-    --gsc-accent: #60a5fa;
-    --gsc-accent-hover: #93c5fd;
+    --gsc-accent: #ffd04d;
+    --gsc-accent-hover: #ffdf8d;
 
-    --gsc-badge-background: rgba(96, 165, 250, 0.16);
-    --gsc-badge-foreground: #93c5fd;
+    --gsc-badge-background: rgba(255, 208, 77, 0.18);
+    --gsc-badge-foreground: #ffdf8d;
 
     --gsc-code-background: rgba(255, 255, 255, 0.08);
 
@@ -79,7 +79,7 @@
 
   --color-btn-primary-bg: var(--gsc-accent);
   --color-btn-primary-hover-bg: var(--gsc-accent-hover);
-  --color-btn-primary-text: #fff;
+  --color-btn-primary-text: #0f1219;
 
   --color-primer-shadow-highlight: var(--gsc-shadow);
   --color-canvas-overlay: var(--gsc-background);
@@ -94,8 +94,8 @@ main,
 .gsc-main,
 .gsc-comment-box,
 .gsc-comments {
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji",
-    "Segoe UI Emoji";
+  font-family: 'Atkinson', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 .gsc-comment-box,
@@ -123,6 +123,17 @@ a {
 }
 a:hover {
   color: var(--gsc-accent-hover) !important;
+}
+
+.gsc-comment-box,
+.gsc-comments,
+.gsc-comment {
+  background: var(--gsc-background) !important;
+  box-shadow: none !important;
+}
+
+.gsc-tl-line {
+  border-color: var(--gsc-border) !important;
 }
 
 /* Borders / separators */
