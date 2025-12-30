@@ -10,22 +10,25 @@ const giscusConfigured = repo && repoId && category && categoryId;
 ---
 <section class="comments">
         {giscusConfigured ? (
-                <script
-                        src="https://giscus.app/client.js"
-                        data-repo={repo}
-                        data-repo-id={repoId}
-                        data-category={category}
-                        data-category-id={categoryId}
-                        data-mapping="pathname"
-                        data-strict="1"
-                        data-reactions-enabled="1"
-                        data-emit-metadata="0"
-                        data-input-position="bottom"
-                        data-theme="https://www.the-optimization-guy.com/giscus-theme.css"
-                        data-lang="fr"
-                        crossorigin="anonymous"
-                        async>
-                </script>
+                <div class="commentsCard">
+                        <h2 class="commentsTitle">Commentaires</h2>
+                        <script
+                                src="https://giscus.app/client.js"
+                                data-repo={repo}
+                                data-repo-id={repoId}
+                                data-category={category}
+                                data-category-id={categoryId}
+                                data-mapping="pathname"
+                                data-strict="1"
+                                data-reactions-enabled="1"
+                                data-emit-metadata="0"
+                                data-input-position="bottom"
+                                data-theme="https://www.the-optimization-guy.com/giscus-theme.css"
+                                data-lang="fr"
+                                crossorigin="anonymous"
+                                async>
+                        </script>
+                </div>
         ) : (
 <p class="warning">Configurez Giscus via une seule série de variables d'environnement PUBLIC_GISCUS_* ou GISCUS_* pour activer les commentaires.</p>
         )}
@@ -37,6 +40,22 @@ const giscusConfigured = repo && repoId && category && categoryId;
                 max-width: calc(100% - 2em);
                 margin: 2em auto 0;
                 padding: 1.5em 1em;
+        }
+        .commentsCard {
+                margin-top: 2rem;
+                padding: 1.25rem;
+                border-radius: 16px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.04);
+        }
+        :global(html:not(.dark)) .commentsCard {
+                border-color: rgba(15, 23, 42, 0.12);
+                background: rgba(15, 23, 42, 0.03);
+        }
+        .commentsTitle {
+                margin: 0 0 1rem 0;
+                font-size: 1.1rem;
+                opacity: 0.9;
         }
         .warning {
                 margin: 0;
