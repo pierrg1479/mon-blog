@@ -32,6 +32,9 @@
 
   /* Shadows */
   --gsc-shadow: 0 1px 0 rgba(15, 23, 42, 0.06);
+
+  /* Buttons */
+  --gsc-btn-text: #0f1219;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -58,6 +61,9 @@
     --gsc-code-background: rgba(255, 255, 255, 0.08);
 
     --gsc-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+
+    /* Buttons */
+    --gsc-btn-text: #f8fafc;
   }
 }
 
@@ -79,7 +85,7 @@
 
   --color-btn-primary-bg: var(--gsc-accent);
   --color-btn-primary-hover-bg: var(--gsc-accent-hover);
-  --color-btn-primary-text: #0f1219;
+  --color-btn-primary-text: var(--gsc-btn-text);
 
   --color-primer-shadow-highlight: var(--gsc-shadow);
   --color-canvas-overlay: var(--gsc-background);
