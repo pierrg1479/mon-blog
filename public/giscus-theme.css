@@ -150,16 +150,12 @@ a:hover {
   color: var(--color-btn-primary-text) !important;
   border: 1px solid var(--gsc-input-border) !important;
   font-weight: 600 !important;
-  opacity: 1 !important;
-  text-shadow: none !important;
-  box-shadow: none !important;
 }
 
 .gsc-comment-box button[type="submit"]:hover,
 .gsc-reply-box button[type="submit"]:hover,
 .gsc-comments button[type="submit"]:hover {
   background: var(--gsc-accent-hover) !important;
-  color: var(--color-btn-primary-text) !important;
 }
 
 .gsc-comment-box button[type="submit"] *,
@@ -167,14 +163,6 @@ a:hover {
 .gsc-comments button[type="submit"] * {
   color: var(--color-btn-primary-text) !important;
   fill: var(--color-btn-primary-text) !important;
-}
-
-.gsc-comment-box button[type="submit"]:disabled,
-.gsc-reply-box button[type="submit"]:disabled,
-.gsc-comments button[type="submit"]:disabled {
-  opacity: 0.9 !important;
-  background: var(--gsc-accent) !important;
-  color: var(--color-btn-primary-text) !important;
 }
 
 .gsc-tl-line {
