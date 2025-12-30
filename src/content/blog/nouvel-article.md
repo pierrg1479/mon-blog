@@ -2,6 +2,7 @@
 title: 'Guide complet de la syntaxe Markdown'
 description: 'Exemple de toutes les possibilités'
 pubDate: 'Dec 17 2024'
+draft: true
 heroImage: '../../assets/blog-placeholder-2.jpg'  # ← Différente image
 author:
   name: Pierre
