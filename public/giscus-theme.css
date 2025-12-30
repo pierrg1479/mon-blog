@@ -1,0 +1,169 @@
+/* public/giscus-theme.css
+   Custom theme for Giscus (light + dark via prefers-color-scheme)
+*/
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --gsc-background: transparent;
+  --gsc-foreground: #0f172a;
+  --gsc-muted: #4b5563;
+
+  /* Borders */
+  --gsc-border: rgba(15, 23, 42, 0.12);
+
+  /* Inputs */
+  --gsc-input-background: rgba(15, 23, 42, 0.04);
+  --gsc-input-foreground: #0f172a;
+  --gsc-input-border: rgba(15, 23, 42, 0.14);
+  --gsc-input-placeholder: rgba(15, 23, 42, 0.45);
+
+  /* Accent */
+  --gsc-accent: #ffd04d;
+  --gsc-accent-hover: #c18b00;
+
+  /* Badges */
+  --gsc-badge-background: rgba(255, 208, 77, 0.18);
+  --gsc-badge-foreground: #997d24;
+
+  /* Code */
+  --gsc-code-background: rgba(15, 23, 42, 0.06);
+
+  /* Shadows */
+  --gsc-shadow: 0 1px 0 rgba(15, 23, 42, 0.06);
+
+  /* Buttons */
+  --gsc-btn-text: #0f1219;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --gsc-background: transparent;
+    --gsc-foreground: #e5e7eb;
+    --gsc-muted: #cbd5e1;
+
+    --gsc-border: rgba(229, 231, 235, 0.16);
+
+    --gsc-input-background: rgba(255, 255, 255, 0.06);
+    --gsc-input-foreground: #e5e7eb;
+    --gsc-input-border: rgba(229, 231, 235, 0.28);
+    --gsc-input-placeholder: rgba(229, 231, 235, 0.7);
+
+    --gsc-accent: #ffd04d;
+    --gsc-accent-hover: #ffdf8d;
+
+    --gsc-badge-background: rgba(255, 208, 77, 0.18);
+    --gsc-badge-foreground: #ffdf8d;
+
+    --gsc-code-background: rgba(255, 255, 255, 0.08);
+
+    --gsc-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+
+    /* Buttons */
+    --gsc-btn-text: #f8fafc;
+  }
+}
+
+/* Map variables -> GitHub/Giscus variables */
+:root {
+  --color-canvas-default: var(--gsc-background);
+  --color-fg-default: var(--gsc-foreground);
+  --color-fg-muted: var(--gsc-muted);
+
+  --color-border-default: var(--gsc-border);
+  --color-border-muted: var(--gsc-border);
+
+  --color-accent-fg: var(--gsc-accent);
+  --color-accent-emphasis: var(--gsc-accent);
+  --color-accent-muted: var(--gsc-badge-background);
+
+  --color-neutral-muted: var(--gsc-input-background);
+  --color-canvas-subtle: var(--gsc-input-background);
+
+  --color-btn-primary-bg: var(--gsc-accent);
+  --color-btn-primary-hover-bg: var(--gsc-accent-hover);
+  --color-btn-primary-text: var(--gsc-btn-text);
+
+  --color-primer-shadow-highlight: var(--gsc-shadow);
+  --color-canvas-overlay: var(--gsc-background);
+
+  --color-input-bg: var(--gsc-input-background);
+  --color-input-contrast-bg: var(--gsc-input-background);
+  --color-fg-on-emphasis: #fff;
+}
+
+/* Harmonisation (dans l’iframe) */
+main,
+.gsc-main,
+.gsc-comment-box,
+.gsc-comments {
+  font-family: 'Atkinson', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.gsc-comment-box,
+.gsc-comments {
+  border-radius: 16px;
+}
+
+/* Inputs */
+textarea,
+input[type="text"] {
+  border-radius: 12px !important;
+  border-color: var(--gsc-input-border) !important;
+  background: var(--gsc-input-background) !important;
+  color: var(--gsc-input-foreground) !important;
+}
+
+textarea::placeholder,
+input[type="text"]::placeholder {
+  color: var(--gsc-input-placeholder) !important;
+}
+
+.gsc-comment-box textarea,
+.gsc-comment-box input[type="text"] {
+  box-shadow: inset 0 0 0 1px var(--gsc-input-border) !important;
+}
+
+/* Links */
+a {
+  color: var(--gsc-accent) !important;
+}
+a:hover {
+  color: var(--gsc-accent-hover) !important;
+}
+
+.gsc-comment-box,
+.gsc-comments,
+.gsc-comment {
+  background: var(--gsc-background) !important;
+  box-shadow: none !important;
+}
+
+.gsc-comment-box button[type="submit"],
+.gsc-reply-box button[type="submit"],
+.gsc-comments button[type="submit"] {
+  background: var(--gsc-accent) !important;
+  color: var(--color-btn-primary-text) !important;
+  border: 1px solid var(--gsc-input-border) !important;
+}
+
+.gsc-comment-box button[type="submit"]:hover,
+.gsc-reply-box button[type="submit"]:hover,
+.gsc-comments button[type="submit"]:hover {
+  background: var(--gsc-accent-hover) !important;
+}
+
+.gsc-tl-line {
+  border-color: var(--gsc-border) !important;
+}
+
+/* Borders / separators */
+hr,
+.gsc-comment,
+.gsc-reply {
+  border-color: var(--gsc-border) !important;
+}
