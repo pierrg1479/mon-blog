@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "the-optimization-guy.vercel.app"
+        }
+      ],
+      "destination": "https://www.the-optimization-guy.com/:path*",
+      "permanent": true
+    }
+  ]
+}
