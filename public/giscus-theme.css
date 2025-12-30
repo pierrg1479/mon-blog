@@ -40,14 +40,14 @@
 
     --gsc-background: transparent;
     --gsc-foreground: #e5e7eb;
-    --gsc-muted: #9ca3af;
+    --gsc-muted: #cbd5e1;
 
     --gsc-border: rgba(229, 231, 235, 0.16);
 
-    --gsc-input-background: #0f172a;
+    --gsc-input-background: rgba(255, 255, 255, 0.06);
     --gsc-input-foreground: #e5e7eb;
-    --gsc-input-border: rgba(229, 231, 235, 0.22);
-    --gsc-input-placeholder: rgba(229, 231, 235, 0.55);
+    --gsc-input-border: rgba(229, 231, 235, 0.28);
+    --gsc-input-placeholder: rgba(229, 231, 235, 0.7);
 
     --gsc-accent: #ffd04d;
     --gsc-accent-hover: #ffdf8d;
@@ -117,6 +117,11 @@ input[type="text"]::placeholder {
   color: var(--gsc-input-placeholder) !important;
 }
 
+.gsc-comment-box textarea,
+.gsc-comment-box input[type="text"] {
+  box-shadow: inset 0 0 0 1px var(--gsc-input-border) !important;
+}
+
 /* Links */
 a {
   color: var(--gsc-accent) !important;
@@ -130,6 +135,20 @@ a:hover {
 .gsc-comment {
   background: var(--gsc-background) !important;
   box-shadow: none !important;
+}
+
+.gsc-comment-box button[type="submit"],
+.gsc-reply-box button[type="submit"],
+.gsc-comments button[type="submit"] {
+  background: var(--gsc-accent) !important;
+  color: var(--color-btn-primary-text) !important;
+  border: 1px solid var(--gsc-input-border) !important;
+}
+
+.gsc-comment-box button[type="submit"]:hover,
+.gsc-reply-box button[type="submit"]:hover,
+.gsc-comments button[type="submit"]:hover {
+  background: var(--gsc-accent-hover) !important;
 }
 
 .gsc-tl-line {
