@@ -42,7 +42,7 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
 </details>
 
 <details>
-  <summary>Têtes thermostatiques Tado V3+</summary>
+  <summary>9 Têtes thermostatiques Tado V3+</summary>
   <p>Elles remplacent aujourd'hui les têtes manuelles sur l'ensemble de mes radiateurs (sauf un seul pour conserver une circulation dans le réseau d'eau). Leur rôle :</p>
   <ul>
     <li>réguler la température pièce par pièce,</li>
@@ -107,7 +107,7 @@ Ce déséquilibre permanent entre confort et consommation a été le point de d�
 | **Total** | **1016€** |
 
 <div class="callout callout--warning">
-  <p class="callout__content">👨‍🔧 Pour pouvoir installer des têtes thermostatiques sur tous les radiateurs, j’ai dû faire intervenir un plombier. Il a remplacé les robinets de 4 radiateurs situés dans le salon, la salle à manger et le bureau. Ces radiateurs étaient auparavant équipés de robinets standards, non compatibles avec les têtes thermostatiques Tado.</p>
+  <p class="callout__content">👨‍🔧 Pour pouvoir installer des têtes thermostatiques sur tous les radiateurs, j’ai dû **faire intervenir un plombier**. Il a remplacé les robinets de 4 radiateurs situés dans le salon, la salle à manger et le bureau. Ces radiateurs étaient auparavant équipés de robinets standards, non compatibles avec les têtes thermostatiques Tado.</p>
 </div>
 
 
