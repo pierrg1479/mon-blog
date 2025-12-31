@@ -23,25 +23,30 @@ const giscusConfigured = repo && repoId && category && categoryId;
                                 data-reactions-enabled="1"
                                 data-emit-metadata="0"
                                 data-input-position="bottom"
-                                data-theme="light"
+                                data-theme="https://the-optimization-guy.com/giscus-custom-theme.css"
                                 data-lang="fr"
                                 crossorigin="anonymous"
                                 async>
                         </script>
                         <script>
-                                function setGiscusTheme(theme) {
+                                function setGiscusTheme() {
                                         const iframe = document.querySelector('iframe.giscus-frame');
                                         if (iframe?.contentWindow) {
                                                 iframe.contentWindow.postMessage(
-                                                        { giscus: { setConfig: { theme } } },
+                                                        {
+                                                                giscus: {
+                                                                        setConfig: {
+                                                                                theme: 'https://the-optimization-guy.com/giscus-custom-theme.css'
+                                                                        }
+                                                                }
+                                                        },
                                                         'https://giscus.app'
                                                 );
                                         }
                                 }
 
                                 const observer = new MutationObserver(() => {
-                                        const isDark = document.documentElement.classList.contains('dark');
-                                        setGiscusTheme(isDark ? 'dark_dimmed' : 'light');
+                                        setGiscusTheme();
                                 });
 
                                 observer.observe(document.documentElement, {
@@ -50,8 +55,7 @@ const giscusConfigured = repo && repoId && category && categoryId;
                                 });
 
                                 setTimeout(() => {
-                                        const isDark = document.documentElement.classList.contains('dark');
-                                        setGiscusTheme(isDark ? 'dark_dimmed' : 'light');
+                                        setGiscusTheme();
                                 }, 1000);
                         </script>
                 </div>

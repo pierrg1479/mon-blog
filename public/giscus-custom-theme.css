@@ -1,0 +1,174 @@
+/* 
+ * Giscus Custom Theme - The Optimization Guy
+ * Couleurs personnalisées avec contraste garanti
+ */
+
+/* ============================================
+   MODE CLAIR
+   ============================================ */
+
+:root {
+  color-scheme: light;
+  
+  /* Couleurs principales */
+  --color-prettylights-syntax-comment: #6b7280;
+  --color-prettylights-syntax-constant: #111827;
+  --color-prettylights-syntax-entity: #ffd04d;
+  --color-prettylights-syntax-storage-modifier-import: #111827;
+  --color-prettylights-syntax-entity-tag: #ffd04d;
+  --color-prettylights-syntax-keyword: #111827;
+  --color-prettylights-syntax-string: #111827;
+  --color-prettylights-syntax-variable: #ffd04d;
+  --color-prettylights-syntax-brackethighlighter-unmatched: #dc2626;
+  --color-prettylights-syntax-invalid-illegal-text: #ffffff;
+  --color-prettylights-syntax-invalid-illegal-bg: #dc2626;
+  --color-prettylights-syntax-carriage-return-text: #ffffff;
+  --color-prettylights-syntax-carriage-return-bg: #dc2626;
+  --color-prettylights-syntax-string-regexp: #ffd04d;
+  --color-prettylights-syntax-markup-list: #111827;
+  --color-prettylights-syntax-markup-heading: #111827;
+  --color-prettylights-syntax-markup-italic: #111827;
+  --color-prettylights-syntax-markup-bold: #111827;
+  --color-prettylights-syntax-markup-deleted-text: #dc2626;
+  --color-prettylights-syntax-markup-deleted-bg: #fee2e2;
+  --color-prettylights-syntax-markup-inserted-text: #059669;
+  --color-prettylights-syntax-markup-inserted-bg: #d1fae5;
+  --color-prettylights-syntax-markup-changed-text: #ffd04d;
+  --color-prettylights-syntax-markup-changed-bg: #fef3c7;
+  --color-prettylights-syntax-markup-ignored-text: #e5e7eb;
+  --color-prettylights-syntax-markup-ignored-bg: #ffd04d;
+  --color-prettylights-syntax-meta-diff-range: #ffd04d;
+  --color-prettylights-syntax-brackethighlighter-angle: #6b7280;
+  --color-prettylights-syntax-sublimelinter-gutter-mark: #9ca3af;
+  --color-prettylights-syntax-constant-other-reference-link: #111827;
+  
+  /* Fond et texte */
+  --color-fg-default: #111827;
+  --color-fg-muted: #6b7280;
+  --color-fg-subtle: #9ca3af;
+  --color-canvas-default: #ffffff;
+  --color-canvas-subtle: #f9fafb;
+  --color-border-default: #e5e7eb;
+  --color-border-muted: #f3f4f6;
+  --color-neutral-muted: rgba(175, 184, 193, 0.2);
+  --color-accent-fg: #ffd04d;
+  --color-accent-emphasis: #ffd04d;
+  --color-success-fg: #059669;
+  --color-success-emphasis: #059669;
+  --color-attention-fg: #f59e0b;
+  --color-attention-emphasis: #f59e0b;
+  --color-attention-subtle: #fef3c7;
+  --color-danger-fg: #dc2626;
+  --color-danger-emphasis: #dc2626;
+  
+  /* Boutons */
+  --color-btn-text: #111827;
+  --color-btn-bg: #f9fafb;
+  --color-btn-border: #e5e7eb;
+  --color-btn-shadow: 0 1px 0 rgba(31, 35, 40, 0.04);
+  --color-btn-inset-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  --color-btn-hover-bg: #f3f4f6;
+  --color-btn-hover-border: #d1d5db;
+  --color-btn-active-bg: #e5e7eb;
+  --color-btn-active-border: #d1d5db;
+  --color-btn-selected-bg: #e5e7eb;
+  
+  /* Bouton primaire - JAUNE */
+  --color-btn-primary-text: #000000;
+  --color-btn-primary-bg: #ffd04d;
+  --color-btn-primary-border: #ffd04d;
+  --color-btn-primary-shadow: 0 1px 0 rgba(31, 35, 40, 0.1);
+  --color-btn-primary-inset-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  --color-btn-primary-hover-bg: #e6bb45;
+  --color-btn-primary-hover-border: #e6bb45;
+  --color-btn-primary-selected-bg: #d4a93d;
+  --color-btn-primary-selected-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.02);
+  --color-btn-primary-disabled-text: rgba(0, 0, 0, 0.5);
+  --color-btn-primary-disabled-bg: rgba(255, 208, 77, 0.6);
+  --color-btn-primary-disabled-border: rgba(255, 208, 77, 0.4);
+}
+
+/* ============================================
+   MODE SOMBRE
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    
+    /* Fond et texte */
+    --color-fg-default: #f9fafb;
+    --color-fg-muted: #d1d5db;
+    --color-fg-subtle: #9ca3af;
+    --color-canvas-default: #1f2937;
+    --color-canvas-subtle: #111827;
+    --color-border-default: #374151;
+    --color-border-muted: #2d3748;
+    --color-neutral-muted: rgba(110, 118, 129, 0.4);
+    --color-accent-fg: #ffd04d;
+    --color-accent-emphasis: #ffd04d;
+    
+    /* Boutons mode sombre */
+    --color-btn-text: #f9fafb;
+    --color-btn-bg: #1f2937;
+    --color-btn-border: #374151;
+    --color-btn-hover-bg: #374151;
+    --color-btn-hover-border: #4b5563;
+    --color-btn-active-bg: #4b5563;
+    
+    /* Bouton primaire - JAUNE (identique) */
+    --color-btn-primary-text: #000000;
+    --color-btn-primary-bg: #ffd04d;
+    --color-btn-primary-border: #ffd04d;
+    --color-btn-primary-hover-bg: #e6bb45;
+    --color-btn-primary-hover-border: #e6bb45;
+  }
+}
+
+/* ============================================
+   STYLES PERSONNALISÉS
+   ============================================ */
+
+/* Container */
+main {
+  font-family: 'Atkinson', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Liens */
+a {
+  color: var(--color-accent-fg);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Bouton primaire - forcer le texte noir */
+.btn-primary,
+button[type="submit"],
+.color-bg-accent-emphasis {
+  background: var(--color-btn-primary-bg) !important;
+  color: var(--color-btn-primary-text) !important;
+  border-color: var(--color-btn-primary-border) !important;
+}
+
+.btn-primary *,
+button[type="submit"] *,
+.color-bg-accent-emphasis * {
+  color: var(--color-btn-primary-text) !important;
+}
+
+/* Réactions */
+.social-reaction-summary-item {
+  border-radius: 6px;
+}
+
+.social-reaction-summary-item:hover {
+  background: rgba(255, 208, 77, 0.1);
+}
+
+.social-reaction-summary-item-has-reacted {
+  border-color: var(--color-accent-emphasis);
+  background: rgba(255, 208, 77, 0.1);
+}
