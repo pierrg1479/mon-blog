@@ -1,169 +1,216 @@
 /* 
  * Giscus Theme - The Optimization Guy
- * Version unifiée avec corrections de contraste
+ * Version ultra-forcée pour corriger les contrastes
  */
 
 /* ============================================
-   VARIABLES GLOBALES
+   MODE CLAIR - Variables de base
    ============================================ */
 
 :root {
-  /* Accents */
-  --giscus-accent: #ffd04d;
-  --giscus-accent-hover: #e6bb45;
-  
-  /* Mode clair */
-  --giscus-bg: transparent;
-  --giscus-text: #111827;
-  --giscus-text-muted: #6b7280;
-  --giscus-border: rgba(31, 41, 55, 0.15);
-  --giscus-input-bg: #ffffff;
-  --giscus-input-placeholder: #9ca3af;
-  
-  /* Boutons */
-  --giscus-btn-text: #111827;
-  --giscus-btn-primary-text: #000000;
+  color-scheme: light dark;
 }
 
+.giscus,
+.giscus-frame {
+  /* Accents */
+  --color-accent-fg: #ffd04d !important;
+  --color-accent-emphasis: #ffd04d !important;
+  
+  /* Texte - MODE CLAIR */
+  --color-fg-default: #111827 !important;
+  --color-fg-muted: #4b5563 !important;
+  --color-fg-subtle: #6b7280 !important;
+  
+  /* Arrière-plans */
+  --color-canvas-default: #ffffff !important;
+  --color-canvas-subtle: #f9fafb !important;
+  
+  /* Bordures */
+  --color-border-default: #e5e7eb !important;
+  --color-border-muted: #f3f4f6 !important;
+  
+  /* Inputs */
+  --color-input-bg: #ffffff !important;
+  --color-input-border: #d1d5db !important;
+  
+  /* Bouton primaire */
+  --color-btn-primary-bg: #ffd04d !important;
+  --color-btn-primary-text: #000000 !important;
+  --color-btn-primary-border: #ffd04d !important;
+  --color-btn-primary-hover-bg: #e6bb45 !important;
+}
+
+/* ============================================
+   MODE SOMBRE - Media query
+   ============================================ */
+
 @media (prefers-color-scheme: dark) {
-  :root {
-    --giscus-bg: transparent;
-    --giscus-text: #f9fafb;
-    --giscus-text-muted: #d1d5db;
-    --giscus-border: rgba(255, 208, 77, 0.2);
-    --giscus-input-bg: #1f2937;
-    --giscus-input-placeholder: #9ca3af;
+  .giscus,
+  .giscus-frame {
+    /* Texte - MODE SOMBRE */
+    --color-fg-default: #f9fafb !important;
+    --color-fg-muted: #d1d5db !important;
+    --color-fg-subtle: #9ca3af !important;
     
-    --giscus-btn-text: #f9fafb;
-    --giscus-btn-primary-text: #000000;
+    /* Arrière-plans */
+    --color-canvas-default: #1f2937 !important;
+    --color-canvas-subtle: #111827 !important;
+    
+    /* Bordures */
+    --color-border-default: #374151 !important;
+    --color-border-muted: #2d3748 !important;
+    
+    /* Inputs */
+    --color-input-bg: #1f2937 !important;
+    --color-input-border: #4b5563 !important;
   }
 }
 
 /* ============================================
-   VARIABLES GISCUS
+   ONGLETS - Écrire / Aperçu
    ============================================ */
 
-.giscus,
-.giscus-frame {
-  --color-accent-fg: var(--giscus-accent);
-  --color-accent-emphasis: var(--giscus-accent);
-  
-  --color-canvas-default: var(--giscus-bg);
-  --color-canvas-subtle: var(--giscus-input-bg);
-  
-  --color-border-default: var(--giscus-border);
-  --color-border-muted: var(--giscus-border);
-  
-  --color-fg-default: var(--giscus-text);
-  --color-fg-muted: var(--giscus-text-muted);
-  --color-fg-subtle: var(--giscus-text-muted);
-  
-  /* Bouton primaire - TEXTE NOIR SUR FOND JAUNE */
-  --color-btn-primary-bg: var(--giscus-accent);
-  --color-btn-primary-text: var(--giscus-btn-primary-text);
-  --color-btn-primary-border: var(--giscus-accent);
-  --color-btn-primary-hover-bg: var(--giscus-accent-hover);
-  --color-btn-primary-hover-border: var(--giscus-accent-hover);
-  
-  /* Boutons secondaires */
-  --color-btn-bg: transparent;
-  --color-btn-text: var(--giscus-btn-text);
-  --color-btn-border: var(--giscus-border);
-  --color-btn-hover-bg: rgba(255, 208, 77, 0.1);
-  --color-btn-hover-border: var(--giscus-accent);
-}
-
-/* ============================================
-   ONGLETS (Écrire / Aperçu)
-   ============================================ */
-
+/* Onglet inactif */
+.giscus .tabnav-tab,
+.giscus [role="tab"],
 .giscus .gsc-comment-box-tab {
-  border-color: var(--giscus-border) !important;
-  color: var(--giscus-text-muted) !important;
-  font-weight: 500;
-  transition: all 0.2s;
+  color: #6b7280 !important;
+  background: transparent !important;
+  border-color: #e5e7eb !important;
+  font-weight: 500 !important;
 }
 
+/* Onglet actif - MODE CLAIR */
+.giscus .tabnav-tab.selected,
+.giscus [role="tab"][aria-selected="true"],
 .giscus .gsc-comment-box-tab-active {
-  color: var(--giscus-text) !important;
-  border-bottom-color: var(--giscus-accent) !important;
-  border-bottom-width: 2px !important;
-  background: rgba(255, 208, 77, 0.05) !important;
+  color: #111827 !important;
+  background: #ffffff !important;
+  border-bottom-color: #ffd04d !important;
+  font-weight: 600 !important;
+}
+
+/* Onglet actif - MODE SOMBRE */
+@media (prefers-color-scheme: dark) {
+  .giscus .tabnav-tab,
+  .giscus [role="tab"],
+  .giscus .gsc-comment-box-tab {
+    color: #9ca3af !important;
+    border-color: #374151 !important;
+  }
+  
+  .giscus .tabnav-tab.selected,
+  .giscus [role="tab"][aria-selected="true"],
+  .giscus .gsc-comment-box-tab-active {
+    color: #f9fafb !important;
+    background: #1f2937 !important;
+    border-bottom-color: #ffd04d !important;
+  }
 }
 
 /* ============================================
-   ZONE DE TEXTE
+   ZONE DE TEXTE et PLACEHOLDER
    ============================================ */
 
+/* Textarea - MODE CLAIR */
 .giscus textarea,
-.giscus input[type="text"] {
-  background: var(--giscus-input-bg) !important;
-  color: var(--giscus-text) !important;
-  border-color: var(--giscus-border) !important;
-  border-radius: 8px !important;
-  font-size: 15px !important;
+.giscus input[type="text"],
+.giscus .form-control {
+  background: #ffffff !important;
+  color: #111827 !important;
+  border-color: #d1d5db !important;
 }
 
-/* PLACEHOLDER - VISIBLE EN CLAIR ET SOMBRE */
+/* Placeholder - MODE CLAIR */
 .giscus textarea::placeholder,
-.giscus input[type="text"]::placeholder {
-  color: var(--giscus-input-placeholder) !important;
+.giscus input::placeholder,
+.giscus .form-control::placeholder {
+  color: #6b7280 !important;
   opacity: 1 !important;
+}
+
+/* Textarea - MODE SOMBRE */
+@media (prefers-color-scheme: dark) {
+  .giscus textarea,
+  .giscus input[type="text"],
+  .giscus .form-control {
+    background: #1f2937 !important;
+    color: #f9fafb !important;
+    border-color: #4b5563 !important;
+  }
+  
+  /* Placeholder - MODE SOMBRE */
+  .giscus textarea::placeholder,
+  .giscus input::placeholder,
+  .giscus .form-control::placeholder {
+    color: #9ca3af !important;
+    opacity: 1 !important;
+  }
 }
 
 /* ============================================
    BOUTONS
    ============================================ */
 
-/* Bouton principal (Commenter / Submit) - TEXTE NOIR */
-.giscus .gsc-comment-box-button-primary,
+/* Bouton primaire (Commenter / S'identifier avec GitHub) */
 .giscus button[type="submit"],
-.giscus .gsc-comment-box-sign-in-button {
-  background: var(--giscus-accent) !important;
+.giscus .btn-primary,
+.giscus .color-bg-accent-emphasis,
+.giscus [data-color-mode] button[type="submit"] {
+  background: #ffd04d !important;
   color: #000000 !important;
-  border-color: var(--giscus-accent) !important;
+  border-color: #ffd04d !important;
   font-weight: 600 !important;
-  border-radius: 8px !important;
 }
 
-.giscus .gsc-comment-box-button-primary:hover,
 .giscus button[type="submit"]:hover,
-.giscus .gsc-comment-box-sign-in-button:hover {
-  background: var(--giscus-accent-hover) !important;
-  border-color: var(--giscus-accent-hover) !important;
+.giscus .btn-primary:hover {
+  background: #e6bb45 !important;
+  border-color: #e6bb45 !important;
 }
 
-/* Forcer le texte noir sur tous les enfants du bouton */
+/* FORCER le texte noir sur TOUS les enfants */
+.giscus button[type="submit"],
 .giscus button[type="submit"] *,
-.giscus .gsc-comment-box-button-primary *,
-.giscus .gsc-comment-box-sign-in-button * {
+.giscus .btn-primary,
+.giscus .btn-primary *,
+.giscus .color-bg-accent-emphasis,
+.giscus .color-bg-accent-emphasis * {
   color: #000000 !important;
   fill: #000000 !important;
 }
 
 /* Boutons secondaires */
-.giscus button:not([type="submit"]):not(.gsc-comment-box-button-primary):not(.gsc-comment-box-sign-in-button) {
+.giscus button:not([type="submit"]):not(.btn-primary) {
   background: transparent !important;
-  color: var(--giscus-btn-text) !important;
-  border-color: var(--giscus-border) !important;
+  color: #111827 !important;
+  border-color: #d1d5db !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .giscus button:not([type="submit"]):not(.btn-primary) {
+    color: #f9fafb !important;
+    border-color: #4b5563 !important;
+  }
 }
 
 /* ============================================
-   COMMENTAIRES
+   TEXTE D'AIDE "S'identifier pour commenter"
    ============================================ */
 
-.giscus .gsc-comment-box,
-.giscus .gsc-comment-box-main {
-  border-color: var(--giscus-border) !important;
-  background: var(--giscus-input-bg) !important;
-  border-radius: 12px !important;
+/* MODE CLAIR */
+.giscus .color-fg-muted,
+.giscus .text-small {
+  color: #4b5563 !important;
 }
 
-.giscus .gsc-comment {
-  background: var(--giscus-input-bg) !important;
-  border: 1px solid var(--giscus-border) !important;
-  border-radius: 8px !important;
-  padding: 1rem !important;
+/* MODE SOMBRE */
+@media (prefers-color-scheme: dark) {
+  .giscus .color-fg-muted,
+  .giscus .text-small {
+    color: #d1d5db !important;
+  }
 }
 
 /* ============================================
@@ -171,42 +218,23 @@
    ============================================ */
 
 .giscus a {
-  color: var(--giscus-accent) !important;
-  text-decoration: none;
+  color: #ffd04d !important;
 }
 
 .giscus a:hover {
-  color: var(--giscus-accent-hover) !important;
-  text-decoration: underline;
+  color: #e6bb45 !important;
 }
 
 /* ============================================
    RÉACTIONS
    ============================================ */
 
-.giscus .gsc-reactions-button {
-  border-radius: 6px !important;
-  border-color: var(--giscus-border) !important;
-  transition: all 0.2s;
-}
-
 .giscus .gsc-reactions-button:hover {
-  border-color: var(--giscus-accent) !important;
+  border-color: #ffd04d !important;
   background: rgba(255, 208, 77, 0.1) !important;
 }
 
 .giscus .gsc-reaction-count {
-  color: var(--giscus-accent) !important;
-  font-weight: 600;
-}
-
-/* ============================================
-   FOCUS
-   ============================================ */
-
-.giscus textarea:focus,
-.giscus input:focus,
-.giscus button:focus-visible {
-  outline: 2px solid var(--giscus-accent) !important;
-  outline-offset: 2px;
+  color: #ffd04d !important;
+  font-weight: 600 !important;
 }
