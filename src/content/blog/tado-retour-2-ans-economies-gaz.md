@@ -8,7 +8,7 @@ author:
   avatar: '/hannibal-cercle.png'
 ---
 
-De mon côté, je voulais juste répondre à une question concrète : **est-ce que ça baisse vraiment ma consommation de gaz, chiffres à l'appui ?**
+On entend tout et son contraire sur les thermostats connectés. Moi, je voulais un truc clair : est-ce que ça baisse vraiment la conso de gaz, chiffres à l’appui ?
 
 Je suis équipé de Tado depuis 2023 (thermostat + têtes thermostatiques sur chaudière gaz), donc j'ai assez de recul pour éviter les impressions du type "on a eu moins froid" ou "on a fait attention". Avec le chauffage, entre la météo, le prix du kWh et nos habitudes, on peut vite conclure n'importe quoi.
 
