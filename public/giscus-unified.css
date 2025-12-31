@@ -1,0 +1,212 @@
+/* 
+ * Giscus Theme - The Optimization Guy
+ * Version unifiée avec corrections de contraste
+ */
+
+/* ============================================
+   VARIABLES GLOBALES
+   ============================================ */
+
+:root {
+  /* Accents */
+  --giscus-accent: #ffd04d;
+  --giscus-accent-hover: #e6bb45;
+  
+  /* Mode clair */
+  --giscus-bg: transparent;
+  --giscus-text: #111827;
+  --giscus-text-muted: #6b7280;
+  --giscus-border: rgba(31, 41, 55, 0.15);
+  --giscus-input-bg: #ffffff;
+  --giscus-input-placeholder: #9ca3af;
+  
+  /* Boutons */
+  --giscus-btn-text: #111827;
+  --giscus-btn-primary-text: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --giscus-bg: transparent;
+    --giscus-text: #f9fafb;
+    --giscus-text-muted: #d1d5db;
+    --giscus-border: rgba(255, 208, 77, 0.2);
+    --giscus-input-bg: #1f2937;
+    --giscus-input-placeholder: #9ca3af;
+    
+    --giscus-btn-text: #f9fafb;
+    --giscus-btn-primary-text: #000000;
+  }
+}
+
+/* ============================================
+   VARIABLES GISCUS
+   ============================================ */
+
+.giscus,
+.giscus-frame {
+  --color-accent-fg: var(--giscus-accent);
+  --color-accent-emphasis: var(--giscus-accent);
+  
+  --color-canvas-default: var(--giscus-bg);
+  --color-canvas-subtle: var(--giscus-input-bg);
+  
+  --color-border-default: var(--giscus-border);
+  --color-border-muted: var(--giscus-border);
+  
+  --color-fg-default: var(--giscus-text);
+  --color-fg-muted: var(--giscus-text-muted);
+  --color-fg-subtle: var(--giscus-text-muted);
+  
+  /* Bouton primaire - TEXTE NOIR SUR FOND JAUNE */
+  --color-btn-primary-bg: var(--giscus-accent);
+  --color-btn-primary-text: var(--giscus-btn-primary-text);
+  --color-btn-primary-border: var(--giscus-accent);
+  --color-btn-primary-hover-bg: var(--giscus-accent-hover);
+  --color-btn-primary-hover-border: var(--giscus-accent-hover);
+  
+  /* Boutons secondaires */
+  --color-btn-bg: transparent;
+  --color-btn-text: var(--giscus-btn-text);
+  --color-btn-border: var(--giscus-border);
+  --color-btn-hover-bg: rgba(255, 208, 77, 0.1);
+  --color-btn-hover-border: var(--giscus-accent);
+}
+
+/* ============================================
+   ONGLETS (Écrire / Aperçu)
+   ============================================ */
+
+.giscus .gsc-comment-box-tab {
+  border-color: var(--giscus-border) !important;
+  color: var(--giscus-text-muted) !important;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.giscus .gsc-comment-box-tab-active {
+  color: var(--giscus-text) !important;
+  border-bottom-color: var(--giscus-accent) !important;
+  border-bottom-width: 2px !important;
+  background: rgba(255, 208, 77, 0.05) !important;
+}
+
+/* ============================================
+   ZONE DE TEXTE
+   ============================================ */
+
+.giscus textarea,
+.giscus input[type="text"] {
+  background: var(--giscus-input-bg) !important;
+  color: var(--giscus-text) !important;
+  border-color: var(--giscus-border) !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+}
+
+/* PLACEHOLDER - VISIBLE EN CLAIR ET SOMBRE */
+.giscus textarea::placeholder,
+.giscus input[type="text"]::placeholder {
+  color: var(--giscus-input-placeholder) !important;
+  opacity: 1 !important;
+}
+
+/* ============================================
+   BOUTONS
+   ============================================ */
+
+/* Bouton principal (Commenter / Submit) - TEXTE NOIR */
+.giscus .gsc-comment-box-button-primary,
+.giscus button[type="submit"],
+.giscus .gsc-comment-box-sign-in-button {
+  background: var(--giscus-accent) !important;
+  color: #000000 !important;
+  border-color: var(--giscus-accent) !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+}
+
+.giscus .gsc-comment-box-button-primary:hover,
+.giscus button[type="submit"]:hover,
+.giscus .gsc-comment-box-sign-in-button:hover {
+  background: var(--giscus-accent-hover) !important;
+  border-color: var(--giscus-accent-hover) !important;
+}
+
+/* Forcer le texte noir sur tous les enfants du bouton */
+.giscus button[type="submit"] *,
+.giscus .gsc-comment-box-button-primary *,
+.giscus .gsc-comment-box-sign-in-button * {
+  color: #000000 !important;
+  fill: #000000 !important;
+}
+
+/* Boutons secondaires */
+.giscus button:not([type="submit"]):not(.gsc-comment-box-button-primary):not(.gsc-comment-box-sign-in-button) {
+  background: transparent !important;
+  color: var(--giscus-btn-text) !important;
+  border-color: var(--giscus-border) !important;
+}
+
+/* ============================================
+   COMMENTAIRES
+   ============================================ */
+
+.giscus .gsc-comment-box,
+.giscus .gsc-comment-box-main {
+  border-color: var(--giscus-border) !important;
+  background: var(--giscus-input-bg) !important;
+  border-radius: 12px !important;
+}
+
+.giscus .gsc-comment {
+  background: var(--giscus-input-bg) !important;
+  border: 1px solid var(--giscus-border) !important;
+  border-radius: 8px !important;
+  padding: 1rem !important;
+}
+
+/* ============================================
+   LIENS
+   ============================================ */
+
+.giscus a {
+  color: var(--giscus-accent) !important;
+  text-decoration: none;
+}
+
+.giscus a:hover {
+  color: var(--giscus-accent-hover) !important;
+  text-decoration: underline;
+}
+
+/* ============================================
+   RÉACTIONS
+   ============================================ */
+
+.giscus .gsc-reactions-button {
+  border-radius: 6px !important;
+  border-color: var(--giscus-border) !important;
+  transition: all 0.2s;
+}
+
+.giscus .gsc-reactions-button:hover {
+  border-color: var(--giscus-accent) !important;
+  background: rgba(255, 208, 77, 0.1) !important;
+}
+
+.giscus .gsc-reaction-count {
+  color: var(--giscus-accent) !important;
+  font-weight: 600;
+}
+
+/* ============================================
+   FOCUS
+   ============================================ */
+
+.giscus textarea:focus,
+.giscus input:focus,
+.giscus button:focus-visible {
+  outline: 2px solid var(--giscus-accent) !important;
+  outline-offset: 2px;
+}
