@@ -1,0 +1,240 @@
+/* 
+ * Giscus Theme - The Optimization Guy
+ * Version ultra-forcée pour corriger les contrastes
+ */
+
+/* ============================================
+   MODE CLAIR - Variables de base
+   ============================================ */
+
+:root {
+  color-scheme: light dark;
+}
+
+.giscus,
+.giscus-frame {
+  /* Accents */
+  --color-accent-fg: #ffd04d !important;
+  --color-accent-emphasis: #ffd04d !important;
+  
+  /* Texte - MODE CLAIR */
+  --color-fg-default: #111827 !important;
+  --color-fg-muted: #4b5563 !important;
+  --color-fg-subtle: #6b7280 !important;
+  
+  /* Arrière-plans */
+  --color-canvas-default: #ffffff !important;
+  --color-canvas-subtle: #f9fafb !important;
+  
+  /* Bordures */
+  --color-border-default: #e5e7eb !important;
+  --color-border-muted: #f3f4f6 !important;
+  
+  /* Inputs */
+  --color-input-bg: #ffffff !important;
+  --color-input-border: #d1d5db !important;
+  
+  /* Bouton primaire */
+  --color-btn-primary-bg: #ffd04d !important;
+  --color-btn-primary-text: #000000 !important;
+  --color-btn-primary-border: #ffd04d !important;
+  --color-btn-primary-hover-bg: #e6bb45 !important;
+}
+
+/* ============================================
+   MODE SOMBRE - Media query
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  .giscus,
+  .giscus-frame {
+    /* Texte - MODE SOMBRE */
+    --color-fg-default: #f9fafb !important;
+    --color-fg-muted: #d1d5db !important;
+    --color-fg-subtle: #9ca3af !important;
+    
+    /* Arrière-plans */
+    --color-canvas-default: #1f2937 !important;
+    --color-canvas-subtle: #111827 !important;
+    
+    /* Bordures */
+    --color-border-default: #374151 !important;
+    --color-border-muted: #2d3748 !important;
+    
+    /* Inputs */
+    --color-input-bg: #1f2937 !important;
+    --color-input-border: #4b5563 !important;
+  }
+}
+
+/* ============================================
+   ONGLETS - Écrire / Aperçu
+   ============================================ */
+
+/* Onglet inactif */
+.giscus .tabnav-tab,
+.giscus [role="tab"],
+.giscus .gsc-comment-box-tab {
+  color: #6b7280 !important;
+  background: transparent !important;
+  border-color: #e5e7eb !important;
+  font-weight: 500 !important;
+}
+
+/* Onglet actif - MODE CLAIR */
+.giscus .tabnav-tab.selected,
+.giscus [role="tab"][aria-selected="true"],
+.giscus .gsc-comment-box-tab-active {
+  color: #111827 !important;
+  background: #ffffff !important;
+  border-bottom-color: #ffd04d !important;
+  font-weight: 600 !important;
+}
+
+/* Onglet actif - MODE SOMBRE */
+@media (prefers-color-scheme: dark) {
+  .giscus .tabnav-tab,
+  .giscus [role="tab"],
+  .giscus .gsc-comment-box-tab {
+    color: #9ca3af !important;
+    border-color: #374151 !important;
+  }
+  
+  .giscus .tabnav-tab.selected,
+  .giscus [role="tab"][aria-selected="true"],
+  .giscus .gsc-comment-box-tab-active {
+    color: #f9fafb !important;
+    background: #1f2937 !important;
+    border-bottom-color: #ffd04d !important;
+  }
+}
+
+/* ============================================
+   ZONE DE TEXTE et PLACEHOLDER
+   ============================================ */
+
+/* Textarea - MODE CLAIR */
+.giscus textarea,
+.giscus input[type="text"],
+.giscus .form-control {
+  background: #ffffff !important;
+  color: #111827 !important;
+  border-color: #d1d5db !important;
+}
+
+/* Placeholder - MODE CLAIR */
+.giscus textarea::placeholder,
+.giscus input::placeholder,
+.giscus .form-control::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+/* Textarea - MODE SOMBRE */
+@media (prefers-color-scheme: dark) {
+  .giscus textarea,
+  .giscus input[type="text"],
+  .giscus .form-control {
+    background: #1f2937 !important;
+    color: #f9fafb !important;
+    border-color: #4b5563 !important;
+  }
+  
+  /* Placeholder - MODE SOMBRE */
+  .giscus textarea::placeholder,
+  .giscus input::placeholder,
+  .giscus .form-control::placeholder {
+    color: #9ca3af !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ============================================
+   BOUTONS
+   ============================================ */
+
+/* Bouton primaire (Commenter / S'identifier avec GitHub) */
+.giscus button[type="submit"],
+.giscus .btn-primary,
+.giscus .color-bg-accent-emphasis,
+.giscus [data-color-mode] button[type="submit"] {
+  background: #ffd04d !important;
+  color: #000000 !important;
+  border-color: #ffd04d !important;
+  font-weight: 600 !important;
+}
+
+.giscus button[type="submit"]:hover,
+.giscus .btn-primary:hover {
+  background: #e6bb45 !important;
+  border-color: #e6bb45 !important;
+}
+
+/* FORCER le texte noir sur TOUS les enfants */
+.giscus button[type="submit"],
+.giscus button[type="submit"] *,
+.giscus .btn-primary,
+.giscus .btn-primary *,
+.giscus .color-bg-accent-emphasis,
+.giscus .color-bg-accent-emphasis * {
+  color: #000000 !important;
+  fill: #000000 !important;
+}
+
+/* Boutons secondaires */
+.giscus button:not([type="submit"]):not(.btn-primary) {
+  background: transparent !important;
+  color: #111827 !important;
+  border-color: #d1d5db !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .giscus button:not([type="submit"]):not(.btn-primary) {
+    color: #f9fafb !important;
+    border-color: #4b5563 !important;
+  }
+}
+
+/* ============================================
+   TEXTE D'AIDE "S'identifier pour commenter"
+   ============================================ */
+
+/* MODE CLAIR */
+.giscus .color-fg-muted,
+.giscus .text-small {
+  color: #4b5563 !important;
+}
+
+/* MODE SOMBRE */
+@media (prefers-color-scheme: dark) {
+  .giscus .color-fg-muted,
+  .giscus .text-small {
+    color: #d1d5db !important;
+  }
+}
+
+/* ============================================
+   LIENS
+   ============================================ */
+
+.giscus a {
+  color: #ffd04d !important;
+}
+
+.giscus a:hover {
+  color: #e6bb45 !important;
+}
+
+/* ============================================
+   RÉACTIONS
+   ============================================ */
+
+.giscus .gsc-reactions-button:hover {
+  border-color: #ffd04d !important;
+  background: rgba(255, 208, 77, 0.1) !important;
+}
+
+.giscus .gsc-reaction-count {
+  color: #ffd04d !important;
+  font-weight: 600 !important;
+}
