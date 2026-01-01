@@ -8,21 +8,6 @@ author:
   avatar: '/hannibal-cercle.png'
 ---
 
-import Gallery from '../../components/Gallery.astro';
-
-export const tadoGalleryImages = [
-  {
-    src: '/images/tado-mode-absent.svg',
-    alt: 'Température en mode absent dans l’application Tado avec réglage à 17°C',
-    caption: 'Mode absent et préchauffage Tado'
-  },
-  {
-    src: '/images/tado-programmation.svg',
-    alt: 'Planning hebdomadaire Tado avec plages de chauffage à 18°C et 19°C',
-    caption: 'Programmation hebdomadaire Tado'
-  }
-];
-
 On entend tout et son contraire sur les thermostats connectés. Moi, je voulais un truc clair : est-ce que ça baisse vraiment la conso de gaz, chiffres à l’appui ?
 
 Je suis équipé de Tado depuis 2023 (thermostat + têtes thermostatiques sur chaudière gaz), donc j'ai assez de recul pour éviter les impressions du type "on a eu moins froid" ou "on a fait attention". Avec le chauffage, entre la météo, le prix du kWh et nos habitudes, on peut vite conclure n'importe quoi.
@@ -148,7 +133,10 @@ Ce déséquilibre permanent entre confort et consommation a été le point de d�
 > Mes économies sont donc calculées avec ces températures-là : si vous chauffez plus ou moins, vos résultats pourront être différents.
 >
 
-<Gallery type="justified" images={tadoGalleryImages} />
+<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+  <img src="/images/tado-programmation.jpg" alt="Planning hebdomadaire Tado avec plages de chauffage à 18°C et 19°C" style="flex: 1 1 320px; width: 100%; max-width: 100%;">
+  <img src="/images/tado-mode-absent.jpg" alt="Température en mode absent dans l'application Tado avec réglage à 17°C" style="flex: 1 1 320px; width: 100%; max-width: 100%;">
+</div>
 
 
 L'installation Tado me permet de réduire d'environ **26 %** ma consommation de gaz. La vraie question devient : **est-ce que les dépenses engagées sont réellement rentabilisées, et en combien de temps ?**
