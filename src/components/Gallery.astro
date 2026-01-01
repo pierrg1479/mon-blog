@@ -9,10 +9,10 @@ interface Props {
 }
 
 const { images, type = 'justified' } = Astro.props;
-const galleryId = `gallery-${Math.random().toString(36).substr(2, 9)}`;
+const galleryId = `gallery-${Math.random().toString(36).substring(2, 11)}`;
 ---
 
-<div class={`gallery gallery-${type}`} id={galleryId}>
+<div class={`gallery gallery-${type}`} id={galleryId} data-lightgallery="true">
   {images.map((image) => (
     <a href={image.src} data-lg-size="1600-1200" class="gallery-item">
       <img src={image.src} alt={image.alt} loading="lazy" />
@@ -128,18 +128,56 @@ const galleryId = `gallery-${Math.random().toString(36).substr(2, 9)}`;
   }
 </style>
 
-<script>
-  import lightGallery from 'lightgallery';
-  import lgThumbnail from 'lightgallery/plugins/thumbnail';
-  import lgZoom from 'lightgallery/plugins/zoom';
+<script is:inline lang="ts">
+  const loadScript = (src: string) =>
+    new Promise<void>((resolve, reject) => {
+      const existing = document.querySelector<HTMLScriptElement>(`script[data-src="${src}"]`);
+      if (existing) {
+        if (existing.dataset.loaded === 'true') return resolve();
+        existing.addEventListener('load', () => resolve(), { once: true });
+        existing.addEventListener(
+          'error',
+          () => reject(new Error(`Échec du chargement du script ${src}`)),
+          { once: true }
+        );
+        return;
+      }
 
-  // Initialiser toutes les galeries sur la page
-  document.addEventListener('DOMContentLoaded', () => {
-    const galleries = document.querySelectorAll('[id^="gallery-"]');
-    
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.dataset.src = src;
+      script.onload = () => {
+        script.dataset.loaded = 'true';
+        resolve();
+      };
+      script.onerror = () => reject(new Error(`Échec du chargement du script ${src}`));
+      document.head.appendChild(script);
+    });
+
+  const initGallery = async () => {
+    if (typeof window === 'undefined') return;
+
+    const galleries = document.querySelectorAll<HTMLElement>('[data-lightgallery="true"]');
+    if (!galleries.length) return;
+
+    await loadScript('https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/lightgallery.min.js');
+    await Promise.all([
+      loadScript('https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/thumbnail/lg-thumbnail.min.js'),
+      loadScript('https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/plugins/zoom/lg-zoom.min.js')
+    ]);
+
+    const globalLG = window as typeof window & {
+      lightGallery?: (root: HTMLElement, options: Record<string, unknown>) => void;
+      lgThumbnail?: unknown;
+      lgZoom?: unknown;
+    };
+
+    if (!globalLG.lightGallery || !globalLG.lgThumbnail || !globalLG.lgZoom) return;
+
     galleries.forEach((gallery) => {
-      lightGallery(gallery as HTMLElement, {
-        plugins: [lgThumbnail, lgZoom],
+      globalLG.lightGallery(gallery, {
+        plugins: [globalLG.lgThumbnail, globalLG.lgZoom],
         speed: 500,
         thumbnail: true,
         animateThumb: true,
@@ -149,8 +187,14 @@ const galleryId = `gallery-${Math.random().toString(36).substr(2, 9)}`;
           controls: true,
           showCloseIcon: true,
           download: false,
-        }
+        },
       });
     });
-  });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGallery, { once: true });
+  } else {
+    initGallery();
+  }
 </script>
