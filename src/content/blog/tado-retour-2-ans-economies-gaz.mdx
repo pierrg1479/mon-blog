@@ -8,6 +8,8 @@ author:
   avatar: '/hannibal-cercle.png'
 ---
 
+import TallyEmbed from '../../components/TallyEmbed.astro';
+
 On entend tout et son contraire sur les thermostats connectés. Moi, je voulais un truc clair : est-ce que ça baisse vraiment la conso de gaz, chiffres à l'appui ?
 
 Je suis équipé de Tado depuis 2023 (thermostat + têtes thermostatiques sur chaudière gaz), donc j'ai assez de recul pour éviter les impressions du type "on a eu moins froid" ou "on a fait attention". Avec le chauffage, entre la météo, le prix du kWh et nos habitudes, on peut vite conclure n'importe quoi.
@@ -112,21 +114,15 @@ Ce déséquilibre permanent entre confort et consommation a été le point de d�
 
 ## 📊 Impact de Tado sur ma consommation de gaz
 
-> 🌡️ **À quelles températures je chauffe ?**
->
-> Pour pouvoir comparer avec votre propre situation, voici mes réglages de chauffage :
->
-> * **Pièces de vie (salon, cuisine, salle à manger)** :
->
->   19 °C pendant les périodes d'occupation, **18 °C le reste du temps**.
-> * **Chambres** :
->
->   18 °C le soir et la nuit quand elles sont utilisées, **16,5 °C sinon**.
-> * **Bureau** :
->
->   Je suis en full remote, donc mon bureau est chauffé à **19 °C en journée la semaine**.
->
-> Mes économies sont donc calculées avec ces températures-là : si vous chauffez plus ou moins, vos résultats pourront être différents.
+<div class="callout callout--note">
+  <p class="callout__title">🌡️ À quelles températures je chauffe ?</p>
+  <ul style={{margin: '0 0 0.5rem 1.25rem'}}>
+    <li><strong>Pièces de vie (salon, cuisine, salle à manger)</strong> : 19 °C pendant les périodes d'occupation, <strong>18 °C le reste du temps</strong>.</li>
+    <li><strong>Chambres</strong> : 18 °C le soir et la nuit quand elles sont utilisées, <strong>16,5 °C sinon</strong>.</li>
+    <li><strong>Bureau</strong> : Je suis en full remote, donc mon bureau est chauffé à <strong>19 °C en journée la semaine</strong>.</li>
+  </ul>
+  <p class="callout__content" style={{marginTop: '0.5rem'}}>Mes économies sont donc calculées avec ces températures-là : si vous chauffez plus ou moins, vos résultats pourront être différents.</p>
+</div>
 
 <div style={{display: 'flex', gap: '1rem', margin: '2rem 0', flexWrap: 'wrap'}}>
   <div style={{flex: 1, minWidth: '300px'}}>
@@ -148,11 +144,17 @@ L'installation Tado me permet de réduire d'environ **26 %** ma consommation de 
 
 ### Économies en euros par année
 
-![Évolution de la consommation de gaz par mois avec Tado](/images/evolution-consommation-gaz_kwh-mois.jpg)
+<figure>
+  <img src="/images/evolution-consommation-gaz_kwh-mois.jpg" alt="Évolution de la consommation de gaz par mois avec Tado" />
+  <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>Évolution de ma consommation de gaz (en kWh) par mois</figcaption>
+</figure>
 
 ### Évolution de ma consommation de gaz (en kWh) par an et impact des éléments
 
-![Évolution de la consommation de gaz par an](/images/evolution-consommation-gaz_kwh-annee.jpg)
+<figure>
+  <img src="/images/evolution-consommation-gaz_kwh-annee.jpg" alt="Évolution de la consommation de gaz par an" />
+  <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>Évolution de ma consommation de gaz (en kWh) par an</figcaption>
+</figure>
 
 <div class="callout callout--caution">
   <p class="callout__title">Disclaimer sur les statistiques de l'article</p>
@@ -180,7 +182,10 @@ Pour isoler l'effet de Tado, je prends comme point de départ **l'année 2023** 
 
 ### Les écarts de température d'un hiver à l'autre expliquent-ils mes écarts de consommation ?
 
-![Évolution de la consommation de gaz par mois avec Tado](/images/ecart-temperature-hiver.jpg)
+<figure>
+  <img src="/images/ecart-temperature-hiver.jpg" alt="Évolution de la consommation de gaz par mois avec Tado" />
+  <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>Écarts de température d’un hiver à l’autre</figcaption>
+</figure>
 
 **En partie, mais pas la baisse globale.**
 
@@ -254,7 +259,10 @@ Si le tarif augmente fortement, cela peut réduire une partie des gains. C'est c
 
 Cela devrait me permettre de garder des fonctionnalités équivalentes tout en économisant l'abonnement, soit environ **28 € par période de chauffe**.
 
-![Blueprint Home Assistant Advanced Heating](/images/blueprint-Home-Assistant-Advanced-Heating-Control.jpg)
+<figure>
+  <img src="/images/blueprint-Home-Assistant-Advanced-Heating-Control.jpg" alt="Blueprint Home Assistant Advanced Heating" />
+  <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>Home Assistant Advanced Heating Control</figcaption>
+</figure>
 
 Pour ça, je prévois d'utiliser notamment le blueprint Home Assistant Advanced Heating Control, qui semble offrir un contrôle très poussé du chauffage… sans avoir à tout réinventer soi-même.
 
@@ -274,3 +282,5 @@ De mon côté, la prochaine étape sera de **remplacer Auto-Assist par des autom
 ---
 
 <em>**Cet article n'est pas sponsorisé**. Je ne suis lié d'aucune façon à Tado et je ne touche aucune commission sur les produits mentionnés. Je partage simplement mon retour d'expérience basé sur ma propre installation.</em>
+
+<TallyEmbed />

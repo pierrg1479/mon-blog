@@ -1,0 +1,14 @@
+---
+const { formId = "Npr8KN", height = "676" } = Astro.props;
+---
+
+<iframe 
+  data-tally-src={`https://tally.so/embed/${formId}?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1`}
+  loading="lazy" 
+  width="100%" 
+  height={height}
+  frameborder="0" 
+  title="Simulateur d'économies Tado"
+></iframe>
+
+<script is:inline async src="https://tally.so/widgets/embed.js"></script>
