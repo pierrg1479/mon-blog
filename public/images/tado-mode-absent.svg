@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1400" viewBox="0 0 1080 1400" role="img" aria-label="Capture d'écran Tado - température en mode absent">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f2f5f9" />
+      <stop offset="100%" stop-color="#e7ebf1" />
+    </linearGradient>
+    <linearGradient id="cta" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f3af39" />
+      <stop offset="100%" stop-color="#f5c561" />
+    </linearGradient>
+    <style>
+      .title { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-size: 48px; font-weight: 700; fill: #1b2a4b; }
+      .label { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-size: 30px; fill: #6d7487; }
+      .value { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-size: 42px; font-weight: 700; fill: #1b2a4b; }
+      .text-strong { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-size: 32px; font-weight: 700; fill: #1f7cff; }
+      .small { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-size: 26px; fill: #70829d; }
+    </style>
+  </defs>
+
+  <rect width="1080" height="1400" rx="40" fill="url(#bg)" />
+
+  <!-- Card header -->
+  <g transform="translate(60,70)">
+    <rect x="0" y="0" width="960" height="220" rx="32" fill="#fff" stroke="#e1e6ef" stroke-width="3" />
+    <text x="44" y="88" class="title">Température en mode Absent</text>
+    <g transform="translate(44,120)">
+      <circle cx="22" cy="32" r="22" fill="none" stroke="#1f7cff" stroke-width="4" />
+      <text x="60" y="42" class="label" fill="#1f2f51">Température</text>
+      <text x="820" y="40" class="value" text-anchor="end">17,0°</text>
+      <rect x="840" y="-8" width="104" height="66" rx="33" fill="#0d63f3" />
+      <circle cx="906" cy="25" r="23" fill="#fff" />
+    </g>
+  </g>
+
+  <!-- Description -->
+  <text x="104" y="340" class="label" fill="#5f6c82" font-size="28">Lorsque tado° est en Mode Absent, il s'assurera que votre maison reste au moins à cette température.</text>
+
+  <!-- Preheat card -->
+  <g transform="translate(60,380)">
+    <rect x="0" y="0" width="960" height="360" rx="32" fill="#fff" stroke="#e1e6ef" stroke-width="3" />
+    <text x="44" y="70" class="label" fill="#1d2a47" font-size="30">PRÉCHAUFFER AVANT L'ARRIVÉE</text>
+
+    <!-- slider -->
+    <g transform="translate(44,110)">
+      <rect x="0" y="40" width="720" height="12" rx="6" fill="#e3e8ef" />
+      <rect x="0" y="40" width="520" height="12" rx="6" fill="#1f7cff" />
+      <circle cx="520" cy="46" r="20" fill="#fff" stroke="#1f7cff" stroke-width="4" />
+      <text x="0" y="92" class="label" font-size="26" fill="#7a859d">Off</text>
+      <text x="120" y="92" class="label" font-size="26" fill="#7a859d">Eco</text>
+      <text x="260" y="92" class="label" font-size="26" fill="#1f7cff" font-weight="700">Équilibre</text>
+      <text x="480" y="92" class="label" font-size="26" fill="#7a859d">Confort</text>
+    </g>
+
+    <!-- map + home -->
+    <g transform="translate(44,170)">
+      <rect x="0" y="0" width="520" height="150" rx="16" fill="url(#cta)" />
+      <circle cx="60" cy="75" r="26" fill="#fff" opacity="0.92" />
+      <path d="M60 56l14 14h-9v18h-10V70h-9z" fill="#d88f05" />
+      <rect x="540" y="0" width="200" height="150" rx="16" fill="#ecf2fb" />
+      <circle cx="640" cy="75" r="30" fill="#0d63f3" opacity="0.8" />
+      <rect x="630" y="48" width="20" height="54" rx="10" fill="#fff" />
+      <rect x="610" y="74" width="60" height="20" rx="10" fill="#fff" />
+    </g>
+  </g>
+
+  <!-- Footer text -->
+  <text x="104" y="780" class="small">tado° préchauffe votre maison avant votre arrivée. Lorsque vous vous approchez de votre maison, la température cible…</text>
+</svg>

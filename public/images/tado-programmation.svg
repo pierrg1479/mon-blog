@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1400" viewBox="0 0 1080 1400" role="img" aria-label="Planning hebdomadaire Tado avec plages de chauffe">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f3f6fb" />
+      <stop offset="100%" stop-color="#e8edf6" />
+    </linearGradient>
+    <style>
+      .day { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-size: 36px; font-weight: 700; fill: #24304a; }
+      .temp { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-size: 28px; font-weight: 700; fill: #1f7cff; }
+      .tick { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-size: 24px; fill: #2f3c56; }
+      .link { font-family: 'Inter', 'Segoe UI', Arial, sans-serif; font-size: 24px; fill: #1f7cff; }
+    </style>
+  </defs>
+  <rect width="1080" height="1400" rx="40" fill="url(#bg)" />
+
+  <g transform="translate(70,70)">
+    <rect x="0" y="0" width="940" height="260" rx="30" fill="#fff" stroke="#dfe6f0" stroke-width="3" />
+    <text x="36" y="70" class="day">Lundi - Vendredi</text>
+    <g transform="translate(36,100)">
+      <rect x="0" y="48" width="860" height="42" rx="20" fill="#d1e6e9" />
+      <rect x="0" y="48" width="180" height="42" rx="20" fill="#bed6d8" />
+      <rect x="180" y="48" width="360" height="42" rx="0" fill="#f3b749" />
+      <rect x="540" y="48" width="200" height="42" rx="0" fill="#bed6d8" />
+      <rect x="740" y="48" width="120" height="42" rx="0" fill="#f3b749" />
+      <text x="0" y="28" class="temp">18.0°</text>
+      <text x="210" y="28" class="temp">18.0°</text>
+      <text x="590" y="28" class="temp" fill="#e19100">19.0°</text>
+      <text x="0" y="130" class="tick">0:00</text>
+      <text x="200" y="130" class="tick">8:00</text>
+      <text x="420" y="130" class="tick">16:00</text>
+      <text x="760" y="130" class="tick">24:00</text>
+    </g>
+    <text x="640" y="220" class="link">Ajouter un bloc horaire</text>
+  </g>
+
+  <g transform="translate(70,360)">
+    <rect x="0" y="0" width="940" height="230" rx="30" fill="#fff" stroke="#dfe6f0" stroke-width="3" />
+    <text x="36" y="66" class="day">Samedi</text>
+    <g transform="translate(36,96)">
+      <rect x="0" y="48" width="860" height="42" rx="20" fill="#d1e6e9" />
+      <rect x="0" y="48" width="200" height="42" rx="20" fill="#bed6d8" />
+      <rect x="200" y="48" width="460" height="42" rx="0" fill="#f3b749" />
+      <rect x="660" y="48" width="200" height="42" rx="0" fill="#bed6d8" />
+      <text x="0" y="28" class="temp">18.0°</text>
+      <text x="230" y="28" class="temp" fill="#e19100">19.0°</text>
+      <text x="0" y="130" class="tick">0:00</text>
+      <text x="220" y="130" class="tick">8:00</text>
+      <text x="460" y="130" class="tick">16:00</text>
+      <text x="780" y="130" class="tick">24:00</text>
+    </g>
+    <text x="640" y="200" class="link">Ajouter un bloc horaire</text>
+  </g>
+
+  <g transform="translate(70,630)">
+    <rect x="0" y="0" width="940" height="230" rx="30" fill="#fff" stroke="#dfe6f0" stroke-width="3" />
+    <text x="36" y="66" class="day">Dimanche</text>
+    <g transform="translate(36,96)">
+      <rect x="0" y="48" width="860" height="42" rx="20" fill="#d1e6e9" />
+      <rect x="0" y="48" width="220" height="42" rx="20" fill="#bed6d8" />
+      <rect x="220" y="48" width="360" height="42" rx="0" fill="#f3b749" />
+      <rect x="580" y="48" width="280" height="42" rx="0" fill="#bed6d8" />
+      <text x="0" y="28" class="temp">18.0°</text>
+      <text x="250" y="28" class="temp" fill="#e19100">19.0°</text>
+      <text x="0" y="130" class="tick">0:00</text>
+      <text x="250" y="130" class="tick">8:00</text>
+      <text x="520" y="130" class="tick">16:00</text>
+      <text x="820" y="130" class="tick">24:00</text>
+    </g>
+    <text x="640" y="200" class="link">Ajouter un bloc horaire</text>
+  </g>
+</svg>
