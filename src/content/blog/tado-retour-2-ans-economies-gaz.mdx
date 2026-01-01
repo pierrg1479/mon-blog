@@ -8,7 +8,7 @@ author:
   avatar: '/hannibal-cercle.png'
 ---
 
-On entend tout et son contraire sur les thermostats connectés. Moi, je voulais un truc clair : est-ce que ça baisse vraiment la conso de gaz, chiffres à l’appui ?
+On entend tout et son contraire sur les thermostats connectés. Moi, je voulais un truc clair : est-ce que ça baisse vraiment la conso de gaz, chiffres à l'appui ?
 
 Je suis équipé de Tado depuis 2023 (thermostat + têtes thermostatiques sur chaudière gaz), donc j'ai assez de recul pour éviter les impressions du type "on a eu moins froid" ou "on a fait attention". Avec le chauffage, entre la météo, le prix du kWh et nos habitudes, on peut vite conclure n'importe quoi.
 
@@ -59,8 +59,9 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
     <li>certains ajustements fins sans que j'aie à intervenir.</li>
   </ul>
 </details>
+
 <div class="callout callout--warning">
-  <p class="callout__content">👉 C’est à partir de cette configuration (chaudière gaz avec sonde extérieure, puis ajout progressif de Tado V3+ : thermostat, têtes thermostatiques et Auto-Assist) que j’ai analysé ma consommation de gaz et mes économies réelles.</p>
+  <p class="callout__content">👉 C'est à partir de cette configuration (chaudière gaz avec sonde extérieure, puis ajout progressif de Tado V3+ : thermostat, têtes thermostatiques et Auto-Assist) que j'ai analysé ma consommation de gaz et mes économies réelles.</p>
 </div>
 
 ## 🧗 Les grandes étapes de mon installation
@@ -73,17 +74,17 @@ J'ai donc fait simple et propre : **comparaison de ma consommation avant et apr�
 | Octobre 2024 | Activation d'Auto-Assist Tado |
 
 <div class="callout callout--warning">
-  <p class="callout__title">Qu’est ce qu’Auto-Assist Tado ?</p>
-  <p class="callout__content">Auto-Assist est un abonnement payant (3,99€/mois) proposé par Tado. Il automatise certaines fonctions intelligentes : réduction du chauffage quand vous quittez la maison, prise en compte des fenêtres ouvertes, retour automatique au planning normal. Sans Auto-Assist, l’application vous envoie des notifications et c’est à vous de valider les actions. Avec Auto-Assist, Tado s’en charge à votre place pour améliorer confort et économies.</p>
+  <p class="callout__title">Qu'est ce qu'Auto-Assist Tado ?</p>
+  <p class="callout__content">Auto-Assist est un abonnement payant (3,99€/mois) proposé par Tado. Il automatise certaines fonctions intelligentes : réduction du chauffage quand vous quittez la maison, prise en compte des fenêtres ouvertes, retour automatique au planning normal. Sans Auto-Assist, l'application vous envoie des notifications et c'est à vous de valider les actions. Avec Auto-Assist, Tado s'en charge à votre place pour améliorer confort et économies.</p>
 </div>
 
 ## ❓Pourquoi j'ai dû repenser complètement le pilotage du chauffage
 
-Avant, mon chauffage fonctionnait, mais j’avais deux problèmes principaux.
+Avant, mon chauffage fonctionnait, mais j'avais deux problèmes principaux.
 
-D’abord, je ne pouvais **pas piloter le chauffage à distance**. La chaudière suivait uniquement un **calendrier figé** : mêmes horaires, mêmes températures, tous les jours. Si nous rentrions plus tôt que prévu, la maison restait froide. Si nous partions à l’improviste pour le week-end, le chauffage continuait comme si nous étions là. La seule solution était de toucher manuellement au thermostat, ce qui n’est pas vraiment ce qu’on peut appeler du “confort moderne”.
+D'abord, je ne pouvais **pas piloter le chauffage à distance**. La chaudière suivait uniquement un **calendrier figé** : mêmes horaires, mêmes températures, tous les jours. Si nous rentrions plus tôt que prévu, la maison restait froide. Si nous partions à l'improviste pour le week-end, le chauffage continuait comme si nous étions là. La seule solution était de toucher manuellement au thermostat, ce qui n'est pas vraiment ce qu'on peut appeler du "confort moderne".
 
-Le vrai gros problème est apparu avec **l’installation du poêle à bois**. Le thermostat général de la chaudière se trouvait dans la pièce de vie, exactement là où se trouve aussi le poêle. Quand le poêle chauffait bien le salon, le thermostat détectait une température suffisante et coupait le chauffage, alors que les chambres restaient froides. Si je déplaçais le thermostat dans une chambre pour avoir chaud la nuit, c’était l’effet inverse : la chaudière se mettait à chauffer pour atteindre la bonne température dans les chambres, mais les radiateurs du salon continuaient à tourner alors qu’il faisait déjà largement assez chaud grâce au poêle.
+Le vrai gros problème est apparu avec **l'installation du poêle à bois**. Le thermostat général de la chaudière se trouvait dans la pièce de vie, exactement là où se trouve aussi le poêle. Quand le poêle chauffait bien le salon, le thermostat détectait une température suffisante et coupait le chauffage, alors que les chambres restaient froides. Si je déplaçais le thermostat dans une chambre pour avoir chaud la nuit, c'était l'effet inverse : la chaudière se mettait à chauffer pour atteindre la bonne température dans les chambres, mais les radiateurs du salon continuaient à tourner alors qu'il faisait déjà largement assez chaud grâce au poêle.
 
 > En pratique, avec **un seul thermostat pour toute la maison**, je devais choisir entre un salon confortable et des chambres froides, ou des chambres agréables mais un salon surchauffé et de l'énergie gaspillée.
 >
@@ -92,7 +93,7 @@ Le vrai gros problème est apparu avec **l’installation du poêle à bois**. L
 Ce déséquilibre permanent entre confort et consommation a été le point de départ de ma réflexion pour revoir complètement la façon dont notre chauffage était piloté.
 
 <div class="callout callout--note">
-  <p class="callout__content">ℹ️ Avec Tado, les têtes thermostatiques ne se contentent pas de fermer ou ouvrir le radiateur localement. Dans ma configuration, elles peuvent aussi demander de la chaleur à la chaudière lorsqu’il y a un écart de température dans leur pièce. Le thermostat central n’est donc plus le seul à décider du lancement du chauffage. C’est ce qui fait toute la différence par rapport à des têtes thermostatiques classiques associées à un simple thermostat d’ambiance : chaque pièce a réellement son mot à dire sur le fonctionnement de la chaudière.</p>
+  <p class="callout__content">ℹ️ Avec Tado, les têtes thermostatiques ne se contentent pas de fermer ou ouvrir le radiateur localement. Dans ma configuration, elles peuvent aussi demander de la chaleur à la chaudière lorsqu'il y a un écart de température dans leur pièce. Le thermostat central n'est donc plus le seul à décider du lancement du chauffage. C'est ce qui fait toute la différence par rapport à des têtes thermostatiques classiques associées à un simple thermostat d'ambiance : chaque pièce a réellement son mot à dire sur le fonctionnement de la chaudière.</p>
 </div>
 
 ## 💰Combien m'a vraiment coûté l'installation Tado ?
@@ -106,12 +107,26 @@ Ce déséquilibre permanent entre confort et consommation a été le point de d�
 | **Total** | **1016€** |
 
 <div class="callout callout--warning">
-  <p class="callout__content">👨‍🔧 Pour pouvoir installer des têtes thermostatiques sur tous les radiateurs, j’ai dû **faire intervenir un plombier**. Il a remplacé les robinets de 4 radiateurs situés dans le salon, la salle à manger et le bureau. Ces radiateurs étaient auparavant équipés de robinets standards, non compatibles avec les têtes thermostatiques Tado.</p>
+  <p class="callout__content">👨‍🔧 Pour pouvoir installer des têtes thermostatiques sur tous les radiateurs, j'ai dû **faire intervenir un plombier**. Il a remplacé les robinets de 4 radiateurs situés dans le salon, la salle à manger et le bureau. Ces radiateurs étaient auparavant équipés de robinets standards, non compatibles avec les têtes thermostatiques Tado.</p>
 </div>
 
-
-
 ## 📊 Impact de Tado sur ma consommation de gaz
+
+> 🌡️ **À quelles températures je chauffe ?**
+>
+> Pour pouvoir comparer avec votre propre situation, voici mes réglages de chauffage :
+>
+> * **Pièces de vie (salon, cuisine, salle à manger)** :
+>
+>   19 °C pendant les périodes d'occupation, **18 °C le reste du temps**.
+> * **Chambres** :
+>
+>   18 °C le soir et la nuit quand elles sont utilisées, **16,5 °C sinon**.
+> * **Bureau** :
+>
+>   Je suis en full remote, donc mon bureau est chauffé à **19 °C en journée la semaine**.
+>
+> Mes économies sont donc calculées avec ces températures-là : si vous chauffez plus ou moins, vos résultats pourront être différents.
 
 <div style="display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap;">
   <div style="flex: 1; min-width: 300px;">
@@ -123,7 +138,6 @@ Ce déséquilibre permanent entre confort et consommation a été le point de d�
     <p style="text-align: center; font-size: 0.875rem; color: #666; margin-top: 0.5rem;">Mode absent 17°C</p>
   </div>
 </div>
-
 
 L'installation Tado me permet de réduire d'environ **26 %** ma consommation de gaz. La vraie question devient : **est-ce que les dépenses engagées sont réellement rentabilisées, et en combien de temps ?**
 
@@ -141,56 +155,55 @@ L'installation Tado me permet de réduire d'environ **26 %** ma consommation de 
 ![Évolution de la consommation de gaz par an](/images/evolution-consommation-gaz_kwh-annee.jpg)
 
 <div class="callout callout--caution">
-  <p class="callout__title">Disclaimer sur les statistiques de l’article</p>
+  <p class="callout__title">Disclaimer sur les statistiques de l'article</p>
   <p class="callout__content">Les chiffres et observations présentés dans cet article sont basés sur ma propre installation et ma situation personnelle (région Grand Ouest). Ils peuvent être influencés par de nombreux facteurs extérieurs : occupation réelle de la maison (présence, absences, télétravail, vacances), température extérieure, ensoleillement, isolation du logement, habitudes de chauffage, etc. Vos résultats pourront donc être différents des miens, même avec une configuration Tado similaire.</p>
 </div>
 
-❄️ **Année 2022 – Sans poêle à bois et sans Tado**
+❄️ **Année 2022 – Sans poêle à bois et sans Tado**
 
-❄️ **Année 2023 – Poêle à bois mais aucun équipement Tado**
+❄️ **Année 2023 – Poêle à bois mais aucun équipement Tado**
 
-Pour isoler l’effet de Tado, je prends comme point de départ **l’année 2023** : le poêle à bois est déjà là, mais **aucun équipement Tado** n’est installé. Cet hiver-là, ma consommation est d’environ **13 934 kWh**.
+Pour isoler l'effet de Tado, je prends comme point de départ **l'année 2023** : le poêle à bois est déjà là, mais **aucun équipement Tado** n'est installé. Cet hiver-là, ma consommation est d'environ **13 934 kWh**.
 
-❄️ **Année 2024 – Thermostat Tado + 1 tête thermostatique**
+❄️ **Année 2024 – Thermostat Tado + 1 tête thermostatique**
 
 - Avec le thermostat connecté sur la chaudière et une première tête dans une chambre, ma conso descend à **11 374 kWh**.
-- Soit environ **–18 % par rapport à l’année précédente**, uniquement grâce au pilotage plus fin du chauffage.
+- Soit environ **–18 % par rapport à l'année précédente**, uniquement grâce au pilotage plus fin du chauffage.
 
-❄️ **Année 2024-2025 – Têtes partout + Auto-Assist**
+❄️ **Année 2024-2025 – Têtes partout + Auto-Assist**
 
-- Une saison plus tard, j’ai des têtes thermostatiques sur tous les radiateurs et Auto-Assist activé. Ma consommation tombe à **10 182 kWh**, **encore –10 % par rapport à l’année précédente.**
-
+- Une saison plus tard, j'ai des têtes thermostatiques sur tous les radiateurs et Auto-Assist activé. Ma consommation tombe à **10 182 kWh**, **encore –10 % par rapport à l'année précédente.**
 
 <div class="callout callout--note">
-  <p class="callout__content">En résumé : entre l’hiver avec poêle seul et l’hiver avec Tado pleinement déployé, Tado m’aide à réduire ma consommation d’environ 26 %, en plus du gain déjà apporté par le poêle.</p>
+  <p class="callout__content">En résumé : entre l'hiver avec poêle seul et l'hiver avec Tado pleinement déployé, Tado m'aide à réduire ma consommation d'environ 26 %, en plus du gain déjà apporté par le poêle.</p>
 </div>
 
-### Les écarts de température d’un hiver à l’autre expliquent-ils mes écarts de consommation ?
+### Les écarts de température d'un hiver à l'autre expliquent-ils mes écarts de consommation ?
 
 ![Évolution de la consommation de gaz par mois avec Tado](/images/ecart-temperature-hiver.jpg)
 
 **En partie, mais pas la baisse globale.**
 
-- D’un hiver à l’autre, il fait **un peu** plus chaud ou plus froid (≈ **1 °C** entre le plus doux et le plus froid dans mes données).. Ça peut changer la consommation.
-- Mais chez moi, **même quand l’hiver est plus froid** (2024–2025), ma consommation **baisse quand même** (**11 374 kWh → 10 182 kWh**).
+- D'un hiver à l'autre, il fait **un peu** plus chaud ou plus froid (≈ **1 °C** entre le plus doux et le plus froid dans mes données).. Ça peut changer la consommation.
+- Mais chez moi, **même quand l'hiver est plus froid** (2024–2025), ma consommation **baisse quand même** (**11 374 kWh → 10 182 kWh**).
 - Donc la météo explique une partie des variations… mais la **tendance à la baisse** vient surtout de mon **pilotage plus fin avec Tado** (thermostat + têtes + automatisations).
 
-## 🤑 Tado est-il rentable ? Mon retour sur investissement
-Maintenant qu’on sait que l’installation Tado me permet de réduire d’environ **26 %** ma consommation de gaz, la vraie question devient : **est-ce que les dépenses engagées (matériel, têtes thermostatiques, plombier, Auto-Assist) sont réellement rentabilisées, et en combien de temps ?** 
+## 🤑 Tado est-il rentable ? Mon retour sur investissement
 
-Je vais comparer le **coût total de l’installation** au montant des économies de gaz réalisées chaque année. L’idée n’est pas seulement de dire “je consomme moins”, mais de voir si, oui ou non, Tado finit par **s’autofinancer** au bout de quelques hivers… ou si cela reste avant tout un investissement de confort.
+Maintenant qu'on sait que l'installation Tado me permet de réduire d'environ **26 %** ma consommation de gaz, la vraie question devient : **est-ce que les dépenses engagées (matériel, têtes thermostatiques, plombier, Auto-Assist) sont réellement rentabilisées, et en combien de temps ?** 
+
+Je vais comparer le **coût total de l'installation** au montant des économies de gaz réalisées chaque année. L'idée n'est pas seulement de dire "je consomme moins", mais de voir si, oui ou non, Tado finit par **s'autofinancer** au bout de quelques hivers… ou si cela reste avant tout un investissement de confort.
 
 <div class="callout callout--caution">
   <p class="callout__title">☝️ Prix du kWh de référence : 0,0896€</p>
-  <p class="callout__content">Pour tous les calculs de cet article, j’ai utilisé un prix de **0,0896€ TTC par kWh de gaz**. C’est une valeur de référence, basée sur mon contrat au moment de l’analyse. 
+  <p class="callout__content">Pour tous les calculs de cet article, j'ai utilisé un prix de **0,0896€ TTC par kWh de gaz**. C'est une valeur de référence, basée sur mon contrat au moment de l'analyse. 
 
-Dans votre cas, le montant peut varier selon votre fournisseur, votre type d’offre et la période.</p>
+Dans votre cas, le montant peut varier selon votre fournisseur, votre type d'offre et la période.</p>
 </div>
-
 
 ### Économies en euros par année
 
-Pour mesurer l’effet de Tado, je pars de **l’année 2023**, avec poêle à bois mais **sans aucun équipement Tado**, soit une consommation de **13 934 kWh**.
+Pour mesurer l'effet de Tado, je pars de **l'année 2023**, avec poêle à bois mais **sans aucun équipement Tado**, soit une consommation de **13 934 kWh**.
 
 **Économies réalisées grâce à Tado :**
 
@@ -207,23 +220,23 @@ Pour mesurer l’effet de Tado, je pars de **l’année 2023**, avec poêle à b
     → Soit **3 752 kWh économisés vs 2023**, environ **336 €** sur la saison.
     
 
-Au total, depuis l’installation de Tado, cela représente environ **566 € d’économies** sur le gaz sur 2 ans.
+Au total, depuis l'installation de Tado, cela représente environ **566 € d'économies** sur le gaz sur 2 ans.
 
-### Rentabilité de l’installation
+### Rentabilité de l'installation
 
-- **Coût total de l’installation Tado** (matériel, plombier, Auto-Assist) : **1 016€**
+- **Coût total de l'installation Tado** (matériel, plombier, Auto-Assist) : **1 016€**
 - **Économies déjà réalisées en deux hivers** : **≈ 566€**
 - **Reste à amortir** : environ **450€**.
 
-En prenant comme base l’année 2025 (environ **336€ d’économies par an**) et sans hausse du prix du gaz, l’installation devrait être **rentabilisée en un peu moins de 4 saisons de chauffage**.
+En prenant comme base l'année 2025 (environ **336€ d'économies par an**) et sans hausse du prix du gaz, l'installation devrait être **rentabilisée en un peu moins de 4 saisons de chauffage**.
 
-Comme deux hivers sont déjà passés, il me manque donc **encore 1 à 2 hivers** pour que j’ai entièrement financé mon installation. Au-delà, ce seront essentiellement des économies nettes… avec en bonus un meilleur confort au quotidien.
+Comme deux hivers sont déjà passés, il me manque donc **encore 1 à 2 hivers** pour que j'ai entièrement financé mon installation. Au-delà, ce seront essentiellement des économies nettes… avec en bonus un meilleur confort au quotidien.
 
-## 💶 Calculez vos propres économies avec Tado
+## 💶 Calculez vos propres économies avec Tado
 
-Utilisez le simulateur ci-dessous pour estimer, avec vos propres chiffres (consommation, prix du kWh, coût de l’installation), combien Tado pourrait vous faire économiser chaque année et en combien de temps votre installation serait amortie.
+Utilisez le simulateur ci-dessous pour estimer, avec vos propres chiffres (consommation, prix du kWh, coût de l'installation), combien Tado pourrait vous faire économiser chaque année et en combien de temps votre installation serait amortie.
 
-<iframe data-tally-src="https://tally.so/embed/Npr8KN?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="676" frameborder="0" marginheight="0" marginwidth="0" title="Simulateur d’économies Tado"></iframe>
+<iframe data-tally-src="https://tally.so/embed/Npr8KN?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="676" frameborder="0" marginheight="0" marginwidth="0" title="Simulateur d'économies Tado"></iframe>
 <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
 
 ## 💸 Ce qui pourrait dégrader la rentabilité dans le temps
