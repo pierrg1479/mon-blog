@@ -9,8 +9,6 @@ author:
   avatar: '/hannibal-cercle.png'
 ---
 
-import Gallery from '../../components/Gallery.astro';
-
 export const mountainImages = [
   {
     src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600",
@@ -80,23 +78,51 @@ Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sap
 
 La galerie justified organise les images en rangées de hauteur uniforme, créant un effet visuel harmonieux.
 
-<Gallery type="justified" images={mountainImages} />
+<div class="gallery gallery-justified">
+  {mountainImages.map((image) => (
+    <figure class="gallery-item">
+      <img src={image.src} alt={image.alt} loading="lazy" />
+      {image.caption && <figcaption class="gallery-caption">{image.caption}</figcaption>}
+    </figure>
+  ))}
+</div>
 
 ### Galerie Masonry
 
 La galerie masonry crée une disposition en colonnes type Pinterest, idéale pour des images de hauteurs variées.
 
-<Gallery type="masonry" images={mountainImages} />
+<div class="gallery gallery-masonry">
+  {mountainImages.map((image) => (
+    <figure class="gallery-item">
+      <img src={image.src} alt={image.alt} loading="lazy" />
+      {image.caption && <figcaption class="gallery-caption">{image.caption}</figcaption>}
+    </figure>
+  ))}
+</div>
 
 ### Galerie Grid
 
 La galerie grid affiche les images dans une grille régulière avec un ratio d'aspect constant.
 
-<Gallery type="grid" images={mountainImages} />
+<div class="gallery gallery-grid">
+  {mountainImages.map((image) => (
+    <figure class="gallery-item">
+      <img src={image.src} alt={image.alt} loading="lazy" />
+      {image.caption && <figcaption class="gallery-caption">{image.caption}</figcaption>}
+    </figure>
+  ))}
+</div>
 
 ### Petite galerie (2 images)
 
-<Gallery type="justified" images={architectureImages} />
+<div class="gallery gallery-justified">
+  {architectureImages.map((image) => (
+    <figure class="gallery-item">
+      <img src={image.src} alt={image.alt} loading="lazy" />
+      {image.caption && <figcaption class="gallery-caption">{image.caption}</figcaption>}
+    </figure>
+  ))}
+</div>
 
 ## Citations
 
@@ -187,6 +213,66 @@ automation:
 ## Images
 
 ![Texte alternatif](../../assets/blog-placeholder-1.jpg)
+
+<style>
+  .gallery {
+    margin: 2rem 0;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .gallery-justified {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .gallery-justified .gallery-item {
+    aspect-ratio: 3 / 2;
+  }
+
+  .gallery-masonry {
+    column-count: 3;
+    column-gap: 16px;
+  }
+
+  .gallery-masonry .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 16px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+  }
+
+  .gallery-caption {
+    font-size: 0.9rem;
+    color: var(--gray-700, #475569);
+    margin-top: 0.5rem;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 1024px) {
+    .gallery-masonry {
+      column-count: 2;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .gallery-masonry {
+      column-count: 1;
+    }
+  }
+</style>
 
 ## Ligne horizontale
 
