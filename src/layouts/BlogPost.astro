@@ -424,7 +424,9 @@ const authorAvatar = author?.avatar
 				const article = document.querySelector('.prose');
 				if (!article) return;
 
-				const headings = article.querySelectorAll('h2, h3, h4');
+				const headings = Array.from(article.querySelectorAll('h2, h3, h4')).filter(
+					heading => !heading.closest('.author-box, .comments')
+				);
 				if (headings.length === 0) return;
 
 				const toc = document.createElement('details');
