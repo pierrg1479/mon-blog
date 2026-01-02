@@ -1,0 +1,219 @@
+---
+title: 'Guide complet de la syntaxe Markdown'
+description: 'Exemple de toutes les possibilités'
+pubDate: 'Dec 17 2024'
+draft: true
+heroImage: '../../assets/blog-placeholder-2.jpg'  # ← Différente image
+author:
+  name: Pierre
+  avatar: '/hannibal-cercle.png'
+---
+
+export const mountainImages = [
+  {
+    src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600",
+    alt: "Montagne enneigée au lever du soleil",
+    caption: "Photo par Tobias Rademacher - Unsplash"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600",
+    alt: "Forêt dense en perspective",
+    caption: "Photo par Massimiliano Morosinotto - Unsplash"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1600",
+    alt: "Champ de fleurs sauvages",
+    caption: "Photo par Sascha Bosshard - Unsplash"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1600",
+    alt: "Lac de montagne au crépuscule",
+    caption: "Photo par Yusuf Evli - Unsplash"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1600",
+    alt: "Route sinueuse en montagne",
+    caption: "Photo par Jay Mantri - Unsplash"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1600",
+    alt: "Sentier forestier automnal",
+    caption: "Photo par Florian van Duyn - Unsplash"
+  }
+];
+
+export const architectureImages = [
+  {
+    src: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1600",
+    alt: "Architecture moderne minimaliste",
+    caption: "Photo par Juan Davila - Unsplash"
+  },
+  {
+    src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600",
+    alt: "Pic montagneux majestueux",
+    caption: "Photo par David Marcu - Unsplash"
+  }
+];
+
+Cet article présente l'ensemble de la syntaxe Markdown de base ainsi que des extensions courantes.
+
+## Titres
+
+# H1
+## H2
+### H3
+#### H4
+##### H5
+###### H6
+
+## Paragraphes
+
+Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur?
+
+Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.
+
+## Citations
+
+> La citation est un élément important dans la rédaction d'articles.
+>
+> — Citation avec auteur
+
+## Listes
+
+### Liste non ordonnée
+
+* Item 1
+* Item 2
+* Item 3
+  * Sous-item 3.1
+  * Sous-item 3.2
+
+### Liste ordonnée
+
+1. Premier item
+2. Deuxième item
+3. Troisième item
+   1. Sous-item 3.1
+   2. Sous-item 3.2
+
+### Liste de tâches
+
+- [x] Tâche complétée
+- [ ] Tâche en cours
+- [ ] Tâche à faire
+
+## Code
+
+### Code inline
+
+Voici du `code inline` dans une phrase.
+
+### Bloc de code
+```
+Code sans coloration syntaxique
+```
+
+### Code avec coloration syntaxique
+```javascript
+function exemple() {
+  console.log("Hello World!");
+  return true;
+}
+```
+```python
+def bonjour():
+    print("Bonjour le monde!")
+    return True
+```
+```yaml
+# Configuration Home Assistant
+automation:
+  - alias: "Test"
+    trigger:
+      platform: state
+      entity_id: binary_sensor.motion
+```
+
+## Tableaux
+
+| Colonne 1 | Colonne 2 | Colonne 3 |
+|-----------|-----------|-----------|
+| Ligne 1   | Donnée A  | Donnée 1  |
+| Ligne 2   | Donnée B  | Donnée 2  |
+| Ligne 3   | Donnée C  | Donnée 3  |
+
+## Mise en forme du texte
+
+**Texte en gras**
+
+*Texte en italique*
+
+***Texte en gras et italique***
+
+~~Texte barré~~
+
+## Liens
+
+[Lien vers Google](https://www.google.com)
+
+[Lien avec titre](https://www.google.com "Titre du lien")
+
+## Images
+
+![Texte alternatif](../../assets/blog-placeholder-1.jpg)
+
+## Ligne horizontale
+
+---
+
+## Notes de bas de page
+
+Voici une phrase avec une note de bas de page[^1].
+
+[^1]: Ceci est la note de bas de page.
+
+## Bloc dépliable
+
+<details>
+  <summary>Click to expand details</summary>
+  <p>This is the collapsed detailed content.</p>
+  <p>You can include any Markdown syntax here:</p>
+  <ul>
+    <li>List item</li>
+    <li><strong>Bold text</strong></li>
+    <li><code>Code</code></li>
+  </ul>
+</details>
+
+## Échappement de caractères
+
+\*Ce texte n'est pas en italique\*
+
+\[Ce texte n'est pas un lien\]
+
+## Blocs informatifs
+
+<div class="callout callout--note">
+  <p class="callout__title">Note</p>
+  <p class="callout__content">Ceci est une note pour attirer l'attention sur un détail important.</p>
+</div>
+
+<div class="callout callout--tip">
+  <p class="callout__title">Tip</p>
+  <p class="callout__content">Voici un conseil pratique pour améliorer votre expérience.</p>
+</div>
+
+<div class="callout callout--important">
+  <p class="callout__title">Important</p>
+  <p class="callout__content">Une information essentielle à ne pas manquer.</p>
+</div>
+
+<div class="callout callout--warning">
+  <p class="callout__title">Warning</p>
+  <p class="callout__content">Cette mise en garde souligne un risque potentiel.</p>
+</div>
+
+<div class="callout callout--caution">
+  <p class="callout__title">Caution</p>
+  <p class="callout__content">Soyez prudent avant de poursuivre cette action.</p>
+</div>
