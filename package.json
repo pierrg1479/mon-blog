@@ -16,7 +16,6 @@
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/vercel": "^9.0.2",
     "astro": "^5.16.5",
-    "lightgallery": "^2.7.2",
     "sharp": "^0.34.3"
   }
 }
