@@ -1,0 +1,74 @@
+---
+// Composant pour ajouter une lightbox aux images
+---
+
+<script>
+  // Import GLightbox depuis CDN
+  const loadGLightbox = async () => {
+    // Charger le CSS
+    if (!document.querySelector('link[href*="glightbox"]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/glightbox@3.2.0/dist/css/glightbox.min.css';
+      document.head.appendChild(link);
+    }
+
+    // Charger le JS
+    if (!window.GLightbox) {
+      await import('https://cdn.jsdelivr.net/npm/glightbox@3.2.0/dist/js/glightbox.min.js');
+    }
+
+    // Sélectionner toutes les images dans l'article
+    const images = document.querySelectorAll('article img');
+
+    images.forEach((img) => {
+      // Ne pas traiter les images déjà wrappées ou les avatars/logos
+      if (img.closest('a') || img.classList.contains('no-lightbox')) {
+        return;
+      }
+
+      // Créer un lien autour de l'image
+      const link = document.createElement('a');
+      link.href = img.src;
+      link.classList.add('glightbox');
+      link.setAttribute('data-gallery', 'article-images');
+
+      // Ajouter le alt comme description si disponible
+      if (img.alt) {
+        link.setAttribute('data-glightbox', `description: ${img.alt}`);
+      }
+
+      // Wrapper l'image
+      img.parentNode.insertBefore(link, img);
+      link.appendChild(img);
+    });
+
+    // Initialiser GLightbox
+    if (window.GLightbox) {
+      window.GLightbox({
+        touchNavigation: true,
+        loop: true,
+        autoplayVideos: false,
+      });
+    }
+  };
+
+  // Charger quand le DOM est prêt
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadGLightbox);
+  } else {
+    loadGLightbox();
+  }
+</script>
+
+<style is:global>
+  /* Ajouter un curseur pointer sur les images cliquables */
+  article img:not(.no-lightbox) {
+    cursor: zoom-in;
+    transition: opacity 0.2s ease;
+  }
+
+  article img:not(.no-lightbox):hover {
+    opacity: 0.9;
+  }
+</style>

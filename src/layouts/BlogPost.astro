@@ -9,6 +9,7 @@ import Comments from '../components/Comments.astro';
 import ShareButtons from '../components/ShareButtons.astro';
 import ReadingProgress from '../components/ReadingProgress.astro';
 import ArticleSchema from '../components/ArticleSchema.astro';
+import ImageLightbox from '../components/ImageLightbox.astro';
 import '../styles/article-ultra-clean.css';
 import '../styles/article-patch.css';
 
@@ -318,18 +319,6 @@ const authorAvatar = author?.avatar
 				}
 			}
 		</style>
-		<link
-			rel="stylesheet"
-			href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/css/lightgallery.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/css/lg-zoom.min.css"
-		/>
-		<link
-			rel="stylesheet"
-			href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.2/css/lg-thumbnail.min.css"
-		/>
 	</head>
 
 	<body>
@@ -358,7 +347,7 @@ const authorAvatar = author?.avatar
 								<img
 									src={authorAvatar}
 									alt={authorName}
-									class="author-avatar"
+									class="author-avatar no-lightbox"
 									loading="lazy"
 								/>
 								<span class="author-name">{authorName}</span>
@@ -418,6 +407,7 @@ const authorAvatar = author?.avatar
 			</article>
 		</main>
 		<Footer />
+		<ImageLightbox />
 		<script>
 			// Génération automatique du sommaire
 			document.addEventListener('DOMContentLoaded', function() {

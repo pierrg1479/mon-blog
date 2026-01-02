@@ -9,8 +9,6 @@ author:
   avatar: '/hannibal-cercle.png'
 ---
 
-import Gallery from '../../components/Gallery.astro';
-
 export const mountainImages = [
   {
     src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600",
@@ -73,30 +71,6 @@ Cet article présente l'ensemble de la syntaxe Markdown de base ainsi que des ex
 Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur?
 
 Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.
-
-## Galeries d'images
-
-### Galerie Justified
-
-La galerie justified organise les images en rangées de hauteur uniforme, créant un effet visuel harmonieux.
-
-<Gallery type="justified" images={mountainImages} />
-
-### Galerie Masonry
-
-La galerie masonry crée une disposition en colonnes type Pinterest, idéale pour des images de hauteurs variées.
-
-<Gallery type="masonry" images={mountainImages} />
-
-### Galerie Grid
-
-La galerie grid affiche les images dans une grille régulière avec un ratio d'aspect constant.
-
-<Gallery type="grid" images={mountainImages} />
-
-### Petite galerie (2 images)
-
-<Gallery type="justified" images={architectureImages} />
 
 ## Citations
 
@@ -210,26 +184,6 @@ Voici une phrase avec une note de bas de page[^1].
     <li><code>Code</code></li>
   </ul>
 </details>
-
-## Emoji
-
-:smile: :rocket: :house: :bulb:
-
-## Abréviations
-
-HTML et CSS sont des langages web.
-
-*[HTML]: Hypertext Markup Language
-*[CSS]: Cascading Style Sheets
-
-## Définitions
-
-Terme 1
-: Définition du terme 1
-
-Terme 2
-: Définition du terme 2
-: Autre définition du terme 2
 
 ## Échappement de caractères
 
