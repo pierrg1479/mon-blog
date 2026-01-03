@@ -1,0 +1,140 @@
+---
+title: 'Recharger son vélo électrique en heures creuses… sans y penser (et sans laisser une prise allumée toute la nuit)'
+description: 'Automatisation Home Assistant pour lancer la charge à 22h01 et couper automatiquement si rien ne consomme ou quand la batterie est pleine.'
+pubDate: 'Jan 03 2026'
+heroImage: '../../assets/blog-placeholder-5.jpg'
+author:
+  name: Pierre
+  avatar: '/hannibal-cercle.png'
+---
+
+Je rentre du travail, je branche le vélo. Mais avec un contrat **heures pleines / heures creuses**, la charge n’a aucun intérêt à démarrer immédiatement. Et clairement, je ne vais pas me relever à 22h pour y penser.
+
+L’idée, c’est donc d’automatiser deux choses très concrètes :
+
+- **Démarrer la charge automatiquement à 22h01** (début des heures creuses).
+- **Couper automatiquement** si rien ne charge… ou dès que la charge est terminée.
+
+Résultat : vous branchez quand ça vous arrange, Home Assistant gère le reste. Et surtout, la prise ne reste pas alimentée inutilement.
+
+## Comprendre le contexte ou le problème
+
+### Pourquoi je ne voulais pas d’un simple ON/OFF à heure fixe
+Une prise qui s’allume à 22h, c’est bien. Mais dans la vraie vie, il y a deux cas qui posent problème :
+
+- **Le vélo n’est pas branché** (ou le chargeur n’est pas connecté correctement). La prise s’allume… pour rien.
+- **La batterie est déjà pleine**. Le chargeur passe en veille, mais la prise reste ON.
+
+Moi, je voulais quelque chose de plus “intelligent” : **allumer au bon moment**, puis **éteindre automatiquement dès que ça ne consomme plus**.
+
+## Notions clés à connaître
+
+### La mesure de puissance : le capteur qui fait toute la différence
+Le cœur du système, c’est la **puissance** mesurée en watts (W) par la prise connectée, disponible dans Home Assistant via un capteur du type :
+
+`sensor.prise_connectee_chargeur_velo_puissance`
+
+- Quand le chargeur recharge vraiment, la puissance est clairement au-dessus de quelques watts.
+- Quand il ne recharge pas (vélo absent, charge terminée, chargeur en veille), la puissance chute.
+
+### Le seuil de puissance : comment décider “ça charge” / “ça ne charge pas”
+J’utilise un seuil simple : **5 W**.
+
+- **Au-dessus de 5 W** : la charge est en cours.
+- **En dessous de 5 W** : ça ne charge pas, ou ça ne charge plus.
+
+Ce seuil dépend des chargeurs. L’idée est de prendre une valeur qui marche bien chez vous.
+
+### Pourquoi “pendant 2 minutes” ?
+Parce que la puissance peut fluctuer. Un mini creux ne doit pas couper la charge.
+
+Donc je demande : **puissance < 5 W pendant 2 minutes** avant de couper. Ça évite les coupures intempestives.
+
+### Matériel utilisé : prise Zigbee Sonoff S60ZBTPF
+De mon côté, j’utilise une **prise connectée Zigbee Sonoff S60ZBTPF** :
+
+- **Zigbee** : réactif et stable, et ça évite de charger le Wi-Fi.
+- **Mesure de puissance** : indispensable pour couper automatiquement quand la charge est terminée (ou si rien ne charge).
+
+## Mise en pratique : l’automatisation pas à pas
+
+### Ce que fait l’automatisation (version humaine)
+1) **À 22h01**, Home Assistant allume la prise du chargeur.  
+2) Il attend **30 secondes** (le temps que le chargeur démarre réellement).  
+3) Si la puissance est **< 5 W**, il coupe immédiatement : probablement rien à charger.  
+4) Si la charge démarre, Home Assistant surveille la puissance.  
+5) Quand la puissance reste **< 5 W pendant 2 minutes**, il coupe : charge terminée.
+
+En clair : ça démarre seul, ça s’arrête seul, et la prise ne reste jamais ON “pour rien”.
+
+### Le YAML complet
+```yaml
+alias: Prise chargeur vélo – ON 22h01, OFF si rien ou si charge terminée
+description: >-
+  Allume à 22:01. Éteint si puissance < 5 W (immédiat après allumage) ou pendant
+  2 min la nuit.
+triggers:
+  - at: "22:01:00"
+    id: start
+    trigger: time
+  - entity_id: sensor.prise_connectee_chargeur_velo_puissance
+    below: 5
+    for: "00:02:00"
+    id: done
+    trigger: numeric_state
+conditions: []
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: start
+        sequence:
+          - target:
+              entity_id: switch.prise_connectee_chargeur_velo
+            action: switch.turn_on
+            data: {}
+          - delay: "00:00:30"
+          - condition: numeric_state
+            entity_id: sensor.prise_connectee_chargeur_velo_puissance
+            below: 5
+          - target:
+              entity_id: switch.prise_connectee_chargeur_velo
+            action: switch.turn_off
+            data: {}
+      - conditions:
+          - condition: trigger
+            id: done
+          - condition: state
+            entity_id: switch.prise_connectee_chargeur_velo
+            state: "on"
+        sequence:
+          - target:
+              entity_id: switch.prise_connectee_chargeur_velo
+            action: switch.turn_off
+mode: restart
+```
+
+### Trois cas concrets (ce que ça change au quotidien)
+
+**Cas 1 — Vous branchez le vélo en rentrant**  
+À 22h01, la prise s’allume, la charge démarre, puis la prise s’éteint automatiquement quand c’est fini. Rien à surveiller.
+
+**Cas 2 — Le vélo n’est finalement pas branché**  
+À 22h01, la prise s’allume… mais la puissance reste < 5 W.  
+30 secondes après, Home Assistant coupe. Pas de prise ON jusqu’au matin.
+
+**Cas 3 — Batterie déjà pleine**  
+La prise s’allume à 22h01, mais la consommation reste faible (chargeur en veille).  
+Résultat : coupure rapide, pas d’alimentation inutile.
+
+> Astuce : si votre chargeur consomme parfois 6–8 W en veille, remontez le seuil (ex : 10 W) et observez un ou deux cycles complets pour valider.
+
+## Conclusion
+
+Cette automatisation règle un irritant du quotidien : **profiter des heures creuses sans y penser**. Vous branchez le vélo quand ça vous arrange, puis Home Assistant s’occupe du reste :
+
+- démarrage à 22h01,
+- coupure rapide si rien ne charge,
+- arrêt automatique quand la charge est terminée.
+
+Si vous voulez aller plus loin ensuite, la suite logique c’est une petite notification “charge terminée” (ou une alerte si le vélo n’était pas branché). Mais même sans ça, vous avez déjà une recharge autonome, propre, et sans prise de tête.
