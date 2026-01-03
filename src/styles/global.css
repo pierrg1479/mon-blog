@@ -265,22 +265,39 @@ pre > code {
 	all: unset;
 }
 blockquote {
+        position: relative;
         margin: 2rem 0;
-        padding: 0.75rem 0 0.75rem 1.25rem;
-        border-left: 3px solid rgb(var(--accent));
-        background: linear-gradient(
-                90deg,
-                rgba(var(--accent-light), 0.18),
-                rgba(var(--accent-light), 0.03)
-        );
+        padding: 2rem 3rem;
+        background: #f9f9f9;
+        border-left: 4px solid #ffd04d;
         color: rgb(var(--gray-dark));
         font-size: 1.15em;
         font-style: italic;
         line-height: 1.6;
 }
 
+blockquote::before {
+        content: "«";
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        font-size: 3rem;
+        color: #ffd04d;
+        font-family: Georgia, serif;
+}
+
+blockquote::after {
+        content: "»";
+        position: absolute;
+        bottom: 0.5rem;
+        right: 1rem;
+        font-size: 3rem;
+        color: #ffd04d;
+        font-family: Georgia, serif;
+}
+
 .dark blockquote {
-        background: rgba(var(--gray-light), 0.2);
+        background: rgba(var(--gray-light), 0.12);
         color: rgb(var(--black));
 }
 
@@ -289,9 +306,15 @@ blockquote p {
 }
 
 blockquote p:last-child {
-        margin-top: 0.9em;
+        margin-top: 1rem;
         margin-bottom: 0;
-        color: rgb(var(--gray));
+        color: #666;
+        font-style: normal;
+        font-weight: 600;
+}
+
+blockquote p:last-child::before {
+        content: "— ";
 }
 
 /* Sommaire */
