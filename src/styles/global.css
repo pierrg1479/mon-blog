@@ -121,8 +121,11 @@ article a,
 .article-content a,
 .prose a,
 main a {
-        color: #ffd04d;
-        text-decoration: none;
+        color: inherit;
+        text-decoration: underline;
+        text-decoration-color: #ffd04d;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 3px;
         transition: all 0.2s ease;
 }
 
@@ -130,11 +133,7 @@ article a:hover,
 .article-content a:hover,
 .prose a:hover,
 main a:hover {
-        color: #ffda70;
-        text-decoration: underline;
-        text-decoration-color: #ffd04d;
-        text-decoration-thickness: 2px;
-        text-underline-offset: 3px;
+        color: #ffd04d;
 }
 
 /* Exclure certains éléments qui ne doivent pas avoir ce style */
