@@ -17,9 +17,7 @@ L’idée, c’est donc d’automatiser deux choses très concrètes :
 
 Résultat : vous branchez quand ça vous arrange, Home Assistant gère le reste. Et surtout, la prise ne reste pas alimentée inutilement.
 
-## Comprendre le contexte ou le problème
-
-### Pourquoi je ne voulais pas d’un simple ON/OFF à heure fixe
+## Pourquoi un simple ON/OFF à 22h ne suffit pas
 Une prise qui s’allume à 22h, c’est bien. Mais dans la vraie vie, il y a deux cas qui posent problème :
 
 - **Le vélo n’est pas branché** (ou le chargeur n’est pas connecté correctement). La prise s’allume… pour rien.
@@ -27,7 +25,7 @@ Une prise qui s’allume à 22h, c’est bien. Mais dans la vraie vie, il y a de
 
 Moi, je voulais quelque chose de plus “intelligent” : **allumer au bon moment**, puis **éteindre automatiquement dès que ça ne consomme plus**.
 
-## Notions clés à connaître
+## Les 3 éléments indispensables de l'automatisation
 
 ### La mesure de puissance : le capteur qui fait toute la différence
 Le cœur du système, c’est la **puissance** mesurée en watts (W) par la prise connectée, disponible dans Home Assistant via un capteur du type :
@@ -56,7 +54,7 @@ De mon côté, j’utilise une **prise connectée Zigbee Sonoff S60ZBTPF** :
 - **Zigbee** : réactif et stable, et ça évite de charger le Wi-Fi.
 - **Mesure de puissance** : indispensable pour couper automatiquement quand la charge est terminée (ou si rien ne charge).
 
-## Mise en pratique : l’automatisation pas à pas
+## L'automatisation Home Assistant (YAML inclus)
 
 ### Ce que fait l’automatisation (version humaine)
 1) **À 22h01**, Home Assistant allume la prise du chargeur.  
