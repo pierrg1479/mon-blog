@@ -115,6 +115,36 @@ a {
 a:hover {
 	color: rgb(var(--accent));
 }
+
+/* Style des liens dans le contenu des articles */
+article a,
+.article-content a,
+.prose a,
+main a {
+        color: #ffd04d;
+        text-decoration: none;
+        transition: all 0.2s ease;
+}
+
+article a:hover,
+.article-content a:hover,
+.prose a:hover,
+main a:hover {
+        color: #ffda70;
+        text-decoration: underline;
+        text-decoration-color: #ffd04d;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 3px;
+}
+
+/* Exclure certains éléments qui ne doivent pas avoir ce style */
+article a.no-underline,
+article a.button,
+article a.cta,
+.affiliate-section a {
+        text-decoration: none;
+        color: inherit;
+}
 p {
 	margin-bottom: 1em;
 }
