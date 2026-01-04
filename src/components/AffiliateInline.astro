@@ -52,10 +52,10 @@ const ariaLabel = `${title} — ${price} (${cta})`;
 <style>
   .aff-inline {
     display: grid;
-    grid-template-columns: 72px 1fr;
-    gap: 12px;
+    grid-template-columns: 64px 1fr;
+    gap: 10px;
     align-items: center;
-    padding: 12px;
+    padding: 10px 12px;
     border-radius: 14px;
     border: 1px solid var(--border, rgba(0, 0, 0, 0.08));
     background: var(--card, rgba(255, 255, 255, 0.9));
@@ -80,8 +80,8 @@ const ariaLabel = `${title} — ${price} (${cta})`;
   }
 
   .aff-inline__img {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: 64px;
     border-radius: 12px;
     object-fit: cover;
     background: var(--card, rgba(0, 0, 0, 0.04));
@@ -91,7 +91,7 @@ const ariaLabel = `${title} — ${price} (${cta})`;
   .aff-inline__body {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     min-width: 0;
   }
 
@@ -107,7 +107,7 @@ const ariaLabel = `${title} — ${price} (${cta})`;
   .aff-inline__meta {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
   }
 
@@ -117,6 +117,9 @@ const ariaLabel = `${title} — ${price} (${cta})`;
   }
 
   .aff-inline__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     margin-left: auto;
     padding: 6px 12px;
     border-radius: 999px;
