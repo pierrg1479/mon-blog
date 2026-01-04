@@ -36,7 +36,7 @@ Le cœur du système, c’est la **puissance** mesurée en watts (W) par la pris
 - Quand il ne recharge pas (vélo absent, charge terminée, chargeur en veille), la puissance chute.
 
 <figure>
-  <img src="/images/charge-velo-heures-creuses-home-assistant-1.png" alt="Historique du capteur de puissance montrant les variations de consommation du chargeur vélo : 0W (veille), 164-178W (charge active), puis retour à 0W" />
+  <img src="/images/charge-velo-heures-creuses-home-assistant-1.png" alt="Historique du capteur de puissance montrant les variations de consommation du chargeur vélo : 0W (arrêt), 164-178W (charge active), puis retour à 0W" />
   <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>
     <strong>Historique du capteur de puissance montrant les variations de consommation du chargeur vélo : 0W (veille), 164-178W (charge active), puis retour à 0W</strong>
   </figcaption>
@@ -134,6 +134,13 @@ mode: restart
 **Cas 2 — Le vélo n’est finalement pas branché**  
 À 22h01, la prise s’allume… mais la puissance reste < 5 W.  
 30 secondes après, Home Assistant coupe. Pas de prise ON jusqu’au matin.
+
+<figure>
+  <img src="/images/charge-velo-heures-creuses-home-assistant.jpg" alt="Trace d'exécution du 3 janvier 2026 : démarrage à 22:01, extinction automatique à 22:01:30" />
+  <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>
+    <strong>Trace d'exécution du 3 janvier 2026 : démarrage à 22:01, extinction automatique à 22:01:30</strong>
+  </figcaption>
+</figure>
 
 **Cas 3 — Batterie déjà pleine**  
 La prise s’allume à 22h01, mais la consommation reste faible (chargeur en veille).  
