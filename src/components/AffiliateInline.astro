@@ -72,6 +72,11 @@ const ariaLabel = `${title} — ${price} (${cta})`;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   }
 
+  .aff-inline:hover .aff-inline__cta {
+    background: var(--cta-bg, rgba(255, 208, 77, 0.32));
+    transform: translateY(-1px);
+  }
+
   .aff-inline:focus-visible {
     outline: none;
     transform: translateY(-1px);
@@ -128,6 +133,7 @@ const ariaLabel = `${title} — ${price} (${cta})`;
     font-weight: 600;
     font-size: 0.9rem;
     white-space: nowrap;
+    transition: transform 0.15s ease, background-color 0.2s ease;
   }
 
   .aff-inline__disclaimer {
