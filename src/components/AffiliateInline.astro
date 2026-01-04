@@ -17,7 +17,7 @@ const {
   imageSrc,
   imageAlt = title,
   cta = "Voir le produit",
-  disclaimer = "Lien affilié",
+  disclaimer,
   dataAff,
 } = Astro.props;
 
@@ -45,7 +45,7 @@ const ariaLabel = `${title} — ${price} (${cta})`;
       <div class="aff-inline__price">{price}</div>
       <div class="aff-inline__cta" aria-hidden="true">{cta}</div>
     </div>
-    <div class="aff-inline__disclaimer">{disclaimer}</div>
+    {disclaimer && <div class="aff-inline__disclaimer">{disclaimer}</div>}
   </div>
 </a>
 
