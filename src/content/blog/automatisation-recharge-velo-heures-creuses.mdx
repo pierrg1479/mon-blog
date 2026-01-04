@@ -10,14 +10,17 @@ author:
 
 import AffiliateInline from '../../components/AffiliateInline.astro';
 
-Je rentre du travail, je branche le vélo. Mais avec un contrat **heures pleines / heures creuses**, la charge n’a aucun intérêt à démarrer immédiatement. Et clairement, je ne vais pas me relever à 22h pour y penser.
+Je rentre du travail et branche mon vélo électrique Moustache Lundi 27. Mais avec un **contrat heures pleines / heures creuses**, aucun intérêt à démarrer la charge immédiatement. Et je ne vais certainement pas me relever à 22h pour y penser.
 
-L’idée, c’est donc d’automatiser deux choses très concrètes :
+Le problème ? Oublier de recharger ce modèle n'est pas une option. Avec ses 27 kg, tomber en panne de batterie en cours de route transforme rapidement le trajet en calvaire.
+
+L'idée, c'est donc d'automatiser deux choses très concrètes :
 
 - **Démarrer la charge automatiquement à 22h01** (début des heures creuses).
-- **Couper automatiquement** si rien ne charge… ou dès que la charge est terminée.
+- **Couper automatiquement si rien ne charge… ou dès que la charge est terminée.**
 
-Résultat : vous branchez quand ça vous arrange, Home Assistant gère le reste. Et surtout, la prise ne reste pas alimentée inutilement.
+**Résultat** : vous branchez quand ça vous arrange, Home Assistant gère le reste. Et surtout, la prise ne reste pas alimentée inutilement.
+
 
 ## Pourquoi un simple ON/OFF à 22h ne suffit pas
 Une prise qui s’allume à 22h, c’est bien. Mais dans la vraie vie, il y a deux cas qui posent problème :
