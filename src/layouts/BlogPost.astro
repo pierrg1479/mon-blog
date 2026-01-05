@@ -361,11 +361,11 @@ const authorAvatar = author?.avatar
 								alt={title}
 								class="hero-header-image"
 								loading="eager"
-							/>
-						)}
-						<div class="hero-overlay"></div>
-					</div>
-					<div class="hero-content">
+								/>
+							)}
+							<div class="hero-overlay"></div>
+						</div>
+						<div class="hero-content">
 						<h1 class="hero-title">{title}</h1>
 						<div class="hero-meta">
 							<div class="meta-info">
@@ -376,17 +376,18 @@ const authorAvatar = author?.avatar
 									loading="lazy"
 								/>
 								<span class="author-name">{authorName}</span>
-									<span class="separator" aria-hidden="true">
-										·
-									</span>
-									<div class="date">
-										Publié le <FormattedDate date={pubDate} />
-										{updatedDate && updatedDate.getTime() !== pubDate.getTime() && (
-											<span> • Mis à jour le <FormattedDate date={updatedDate} /></span>
-										)}
-									</div>
-									<span class="separator" aria-hidden="true">
-										·
+								<span class="separator" aria-hidden="true">
+									·
+								</span>
+								<div class="date">
+									Publié le{' '}
+									<FormattedDate date={pubDate} />
+									{updatedDate && (
+										<span> • Mis à jour le <FormattedDate date={updatedDate} /></span>
+									)}
+								</div>
+								<span class="separator" aria-hidden="true">
+									·
 									</span>
 								<span>{readingTime} min de lecture</span>
 							</div>
