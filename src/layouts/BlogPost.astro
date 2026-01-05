@@ -204,6 +204,9 @@ const authorAvatar = author?.avatar
 			.date {
 				display: inline-flex;
 				align-items: center;
+				margin-bottom: 1rem;
+				color: rgb(var(--gray));
+				font-size: 0.95rem;
 			}
 
 			.updated {
@@ -378,10 +381,10 @@ const authorAvatar = author?.avatar
 									</span>
 									<div class="date">
 										Publié le <FormattedDate date={pubDate} />
-										{updatedDate && (
+										{updatedDate && new Date(updatedDate).toISOString() !== new Date(pubDate).toISOString() && (
 											<>
-												{' • Mis à jour le '}
-												<FormattedDate date={updatedDate} />
+												{' • '}
+												Mis à jour le <FormattedDate date={updatedDate} />
 											</>
 										)}
 									</div>
