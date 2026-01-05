@@ -8,9 +8,13 @@ export async function GET(context) {
 		title: SITE_TITLE,
 		description: SITE_DESCRIPTION,
 		site: context.site,
-		items: posts.map((post) => ({
-			...post.data,
-			link: `/blog/${post.id}/`,
-		})),
+		items: posts.map((post) => {
+			const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
+
+			return {
+				...post.data,
+				link: `/blog/${slug}/`,
+			};
+		}),
 	});
 }

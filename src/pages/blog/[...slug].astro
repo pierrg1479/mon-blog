@@ -1,15 +1,45 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import { execSync } from 'node:child_process';
+import path from 'node:path';
 
 export const prerender = true;
 
+export const getGitLastUpdatedDate = (entryId: string) => {
+	try {
+		const filePath = path.join(process.cwd(), 'src', 'content', 'blog', entryId);
+		const isoDate = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
+			encoding: 'utf-8',
+		}).trim();
+
+		if (!isoDate) return undefined;
+
+		const parsedDate = new Date(isoDate);
+		return Number.isNaN(parsedDate.getTime()) ? undefined : parsedDate;
+	} catch (error) {
+		console.warn(`Impossible de récupérer la date de mise à jour pour ${entryId}:`, error);
+		return undefined;
+	}
+};
+
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id.replace('.md', '') },
-		props: post,
-	}));
+	return posts.map((post) => {
+		const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
+		const updatedDate = getGitLastUpdatedDate(post.id);
+		
+		return {
+			params: { slug },
+			props: {
+				...post,
+				data: {
+					...post.data,
+					updatedDate: updatedDate || post.data.updatedDate || post.data.pubDate,
+				},
+			},
+		};
+	});
 }
 
 type Props = CollectionEntry<'blog'>;
