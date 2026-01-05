@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import AuthorBox from '../components/AuthorBox.astro';
 import Footer from '../components/Footer.astro';
@@ -10,11 +9,18 @@ import ShareButtons from '../components/ShareButtons.astro';
 import ReadingProgress from '../components/ReadingProgress.astro';
 import ArticleSchema from '../components/ArticleSchema.astro';
 import ImageLightbox from '../components/ImageLightbox.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import '../styles/article-ultra-clean.css';
 import '../styles/article-patch.css';
 
-type Props = CollectionEntry<'blog'>['data'] & {
-	content: string;
+type Props = {
+	title: string;
+	description: string;
+	pubDate: Date;
+	updatedDate?: Date;
+	heroImage?: any;
+	content?: string;
+	author?: any;
 };
 
 const { title, description, pubDate, updatedDate, heroImage, content, author } = Astro.props;
@@ -32,19 +38,6 @@ const schemaImage = heroImageSource
 		? heroImageSource
 		: new URL(heroImageSource, Astro.site).href
 	: undefined;
-
-const isSameDay = (left: Date, right: Date) =>
-	left.getFullYear() === right.getFullYear() &&
-	left.getMonth() === right.getMonth() &&
-	left.getDate() === right.getDate();
-
-const showUpdatedDate = updatedDate && !isSameDay(pubDate, updatedDate);
-
-const formattedDate = new Intl.DateTimeFormat('fr-FR', {
-	day: 'numeric',
-	month: 'short',
-	year: 'numeric',
-}).format(pubDate);
 
 const calculateReadingTime = (text: string): number => {
 	const cleanText = text
@@ -208,6 +201,16 @@ const authorAvatar = author?.avatar
 				opacity: 0.6;
 			}
 
+			.date {
+				display: inline-flex;
+				align-items: center;
+			}
+
+			.updated {
+				color: rgb(var(--gray-light));
+				font-style: italic;
+			}
+
 			.ai-resume-badge {
 				position: absolute;
 				bottom: -1.25rem;
@@ -269,13 +272,6 @@ const authorAvatar = author?.avatar
 			.dark .article-content {
 				background: #0f172a;
 				box-shadow: 0 -4px 30px rgba(15, 23, 42, 0.65);
-			}
-
-			.article-updated {
-				margin-bottom: 1.5rem;
-				color: rgb(var(--gray));
-				font-style: italic;
-				text-align: center;
 			}
 
 			@media (max-width: 768px) {
@@ -377,12 +373,20 @@ const authorAvatar = author?.avatar
 									loading="lazy"
 								/>
 								<span class="author-name">{authorName}</span>
-								<span class="separator" aria-hidden="true">
-									·
-								</span>
-								<span>Publié le {formattedDate}</span>
-								<span class="separator" aria-hidden="true">
-									·
+									<span class="separator" aria-hidden="true">
+										·
+									</span>
+									<div class="date">
+										Publié le <FormattedDate date={pubDate} />
+										{updatedDate && (
+											<>
+												{' • Mis à jour le '}
+												<FormattedDate date={updatedDate} />
+											</>
+										)}
+									</div>
+									<span class="separator" aria-hidden="true">
+										·
 								</span>
 								<span>{readingTime} min de lecture</span>
 							</div>
@@ -414,16 +418,6 @@ const authorAvatar = author?.avatar
 
 				<div class="article-content">
 					<div class="prose">
-						{showUpdatedDate && (
-							<div class="article-updated">
-								Mis à jour le{' '}
-								{new Intl.DateTimeFormat('fr-FR', {
-									day: 'numeric',
-									month: 'short',
-									year: 'numeric',
-								}).format(updatedDate)}
-							</div>
-						)}
 						<slot />
 						<ShareButtons title={title} />
 						<AuthorBox />
