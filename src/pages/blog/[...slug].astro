@@ -8,17 +8,32 @@ export const prerender = true;
 
 export const getGitLastUpdatedDate = (entryId: string) => {
 	try {
-		const filePath = path.join(process.cwd(), 'src', 'content', 'blog', entryId);
-		const isoDate = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
-			encoding: 'utf-8',
-		}).trim();
+		const basePath = path.join(process.cwd(), 'src', 'content', 'blog');
+		const possibleFiles = [
+			path.join(basePath, entryId),
+			path.join(basePath, `${entryId}.md`),
+			path.join(basePath, `${entryId}.mdx`),
+		];
 
-		if (!isoDate) return undefined;
+		for (const filePath of possibleFiles) {
+			try {
+				const isoDate = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
+					encoding: 'utf-8',
+				}).trim();
 
-		const parsedDate = new Date(isoDate);
-		return Number.isNaN(parsedDate.getTime()) ? undefined : parsedDate;
+				if (isoDate) {
+					const parsedDate = new Date(isoDate);
+					if (!Number.isNaN(parsedDate.getTime())) {
+						return parsedDate;
+					}
+				}
+			} catch {
+				continue;
+			}
+		}
+		return undefined;
 	} catch (error) {
-		console.warn(`Impossible de récupérer la date de mise à jour pour ${entryId}:`, error);
+		console.error(`Erreur Git pour ${entryId}:`, error);
 		return undefined;
 	}
 };

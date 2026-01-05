@@ -201,17 +201,12 @@ const authorAvatar = author?.avatar
 				opacity: 0.6;
 			}
 
-			.date {
-				display: inline-flex;
-				align-items: center;
-				margin-bottom: 1rem;
-				color: rgb(var(--gray));
-				font-size: 0.95rem;
+			.meta-date {
+				color: rgba(255, 255, 255, 0.95) !important;
 			}
 
-			.updated {
-				color: rgb(var(--gray-light));
-				font-style: italic;
+			.dark .meta-date {
+				color: rgba(255, 255, 255, 0.9) !important;
 			}
 
 			.ai-resume-badge {
@@ -376,19 +371,18 @@ const authorAvatar = author?.avatar
 									loading="lazy"
 								/>
 								<span class="author-name">{authorName}</span>
-								<span class="separator" aria-hidden="true">
-									·
-								</span>
-								<div class="date">
+								<span class="separator" aria-hidden="true">·</span>
+								<span class="meta-date">
 									Publié le{' '}
 									<FormattedDate date={pubDate} />
-									{updatedDate && (
-										<span> • Mis à jour le <FormattedDate date={updatedDate} /></span>
+									{updatedDate && updatedDate.getTime() !== pubDate.getTime() && (
+										<>
+											{' • Mis à jour le '}
+											<FormattedDate date={updatedDate} />
+										</>
 									)}
-								</div>
-								<span class="separator" aria-hidden="true">
-									·
-									</span>
+								</span>
+								<span class="separator" aria-hidden="true">·</span>
 								<span>{readingTime} min de lecture</span>
 							</div>
 						</div>
