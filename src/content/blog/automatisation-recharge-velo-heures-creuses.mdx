@@ -10,14 +10,15 @@ author:
 
 import AffiliateInline from '../../components/AffiliateInline.astro';
 
-Je rentre du travail et branche mon vélo électrique Moustache Lundi 27. Mais avec un **contrat heures pleines / heures creuses**, aucun intérêt à démarrer la charge immédiatement. Et je ne vais certainement pas me relever à 22h pour y penser.
+27 kg. C'est le poids de mon Moustache Lundi 27 (que je recommande, je le kiffe !) une fois la batterie à plat. Autant dire qu'oublier de recharger avant un trajet, c'est transformer le vélo en enclume.
 
-Le problème ? Oublier de recharger ce modèle n'est pas une option. Avec ses 27 kg, tomber en panne de batterie en cours de route transforme rapidement le trajet en calvaire.
+Le problème, c'est que je n'ai pas envie de brancher systématiquement mon vélo dès que je rentre. Avec un **contrat heures pleines / heures creuses**, lancer la charge à 18h n'a aucun sens économique. Et me relever à 22h01 pour appuyer sur un bouton ? Très peu pour moi.
 
-L'idée, c'est donc d'automatiser deux choses très concrètes :
+L'objectif est donc simple : brancher le vélo quand ça me convient, et laisser Home Assistant gérer l'optimisation.
+Concrètement, l'automatisation doit :
 
 - **Démarrer la charge automatiquement à 22h01** (début des heures creuses).
-- **Couper automatiquement si rien ne charge… ou dès que la charge est terminée.**
+- **Couper la prise** dès que la charge est terminée… ou si rien ne charge.
 
 **Résultat** : vous branchez quand ça vous arrange, Home Assistant gère le reste. Et surtout, la prise ne reste pas alimentée inutilement.
 
