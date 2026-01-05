@@ -52,7 +52,7 @@ export async function getStaticPaths() {
 				...post,
 				data: {
 					...post.data,
-					updatedDate: updatedDate || post.data.updatedDate || post.data.pubDate,
+					updatedDate: updatedDate || post.data.pubDate,
 				},
 			},
 		};
