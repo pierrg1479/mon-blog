@@ -1,15 +1,40 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import { execSync } from 'node:child_process';
+import path from 'node:path';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id.replace('.md', '') },
-		props: post,
-	}));
+	
+	return posts.map((post) => {
+		const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
+		
+		let updatedDate = post.data.pubDate;
+		try {
+			const filePath = path.join(process.cwd(), 'src/content/blog', post.id);
+			const gitDate = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
+				encoding: 'utf-8',
+			}).trim();
+			
+			if (gitDate) {
+				updatedDate = new Date(gitDate);
+			}
+		} catch (e) {}
+		
+		return {
+			params: { slug },
+			props: {
+				...post,
+				data: {
+					...post.data,
+					updatedDate,
+				},
+			},
+		};
+	});
 }
 
 type Props = CollectionEntry<'blog'>;
