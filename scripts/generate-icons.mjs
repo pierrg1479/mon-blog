@@ -10,6 +10,7 @@ const sourceImage = join(publicDir, 'hannibal-cercle.png');
 const outputs = [
 	{ name: 'apple-touch-icon.png', size: 180 },
 	{ name: 'favicon-48.png', size: 48 },
+	{ name: 'favicon-96.png', size: 96 },
 	{ name: 'icon-192.png', size: 192 },
 	{ name: 'icon-512.png', size: 512 },
 ];
