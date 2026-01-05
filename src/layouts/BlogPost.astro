@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import AuthorBox from '../components/AuthorBox.astro';
 import Footer from '../components/Footer.astro';
@@ -14,8 +13,14 @@ import FormattedDate from '../components/FormattedDate.astro';
 import '../styles/article-ultra-clean.css';
 import '../styles/article-patch.css';
 
-type Props = CollectionEntry<'blog'>['data'] & {
-	content: string;
+type Props = {
+	title: string;
+	description: string;
+	pubDate: Date;
+	updatedDate?: Date;
+	heroImage?: any;
+	content?: string;
+	author?: any;
 };
 
 const { title, description, pubDate, updatedDate, heroImage, content, author } = Astro.props;
@@ -368,22 +373,20 @@ const authorAvatar = author?.avatar
 									loading="lazy"
 								/>
 								<span class="author-name">{authorName}</span>
-								<span class="separator" aria-hidden="true">
-									·
-								</span>
-								<div class="date">
-									<FormattedDate date={pubDate} />
-									{updatedDate && updatedDate.getTime() !== pubDate.getTime() && (
-										<>
-											{' • '}
-											<span class="updated">
-												Mis à jour le <FormattedDate date={updatedDate} />
-											</span>
-										</>
-									)}
-								</div>
-								<span class="separator" aria-hidden="true">
-									·
+									<span class="separator" aria-hidden="true">
+										·
+									</span>
+									<div class="date">
+										Publié le <FormattedDate date={pubDate} />
+										{updatedDate && (
+											<>
+												{' • Mis à jour le '}
+												<FormattedDate date={updatedDate} />
+											</>
+										)}
+									</div>
+									<span class="separator" aria-hidden="true">
+										·
 								</span>
 								<span>{readingTime} min de lecture</span>
 							</div>
