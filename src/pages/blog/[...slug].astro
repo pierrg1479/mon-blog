@@ -39,6 +39,23 @@ export const getGitLastUpdatedDate = (entryId: string) => {
 };
 
 export async function getStaticPaths() {
+	const getGitLastUpdatedDate = (entryId: string) => {
+		try {
+			const filePath = path.join(process.cwd(), 'src', 'content', 'blog', entryId);
+			const isoDate = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
+				encoding: 'utf-8',
+			}).trim();
+
+			if (!isoDate) return undefined;
+
+			const parsedDate = new Date(isoDate);
+			return Number.isNaN(parsedDate.getTime()) ? undefined : parsedDate;
+		} catch (error) {
+			console.warn(`Impossible de récupérer la dernière modification pour ${entryId}:`, error);
+			return undefined;
+		}
+	};
+
 	const posts = await getCollection('blog');
 	return posts.map((post) => {
 		const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
