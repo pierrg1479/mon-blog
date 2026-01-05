@@ -2,11 +2,12 @@
 interface Props {
 	title: string;
 	publishDate: Date;
+	updatedDate?: Date;
 	content: string;
 	url?: string;
 }
 
-const { title, publishDate, content, url } = Astro.props;
+const { title, publishDate, updatedDate, content, url } = Astro.props;
 
 const articleUrl = url || new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
 
@@ -30,17 +31,28 @@ const calculateReadingTime = (text: string): number => {
 	return Math.max(1, minutes);
 };
 
-const formattedDate = new Intl.DateTimeFormat('fr-FR', {
+const formatDate = (date: Date) => new Intl.DateTimeFormat('fr-FR', {
 	day: 'numeric',
 	month: 'short',
 	year: 'numeric',
-}).format(publishDate);
+}).format(date);
+
+const formattedPubDate = formatDate(publishDate);
+const formattedUpdateDate = updatedDate ? formatDate(updatedDate) : null;
+
+// Affiche la mise à jour seulement si différente
+const showUpdate = updatedDate && updatedDate.getTime() !== publishDate.getTime();
 
 const readingTime = calculateReadingTime(content);
 ---
 
 <div class="article-meta" aria-label="Métadonnées de l'article">
-	<span class="meta-item">Publié le {formattedDate}</span>
+	<span class="meta-item">
+		Publié le {formattedPubDate}
+		{showUpdate && formattedUpdateDate && (
+			<> • Mis à jour le {formattedUpdateDate}</>
+		)}
+	</span>
 	<span class="meta-separator" aria-hidden="true">·</span>
 	<span class="meta-item">{readingTime} min de lecture</span>
 	<span class="meta-separator" aria-hidden="true">·</span>
