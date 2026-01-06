@@ -24,7 +24,7 @@ Concrètement, l'automatisation doit :
 **Résultat** : vous branchez quand ça vous arrange, Home Assistant gère le reste. Et surtout, la prise ne reste pas alimentée inutilement.
 
 
-## Pourquoi un simple ON/OFF à 22h ne suffit pas
+## ❓ Pourquoi un simple ON/OFF à 22h ne suffit pas
 Une prise qui s’allume à 22h, c’est bien. Mais dans la vraie vie, il y a deux cas qui posent problème :
 
 - **Le vélo n’est pas branché** (ou le chargeur n’est pas connecté correctement). La prise s’allume… pour rien.
@@ -32,7 +32,7 @@ Une prise qui s’allume à 22h, c’est bien. Mais dans la vraie vie, il y a de
 
 Moi, je voulais quelque chose de plus “intelligent” : **allumer au bon moment**, puis **éteindre automatiquement dès que ça ne consomme plus**.
 
-## Les 3 éléments indispensables de l'automatisation
+## ✅ Les 3 éléments indispensables de l'automatisation
 
 ### La mesure de puissance : le capteur qui fait toute la différence
 Le cœur du système, c’est la **puissance** mesurée en watts (W) par la prise connectée, disponible dans Home Assistant via un capteur du type :
@@ -62,7 +62,7 @@ Parce que la puissance peut fluctuer. Un mini creux ne doit pas couper la charge
 
 Donc je demande : **puissance < 5 W pendant 2 minutes** avant de couper. Ça évite les coupures intempestives.
 
-### Matériel utilisé : prise Zigbee Sonoff S60ZBTPF
+## 🔌 Matériel utilisé : prise Zigbee Sonoff S60ZBTPF
 De mon côté, j’utilise une **prise connectée Zigbee Sonoff S60ZBTPF** :
 
 - **Zigbee** : réactif et stable, et ça évite de charger le Wi-Fi.
@@ -77,7 +77,7 @@ De mon côté, j’utilise une **prise connectée Zigbee Sonoff S60ZBTPF** :
   dataAff="sonoff-s60zbtpf"
 />
 
-## L'automatisation Home Assistant (YAML inclus)
+## 🤖 L'automatisation Home Assistant (YAML inclus)
 
 <figure>
   <img src="/images/charge-velo-heures-creuses-home-assistant-1.jpg" alt="Graphique de consommation du vélo électrique sur 24h : montée à 170W à 23h, puis descente progressive jusqu'à 7W à 2h indiquant la fin de charge" />
