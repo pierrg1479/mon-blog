@@ -46,12 +46,17 @@ export async function getStaticPaths() {
 	const toAdjacentPost = (post: CollectionEntry<'blog'> | undefined) => {
 		if (!post) return undefined;
 		const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
+		const heroImage =
+			typeof post.data.heroImage === 'string'
+				? post.data.heroImage
+				: post.data.heroImage?.src;
 
 		return {
 			slug,
 			title: post.data.title,
 			h1: post.data.h1,
 			pubDate: post.data.pubDate,
+			heroImage,
 		};
 	};
 
