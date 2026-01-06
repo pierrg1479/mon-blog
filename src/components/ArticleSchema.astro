@@ -22,6 +22,12 @@ const {
 	canonicalUrl,
 } = Astro.props;
 
+const defaultAuthor = { name: 'Pierre', url: 'https://www.reddit.com/user/Patient-Gene703/' };
+const resolvedAuthor = {
+	name: author?.name || defaultAuthor.name,
+	url: author?.url || defaultAuthor.url,
+};
+
 const publisher = {
 	'@type': 'Organization',
 	name: 'The Optimization Guy',
@@ -50,8 +56,8 @@ const schema = {
 			: datePublished.toISOString(),
 	author: {
 		'@type': 'Person',
-		name: author.name,
-		...(author.url && { url: author.url }),
+		name: resolvedAuthor.name,
+		url: resolvedAuthor.url,
 	},
 	publisher,
 	mainEntityOfPage: {
