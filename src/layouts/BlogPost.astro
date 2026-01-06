@@ -356,15 +356,14 @@ const authorAvatar = author?.avatar
 
 			.post-navigation {
 				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-				gap: 1rem;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 1.5rem;
 				margin: 3rem 0 1.5rem;
 			}
 
 			.nav-card {
 				display: flex;
-				flex-direction: column;
-				gap: 1rem;
+				gap: 1.25rem;
 				padding: 1.5rem;
 				border-radius: 16px;
 				border: 1px solid rgba(15, 23, 42, 0.08);
@@ -373,7 +372,15 @@ const authorAvatar = author?.avatar
 				text-decoration: none;
 				box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
 				transition: all 0.2s ease;
-				align-items: stretch;
+				align-items: flex-start;
+			}
+
+			.nav-card.previous {
+				flex-direction: row;
+			}
+
+			.nav-card.next {
+				flex-direction: row-reverse;
 			}
 
 			.nav-card:hover {
@@ -408,13 +415,13 @@ const authorAvatar = author?.avatar
 			}
 
 			.nav-thumb {
-				position: relative;
-				width: 100%;
-				aspect-ratio: 16 / 9;
+				width: 140px;
+				height: 140px;
 				border-radius: 12px;
 				overflow: hidden;
 				flex-shrink: 0;
 				background: #e2e8f0;
+				align-self: flex-start;
 			}
 
 			:global(.dark) .nav-thumb {
@@ -435,8 +442,11 @@ const authorAvatar = author?.avatar
 				align-items: center;
 				gap: 0.5rem;
 				font-weight: 600;
+				font-size: 0.875rem;
 				color: #0f172a;
-				opacity: 0.8;
+				opacity: 0.7;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
 			}
 
 			:global(.dark) .nav-direction {
@@ -450,7 +460,9 @@ const authorAvatar = author?.avatar
 
 			.nav-title {
 				margin: 0;
-				font-size: 1.15rem;
+				font-size: 1.1rem;
+				font-weight: 600;
+				line-height: 1.4;
 				color: #0f172a;
 			}
 
@@ -462,7 +474,8 @@ const authorAvatar = author?.avatar
 				display: flex;
 				align-items: center;
 				gap: 0.5rem;
-				color: #475569;
+				font-size: 0.875rem;
+				color: #64748b;
 			}
 
 			:global(.dark) .nav-meta {
@@ -478,9 +491,26 @@ const authorAvatar = author?.avatar
 				color: #94a3b8;
 			}
 
-			@media (min-width: 900px) {
-				.nav-card {
+			@media (max-width: 600px) {
+				.nav-card,
+				.nav-card.previous,
+				.nav-card.next {
 					flex-direction: column;
+					align-items: flex-start;
+				}
+
+				.nav-direction.next {
+					justify-content: flex-start;
+				}
+
+				.nav-thumb {
+					width: 100%;
+					height: 160px;
+					order: -1;
+				}
+
+				.post-navigation {
+					grid-template-columns: 1fr;
 				}
 			}
 		</style>
@@ -571,7 +601,7 @@ const authorAvatar = author?.avatar
 				{(previousPost || nextPost) && (
 					<section class="post-navigation" aria-label="Navigation entre articles">
 						{previousPost ? (
-							<a class="nav-card" href={`/blog/${previousPost.slug}/`}>
+							<a class="nav-card previous" href={`/blog/${previousPost.slug}/`}>
 								<div class="nav-content">
 									<div class="nav-direction">
 										<span aria-hidden="true">←</span>
@@ -606,7 +636,7 @@ const authorAvatar = author?.avatar
 						)}
 
 						{nextPost ? (
-							<a class="nav-card" href={`/blog/${nextPost.slug}/`}>
+							<a class="nav-card next" href={`/blog/${nextPost.slug}/`}>
 								<div class="nav-content">
 									<div class="nav-direction next">
 										<span class="direction-label">Article suivant</span>
