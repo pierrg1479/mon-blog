@@ -14,6 +14,7 @@ import '../styles/article-ultra-clean.css';
 import '../styles/article-patch.css';
 
 type Props = {
+	h1?: string;
 	title: string;
 	description: string;
 	pubDate: Date;
@@ -23,9 +24,10 @@ type Props = {
 	author?: any;
 };
 
-const { title, description, pubDate, updatedDate, heroImage, content, author } = Astro.props;
+const { h1, title, description, pubDate, updatedDate, heroImage, content, author } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+const displayTitle = h1 || title;
 
 const heroImageSource = heroImage
 	? typeof heroImage === 'string'
@@ -58,7 +60,7 @@ const calculateReadingTime = (text: string): number => {
 const readingTime = calculateReadingTime(content);
 
 const articleUrl = new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
-const prompt = `Résume cet article de manière concise, en listant les points clés à retenir. Titre : ${title} — URL : ${articleUrl}`;
+const prompt = `Résume cet article de manière concise, en listant les points clés à retenir. Titre : ${displayTitle} — URL : ${articleUrl}`;
 const chatGPTUrl = `https://chat.openai.com/?q=${encodeURIComponent(prompt)}`;
 
 const authorName = author?.name || 'Pierre';
@@ -91,6 +93,7 @@ const authorAvatar = author?.avatar
 		<BaseHead title={title} description={description} image={heroImageSource} />
 		<ArticleSchema
 			title={title}
+			headline={displayTitle}
 			description={description}
 			datePublished={pubDate}
 			dateModified={updatedDate}
@@ -353,7 +356,7 @@ const authorAvatar = author?.avatar
 								width={1600}
 								height={900}
 								src={heroImage}
-								alt={title}
+								alt={displayTitle}
 								class="hero-header-image"
 								loading="eager"
 								/>
@@ -361,7 +364,7 @@ const authorAvatar = author?.avatar
 							<div class="hero-overlay"></div>
 						</div>
 						<div class="hero-content">
-						<h1 class="hero-title">{title}</h1>
+						<h1 class="hero-title">{displayTitle}</h1>
 						<div class="hero-meta">
 							<div class="meta-info">
 								<img
@@ -414,7 +417,7 @@ const authorAvatar = author?.avatar
 				<div class="article-content">
 					<div class="prose">
 						<slot />
-						<ShareButtons title={title} />
+						<ShareButtons title={displayTitle} />
 						<AuthorBox />
 						<Comments />
 					</div>

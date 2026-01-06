@@ -60,6 +60,7 @@ const posts = (await getCollection('blog', ({ data }) => {
 				<ul>
 					{posts.map((post) => {
 						const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
+						const displayTitle = post.data.h1 ?? post.data.title;
 
 						return (
 							<li>
@@ -69,12 +70,12 @@ const posts = (await getCollection('blog', ({ data }) => {
 											width="300"
 											height="200"
 											src={post.data.heroImage.src}
-											alt={post.data.title}
+											alt={displayTitle}
 											class="post-image"
 										/>
 									)}
 									<div class="content">
-										<h3>{post.data.title}</h3>
+										<h3>{displayTitle}</h3>
 										<p class="date">
 											<FormattedDate date={post.data.pubDate} />
 										</p>
