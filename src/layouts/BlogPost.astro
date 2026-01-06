@@ -417,16 +417,16 @@ const authorAvatar = author?.avatar
 			.nav-thumb {
 				position: relative;
 				width: 180px;
-				height: 180px;
+				height: 120px;
 				border-radius: 12px;
 				overflow: hidden;
 				flex-shrink: 0;
-				background: #e2e8f0;
+				background: transparent;
 				align-self: flex-start;
 			}
 
 			:global(.dark) .nav-thumb {
-				background: #1e293b;
+				background: transparent;
 			}
 
 			.nav-thumb img {
@@ -437,6 +437,7 @@ const authorAvatar = author?.avatar
 				object-fit: cover;
 				object-position: center;
 				display: block;
+				transform: scale(1.05);
 			}
 
 			.nav-direction {
@@ -507,7 +508,7 @@ const authorAvatar = author?.avatar
 
 				.nav-thumb {
 					width: 100%;
-					height: 200px;
+					height: 160px;
 					order: -1;
 				}
 
