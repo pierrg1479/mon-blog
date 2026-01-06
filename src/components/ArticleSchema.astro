@@ -1,6 +1,7 @@
 ---
 interface Props {
 	title: string;
+	headline?: string;
 	description: string;
 	image?: string;
 	datePublished: Date | string;
@@ -14,6 +15,7 @@ interface Props {
 
 const {
 	title,
+	headline,
 	description,
 	image,
 	datePublished,
@@ -21,6 +23,8 @@ const {
 	author = { name: 'Pierre', url: 'https://www.reddit.com/user/Patient-Gene703/' },
 	canonicalUrl,
 } = Astro.props;
+
+const schemaHeadline = headline || title;
 
 const defaultAuthor = { name: 'Pierre', url: 'https://www.reddit.com/user/Patient-Gene703/' };
 const resolvedAuthor = {
@@ -42,7 +46,7 @@ const defaultImage = new URL('/hannibal.jpg', Astro.site).href;
 const schema = {
 	'@context': 'https://schema.org',
 	'@type': 'Article',
-	headline: title,
+	headline: schemaHeadline,
 	description,
 	image: image || defaultImage,
 	datePublished:
