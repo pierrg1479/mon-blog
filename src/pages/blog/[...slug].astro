@@ -39,17 +39,40 @@ export const getGitLastUpdatedDate = (entryId: string) => {
 };
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = (await getCollection('blog', ({ data }) => data.draft !== true)).sort(
+		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+	);
 
-	return posts.map((post) => {
+	const toAdjacentPost = (post: CollectionEntry<'blog'> | undefined) => {
+		if (!post) return undefined;
+		const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
+		const heroImage =
+			typeof post.data.heroImage === 'string'
+				? post.data.heroImage
+				: post.data.heroImage?.src;
+
+		return {
+			slug,
+			title: post.data.title,
+			h1: post.data.h1,
+			pubDate: post.data.pubDate,
+			heroImage,
+		};
+	};
+
+	return posts.map((post, index) => {
 		const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
 		const gitUpdatedDate = getGitLastUpdatedDate(post.id);
 		const updatedDate = gitUpdatedDate || post.data.updatedDate || post.data.pubDate;
+		const previousPost = toAdjacentPost(posts[index + 1]);
+		const nextPost = toAdjacentPost(posts[index - 1]);
 
 		return {
 			params: { slug },
 			props: {
 				...post,
+				previousPost,
+				nextPost,
 				data: {
 					...post.data,
 					updatedDate,
@@ -65,6 +88,11 @@ const post = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BlogPost {...post.data} content={post.body}>
+<BlogPost
+	{...post.data}
+	previousPost={post.previousPost}
+	nextPost={post.nextPost}
+	content={post.body}
+>
 	<Content />
 </BlogPost>
