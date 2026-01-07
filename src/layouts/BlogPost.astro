@@ -13,6 +13,14 @@ import FormattedDate from '../components/FormattedDate.astro';
 import '../styles/article-ultra-clean.css';
 import '../styles/article-patch.css';
 
+type AdjacentPost = {
+	slug: string;
+	title: string;
+	h1?: string;
+	pubDate: Date;
+	heroImage?: string;
+};
+
 type Props = {
 	h1?: string;
 	title: string;
@@ -22,9 +30,22 @@ type Props = {
 	heroImage?: any;
 	content?: string;
 	author?: any;
+	previousPost?: AdjacentPost;
+	nextPost?: AdjacentPost;
 };
 
-const { h1, title, description, pubDate, updatedDate, heroImage, content, author } = Astro.props;
+const {
+	h1,
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	heroImage,
+	content,
+	author,
+	previousPost,
+	nextPost,
+} = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
 const displayTitle = h1 || title;
@@ -332,6 +353,134 @@ const authorAvatar = author?.avatar
 					justify-content: center;
 				}
 			}
+
+			.post-navigation {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 1rem;
+				margin: 3rem 0 1.5rem;
+			}
+
+			.nav-card {
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+				padding: 1.5rem;
+				border-radius: 16px;
+				border: 1px solid rgba(15, 23, 42, 0.08);
+				background: #f8fafc;
+				color: inherit;
+				text-decoration: none;
+				box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+				transition: all 0.2s ease;
+				align-items: stretch;
+			}
+
+			.nav-card:hover {
+				border-color: rgba(15, 23, 42, 0.16);
+				transform: translateY(-2px);
+				box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+			}
+
+			:global(.dark) .nav-card {
+				background: #0b1221;
+				border-color: rgba(255, 255, 255, 0.08);
+				box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+			}
+
+			:global(.dark) .nav-card:hover {
+				border-color: rgba(255, 255, 255, 0.14);
+				box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+			}
+
+			.nav-card.empty {
+				opacity: 0.7;
+				cursor: default;
+				pointer-events: none;
+			}
+
+			.nav-content {
+				display: flex;
+				flex-direction: column;
+				gap: 0.6rem;
+				flex: 1;
+				min-width: 0;
+			}
+
+			.nav-thumb {
+				position: relative;
+				width: 100%;
+				aspect-ratio: 16 / 10;
+				min-height: 140px;
+				border-radius: 12px;
+				overflow: hidden;
+				flex-shrink: 0;
+				background: #e2e8f0;
+			}
+
+			:global(.dark) .nav-thumb {
+				background: #1e293b;
+			}
+
+			.nav-thumb img {
+				position: absolute;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				object-position: center top;
+				margin: 0;
+				box-shadow: none;
+				display: block;
+			}
+
+			.nav-direction {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				font-weight: 600;
+				color: #0f172a;
+				opacity: 0.8;
+			}
+
+			:global(.dark) .nav-direction {
+				color: #e2e8f0;
+			}
+
+			.nav-direction.next {
+				justify-content: flex-end;
+				text-align: right;
+			}
+
+			.nav-title {
+				margin: 0;
+				font-size: 1.15rem;
+				color: #0f172a;
+			}
+
+			:global(.dark) .nav-title {
+				color: #f8fafc;
+			}
+
+			.nav-meta {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				color: #475569;
+			}
+
+			:global(.dark) .nav-meta {
+				color: #cbd5e1;
+			}
+
+			.nav-empty-text {
+				margin: 0;
+				color: #94a3b8;
+			}
+
+			:global(.dark) .nav-empty-text {
+				color: #94a3b8;
+			}
 		</style>
 	</head>
 
@@ -414,14 +563,87 @@ const authorAvatar = author?.avatar
 					</a>
 				</div>
 
-				<div class="article-content">
-					<div class="prose">
-						<slot />
-						<ShareButtons title={displayTitle} />
-						<AuthorBox />
-						<Comments />
-					</div>
-				</div>
+		<div class="article-content">
+			<div class="prose">
+				<slot />
+				{(previousPost || nextPost) && (
+					<section class="post-navigation" aria-label="Navigation entre articles">
+						{previousPost ? (
+							<a class="nav-card" href={`/blog/${previousPost.slug}/`}>
+								{previousPost.heroImage && (
+									<div class="nav-thumb" aria-hidden="true">
+										<img
+											src={previousPost.heroImage}
+											alt={`Illustration de ${previousPost.h1 ?? previousPost.title}`}
+											loading="lazy"
+										/>
+									</div>
+								)}
+								<div class="nav-content">
+									<div class="nav-direction">
+										<span aria-hidden="true">←</span>
+										<span class="direction-label">Article précédent</span>
+									</div>
+									<h3 class="nav-title">{previousPost.h1 ?? previousPost.title}</h3>
+									<div class="nav-meta">
+										<span aria-hidden="true">📅</span>
+										<FormattedDate date={previousPost.pubDate} />
+									</div>
+								</div>
+							</a>
+						) : (
+							<div class="nav-card empty">
+								<div class="nav-content">
+									<div class="nav-direction">
+										<span aria-hidden="true">←</span>
+										<span class="direction-label">Pas d'article précédent</span>
+									</div>
+									<p class="nav-empty-text">Vous êtes sur le premier article.</p>
+								</div>
+							</div>
+						)}
+
+						{nextPost ? (
+							<a class="nav-card" href={`/blog/${nextPost.slug}/`}>
+								{nextPost.heroImage && (
+									<div class="nav-thumb" aria-hidden="true">
+										<img
+											src={nextPost.heroImage}
+											alt={`Illustration de ${nextPost.h1 ?? nextPost.title}`}
+											loading="lazy"
+										/>
+									</div>
+								)}
+								<div class="nav-content">
+									<div class="nav-direction next">
+										<span class="direction-label">Article suivant</span>
+										<span aria-hidden="true">→</span>
+									</div>
+									<h3 class="nav-title">{nextPost.h1 ?? nextPost.title}</h3>
+									<div class="nav-meta">
+										<span aria-hidden="true">📅</span>
+										<FormattedDate date={nextPost.pubDate} />
+									</div>
+								</div>
+							</a>
+						) : (
+							<div class="nav-card empty">
+								<div class="nav-content">
+									<div class="nav-direction next">
+										<span class="direction-label">Pas d'article suivant</span>
+										<span aria-hidden="true">→</span>
+									</div>
+									<p class="nav-empty-text">Vous êtes sur le dernier article.</p>
+								</div>
+							</div>
+						)}
+					</section>
+				)}
+				<ShareButtons title={displayTitle} />
+				<AuthorBox />
+				<Comments />
+			</div>
+		</div>
 			</article>
 		</main>
 		<Footer />
