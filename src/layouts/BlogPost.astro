@@ -564,86 +564,86 @@ const authorAvatar = author?.avatar
 				</div>
 
 		<div class="article-content">
-			<div class="prose">
-				<slot />
-				{(previousPost || nextPost) && (
-					<section class="post-navigation" aria-label="Navigation entre articles">
-						{previousPost ? (
-							<a class="nav-card" href={`/blog/${previousPost.slug}/`}>
-								{previousPost.heroImage && (
-									<div class="nav-thumb" aria-hidden="true">
-										<img
-											src={previousPost.heroImage}
-											alt={`Illustration de ${previousPost.h1 ?? previousPost.title}`}
-											loading="lazy"
-										/>
+					<div class="prose">
+						<slot />
+						<ShareButtons title={displayTitle} />
+						<AuthorBox />
+						<Comments />
+						{(previousPost || nextPost) && (
+							<section class="post-navigation" aria-label="Navigation entre articles">
+								{previousPost ? (
+									<a class="nav-card" href={`/blog/${previousPost.slug}/`}>
+										{previousPost.heroImage && (
+											<div class="nav-thumb" aria-hidden="true">
+												<img
+													src={previousPost.heroImage}
+													alt={`Illustration de ${previousPost.h1 ?? previousPost.title}`}
+													loading="lazy"
+												/>
+											</div>
+										)}
+										<div class="nav-content">
+											<div class="nav-direction">
+												<span aria-hidden="true">←</span>
+												<span class="direction-label">Article précédent</span>
+											</div>
+											<h3 class="nav-title">{previousPost.h1 ?? previousPost.title}</h3>
+											<div class="nav-meta">
+												<span aria-hidden="true">📅</span>
+												<FormattedDate date={previousPost.pubDate} />
+											</div>
+										</div>
+									</a>
+								) : (
+									<div class="nav-card empty">
+										<div class="nav-content">
+											<div class="nav-direction">
+												<span aria-hidden="true">←</span>
+												<span class="direction-label">Pas d'article précédent</span>
+											</div>
+											<p class="nav-empty-text">Vous êtes sur le premier article.</p>
+										</div>
 									</div>
 								)}
-								<div class="nav-content">
-									<div class="nav-direction">
-										<span aria-hidden="true">←</span>
-										<span class="direction-label">Article précédent</span>
-									</div>
-									<h3 class="nav-title">{previousPost.h1 ?? previousPost.title}</h3>
-									<div class="nav-meta">
-										<span aria-hidden="true">📅</span>
-										<FormattedDate date={previousPost.pubDate} />
-									</div>
-								</div>
-							</a>
-						) : (
-							<div class="nav-card empty">
-								<div class="nav-content">
-									<div class="nav-direction">
-										<span aria-hidden="true">←</span>
-										<span class="direction-label">Pas d'article précédent</span>
-									</div>
-									<p class="nav-empty-text">Vous êtes sur le premier article.</p>
-								</div>
-							</div>
-						)}
 
-						{nextPost ? (
-							<a class="nav-card" href={`/blog/${nextPost.slug}/`}>
-								{nextPost.heroImage && (
-									<div class="nav-thumb" aria-hidden="true">
-										<img
-											src={nextPost.heroImage}
-											alt={`Illustration de ${nextPost.h1 ?? nextPost.title}`}
-											loading="lazy"
-										/>
+								{nextPost ? (
+									<a class="nav-card" href={`/blog/${nextPost.slug}/`}>
+										{nextPost.heroImage && (
+											<div class="nav-thumb" aria-hidden="true">
+												<img
+													src={nextPost.heroImage}
+													alt={`Illustration de ${nextPost.h1 ?? nextPost.title}`}
+													loading="lazy"
+												/>
+											</div>
+										)}
+										<div class="nav-content">
+											<div class="nav-direction next">
+												<span class="direction-label">Article suivant</span>
+												<span aria-hidden="true">→</span>
+											</div>
+											<h3 class="nav-title">{nextPost.h1 ?? nextPost.title}</h3>
+											<div class="nav-meta">
+												<span aria-hidden="true">📅</span>
+												<FormattedDate date={nextPost.pubDate} />
+											</div>
+										</div>
+									</a>
+								) : (
+									<div class="nav-card empty">
+										<div class="nav-content">
+											<div class="nav-direction next">
+												<span class="direction-label">Pas d'article suivant</span>
+												<span aria-hidden="true">→</span>
+											</div>
+											<p class="nav-empty-text">Vous êtes sur le dernier article.</p>
+										</div>
 									</div>
 								)}
-								<div class="nav-content">
-									<div class="nav-direction next">
-										<span class="direction-label">Article suivant</span>
-										<span aria-hidden="true">→</span>
-									</div>
-									<h3 class="nav-title">{nextPost.h1 ?? nextPost.title}</h3>
-									<div class="nav-meta">
-										<span aria-hidden="true">📅</span>
-										<FormattedDate date={nextPost.pubDate} />
-									</div>
-								</div>
-							</a>
-						) : (
-							<div class="nav-card empty">
-								<div class="nav-content">
-									<div class="nav-direction next">
-										<span class="direction-label">Pas d'article suivant</span>
-										<span aria-hidden="true">→</span>
-									</div>
-									<p class="nav-empty-text">Vous êtes sur le dernier article.</p>
-								</div>
-							</div>
+							</section>
 						)}
-					</section>
-				)}
-				<ShareButtons title={displayTitle} />
-				<AuthorBox />
-				<Comments />
-			</div>
-		</div>
+					</div>
+				</div>
 			</article>
 		</main>
 		<Footer />
