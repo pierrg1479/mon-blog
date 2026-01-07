@@ -410,7 +410,8 @@ const authorAvatar = author?.avatar
 			.nav-thumb {
 				position: relative;
 				width: 100%;
-				height: 80px;
+				aspect-ratio: 16 / 10;
+				min-height: 140px;
 				border-radius: 12px;
 				overflow: hidden;
 				flex-shrink: 0;
@@ -423,13 +424,11 @@ const authorAvatar = author?.avatar
 
 			.nav-thumb img {
 				position: absolute;
-				top: 0;
-				left: 0;
+				inset: 0;
 				width: 100%;
-				height: 80px;
-				max-height: 80px;
+				height: 100%;
 				object-fit: cover;
-				object-position: center;
+				object-position: center top;
 				display: block;
 			}
 
@@ -569,6 +568,15 @@ const authorAvatar = author?.avatar
 					<section class="post-navigation" aria-label="Navigation entre articles">
 						{previousPost ? (
 							<a class="nav-card" href={`/blog/${previousPost.slug}/`}>
+								{previousPost.heroImage && (
+									<div class="nav-thumb" aria-hidden="true">
+										<img
+											src={previousPost.heroImage}
+											alt={`Illustration de ${previousPost.h1 ?? previousPost.title}`}
+											loading="lazy"
+										/>
+									</div>
+								)}
 								<div class="nav-content">
 									<div class="nav-direction">
 										<span aria-hidden="true">←</span>
@@ -580,15 +588,6 @@ const authorAvatar = author?.avatar
 										<FormattedDate date={previousPost.pubDate} />
 									</div>
 								</div>
-								{previousPost.heroImage && (
-									<div class="nav-thumb" aria-hidden="true">
-										<img
-											src={previousPost.heroImage}
-											alt={`Illustration de ${previousPost.h1 ?? previousPost.title}`}
-											loading="lazy"
-										/>
-									</div>
-								)}
 							</a>
 						) : (
 							<div class="nav-card empty">
@@ -604,6 +603,15 @@ const authorAvatar = author?.avatar
 
 						{nextPost ? (
 							<a class="nav-card" href={`/blog/${nextPost.slug}/`}>
+								{nextPost.heroImage && (
+									<div class="nav-thumb" aria-hidden="true">
+										<img
+											src={nextPost.heroImage}
+											alt={`Illustration de ${nextPost.h1 ?? nextPost.title}`}
+											loading="lazy"
+										/>
+									</div>
+								)}
 								<div class="nav-content">
 									<div class="nav-direction next">
 										<span class="direction-label">Article suivant</span>
@@ -615,15 +623,6 @@ const authorAvatar = author?.avatar
 										<FormattedDate date={nextPost.pubDate} />
 									</div>
 								</div>
-								{nextPost.heroImage && (
-									<div class="nav-thumb" aria-hidden="true">
-										<img
-											src={nextPost.heroImage}
-											alt={`Illustration de ${nextPost.h1 ?? nextPost.title}`}
-											loading="lazy"
-										/>
-									</div>
-								)}
 							</a>
 						) : (
 							<div class="nav-card empty">
