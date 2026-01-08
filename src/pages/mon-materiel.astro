@@ -1,0 +1,395 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import EquipmentTable from '../components/EquipmentTable.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+type Equipment = {
+	name: string;
+	image: string;
+	protocol: string;
+	integration: string;
+	price: string;
+	rating: number;
+	comment: string;
+	affiliateLink: string | null;
+	articleUrl: string | null;
+};
+
+const lastUpdated = '1 janvier 2025';
+
+const placeholderImage = '/images/equipment/placeholder-400.svg';
+
+const security: Equipment[] = [
+	{
+		name: 'Caméra Reolink E1 Pro',
+		image: placeholderImage,
+		protocol: 'WiFi',
+		integration: 'Moyenne',
+		price: '59€',
+		rating: 4,
+		comment: 'Vue claire de nuit, parfaite pour l’intérieur.',
+		affiliateLink: 'https://domadoo.fr/reolink-e1-pro?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+	{
+		name: 'Serrure Nuki Smart Lock',
+		image: placeholderImage,
+		protocol: 'Thread',
+		integration: 'Oui',
+		price: '219€',
+		rating: 5,
+		comment: 'Accès sans clé avec scénarios Home Assistant.',
+		affiliateLink: 'https://domadoo.fr/nuki-smart-lock?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+];
+
+const leakSensors: Equipment[] = [
+	{
+		name: 'Aqara Water Leak Sensor',
+		image: placeholderImage,
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '21€',
+		rating: 5,
+		comment: 'Rapide à détecter, mini format discret.',
+		affiliateLink: 'https://domadoo.fr/aqara-water-leak?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+	{
+		name: 'Shelly Flood',
+		image: placeholderImage,
+		protocol: 'WiFi',
+		integration: 'Oui',
+		price: '34€',
+		rating: 4,
+		comment: 'WiFi direct, bon en dépannage.',
+		affiliateLink: 'https://domadoo.fr/shelly-flood?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+];
+
+const sensors: Equipment[] = [
+	{
+		name: 'Aqara Temperature & Humidity',
+		image: placeholderImage,
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '15€',
+		rating: 5,
+		comment: 'Capteur fiable pour les pièces clés.',
+		affiliateLink: 'https://domadoo.fr/aqara-temp-humidity?ref=the-optimization-guy',
+		articleUrl: '/blog/capteurs-zigbee-guide',
+	},
+	{
+		name: 'Sonoff SNZB-04 Contact',
+		image: placeholderImage,
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '11€',
+		rating: 4,
+		comment: 'Parfait pour portes et fenêtres.',
+		affiliateLink: 'https://domadoo.fr/sonoff-snzb-04?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+];
+
+const heating: Equipment[] = [
+	{
+		name: 'Tado V3+ Thermostat',
+		image: '/images/tado-termostat-v3+.jpg',
+		protocol: 'WiFi',
+		integration: 'Oui',
+		price: '129€',
+		rating: 5,
+		comment: 'Le meilleur thermostat connecté, ROI rapide.',
+		affiliateLink: 'https://domadoo.fr/tado-v3?ref=the-optimization-guy',
+		articleUrl: '/blog/test-tado-v3',
+	},
+	{
+		name: 'Têtes thermostatiques Tado',
+		image: '/images/tete-tado-thermostatique (1).jpg',
+		protocol: 'WiFi',
+		integration: 'Oui',
+		price: '79€/pièce',
+		rating: 5,
+		comment: 'Granularité pièce par pièce, top en hiver.',
+		affiliateLink: 'https://domadoo.fr/tete-tado?ref=the-optimization-guy',
+		articleUrl: '/blog/tetes-thermostatiques-tado',
+	},
+];
+
+const cleaning: Equipment[] = [
+	{
+		name: 'Roborock S8',
+		image: placeholderImage,
+		protocol: 'WiFi',
+		integration: 'Moyenne',
+		price: '599€',
+		rating: 4,
+		comment: 'Aspiration puissante et cartographie fiable.',
+		affiliateLink: 'https://domadoo.fr/roborock-s8?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+	{
+		name: 'Switchbot Bot',
+		image: placeholderImage,
+		protocol: 'Bluetooth',
+		integration: 'Moyenne',
+		price: '29€',
+		rating: 3,
+		comment: 'Pratique pour automatiser un bouton existant.',
+		affiliateLink: 'https://domadoo.fr/switchbot-bot?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+];
+
+const multimedia: Equipment[] = [
+	{
+		name: 'Chromecast 4K',
+		image: placeholderImage,
+		protocol: 'WiFi',
+		integration: 'Moyenne',
+		price: '69€',
+		rating: 4,
+		comment: 'Streaming fluide, facile à piloter.',
+		affiliateLink: 'https://domadoo.fr/chromecast-4k?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+	{
+		name: 'Amplificateur Sonos Amp',
+		image: placeholderImage,
+		protocol: 'WiFi',
+		integration: 'Moyenne',
+		price: '699€',
+		rating: 5,
+		comment: 'Multiroom robuste pour les pièces ouvertes.',
+		affiliateLink: 'https://domadoo.fr/sonos-amp?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+];
+
+const switchesAndLights: Equipment[] = [
+	{
+		name: 'Interrupteur Aqara H1',
+		image: placeholderImage,
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '29€',
+		rating: 4,
+		comment: 'Look propre, intégration HA immédiate.',
+		affiliateLink: 'https://domadoo.fr/aqara-h1?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+	{
+		name: 'Ampoule Philips Hue White',
+		image: placeholderImage,
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '19€',
+		rating: 4,
+		comment: 'Lumière douce et stable, idéale le soir.',
+		affiliateLink: 'https://domadoo.fr/hue-white?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+];
+
+const buttons: Equipment[] = [
+	{
+		name: 'Ikea Shortcut Button',
+		image: placeholderImage,
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '9€',
+		rating: 4,
+		comment: 'Bouton simple pour scènes rapides.',
+		affiliateLink: 'https://domadoo.fr/ikea-shortcut?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+	{
+		name: 'Aqara Wireless Mini Switch',
+		image: placeholderImage,
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '12€',
+		rating: 5,
+		comment: 'Compact et très réactif.',
+		affiliateLink: 'https://domadoo.fr/aqara-mini-switch?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+];
+
+const infrastructure: Equipment[] = [
+	{
+		name: 'ConBee II Zigbee USB',
+		image: placeholderImage,
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '39€',
+		rating: 4,
+		comment: 'Stable, reconnu par Zigbee2MQTT.',
+		affiliateLink: 'https://domadoo.fr/conbee-2?ref=the-optimization-guy',
+		articleUrl: null,
+	},
+	{
+		name: 'Mini PC Home Assistant',
+		image: placeholderImage,
+		protocol: '-',
+		integration: 'Oui',
+		price: '199€',
+		rating: 5,
+		comment: 'Le cœur du système, silencieux et fiable.',
+		affiliateLink: null,
+		articleUrl: null,
+	},
+];
+
+const sections = [
+	{ title: 'Sécurité', items: security },
+	{ title: 'Capteurs de fuite', items: leakSensors },
+	{ title: 'Capteurs', items: sensors },
+	{ title: 'Chauffage', items: heating },
+	{ title: 'Ménage et entretien', items: cleaning },
+	{ title: 'Multimédia', items: multimedia },
+	{ title: 'Interrupteurs et lumières', items: switchesAndLights },
+	{ title: 'Boutons', items: buttons },
+	{ title: 'Infrastructure', items: infrastructure },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<!-- Google Tag Manager -->
+		<script is:inline>
+			(function (w, d, s, l, i) {
+				w[l] = w[l] || [];
+				w[l].push({
+					'gtm.start': new Date().getTime(),
+					event: 'gtm.js',
+				});
+				const f = d.getElementsByTagName(s)[0];
+				const j = d.createElement(s);
+				const dl = l != 'dataLayer' ? '&l=' + l : '';
+				j.async = true;
+				j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+				f.parentNode.insertBefore(j, f);
+			})(window, document, 'script', 'dataLayer', 'GTM-PTBBTWQV');
+		</script>
+		<!-- End Google Tag Manager -->
+		<BaseHead
+			title="Mon matériel domotique Home Assistant - The Optimization Guy"
+			description="Liste complète du matériel domotique que j'utilise au quotidien : caméras, capteurs, chauffage connecté, et mes recommandations."
+		/>
+	</head>
+	<body>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript
+			><iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-PTBBTWQV"
+				height="0"
+				width="0"
+				style="display:none;visibility:hidden"></iframe
+		></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+		<Header />
+		<main class="equipment-main">
+			<article class="equipment-page">
+				<header class="page-header">
+					<h1>Mon matériel</h1>
+					<p class="last-updated">Dernière mise à jour : {lastUpdated}</p>
+					<p class="intro">
+						Voici la liste complète du matériel domotique que j'utilise chez moi avec Home Assistant.
+						Tout ce qui est listé ici est réellement installé et testé, avec mes retours courts et directs.
+					</p>
+				</header>
+
+				{sections.map((section) => (
+					<section class="equipment-section">
+						<h2>{section.title}</h2>
+						<p class="section-intro">
+							Une sélection de produits testés au quotidien pour cette catégorie.
+						</p>
+						<EquipmentTable equipment={section.items} />
+					</section>
+				))}
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.equipment-main {
+		width: calc(100% - 2em);
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 3em 1em 4em;
+	}
+
+	.equipment-page {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.page-header {
+		text-align: left;
+		max-width: 820px;
+	}
+
+	.page-header h1 {
+		font-size: 2.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.last-updated {
+		font-size: 0.95rem;
+		color: #6b7280;
+	}
+
+	:global(.dark) .last-updated {
+		color: #9ca3af;
+	}
+
+	.intro {
+		margin-top: 1rem;
+		color: #374151;
+		font-size: 1.05rem;
+	}
+
+	:global(.dark) .intro {
+		color: #d1d5db;
+	}
+
+	.equipment-section {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.section-intro {
+		margin: 0;
+		color: rgb(var(--gray));
+		font-size: 1rem;
+	}
+
+	:global(.dark) .section-intro {
+		color: rgb(var(--gray));
+	}
+
+	.equipment-section h2 {
+		font-size: 1.8rem;
+		margin-bottom: 0.25rem;
+	}
+
+	@media (max-width: 768px) {
+		.page-header h1 {
+			font-size: 2rem;
+		}
+		.equipment-section h2 {
+			font-size: 1.5rem;
+		}
+	}
+</style>

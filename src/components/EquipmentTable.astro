@@ -1,0 +1,324 @@
+---
+type Equipment = {
+	name: string;
+	image: string;
+	protocol: string;
+	integration: string;
+	price: string;
+	rating: number;
+	comment: string;
+	affiliateLink: string | null;
+	articleUrl: string | null;
+};
+
+interface Props {
+	equipment: Equipment[];
+}
+
+const { equipment } = Astro.props;
+
+const renderStars = (rating: number) => {
+	const fullStars = '⭐'.repeat(rating);
+	const emptyStars = '☆'.repeat(5 - rating);
+	return `${fullStars}${emptyStars}`;
+};
+
+const protocolClass = (protocol: string) =>
+	`protocol-${protocol.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+---
+
+<table class="equipment-table">
+	<thead>
+		<tr>
+			<th scope="col">Visuel</th>
+			<th scope="col">Nom</th>
+			<th scope="col">Protocole</th>
+			<th scope="col">Intégration HA</th>
+			<th scope="col">Prix</th>
+			<th scope="col">Mon avis</th>
+			<th scope="col">Commentaire</th>
+			<th scope="col">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{equipment.map((item) => (
+			<tr>
+				<td data-label="Visuel">
+					<img
+						src={item.image}
+						alt={item.name}
+						loading="lazy"
+						class="product-image"
+					/>
+				</td>
+				<td data-label="Nom">
+					{item.articleUrl ? (
+						<a href={item.articleUrl} class="product-name-link">
+							{item.name}
+						</a>
+					) : (
+						<span class="product-name">{item.name}</span>
+					)}
+				</td>
+				<td data-label="Protocole">
+					<span class={`protocol-badge ${protocolClass(item.protocol)}`}>
+						{item.protocol}
+					</span>
+				</td>
+				<td data-label="Intégration HA">
+					<span class="integration-pill">{item.integration}</span>
+				</td>
+				<td data-label="Prix">{item.price}</td>
+				<td data-label="Mon avis">
+					<span class="rating" aria-label={`Note ${item.rating} sur 5`}>
+						{renderStars(item.rating)}
+					</span>
+				</td>
+				<td data-label="Commentaire">{item.comment}</td>
+				<td data-label="Action">
+					{item.affiliateLink ? (
+						<a
+							href={item.affiliateLink}
+							target="_blank"
+							rel="noopener noreferrer nofollow"
+							class="affiliate-cta"
+						>
+								Voir le produit
+							</a>
+						) : (
+						<span class="no-cta">-</span>
+					)}
+				</td>
+			</tr>
+		))}
+	</tbody>
+</table>
+
+<style>
+	.equipment-table {
+		width: 100%;
+		border-collapse: collapse;
+		background: #fff;
+		border-radius: 12px;
+		overflow: hidden;
+		box-shadow: var(--box-shadow);
+	}
+
+	:global(.dark) .equipment-table {
+		background: #1f2937;
+		box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+	}
+
+	.equipment-table th,
+	.equipment-table td {
+		text-align: left;
+		padding: 1rem;
+		border-bottom: 1px solid rgb(var(--gray-light));
+		vertical-align: middle;
+	}
+
+	:global(.dark) .equipment-table th,
+	:global(.dark) .equipment-table td {
+		border-bottom-color: rgb(var(--gray-light));
+	}
+
+	.equipment-table th {
+		font-size: 0.95rem;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: rgb(var(--gray));
+		background: rgb(var(--gray-light));
+	}
+
+	:global(.dark) .equipment-table th {
+		background: rgba(var(--gray-light), 0.3);
+		color: rgb(var(--gray));
+	}
+
+	.equipment-table tbody tr:hover {
+		background: rgba(var(--gray-light), 0.6);
+	}
+
+	:global(.dark) .equipment-table tbody tr:hover {
+		background: rgba(var(--gray-light), 0.3);
+	}
+
+	.product-image {
+		width: 80px;
+		height: 80px;
+		border-radius: 8px;
+		object-fit: cover;
+		display: block;
+	}
+
+	.product-name-link {
+		font-weight: 600;
+		color: inherit;
+		text-decoration: underline;
+		text-decoration-color: rgb(var(--accent));
+		text-decoration-thickness: 2px;
+		text-underline-offset: 3px;
+	}
+
+	.product-name-link:hover {
+		color: rgb(var(--accent));
+	}
+
+	.protocol-badge {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.25rem 0.75rem;
+		border-radius: 999px;
+		font-size: 0.85rem;
+		font-weight: 600;
+	}
+
+	.protocol-zigbee {
+		background: #dbeafe;
+		color: #1e40af;
+	}
+	.protocol-wifi {
+		background: #dcfce7;
+		color: #166534;
+	}
+	.protocol-z-wave {
+		background: #fef3c7;
+		color: #92400e;
+	}
+	.protocol-thread {
+		background: #f3e8ff;
+		color: #6b21a8;
+	}
+	.protocol-bluetooth {
+		background: #e0f2fe;
+		color: #075985;
+	}
+	.protocol- {
+		background: #e5e7eb;
+		color: #6b7280;
+	}
+
+	:global(.dark) .protocol-zigbee {
+		background: #1e3a8a;
+		color: #93c5fd;
+	}
+	:global(.dark) .protocol-wifi {
+		background: #14532d;
+		color: #86efac;
+	}
+	:global(.dark) .protocol-z-wave {
+		background: #78350f;
+		color: #fde68a;
+	}
+	:global(.dark) .protocol-thread {
+		background: #4c1d95;
+		color: #e9d5ff;
+	}
+	:global(.dark) .protocol-bluetooth {
+		background: #0c4a6e;
+		color: #bae6fd;
+	}
+	:global(.dark) .protocol- {
+		background: #374151;
+		color: #d1d5db;
+	}
+
+	.integration-pill {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.25rem 0.75rem;
+		border-radius: 999px;
+		font-size: 0.85rem;
+		font-weight: 600;
+		background: rgba(var(--gray-light), 0.7);
+		color: rgb(var(--gray-dark));
+	}
+
+	:global(.dark) .integration-pill {
+		background: rgba(var(--gray-light), 0.3);
+		color: rgb(var(--gray-dark));
+	}
+
+	.rating {
+		font-size: 1rem;
+		white-space: nowrap;
+	}
+
+	.affiliate-cta {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.5rem 1rem;
+		background: rgb(var(--accent));
+		color: rgb(var(--black));
+		border-radius: 6px;
+		text-decoration: none;
+		font-weight: 600;
+		box-shadow: 0 6px 12px rgba(var(--black), 0.2);
+		transition: all 0.2s ease;
+	}
+
+	.affiliate-cta:hover {
+		background: rgb(var(--accent-light));
+		transform: translateY(-1px);
+		box-shadow: 0 8px 16px rgba(var(--black), 0.3);
+	}
+
+	.no-cta {
+		color: #9ca3af;
+	}
+
+	@media (max-width: 768px) {
+		.equipment-table {
+			box-shadow: none;
+			background: transparent;
+		}
+		.equipment-table thead {
+			display: none;
+		}
+		.equipment-table tbody tr {
+			display: block;
+			margin-bottom: 1.5rem;
+			border-radius: 12px;
+			background: #fff;
+			box-shadow: var(--box-shadow);
+			overflow: hidden;
+		}
+		:global(.dark) .equipment-table tbody tr {
+			background: #1f2937;
+			box-shadow: var(--box-shadow);
+		}
+		.equipment-table tbody td {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			padding: 0.75rem 1rem;
+			border-bottom: 1px solid rgb(var(--gray-light));
+		}
+		:global(.dark) .equipment-table tbody td {
+			border-bottom-color: rgb(var(--gray-light));
+		}
+		.equipment-table tbody td::before {
+			content: attr(data-label);
+			font-weight: 600;
+			min-width: 110px;
+			color: rgb(var(--gray));
+		}
+		:global(.dark) .equipment-table tbody td::before {
+			color: rgb(var(--gray));
+		}
+		.equipment-table tbody td:last-child {
+			border-bottom: none;
+		}
+		.product-image {
+			width: 100px;
+			height: 100px;
+			margin: 0 auto;
+		}
+		.affiliate-cta {
+			width: 100%;
+		}
+	}
+</style>
