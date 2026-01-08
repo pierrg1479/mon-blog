@@ -433,9 +433,7 @@ const sections = [
 			title="Mon matériel domotique Home Assistant - The Optimization Guy"
 			description="Liste complète du matériel domotique que j'utilise au quotidien : caméras, capteurs, chauffage connecté, et mes recommandations."
 		/>
-		<script type="application/ld+json" is:inline>
-			{JSON.stringify(structuredData)}
-		</script>
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
 	</head>
 	<body>
 		<!-- Google Tag Manager (noscript) -->
