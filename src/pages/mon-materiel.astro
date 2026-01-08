@@ -272,6 +272,8 @@ const sensors: Equipment[] = [
 	},
 ];
 
+const sensorSection: Equipment[] = [...leakSensors, ...sensors];
+
 const heating: Equipment[] = [
 	{
 		name: 'Tado V3+ Thermostat',
@@ -424,8 +426,7 @@ const infrastructure: Equipment[] = [
 
 const sections = [
 	{ title: 'Sécurité', items: security },
-	{ title: 'Capteurs de fuite', items: leakSensors },
-	{ title: 'Capteurs', items: sensors },
+	{ title: 'Capteurs', items: sensorSection },
 	{ title: 'Chauffage', items: heating },
 	{ title: 'Ménage et entretien', items: cleaning },
 	{ title: 'Multimédia', items: multimedia },
