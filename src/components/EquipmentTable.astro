@@ -2,10 +2,10 @@
 type Equipment = {
 	name: string;
 	image: string;
-	protocol: string;
+	protocol?: string;
 	integration: string;
 	price: string;
-	rating: number;
+	rating?: number;
 	comment: string;
 	affiliateLink: string | null;
 	articleUrl: string | null;
@@ -16,15 +16,17 @@ interface Props {
 }
 
 const { equipment } = Astro.props;
+const safeEquipment = Array.isArray(equipment) ? equipment : [];
 
-const renderStars = (rating: number) => {
-	const fullStars = '⭐'.repeat(rating);
-	const emptyStars = '☆'.repeat(5 - rating);
+const renderStars = (rating?: number) => {
+	const safeRating = Math.min(5, Math.max(0, Math.round(rating ?? 0)));
+	const fullStars = '⭐'.repeat(safeRating);
+	const emptyStars = '☆'.repeat(5 - safeRating);
 	return `${fullStars}${emptyStars}`;
 };
 
-const protocolClass = (protocol: string) =>
-	`protocol-${protocol.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+const protocolClass = (protocol?: string) =>
+	`protocol-${(protocol ?? '-').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 ---
 
 <table class="equipment-table">
@@ -40,9 +42,9 @@ const protocolClass = (protocol: string) =>
 			<th scope="col">Action</th>
 		</tr>
 	</thead>
-	<tbody>
-		{equipment.map((item) => (
-			<tr>
+		<tbody>
+			{safeEquipment.map((item) => (
+				<tr>
 				<td data-label="Visuel">
 					<img
 						src={item.image}
@@ -62,7 +64,7 @@ const protocolClass = (protocol: string) =>
 				</td>
 				<td data-label="Protocole">
 					<span class={`protocol-badge ${protocolClass(item.protocol)}`}>
-						{item.protocol}
+						{item.protocol ?? '-'}
 					</span>
 				</td>
 				<td data-label="Intégration HA">
@@ -70,7 +72,7 @@ const protocolClass = (protocol: string) =>
 				</td>
 				<td data-label="Prix">{item.price}</td>
 				<td data-label="Mon avis">
-					<span class="rating" aria-label={`Note ${item.rating} sur 5`}>
+					<span class="rating" aria-label={`Note ${Math.min(5, Math.max(0, Math.round(item.rating ?? 0)))} sur 5`}>
 						{renderStars(item.rating)}
 					</span>
 				</td>
@@ -246,7 +248,7 @@ const protocolClass = (protocol: string) =>
 		white-space: nowrap;
 	}
 
-	.affiliate-cta {
+	.equipment-table .affiliate-cta {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -258,6 +260,10 @@ const protocolClass = (protocol: string) =>
 		font-weight: 600;
 		box-shadow: 0 6px 12px rgba(var(--black), 0.2);
 		transition: all 0.2s ease;
+	}
+
+	:global(.dark) .equipment-table .affiliate-cta {
+		color: rgb(var(--black));
 	}
 
 	.affiliate-cta:hover {
