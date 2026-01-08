@@ -16,6 +16,7 @@ interface Props {
 }
 
 const { equipment } = Astro.props;
+const safeEquipment = Array.isArray(equipment) ? equipment : [];
 
 const renderStars = (rating?: number) => {
 	const safeRating = Math.min(5, Math.max(0, Math.round(rating ?? 0)));
@@ -41,9 +42,9 @@ const protocolClass = (protocol?: string) =>
 			<th scope="col">Action</th>
 		</tr>
 	</thead>
-	<tbody>
-		{equipment.map((item) => (
-			<tr>
+		<tbody>
+			{safeEquipment.map((item) => (
+				<tr>
 				<td data-label="Visuel">
 					<img
 						src={item.image}
@@ -63,7 +64,7 @@ const protocolClass = (protocol?: string) =>
 				</td>
 				<td data-label="Protocole">
 					<span class={`protocol-badge ${protocolClass(item.protocol)}`}>
-						{item.protocol}
+						{item.protocol ?? '-'}
 					</span>
 				</td>
 				<td data-label="Intégration HA">
@@ -71,7 +72,7 @@ const protocolClass = (protocol?: string) =>
 				</td>
 				<td data-label="Prix">{item.price}</td>
 				<td data-label="Mon avis">
-					<span class="rating" aria-label={`Note ${item.rating} sur 5`}>
+					<span class="rating" aria-label={`Note ${Math.min(5, Math.max(0, Math.round(item.rating ?? 0)))} sur 5`}>
 						{renderStars(item.rating)}
 					</span>
 				</td>
