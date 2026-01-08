@@ -246,7 +246,7 @@ const protocolClass = (protocol: string) =>
 		white-space: nowrap;
 	}
 
-	.affiliate-cta {
+	.equipment-table .affiliate-cta {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -258,6 +258,10 @@ const protocolClass = (protocol: string) =>
 		font-weight: 600;
 		box-shadow: 0 6px 12px rgba(var(--black), 0.2);
 		transition: all 0.2s ease;
+	}
+
+	:global(.dark) .equipment-table .affiliate-cta {
+		color: rgb(var(--black));
 	}
 
 	.affiliate-cta:hover {
