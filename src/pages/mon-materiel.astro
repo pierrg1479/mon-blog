@@ -308,6 +308,9 @@ const sections = [
 				{sections.map((section) => (
 					<section class="equipment-section">
 						<h2>{section.title}</h2>
+						<p class="section-intro">
+							Une sélection de produits testés au quotidien pour cette catégorie.
+						</p>
 						<EquipmentTable equipment={section.items} />
 					</section>
 				))}
@@ -364,6 +367,16 @@ const sections = [
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+	}
+
+	.section-intro {
+		margin: 0;
+		color: rgb(var(--gray));
+		font-size: 1rem;
+	}
+
+	:global(.dark) .section-intro {
+		color: rgb(var(--gray));
 	}
 
 	.equipment-section h2 {

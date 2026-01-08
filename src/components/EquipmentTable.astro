@@ -35,7 +35,7 @@ const protocolClass = (protocol: string) =>
 			<th scope="col">Protocole</th>
 			<th scope="col">Intégration HA</th>
 			<th scope="col">Prix</th>
-			<th scope="col">Note</th>
+			<th scope="col">Mon avis</th>
 			<th scope="col">Commentaire</th>
 			<th scope="col">Action</th>
 		</tr>
@@ -69,7 +69,7 @@ const protocolClass = (protocol: string) =>
 					<span class="integration-pill">{item.integration}</span>
 				</td>
 				<td data-label="Prix">{item.price}</td>
-				<td data-label="Note">
+				<td data-label="Mon avis">
 					<span class="rating" aria-label={`Note ${item.rating} sur 5`}>
 						{renderStars(item.rating)}
 					</span>
@@ -83,9 +83,9 @@ const protocolClass = (protocol: string) =>
 							rel="noopener noreferrer nofollow"
 							class="affiliate-cta"
 						>
-							Voir le prix
-						</a>
-					) : (
+								Voir le produit
+							</a>
+						) : (
 						<span class="no-cta">-</span>
 					)}
 				</td>
@@ -101,7 +101,7 @@ const protocolClass = (protocol: string) =>
 		background: #fff;
 		border-radius: 12px;
 		overflow: hidden;
-		box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+		box-shadow: var(--box-shadow);
 	}
 
 	:global(.dark) .equipment-table {
@@ -113,34 +113,34 @@ const protocolClass = (protocol: string) =>
 	.equipment-table td {
 		text-align: left;
 		padding: 1rem;
-		border-bottom: 1px solid #e5e7eb;
+		border-bottom: 1px solid rgb(var(--gray-light));
 		vertical-align: middle;
 	}
 
 	:global(.dark) .equipment-table th,
 	:global(.dark) .equipment-table td {
-		border-bottom-color: #374151;
+		border-bottom-color: rgb(var(--gray-light));
 	}
 
 	.equipment-table th {
 		font-size: 0.95rem;
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
-		color: #6b7280;
-		background: #f9fafb;
+		color: rgb(var(--gray));
+		background: rgb(var(--gray-light));
 	}
 
 	:global(.dark) .equipment-table th {
-		background: #111827;
-		color: #d1d5db;
+		background: rgba(var(--gray-light), 0.3);
+		color: rgb(var(--gray));
 	}
 
 	.equipment-table tbody tr:hover {
-		background: #f9fafb;
+		background: rgba(var(--gray-light), 0.6);
 	}
 
 	:global(.dark) .equipment-table tbody tr:hover {
-		background: #374151;
+		background: rgba(var(--gray-light), 0.3);
 	}
 
 	.product-image {
@@ -153,14 +153,15 @@ const protocolClass = (protocol: string) =>
 
 	.product-name-link {
 		font-weight: 600;
-		color: #2563eb;
-		text-decoration: none;
+		color: inherit;
+		text-decoration: underline;
+		text-decoration-color: rgb(var(--accent));
+		text-decoration-thickness: 2px;
+		text-underline-offset: 3px;
 	}
 
 	.product-name-link:hover {
-		color: #1d4ed8;
-		text-decoration: underline;
-		text-decoration-thickness: 2px;
+		color: rgb(var(--accent));
 	}
 
 	.protocol-badge {
@@ -231,13 +232,13 @@ const protocolClass = (protocol: string) =>
 		border-radius: 999px;
 		font-size: 0.85rem;
 		font-weight: 600;
-		background: #f3f4f6;
-		color: #374151;
+		background: rgba(var(--gray-light), 0.7);
+		color: rgb(var(--gray-dark));
 	}
 
 	:global(.dark) .integration-pill {
-		background: #111827;
-		color: #e5e7eb;
+		background: rgba(var(--gray-light), 0.3);
+		color: rgb(var(--gray-dark));
 	}
 
 	.rating {
@@ -250,19 +251,19 @@ const protocolClass = (protocol: string) =>
 		align-items: center;
 		justify-content: center;
 		padding: 0.5rem 1rem;
-		background: #2563eb;
-		color: #fff;
+		background: rgb(var(--accent));
+		color: rgb(var(--black));
 		border-radius: 6px;
 		text-decoration: none;
 		font-weight: 600;
-		box-shadow: 0 6px 12px rgba(37, 99, 235, 0.25);
+		box-shadow: 0 6px 12px rgba(var(--black), 0.2);
 		transition: all 0.2s ease;
 	}
 
 	.affiliate-cta:hover {
-		background: #1d4ed8;
+		background: rgb(var(--accent-light));
 		transform: translateY(-1px);
-		box-shadow: 0 8px 16px rgba(37, 99, 235, 0.35);
+		box-shadow: 0 8px 16px rgba(var(--black), 0.3);
 	}
 
 	.no-cta {
@@ -282,31 +283,31 @@ const protocolClass = (protocol: string) =>
 			margin-bottom: 1.5rem;
 			border-radius: 12px;
 			background: #fff;
-			box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+			box-shadow: var(--box-shadow);
 			overflow: hidden;
 		}
 		:global(.dark) .equipment-table tbody tr {
 			background: #1f2937;
-			box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+			box-shadow: var(--box-shadow);
 		}
 		.equipment-table tbody td {
 			display: flex;
 			align-items: center;
 			gap: 1rem;
 			padding: 0.75rem 1rem;
-			border-bottom: 1px solid #e5e7eb;
+			border-bottom: 1px solid rgb(var(--gray-light));
 		}
 		:global(.dark) .equipment-table tbody td {
-			border-bottom-color: #374151;
+			border-bottom-color: rgb(var(--gray-light));
 		}
 		.equipment-table tbody td::before {
 			content: attr(data-label);
 			font-weight: 600;
 			min-width: 110px;
-			color: #6b7280;
+			color: rgb(var(--gray));
 		}
 		:global(.dark) .equipment-table tbody td::before {
-			color: #d1d5db;
+			color: rgb(var(--gray));
 		}
 		.equipment-table tbody td:last-child {
 			border-bottom: none;
