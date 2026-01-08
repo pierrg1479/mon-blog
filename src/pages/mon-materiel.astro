@@ -19,6 +19,157 @@ type Equipment = {
 const lastUpdated = '1 janvier 2025';
 
 const placeholderImage = '/images/equipment/placeholder-400.svg';
+const structuredPlaceholderImage = '/images/equipment/placeholder-1200.svg';
+const siteUrl = 'https://www.the-optimization-guy.com';
+
+const structuredProducts = [
+	{
+		name: 'Caméra Reolink E1 Pro',
+		image: structuredPlaceholderImage,
+		description: 'Vue claire de nuit, parfaite pour l’intérieur.',
+		url: 'https://domadoo.fr/reolink-e1-pro?ref=the-optimization-guy',
+		brand: 'Reolink',
+	},
+	{
+		name: 'Serrure Nuki Smart Lock',
+		image: structuredPlaceholderImage,
+		description: 'Accès sans clé avec scénarios Home Assistant.',
+		url: 'https://domadoo.fr/nuki-smart-lock?ref=the-optimization-guy',
+		brand: 'Nuki',
+	},
+	{
+		name: 'Aqara Water Leak Sensor',
+		image: structuredPlaceholderImage,
+		description: 'Rapide à détecter, mini format discret.',
+		url: 'https://domadoo.fr/aqara-water-leak?ref=the-optimization-guy',
+		brand: 'Aqara',
+	},
+	{
+		name: 'Shelly Flood',
+		image: structuredPlaceholderImage,
+		description: 'WiFi direct, bon en dépannage.',
+		url: 'https://domadoo.fr/shelly-flood?ref=the-optimization-guy',
+		brand: 'Shelly',
+	},
+	{
+		name: 'Aqara Temperature & Humidity',
+		image: structuredPlaceholderImage,
+		description: 'Capteur fiable pour les pièces clés.',
+		url: 'https://domadoo.fr/aqara-temp-humidity?ref=the-optimization-guy',
+		brand: 'Aqara',
+	},
+	{
+		name: 'Sonoff SNZB-04 Contact',
+		image: structuredPlaceholderImage,
+		description: 'Parfait pour portes et fenêtres.',
+		url: 'https://domadoo.fr/sonoff-snzb-04?ref=the-optimization-guy',
+		brand: 'Sonoff',
+	},
+	{
+		name: 'Tado V3+ Thermostat',
+		image: structuredPlaceholderImage,
+		description: 'Le meilleur thermostat connecté, ROI rapide.',
+		url: 'https://domadoo.fr/tado-v3?ref=the-optimization-guy',
+		brand: 'tado°',
+	},
+	{
+		name: 'Têtes thermostatiques Tado',
+		image: structuredPlaceholderImage,
+		description: 'Granularité pièce par pièce, top en hiver.',
+		url: 'https://domadoo.fr/tete-tado?ref=the-optimization-guy',
+		brand: 'tado°',
+	},
+	{
+		name: 'Roborock S8',
+		image: structuredPlaceholderImage,
+		description: 'Aspiration puissante et cartographie fiable.',
+		url: 'https://domadoo.fr/roborock-s8?ref=the-optimization-guy',
+		brand: 'Roborock',
+	},
+	{
+		name: 'Switchbot Bot',
+		image: structuredPlaceholderImage,
+		description: 'Pratique pour automatiser un bouton existant.',
+		url: 'https://domadoo.fr/switchbot-bot?ref=the-optimization-guy',
+		brand: 'SwitchBot',
+	},
+	{
+		name: 'Chromecast 4K',
+		image: structuredPlaceholderImage,
+		description: 'Streaming fluide, facile à piloter.',
+		url: 'https://domadoo.fr/chromecast-4k?ref=the-optimization-guy',
+		brand: 'Google',
+	},
+	{
+		name: 'Amplificateur Sonos Amp',
+		image: structuredPlaceholderImage,
+		description: 'Multiroom robuste pour les pièces ouvertes.',
+		url: 'https://domadoo.fr/sonos-amp?ref=the-optimization-guy',
+		brand: 'Sonos',
+	},
+	{
+		name: 'Interrupteur Aqara H1',
+		image: structuredPlaceholderImage,
+		description: 'Look propre, intégration HA immédiate.',
+		url: 'https://domadoo.fr/aqara-h1?ref=the-optimization-guy',
+		brand: 'Aqara',
+	},
+	{
+		name: 'Ampoule Philips Hue White',
+		image: structuredPlaceholderImage,
+		description: 'Lumière douce et stable, idéale le soir.',
+		url: 'https://domadoo.fr/hue-white?ref=the-optimization-guy',
+		brand: 'Philips Hue',
+	},
+	{
+		name: 'Ikea Shortcut Button',
+		image: structuredPlaceholderImage,
+		description: 'Bouton simple pour scènes rapides.',
+		url: 'https://domadoo.fr/ikea-shortcut?ref=the-optimization-guy',
+		brand: 'IKEA',
+	},
+	{
+		name: 'Aqara Wireless Mini Switch',
+		image: structuredPlaceholderImage,
+		description: 'Compact et très réactif.',
+		url: 'https://domadoo.fr/aqara-mini-switch?ref=the-optimization-guy',
+		brand: 'Aqara',
+	},
+	{
+		name: 'ConBee II Zigbee USB',
+		image: structuredPlaceholderImage,
+		description: 'Stable, reconnu par Zigbee2MQTT.',
+		url: 'https://domadoo.fr/conbee-2?ref=the-optimization-guy',
+		brand: 'dresden elektronik',
+	},
+	{
+		name: 'Mini PC Home Assistant',
+		image: structuredPlaceholderImage,
+		description: 'Le cœur du système, silencieux et fiable.',
+		url: 'https://www.home-assistant.io/installation/',
+		brand: 'Home Assistant',
+	},
+];
+
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@type': 'CollectionPage',
+	name: 'Mon matériel – The Optimization Guy',
+	url: `${siteUrl}/mon-materiel/`,
+	description:
+		'Découvrez tout le matériel recommandé par The Optimization Guy : équipements, outils et accessoires utilisés au quotidien.',
+	mainEntity: structuredProducts.map((product) => ({
+		'@type': 'Product',
+		name: product.name,
+		image: product.image.startsWith('http') ? product.image : `${siteUrl}${product.image}`,
+		description: product.description,
+		url: product.url,
+		brand: {
+			'@type': 'Brand',
+			name: product.brand,
+		},
+	})),
+};
 
 const security: Equipment[] = [
 	{
@@ -282,6 +433,7 @@ const sections = [
 			title="Mon matériel domotique Home Assistant - The Optimization Guy"
 			description="Liste complète du matériel domotique que j'utilise au quotidien : caméras, capteurs, chauffage connecté, et mes recommandations."
 		/>
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
 	</head>
 	<body>
 		<!-- Google Tag Manager (noscript) -->
