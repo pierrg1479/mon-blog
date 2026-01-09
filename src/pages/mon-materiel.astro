@@ -24,48 +24,8 @@ const siteUrl = 'https://www.the-optimization-guy.com';
 
 const structuredProducts = [
 	{
-		name: 'Caméra Reolink E1 Pro',
-		image: '/images/equipment/camera-reolink-e1-pro.svg',
-		description: 'Vue claire de nuit, parfaite pour l’intérieur.',
-		url: 'https://domadoo.fr/reolink-e1-pro?ref=the-optimization-guy',
-		brand: 'Reolink',
-		price: '59.00',
-	},
-	{
-		name: 'Serrure Nuki Smart Lock',
-		image: '/images/equipment/serrure-nuki-smart-lock.svg',
-		description: 'Accès sans clé avec scénarios Home Assistant.',
-		url: 'https://domadoo.fr/nuki-smart-lock?ref=the-optimization-guy',
-		brand: 'Nuki',
-		price: '219.00',
-	},
-	{
-		name: 'Aqara Water Leak Sensor',
-		image: '/images/equipment/aqara-water-leak-sensor.svg',
-		description: 'Rapide à détecter, mini format discret.',
-		url: 'https://domadoo.fr/aqara-water-leak?ref=the-optimization-guy',
-		brand: 'Aqara',
-		price: '21.00',
-	},
-	{
-		name: 'Shelly Flood',
-		image: '/images/equipment/shelly-flood.svg',
-		description: 'WiFi direct, bon en dépannage.',
-		url: 'https://domadoo.fr/shelly-flood?ref=the-optimization-guy',
-		brand: 'Shelly',
-		price: '34.00',
-	},
-	{
-		name: 'Aqara Temperature & Humidity',
-		image: '/images/equipment/aqara-temperature-humidity.svg',
-		description: 'Capteur fiable pour les pièces clés.',
-		url: 'https://domadoo.fr/aqara-temp-humidity?ref=the-optimization-guy',
-		brand: 'Aqara',
-		price: '15.00',
-	},
-	{
 		name: 'Sonoff SNZB-04 Contact',
-		image: '/images/equipment/sonoff-snzb-04-contact.svg',
+		image: 'https://community.hubitat.com/uploads/default/original/3X/7/5/755811b5f4acd5d77b9b54f0517e638c7e52a952.jpeg',
 		description: 'Parfait pour portes et fenêtres.',
 		url: 'https://domadoo.fr/sonoff-snzb-04?ref=the-optimization-guy',
 		brand: 'Sonoff',
@@ -73,7 +33,7 @@ const structuredProducts = [
 	},
 	{
 		name: 'Tado V3+ Thermostat',
-		image: '/images/equipment/tado-v3-thermostat.svg',
+		image: 'https://m.media-amazon.com/images/I/61fiMVYLXVL._AC_.jpg',
 		description: 'Le meilleur thermostat connecté, ROI rapide.',
 		url: 'https://domadoo.fr/tado-v3?ref=the-optimization-guy',
 		brand: 'tado°',
@@ -81,92 +41,21 @@ const structuredProducts = [
 	},
 	{
 		name: 'Têtes thermostatiques Tado',
-		image: '/images/equipment/tetes-thermostatiques-tado.svg',
+		image: 'https://media.adeo.com/media/4721022/media.png?width=3000&height=3000&format=jpg&quality=80&fit=bounds',
 		description: 'Granularité pièce par pièce, top en hiver.',
 		url: 'https://domadoo.fr/tete-tado?ref=the-optimization-guy',
 		brand: 'tado°',
 		price: '79.00',
 	},
 	{
-		name: 'Roborock S8',
-		image: '/images/equipment/roborock-s8.svg',
-		description: 'Aspiration puissante et cartographie fiable.',
-		url: 'https://domadoo.fr/roborock-s8?ref=the-optimization-guy',
-		brand: 'Roborock',
-		price: '599.00',
-	},
-	{
 		name: 'Switchbot Bot',
-		image: '/images/equipment/switchbot-bot.svg',
+		image: 'https://i5.walmartimages.com/asr/0ffcb79d-d390-46e1-8717-d79b1e67b133.3055a9a9422d96a3f22a3f570c7d5caa.jpeg',
 		description: 'Pratique pour automatiser un bouton existant.',
 		url: 'https://domadoo.fr/switchbot-bot?ref=the-optimization-guy',
 		brand: 'SwitchBot',
 		price: '29.00',
 	},
-	{
-		name: 'Chromecast 4K',
-		image: '/images/equipment/chromecast-4k.svg',
-		description: 'Streaming fluide, facile à piloter.',
-		url: 'https://domadoo.fr/chromecast-4k?ref=the-optimization-guy',
-		brand: 'Google',
-		price: '69.00',
-	},
-	{
-		name: 'Amplificateur Sonos Amp',
-		image: '/images/equipment/amplificateur-sonos-amp.svg',
-		description: 'Multiroom robuste pour les pièces ouvertes.',
-		url: 'https://domadoo.fr/sonos-amp?ref=the-optimization-guy',
-		brand: 'Sonos',
-		price: '699.00',
-	},
-	{
-		name: 'Interrupteur Aqara H1',
-		image: '/images/equipment/interrupteur-aqara-h1.svg',
-		description: 'Look propre, intégration HA immédiate.',
-		url: 'https://domadoo.fr/aqara-h1?ref=the-optimization-guy',
-		brand: 'Aqara',
-		price: '29.00',
-	},
-	{
-		name: 'Ampoule Philips Hue White',
-		image: '/images/equipment/ampoule-philips-hue-white.svg',
-		description: 'Lumière douce et stable, idéale le soir.',
-		url: 'https://domadoo.fr/hue-white?ref=the-optimization-guy',
-		brand: 'Philips Hue',
-		price: '19.00',
-	},
-	{
-		name: 'Ikea Shortcut Button',
-		image: '/images/equipment/ikea-shortcut-button.svg',
-		description: 'Bouton simple pour scènes rapides.',
-		url: 'https://domadoo.fr/ikea-shortcut?ref=the-optimization-guy',
-		brand: 'IKEA',
-		price: '9.00',
-	},
-	{
-		name: 'Aqara Wireless Mini Switch',
-		image: '/images/equipment/aqara-wireless-mini-switch.svg',
-		description: 'Compact et très réactif.',
-		url: 'https://domadoo.fr/aqara-mini-switch?ref=the-optimization-guy',
-		brand: 'Aqara',
-		price: '12.00',
-	},
-	{
-		name: 'ConBee II Zigbee USB',
-		image: '/images/equipment/conbee-ii-zigbee-usb.svg',
-		description: 'Stable, reconnu par Zigbee2MQTT.',
-		url: 'https://domadoo.fr/conbee-2?ref=the-optimization-guy',
-		brand: 'dresden elektronik',
-		price: '39.00',
-	},
-	{
-		name: 'Mini PC Home Assistant',
-		image: '/images/equipment/mini-pc-home-assistant.svg',
-		description: 'Le cœur du système, silencieux et fiable.',
-		url: 'https://www.home-assistant.io/installation/',
-		brand: 'Home Assistant',
-		price: '199.00',
-	},
+
 ];
 
 const structuredData = {
@@ -200,7 +89,7 @@ const structuredData = {
 const security: Equipment[] = [
 	{
 		name: 'Reolink Argus 4 Pro',
-		image: '/images/equipment/reolink-argus-4-pro.svg',
+		image: 'https://home-cdn.reolink.us/wp-content/uploads/2024/06/070511041717737064.7127.jpg.webp',
 		protocol: 'WiFi',
 		integration: 'Oui',
 		price: '204€',
@@ -211,7 +100,7 @@ const security: Equipment[] = [
 	},
 	{
 		name: 'Tapo C225',
-		image: '/images/equipment/tapo-c225.svg',
+		image: 'https://static.tp-link.com/upload/image-line/Tapo-C225_EU_1.0_overview_05_large_20221128090030u.jpg',
 		protocol: 'WiFi',
 		integration: 'Oui',
 		price: '40€',
@@ -222,7 +111,7 @@ const security: Equipment[] = [
 	},
 	{
 		name: 'Reolink Lumus Pro',
-		image: '/images/equipment/reolink-lumus-pro.svg',
+		image: 'https://home-cdn.reolink.us/wp-content/uploads/2024/10/300852201730278340.2305.jpg.webp',
 		protocol: 'WiFi',
 		integration: 'Oui',
 		price: '63€',
@@ -233,7 +122,7 @@ const security: Equipment[] = [
 	},
 	{
 		name: 'Tapo C510W',
-		image: '/images/equipment/tapo-c510w.svg',
+		image: 'https://static.tp-link.com/upload/image-line/01_normal_20230420071916t.jpg',
 		protocol: 'WiFi',
 		integration: 'Oui',
 		price: '34€',
@@ -244,7 +133,7 @@ const security: Equipment[] = [
 	},
 	{
 		name: 'Reolink Argus 3 Ultra',
-		image: '/images/equipment/reolink-argus-3-ultra.svg',
+		image: 'https://home-cdn.reolink.us/wp-content/uploads/2023/11/090908511699520931.6711.jpg',
 		protocol: 'WiFi',
 		integration: 'Oui',
 		price: '110€',
@@ -255,7 +144,7 @@ const security: Equipment[] = [
 	},
 	{
 		name: 'Tapo C425',
-		image: '/images/equipment/tapo-c425.svg',
+		image: 'https://static.tp-link.com/upload/image-line/Tapo_C425(US)_1.0-180x150x84.5mm-7022510299_large_20240328055558w.png',
 		protocol: 'WiFi',
 		integration: 'Oui',
 		price: '83€',
@@ -266,7 +155,7 @@ const security: Equipment[] = [
 	},
 	{
 		name: 'Serrure SwitchBot Smart Lock Ultra',
-		image: '/images/equipment/serrure-switchbot-smart-lock-ultra.svg',
+		image: 'https://m.media-amazon.com/images/I/61UnLizGnPL._AC_SL1500_.jpg',
 		protocol: 'WiFi',
 		integration: 'Oui',
 		price: '250€',
@@ -277,7 +166,7 @@ const security: Equipment[] = [
 	},
 	{
 		name: 'SwitchBot Keypad Vision',
-		image: '/images/equipment/switchbot-keypad-vision.svg',
+		image: 'https://www.switch-bot.com/cdn/shop/files/Keypad_vision_JP_Amazon_Images_1000x1000_05_2x_2.webp?v=1747894218',
 		protocol: 'Bluetooth',
 		integration: 'Oui',
 		price: '150€',
@@ -288,7 +177,7 @@ const security: Equipment[] = [
 	},
 	{
 		name: 'SwitchBot Keypad Touch',
-		image: '/images/equipment/switchbot-keypad-touch.svg',
+		image: 'https://i5.walmartimages.com/seo/SwitchBot-Keypad-Touch-Smart-Keypad-for-SwitchBot-Lock-2-Years-Battery-Life-IP65_33f6b833-2a54-4f08-9d4c-f7a6b20a666b.f918e8ea7702fd3489ced62641dfbef5.jpeg',
 		protocol: 'Bluetooth',
 		integration: 'Oui',
 		price: '67€',
@@ -302,7 +191,7 @@ const security: Equipment[] = [
 const sensors: Equipment[] = [
 	{
 		name: "Capteur d'ouverture Sonoff SNZB-04P",
-		image: '/images/equipment/switchbot-keypad-touch.svg',
+		image: 'https://sonoff.tech/cdn/shop/files/sonoff-zigbee-door-window-sensor-snzb-04p-3.jpg?v=1751008379&width=1200',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '12€',
@@ -313,7 +202,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: "Capteur d'ouverture Tapo T110",
-		image: '/images/equipment/switchbot-keypad-touch.svg',
+		image: 'https://static.tp-link.com/upload/image-line/Tapo_T110_04_large_20220616080629e.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '13€',
@@ -324,7 +213,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: 'Détecteur de mouvement Sonoff SNZB-03P',
-		image: '/images/equipment/detecteur-de-mouvement-sonoff-snzb-03p.svg',
+		image: 'https://m.media-amazon.com/images/I/6135pMy+h6L._AC_.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '15€',
@@ -335,7 +224,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: 'Détecteur de présence Sonoff SNZB-06P',
-		image: '/images/equipment/detecteur-de-presence-sonoff-snzb-06p.svg',
+		image: 'https://itead.cc/wp-content/uploads/2023/09/SNZB-06P_1000px_1.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '16€',
@@ -346,7 +235,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: 'Capteur de pluie SNZB-05',
-		image: '/images/equipment/capteur-de-pluie-snzb-05.svg',
+		image: 'https://www.expert4house.com/img/cms/Sensori Acqua Smart/Sonoff SNZB-05P Rilevatore di Perdite dacqua Smart Zigbee IP67.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '20€',
@@ -357,7 +246,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: 'Capteur de fuite Sonoff SNZB-05P',
-		image: '/images/equipment/capteur-de-fuite-sonoff-snzb-05p.svg',
+		image: 'https://www.expert4house.com/6792-large_default/sonoff-snzb-05p-capteur-de-fuite-d-eau-intelligent-zigbee.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '22€',
@@ -368,7 +257,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: 'Capteur de vibration Third Reality 3RVS01031Z',
-		image: '/images/equipment/capteur-de-vibration-third-reality-3rvs01031z.svg',
+		image: 'https://zigbee.blakadder.com/assets/images/devices/Third_Reality_3RVS01031Z.webp',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '20€',
@@ -379,7 +268,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: 'Capteur de température Sonoff SNZB-02LD',
-		image: '/images/equipment/capteur-de-temperature-sonoff-snzb-02ld.svg',
+		image: 'https://cdn2.domadoo.fr/33245-large_default/sonoff-capteur-de-temperature-zigbee-etanche-ip65-cable-deporte-snzb02ld.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '20€',
@@ -390,7 +279,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: 'Capteur de fuite Tapo T300',
-		image: '/images/equipment/capteur-de-fuite-tapo-t300.svg',
+		image: 'https://static.tp-link.com/upload/image-line/8_large_20230725014222p.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '22€',
@@ -401,7 +290,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: 'Capteur de température et humidité Tapo T310',
-		image: '/images/equipment/capteur-de-temperature-et-humidite-tapo-t310.svg',
+		image: 'https://static.tp-link.com/upload/image-line/Tapo_T310_2_normal_20231208011539o.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '20€',
@@ -412,7 +301,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: 'Capteur de température et humidité Tapo T315',
-		image: '/images/equipment/capteur-de-temperature-et-humidite-tapo-t315.svg',
+		image: 'https://fr.store.tapo.com/cdn/shop/files/TAPOT315_OVERVIEW_1.jpg?v=1719853739',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '28€',
@@ -423,7 +312,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: 'Capteur de luminosité TS0222',
-		image: '/images/equipment/capteur-de-luminosite-ts0222.svg',
+		image: 'https://community.jeedom.com/uploads/default/original/3X/7/1/71e8421cb38e4b71f7b0cf5536b9fcc53ab26b6b.png',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '15€',
@@ -434,7 +323,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: 'Détecteur de fumée Heiman',
-		image: '/images/equipment/detecteur-de-fumee-heiman.svg',
+		image: 'https://m.media-amazon.com/images/I/71m44RpM3EL._AC_.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '28€',
@@ -448,7 +337,7 @@ const sensors: Equipment[] = [
 const heating: Equipment[] = [
 	{
 		name: 'Tado V3+ Thermostat',
-		image: '/images/equipment/tado-v3-thermostat.svg',
+		image: 'https://m.media-amazon.com/images/I/61fiMVYLXVL._AC_.jpg',
 		protocol: 'WiFi',
 		integration: 'Oui',
 		price: '129€',
@@ -459,7 +348,7 @@ const heating: Equipment[] = [
 	},
 	{
 		name: 'Têtes thermostatiques Tado',
-		image: '/images/equipment/tetes-thermostatiques-tado.svg',
+		image: 'https://media.adeo.com/media/4721022/media.png?width=3000&height=3000&format=jpg&quality=80&fit=bounds',
 		protocol: 'WiFi',
 		integration: 'Oui',
 		price: '79€/pièce',
@@ -470,7 +359,7 @@ const heating: Equipment[] = [
 	},
 	{
 		name: 'Module fil pilote Nodon SIN-4-FP-21',
-		image: '/images/equipment/module-fil-pilote-nodon-sin-4-fp-21.svg',
+		image: 'https://haade.fr/assets/images/generated/posts/118/test-nodon-module-fil-pilote-sin-4fp-21-controle-dans-home-assistant-940-e96b56148.png',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '40€',
@@ -484,7 +373,7 @@ const heating: Equipment[] = [
 const cleaning: Equipment[] = [
 	{
 		name: 'Robot Tondeuse Dream A1',
-		image: '/images/equipment/robot-tondeuse-dream-a1.svg',
+		image: 'https://www.notebookcheck.net/fileadmin/Notebooks/News/_nc4/Dreame-A1-Maehroboter-Test-Bilder-Unterseite.jpg',
 		protocol: 'WiFi',
 		integration: 'Moyenne',
 		price: '1055€',
@@ -495,7 +384,7 @@ const cleaning: Equipment[] = [
 	},
 	{
 		name: 'Robot aspirateur Dream X50 Master',
-		image: '/images/equipment/robot-aspirateur-dream-x50-master.svg',
+		image: 'https://fr.dreametech.com/cdn/shop/files/Host-rag_external_expansion_2fa81370-733b-4479-9768-0ef74f5d9952_1024x1024.jpg?v=1735281769',
 		protocol: 'WiFi',
 		integration: 'Moyenne',
 		price: '1074€',
@@ -509,7 +398,7 @@ const cleaning: Equipment[] = [
 const multimedia: Equipment[] = [
 	{
 		name: 'Ampli Nad C700',
-		image: '/images/equipment/ampli-nad-c700.svg',
+		image: 'https://musikit.com/4126-large_default/nad-c700.jpg',
 		protocol: 'WiFi',
 		integration: 'Moyenne',
 		price: '1599€',
@@ -520,7 +409,7 @@ const multimedia: Equipment[] = [
 	},
 	{
 		name: 'Xiaomi TV Box S 3ème Génération',
-		image: '/images/equipment/xiaomi-tv-box-s-3eme-generation.svg',
+		image: 'https://i02.appmifile.com/mi-com-product/fly-birds/xiaomi-tv-box-s-3rd-gen/pc/zewsxdrcftvgybhnj.jpg',
 		protocol: 'WiFi',
 		integration: 'Moyenne',
 		price: '52€',
@@ -534,7 +423,7 @@ const multimedia: Equipment[] = [
 const switchesAndLights: Equipment[] = [
 	{
 		name: 'Prise Tapo P110',
-		image: '/images/equipment/prise-tapo-p110.svg',
+		image: 'https://static.tp-link.com/upload/image-line/01_large_20210910081715c.jpg',
 		protocol: 'WiFi',
 		integration: 'Oui',
 		price: '13€',
@@ -545,7 +434,7 @@ const switchesAndLights: Equipment[] = [
 	},
 	{
 		name: 'Prise Tapo P110M',
-		image: '/images/equipment/prise-tapo-p110m.svg',
+		image: 'https://static.tp-link.com/upload/image-line/2_normal_20230913015222f.jpg',
 		protocol: 'WiFi + Matter',
 		integration: 'Oui',
 		price: '20€',
@@ -556,7 +445,7 @@ const switchesAndLights: Equipment[] = [
 	},
 	{
 		name: 'Prise Sonoff S60ZBTPF',
-		image: '/images/equipment/prise-sonoff-s60zbtpf.svg',
+		image: 'https://www.cnx-software.com/wp-content/uploads/2025/06/Sonoff_S60ZBTPF_AvailableModel.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '16€',
@@ -567,7 +456,7 @@ const switchesAndLights: Equipment[] = [
 	},
 	{
 		name: 'Interrupteur Tapo S210',
-		image: '/images/equipment/interrupteur-tapo-s210.svg',
+		image: 'https://static.tp-link.com/upload/image-line/overview_07_large_20230105093825m.jpg',
 		protocol: 'SubGHz',
 		integration: 'Oui',
 		price: '22€',
@@ -578,7 +467,7 @@ const switchesAndLights: Equipment[] = [
 	},
 	{
 		name: 'Interrupteur Tapo S220',
-		image: '/images/equipment/interrupteur-tapo-s220.svg',
+		image: 'https://static.tp-link.com/upload/image-line/overview_06_large_20230105093533k.jpg',
 		protocol: 'SubGHz',
 		integration: 'Oui',
 		price: '24€',
@@ -589,7 +478,7 @@ const switchesAndLights: Equipment[] = [
 	},
 	{
 		name: 'Interrupteur Sonoff ZBM5-1C-80/86',
-		image: '/images/equipment/interrupteur-sonoff-zbm5-1c-80-86.svg',
+		image: 'https://sonoff.tech/cdn/shop/files/SONOFF_SwitchMan_Zigbee_Smart_Wall_Switch-03.jpg?v=1751265059&width=1400',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '22€',
@@ -603,7 +492,7 @@ const switchesAndLights: Equipment[] = [
 const buttons: Equipment[] = [
 	{
 		name: 'Bot Switchbot',
-		image: '/images/equipment/bot-switchbot.svg',
+		image: 'https://i5.walmartimages.com/asr/0ffcb79d-d390-46e1-8717-d79b1e67b133.3055a9a9422d96a3f22a3f570c7d5caa.jpeg',
 		protocol: 'Bluetooth',
 		integration: 'Oui',
 		price: '25€',
@@ -614,7 +503,7 @@ const buttons: Equipment[] = [
 	},
 	{
 		name: 'Fingerbot TS0001',
-		image: '/images/equipment/fingerbot-ts0001.svg',
+		image: 'https://cdn2.domadoo.fr/26391-large_default/adaprox-smart-button-fingerbot-zigbee-30-tuya-and-zigbee2mqtt.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '20€',
@@ -625,7 +514,7 @@ const buttons: Equipment[] = [
 	},
 	{
 		name: 'Bouton Tapo S200D',
-		image: '/images/equipment/bouton-tapo-s200d.svg',
+		image: 'https://www.neobyte.es/124416-thickbox_default/tp-link-tapo-s200d-boton-inteligente.jpg',
 		protocol: 'SubGHz',
 		integration: 'Oui',
 		price: '17€',
@@ -636,7 +525,7 @@ const buttons: Equipment[] = [
 	},
 	{
 		name: 'Bouton Sonoff SNZB-01P',
-		image: '/images/equipment/bouton-sonoff-snzb-01p.svg',
+		image: 'https://shop.smarthome-europe.com/18054-thickbox_default/bouton-connecte-sans-fil-zigbee-30-snzb-01p-sonoff.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '11€',
@@ -650,7 +539,7 @@ const buttons: Equipment[] = [
 const infrastructure: Equipment[] = [
 	{
 		name: 'Répéteur Zigbee Aeotec',
-		image: '/images/equipment/repeteur-zigbee-aeotec.svg',
+		image: 'https://cdn1.domadoo.fr/22259-large_default/aeotec-repeteur-routeur-zigbee-range-extender-zi-wg001.jpg',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '30€',
@@ -661,7 +550,7 @@ const infrastructure: Equipment[] = [
 	},
 	{
 		name: 'Home Assistant Green',
-		image: '/images/equipment/home-assistant-green.svg',
+		image: 'https://www.home-assistant.io/images/green/ha-green-box-contents.jpg',
 		protocol: '-',
 		integration: 'Oui',
 		price: '109€',
