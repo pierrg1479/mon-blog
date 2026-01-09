@@ -1,9 +1,5 @@
-public/apple-touch-icon.png
-public/favicon-48.png
-public/favicon-96.png
-public/icon-192.png
-public/icon-512.png
-node_modules
-.astro
-.vercel
-dist
+# Generated equipment images
+public/images/equipment/*.webp
+
+# Local source images for equipment (not committed)
+scripts/assets/
