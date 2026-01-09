@@ -1,0 +1,10 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'>
+  <rect width='400' height='300' fill='#f3f4f6'/>
+  <rect x='24' y='24' width='352' height='252' rx='20' fill='#ffffff' stroke='#e5e7eb' stroke-width='2'/>
+  <text x='200' y='140' text-anchor='middle' font-family='Arial, sans-serif' font-size='18' fill='#111827'>
+    Aqara Wireless Mini Switch
+  </text>
+  <text x='200' y='172' text-anchor='middle' font-family='Arial, sans-serif' font-size='12' fill='#6b7280'>
+    The Optimization Guy
+  </text>
+</svg>
