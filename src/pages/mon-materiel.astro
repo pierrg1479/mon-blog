@@ -18,7 +18,12 @@ type Equipment = {
 	articleUrl: string | null;
 };
 
-const lastUpdated = '1 janvier 2025';
+// Date de dernière mise à jour générée automatiquement
+const lastUpdated = new Date().toLocaleDateString('fr-FR', {
+	day: 'numeric',
+	month: 'long',
+	year: 'numeric'
+});
 
 const siteUrl = 'https://www.the-optimization-guy.com';
 
