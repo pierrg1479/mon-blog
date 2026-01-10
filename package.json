@@ -4,11 +4,12 @@
   "version": "0.0.1",
   "scripts": {
     "predev": "node scripts/generate-icons.mjs",
-    "prebuild": "node scripts/generate-icons.mjs",
+    "prebuild": "node scripts/fetch-equipment-images.mjs && node scripts/generate-icons.mjs",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "fetch-equipment-images": "node scripts/fetch-equipment-images.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",

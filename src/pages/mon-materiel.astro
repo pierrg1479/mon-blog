@@ -24,6 +24,46 @@ const siteUrl = 'https://www.the-optimization-guy.com';
 
 const structuredProducts = [
 	{
+		name: 'Caméra Reolink E1 Pro',
+		image: '/images/equipment/camera-reolink-e1-pro.webp',
+		description: 'Vue claire de nuit, parfaite pour l’intérieur.',
+		url: 'https://domadoo.fr/reolink-e1-pro?ref=the-optimization-guy',
+		brand: 'Reolink',
+		price: '59.00',
+	},
+	{
+		name: 'Serrure Nuki Smart Lock',
+		image: '/images/equipment/serrure-nuki-smart-lock.webp',
+		description: 'Accès sans clé avec scénarios Home Assistant.',
+		url: 'https://domadoo.fr/nuki-smart-lock?ref=the-optimization-guy',
+		brand: 'Nuki',
+		price: '219.00',
+	},
+	{
+		name: 'Aqara Water Leak Sensor',
+		image: '/images/equipment/aqara-water-leak-sensor.webp',
+		description: 'Rapide à détecter, mini format discret.',
+		url: 'https://domadoo.fr/aqara-water-leak?ref=the-optimization-guy',
+		brand: 'Aqara',
+		price: '21.00',
+	},
+	{
+		name: 'Shelly Flood',
+		image: '/images/equipment/shelly-flood.webp',
+		description: 'WiFi direct, bon en dépannage.',
+		url: 'https://domadoo.fr/shelly-flood?ref=the-optimization-guy',
+		brand: 'Shelly',
+		price: '34.00',
+	},
+	{
+		name: 'Aqara Temperature & Humidity',
+		image: '/images/equipment/aqara-temperature-humidity.webp',
+		description: 'Capteur fiable pour les pièces clés.',
+		url: 'https://domadoo.fr/aqara-temp-humidity?ref=the-optimization-guy',
+		brand: 'Aqara',
+		price: '15.00',
+	},
+	{
 		name: 'Sonoff SNZB-04 Contact',
 		image: '/images/equipment/sonoff-snzb-04-contact.webp',
 		description: 'Parfait pour portes et fenêtres.',
@@ -48,6 +88,14 @@ const structuredProducts = [
 		price: '79.00',
 	},
 	{
+		name: 'Roborock S8',
+		image: '/images/equipment/roborock-s8.webp',
+		description: 'Aspiration puissante et cartographie fiable.',
+		url: 'https://domadoo.fr/roborock-s8?ref=the-optimization-guy',
+		brand: 'Roborock',
+		price: '599.00',
+	},
+	{
 		name: 'Switchbot Bot',
 		image: '/images/equipment/switchbot-bot.webp',
 		description: 'Pratique pour automatiser un bouton existant.',
@@ -55,7 +103,70 @@ const structuredProducts = [
 		brand: 'SwitchBot',
 		price: '29.00',
 	},
-
+	{
+		name: 'Chromecast 4K',
+		image: '/images/equipment/chromecast-4k.webp',
+		description: 'Streaming fluide, facile à piloter.',
+		url: 'https://domadoo.fr/chromecast-4k?ref=the-optimization-guy',
+		brand: 'Google',
+		price: '69.00',
+	},
+	{
+		name: 'Amplificateur Sonos Amp',
+		image: '/images/equipment/amplificateur-sonos-amp.webp',
+		description: 'Multiroom robuste pour les pièces ouvertes.',
+		url: 'https://domadoo.fr/sonos-amp?ref=the-optimization-guy',
+		brand: 'Sonos',
+		price: '699.00',
+	},
+	{
+		name: 'Interrupteur Aqara H1',
+		image: '/images/equipment/interrupteur-aqara-h1.webp',
+		description: 'Look propre, intégration HA immédiate.',
+		url: 'https://domadoo.fr/aqara-h1?ref=the-optimization-guy',
+		brand: 'Aqara',
+		price: '29.00',
+	},
+	{
+		name: 'Ampoule Philips Hue White',
+		image: '/images/equipment/ampoule-philips-hue-white.webp',
+		description: 'Lumière douce et stable, idéale le soir.',
+		url: 'https://domadoo.fr/hue-white?ref=the-optimization-guy',
+		brand: 'Philips Hue',
+		price: '19.00',
+	},
+	{
+		name: 'Ikea Shortcut Button',
+		image: '/images/equipment/ikea-shortcut-button.webp',
+		description: 'Bouton simple pour scènes rapides.',
+		url: 'https://domadoo.fr/ikea-shortcut?ref=the-optimization-guy',
+		brand: 'IKEA',
+		price: '9.00',
+	},
+	{
+		name: 'Aqara Wireless Mini Switch',
+		image: '/images/equipment/aqara-wireless-mini-switch.webp',
+		description: 'Compact et très réactif.',
+		url: 'https://domadoo.fr/aqara-mini-switch?ref=the-optimization-guy',
+		brand: 'Aqara',
+		price: '12.00',
+	},
+	{
+		name: 'ConBee II Zigbee USB',
+		image: '/images/equipment/conbee-ii-zigbee-usb.webp',
+		description: 'Stable, reconnu par Zigbee2MQTT.',
+		url: 'https://domadoo.fr/conbee-2?ref=the-optimization-guy',
+		brand: 'dresden elektronik',
+		price: '39.00',
+	},
+	{
+		name: 'Mini PC Home Assistant',
+		image: '/images/equipment/mini-pc-home-assistant.webp',
+		description: 'Le cœur du système, silencieux et fiable.',
+		url: 'https://www.home-assistant.io/installation/',
+		brand: 'Home Assistant',
+		price: '199.00',
+	},
 ];
 
 const structuredData = {
@@ -68,7 +179,7 @@ const structuredData = {
 	mainEntity: structuredProducts.map((product) => ({
 		'@type': 'Product',
 		name: product.name,
-		image: product.image.startsWith('http') ? product.image : `${siteUrl}${product.image}`,
+		image: '/images/equipment/mon-materiel-the-optimization-guy.webp',
 		description: product.description,
 		url: product.url,
 		brand: {
@@ -191,7 +302,7 @@ const security: Equipment[] = [
 const sensors: Equipment[] = [
 	{
 		name: "Capteur d'ouverture Sonoff SNZB-04P",
-		image: '/images/equipment/capteur-ouverture-sonoff-snzb-04p.webp',
+		image: '/images/equipment/capteur-d-ouverture-sonoff-snzb-04p.webp',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '12€',
@@ -202,7 +313,7 @@ const sensors: Equipment[] = [
 	},
 	{
 		name: "Capteur d'ouverture Tapo T110",
-		image: '/images/equipment/capteur-ouverture-tapo-t110.webp',
+		image: '/images/equipment/capteur-d-ouverture-tapo-t110.webp',
 		protocol: 'Zigbee',
 		integration: 'Oui',
 		price: '13€',
