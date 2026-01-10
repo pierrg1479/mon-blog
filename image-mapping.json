@@ -1,0 +1,207 @@
+[
+  {
+    "url": "https://community.hubitat.com/uploads/default/original/3X/7/5/755811b5f4acd5d77b9b54f0517e638c7e52a952.jpeg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN community.hubitat.com"
+  },
+  {
+    "url": "https://m.media-amazon.com/images/I/61fiMVYLXVL._AC_.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN m.media-amazon.com"
+  },
+  {
+    "url": "https://media.adeo.com/media/4721022/media.png?width=3000&height=3000&format=jpg&quality=80&fit=bounds",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN media.adeo.com"
+  },
+  {
+    "url": "https://i5.walmartimages.com/asr/0ffcb79d-d390-46e1-8717-d79b1e67b133.3055a9a9422d96a3f22a3f570c7d5caa.jpeg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN i5.walmartimages.com"
+  },
+  {
+    "url": "https://home-cdn.reolink.us/wp-content/uploads/2024/06/070511041717737064.7127.jpg.webp",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN home-cdn.reolink.us"
+  },
+  {
+    "url": "https://static.tp-link.com/upload/image-line/Tapo-C225_EU_1.0_overview_05_large_20221128090030u.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN static.tp-link.com"
+  },
+  {
+    "url": "https://home-cdn.reolink.us/wp-content/uploads/2024/10/300852201730278340.2305.jpg.webp",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN home-cdn.reolink.us"
+  },
+  {
+    "url": "https://static.tp-link.com/upload/image-line/01_normal_20230420071916t.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN static.tp-link.com"
+  },
+  {
+    "url": "https://home-cdn.reolink.us/wp-content/uploads/2023/11/090908511699520931.6711.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN home-cdn.reolink.us"
+  },
+  {
+    "url": "https://static.tp-link.com/upload/image-line/Tapo_C425(US)_1.0-180x150x84.5mm-7022510299_large_20240328055558w.png",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN static.tp-link.com"
+  },
+  {
+    "url": "https://m.media-amazon.com/images/I/61UnLizGnPL._AC_SL1500_.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN m.media-amazon.com"
+  },
+  {
+    "url": "https://www.switch-bot.com/cdn/shop/files/Keypad_vision_JP_Amazon_Images_1000x1000_05_2x_2.webp?v=1747894218",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN www.switch-bot.com"
+  },
+  {
+    "url": "https://i5.walmartimages.com/seo/SwitchBot-Keypad-Touch-Smart-Keypad-for-SwitchBot-Lock-2-Years-Battery-Life-IP65_33f6b833-2a54-4f08-9d4c-f7a6b20a666b.f918e8ea7702fd3489ced62641dfbef5.jpeg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN i5.walmartimages.com"
+  },
+  {
+    "url": "https://sonoff.tech/cdn/shop/files/sonoff-zigbee-door-window-sensor-snzb-04p-3.jpg?v=1751008379&width=1200",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN sonoff.tech"
+  },
+  {
+    "url": "https://static.tp-link.com/upload/image-line/Tapo_T110_04_large_20220616080629e.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN static.tp-link.com"
+  },
+  {
+    "url": "https://m.media-amazon.com/images/I/6135pMy+h6L._AC_.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN m.media-amazon.com"
+  },
+  {
+    "url": "https://itead.cc/wp-content/uploads/2023/09/SNZB-06P_1000px_1.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN itead.cc"
+  },
+  {
+    "url": "https://www.expert4house.com/img/cms/Sensori Acqua Smart/Sonoff SNZB-05P Rilevatore di Perdite dacqua Smart Zigbee IP67.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN www.expert4house.com"
+  },
+  {
+    "url": "https://www.expert4house.com/6792-large_default/sonoff-snzb-05p-capteur-de-fuite-d-eau-intelligent-zigbee.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN www.expert4house.com"
+  },
+  {
+    "url": "https://zigbee.blakadder.com/assets/images/devices/Third_Reality_3RVS01031Z.webp",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN zigbee.blakadder.com"
+  },
+  {
+    "url": "https://cdn2.domadoo.fr/33245-large_default/sonoff-capteur-de-temperature-zigbee-etanche-ip65-cable-deporte-snzb02ld.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN cdn2.domadoo.fr"
+  },
+  {
+    "url": "https://static.tp-link.com/upload/image-line/8_large_20230725014222p.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN static.tp-link.com"
+  },
+  {
+    "url": "https://static.tp-link.com/upload/image-line/Tapo_T310_2_normal_20231208011539o.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN static.tp-link.com"
+  },
+  {
+    "url": "https://fr.store.tapo.com/cdn/shop/files/TAPOT315_OVERVIEW_1.jpg?v=1719853739",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN fr.store.tapo.com"
+  },
+  {
+    "url": "https://community.jeedom.com/uploads/default/original/3X/7/1/71e8421cb38e4b71f7b0cf5536b9fcc53ab26b6b.png",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN community.jeedom.com"
+  },
+  {
+    "url": "https://m.media-amazon.com/images/I/71m44RpM3EL._AC_.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN m.media-amazon.com"
+  },
+  {
+    "url": "https://haade.fr/assets/images/generated/posts/118/test-nodon-module-fil-pilote-sin-4fp-21-controle-dans-home-assistant-940-e96b56148.png",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN haade.fr"
+  },
+  {
+    "url": "https://www.notebookcheck.net/fileadmin/Notebooks/News/_nc4/Dreame-A1-Maehroboter-Test-Bilder-Unterseite.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN www.notebookcheck.net"
+  },
+  {
+    "url": "https://fr.dreametech.com/cdn/shop/files/Host-rag_external_expansion_2fa81370-733b-4479-9768-0ef74f5d9952_1024x1024.jpg?v=1735281769",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN fr.dreametech.com"
+  },
+  {
+    "url": "https://i02.appmifile.com/mi-com-product/fly-birds/xiaomi-tv-box-s-3rd-gen/pc/zewsxdrcftvgybhnj.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN i02.appmifile.com"
+  },
+  {
+    "url": "https://static.tp-link.com/upload/image-line/01_large_20210910081715c.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN static.tp-link.com"
+  },
+  {
+    "url": "https://static.tp-link.com/upload/image-line/2_normal_20230913015222f.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN static.tp-link.com"
+  },
+  {
+    "url": "https://www.cnx-software.com/wp-content/uploads/2025/06/Sonoff_S60ZBTPF_AvailableModel.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN www.cnx-software.com"
+  },
+  {
+    "url": "https://static.tp-link.com/upload/image-line/overview_07_large_20230105093825m.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN static.tp-link.com"
+  },
+  {
+    "url": "https://static.tp-link.com/upload/image-line/overview_06_large_20230105093533k.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN static.tp-link.com"
+  },
+  {
+    "url": "https://sonoff.tech/cdn/shop/files/SONOFF_SwitchMan_Zigbee_Smart_Wall_Switch-03.jpg?v=1751265059&width=1400",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN sonoff.tech"
+  },
+  {
+    "url": "https://cdn2.domadoo.fr/26391-large_default/adaprox-smart-button-fingerbot-zigbee-30-tuya-and-zigbee2mqtt.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN cdn2.domadoo.fr"
+  },
+  {
+    "url": "https://www.neobyte.es/124416-thickbox_default/tp-link-tapo-s200d-boton-inteligente.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN www.neobyte.es"
+  },
+  {
+    "url": "https://shop.smarthome-europe.com/18054-thickbox_default/bouton-connecte-sans-fil-zigbee-30-snzb-01p-sonoff.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN shop.smarthome-europe.com"
+  },
+  {
+    "url": "https://cdn1.domadoo.fr/22259-large_default/aeotec-repeteur-routeur-zigbee-range-extender-zi-wg001.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN cdn1.domadoo.fr"
+  },
+  {
+    "url": "https://www.home-assistant.io/images/green/ha-green-box-contents.jpg",
+    "filename": null,
+    "error": "getaddrinfo EAI_AGAIN www.home-assistant.io"
+  }
+]
