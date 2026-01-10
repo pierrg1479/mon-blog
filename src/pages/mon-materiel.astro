@@ -87,45 +87,13 @@ const structuredData = {
 };
 
 const security: Equipment[] = [
+	// Caméras Reolink
 	{
 		name: 'Reolink Argus 4 Pro',
 		image: '/images/equipment/reolink-argus-4.jpg',
 		protocol: 'WiFi',
 		integration: 'Oui',
 		price: '204€',
-		rating: 4,
-		comment: 'Caméra de sécurité.',
-		affiliateLink: null,
-		articleUrl: null,
-	},
-	{
-		name: 'Tapo C225',
-		image: '/images/equipment/tapo-c225.jpg',
-		protocol: 'WiFi',
-		integration: 'Oui',
-		price: '40€',
-		rating: 4,
-		comment: 'Caméra de sécurité.',
-		affiliateLink: null,
-		articleUrl: null,
-	},
-	{
-		name: 'Reolink Lumus Pro',
-		image: '/images/equipment/reolink-lumus-pro.jpg',
-		protocol: 'WiFi',
-		integration: 'Oui',
-		price: '63€',
-		rating: 4,
-		comment: 'Caméra de sécurité.',
-		affiliateLink: null,
-		articleUrl: null,
-	},
-	{
-		name: 'Tapo C510W',
-		image: '/images/equipment/tapo-c510w.jpg',
-		protocol: 'WiFi',
-		integration: 'Oui',
-		price: '34€',
 		rating: 4,
 		comment: 'Caméra de sécurité.',
 		affiliateLink: null,
@@ -143,6 +111,40 @@ const security: Equipment[] = [
 		articleUrl: null,
 	},
 	{
+		name: 'Reolink Lumus Pro',
+		image: '/images/equipment/reolink-lumus-pro.jpg',
+		protocol: 'WiFi',
+		integration: 'Oui',
+		price: '63€',
+		rating: 4,
+		comment: 'Caméra de sécurité.',
+		affiliateLink: null,
+		articleUrl: null,
+	},
+	// Caméras Tapo
+	{
+		name: 'Tapo C225',
+		image: '/images/equipment/tapo-c225.jpg',
+		protocol: 'WiFi',
+		integration: 'Oui',
+		price: '40€',
+		rating: 4,
+		comment: 'Caméra de sécurité.',
+		affiliateLink: null,
+		articleUrl: null,
+	},
+	{
+		name: 'Tapo C510W',
+		image: '/images/equipment/tapo-c510w.jpg',
+		protocol: 'WiFi',
+		integration: 'Oui',
+		price: '34€',
+		rating: 4,
+		comment: 'Caméra de sécurité.',
+		affiliateLink: null,
+		articleUrl: null,
+	},
+	{
 		name: 'Tapo C425',
 		image: '/images/equipment/tapo-c425.jpg',
 		protocol: 'WiFi',
@@ -153,6 +155,7 @@ const security: Equipment[] = [
 		affiliateLink: null,
 		articleUrl: null,
 	},
+	// Serrures et claviers
 	{
 		name: 'Serrure SwitchBot Smart Lock Ultra',
 		image: '/images/equipment/switchbot-lock-ultra.jpg',
@@ -189,6 +192,7 @@ const security: Equipment[] = [
 ];
 
 const sensors: Equipment[] = [
+	// Capteurs d'ouverture
 	{
 		name: "Capteur d'ouverture Sonoff SNZB-04P",
 		image: '/images/equipment/sonoff-zigbee-30-snzb-04p.jpg',
@@ -211,6 +215,7 @@ const sensors: Equipment[] = [
 		affiliateLink: null,
 		articleUrl: null,
 	},
+	// Détecteurs de mouvement/présence
 	{
 		name: 'Détecteur de mouvement Sonoff SNZB-03P',
 		image: '/images/equipment/sonoff-snzb-03p.jpg',
@@ -233,50 +238,7 @@ const sensors: Equipment[] = [
 		affiliateLink: null,
 		articleUrl: null,
 	},
-	{
-		name: 'Capteur de luminosité extérieur Mumubiz',
-		image: '/images/equipment/mumubiz-capteur-de-luminosite.jpg',
-		protocol: 'Zigbee',
-		integration: 'Oui',
-		price: '30€',
-		rating: 4,
-		comment: 'Capteur de luminosité extérieur avec panneau solaire.',
-		affiliateLink: 'https://www.domadoo.fr/fr/produits-de-domotique/8025-mumubiz-capteur-de-luminosite-exterieur-zigbee-avec-panneau-solaire-tuya-smart-life.html?srsltid=AfmBOooDGCR40IwrxCXETHVLmTyiAYJ0U6c5tGhDq-LeP8grSSDDCLYa',
-		articleUrl: null,
-	},
-	{
-		name: 'Capteur de pluie Mumubiz',
-		image: '/images/equipment/mumubiz-capteur-de-pluie.jpg',
-		protocol: 'Zigbee',
-		integration: 'Oui',
-		price: '35€',
-		rating: 4,
-		comment: 'Capteur de pluie Zigbee.',
-		affiliateLink: 'https://www.domadoo.fr/fr/produits-zigbee/7815-mumubiz-capteur-de-pluie-zigbee-ewelink-jeedom-home-assistant-zigbee2mqtt.html?srsltid=AfmBOorZCErwH60Wg6KBz-UUJgOF7UEN2yeD9d0ohUOhIujOWkqcUHvC',
-		articleUrl: null,
-	},
-	{
-		name: 'Capteur de fuite Sonoff SNZB-05P',
-		image: '/images/equipment/sonoff-snzb-05p.jpg',
-		protocol: 'Zigbee',
-		integration: 'Oui',
-		price: '22€',
-		rating: 4,
-		comment: 'Capteur de fuite.',
-		affiliateLink: null,
-		articleUrl: null,
-	},
-	{
-		name: 'Capteur de vibration Third Reality 3RVS01031Z',
-		image: '/images/equipment/third-reality-3rvs01031z.jpg',
-		protocol: 'Zigbee',
-		integration: 'Oui',
-		price: '20€',
-		rating: 4,
-		comment: 'Capteur de vibration.',
-		affiliateLink: null,
-		articleUrl: null,
-	},
+	// Capteurs de température
 	{
 		name: 'Capteur de température Sonoff SNZB-02LD',
 		image: '/images/equipment/sonoff-snzb02ld.jpg',
@@ -285,17 +247,6 @@ const sensors: Equipment[] = [
 		price: '20€',
 		rating: 4,
 		comment: 'Capteur de température.',
-		affiliateLink: null,
-		articleUrl: null,
-	},
-	{
-		name: 'Capteur de fuite Tapo T300',
-		image: '/images/equipment/tapo-t300.jpg',
-		protocol: 'Zigbee',
-		integration: 'Oui',
-		price: '22€',
-		rating: 4,
-		comment: 'Capteur de fuite.',
 		affiliateLink: null,
 		articleUrl: null,
 	},
@@ -321,6 +272,30 @@ const sensors: Equipment[] = [
 		affiliateLink: null,
 		articleUrl: null,
 	},
+	// Capteurs de fuite
+	{
+		name: 'Capteur de fuite Sonoff SNZB-05P',
+		image: '/images/equipment/sonoff-snzb-05p.jpg',
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '22€',
+		rating: 4,
+		comment: 'Capteur de fuite.',
+		affiliateLink: null,
+		articleUrl: null,
+	},
+	{
+		name: 'Capteur de fuite Tapo T300',
+		image: '/images/equipment/tapo-t300.jpg',
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '22€',
+		rating: 4,
+		comment: 'Capteur de fuite.',
+		affiliateLink: null,
+		articleUrl: null,
+	},
+	// Capteurs de luminosité
 	{
 		name: 'Capteur de luminosité TS0222',
 		image: '/images/equipment/capteur-luminosite.jpg',
@@ -332,6 +307,42 @@ const sensors: Equipment[] = [
 		affiliateLink: null,
 		articleUrl: null,
 	},
+	{
+		name: 'Capteur de luminosité extérieur Mumubiz',
+		image: '/images/equipment/mumubiz-capteur-de-luminosite.jpg',
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '30€',
+		rating: 4,
+		comment: 'Capteur de luminosité extérieur avec panneau solaire.',
+		affiliateLink: 'https://www.domadoo.fr/fr/produits-de-domotique/8025-mumubiz-capteur-de-luminosite-exterieur-zigbee-avec-panneau-solaire-tuya-smart-life.html?srsltid=AfmBOooDGCR40IwrxCXETHVLmTyiAYJ0U6c5tGhDq-LeP8grSSDDCLYa',
+		articleUrl: null,
+	},
+	// Capteur de pluie
+	{
+		name: 'Capteur de pluie Mumubiz',
+		image: '/images/equipment/mumubiz-capteur-de-pluie.jpg',
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '35€',
+		rating: 4,
+		comment: 'Capteur de pluie Zigbee.',
+		affiliateLink: 'https://www.domadoo.fr/fr/produits-zigbee/7815-mumubiz-capteur-de-pluie-zigbee-ewelink-jeedom-home-assistant-zigbee2mqtt.html?srsltid=AfmBOorZCErwH60Wg6KBz-UUJgOF7UEN2yeD9d0ohUOhIujOWkqcUHvC',
+		articleUrl: null,
+	},
+	// Capteur de vibration
+	{
+		name: 'Capteur de vibration Third Reality 3RVS01031Z',
+		image: '/images/equipment/third-reality-3rvs01031z.jpg',
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '20€',
+		rating: 4,
+		comment: 'Capteur de vibration.',
+		affiliateLink: null,
+		articleUrl: null,
+	},
+	// Détecteur de fumée
 	{
 		name: 'Détecteur de fumée Heiman',
 		image: '/images/equipment/heiman-HS1SA.jpg',
@@ -432,6 +443,7 @@ const multimedia: Equipment[] = [
 ];
 
 const switchesAndLights: Equipment[] = [
+	// Prises connectées
 	{
 		name: 'Prise Tapo P110',
 		image: '/images/equipment/tapo-p110.jpg',
@@ -465,6 +477,7 @@ const switchesAndLights: Equipment[] = [
 		affiliateLink: null,
 		articleUrl: null,
 	},
+	// Interrupteurs
 	{
 		name: 'Interrupteur Tapo S210',
 		image: '/images/equipment/tapo-s210.png',
@@ -549,17 +562,6 @@ const buttons: Equipment[] = [
 
 const infrastructure: Equipment[] = [
 	{
-		name: 'Répéteur Zigbee Aeotec',
-		image: '/images/equipment/aotec-zigbee-repetiteur.jpg',
-		protocol: 'Zigbee',
-		integration: 'Oui',
-		price: '30€',
-		rating: 4,
-		comment: 'Répéteur Zigbee.',
-		affiliateLink: null,
-		articleUrl: null,
-	},
-	{
 		name: 'Home Assistant Green',
 		image: '/images/equipment/home-assistant-green.jpg',
 		protocol: '-',
@@ -570,17 +572,28 @@ const infrastructure: Equipment[] = [
 		affiliateLink: null,
 		articleUrl: null,
 	},
+	{
+		name: 'Répéteur Zigbee Aeotec',
+		image: '/images/equipment/aotec-zigbee-repetiteur.jpg',
+		protocol: 'Zigbee',
+		integration: 'Oui',
+		price: '30€',
+		rating: 4,
+		comment: 'Répéteur Zigbee.',
+		affiliateLink: null,
+		articleUrl: null,
+	},
 ];
 
 const sections = [
-	{ title: 'Sécurité', items: security },
+	{ title: 'Infrastructure', items: infrastructure },
+	{ title: 'Prise et interrupteur', items: switchesAndLights },
 	{ title: 'Capteurs', items: sensors },
 	{ title: 'Chauffage', items: heating },
+	{ title: 'Sécurité', items: security },
+	{ title: 'Boutons et Fingerbot', items: buttons },
 	{ title: 'Ménage et entretien', items: cleaning },
 	{ title: 'Multimédia', items: multimedia },
-	{ title: 'Prise et interrupteur', items: switchesAndLights },
-	{ title: 'Boutons et Fingerbot', items: buttons },
-	{ title: 'Infrastructure', items: infrastructure },
 ];
 ---
 
