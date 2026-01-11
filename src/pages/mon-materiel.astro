@@ -673,7 +673,7 @@ const sections = [
 		<!-- End Google Tag Manager (noscript) -->
 		<Header />
 		<section class="w-full">
-			<div class="relative overflow-hidden h-[200px] sm:h-[280px] lg:h-[360px]">
+			<div class="relative w-full overflow-hidden h-[180px] sm:h-[240px] lg:h-[320px]">
 				<img
 					src={heroImg.src}
 					alt="Mon matériel Home Assistant (testé chez moi)"
@@ -681,11 +681,10 @@ const sections = [
 					class="h-full w-full object-cover"
 				/>
 
-				<!-- Overlay (dégradé vers le fond de page) -->
-				<div
-					class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-[var(--bg,white)] dark:to-[var(--bg,#0b0f0b)]"></div>
+				<!-- Overlay dégradé bas -> fond de page -->
+				<div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-white dark:to-[#0b0f0b]"></div>
 
-				<!-- Titre -->
+				<!-- Titre overlay -->
 				<div class="absolute inset-x-0 bottom-0">
 					<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6">
 						<h1 class="text-white drop-shadow text-xl sm:text-3xl font-semibold tracking-tight">
@@ -742,7 +741,7 @@ const sections = [
 		width: calc(100% - 2em);
 		max-width: 1200px;
 		margin: 0 auto;
-		padding: 3em 1em 4em;
+		padding: 1rem 1em 4em;
 	}
 
 	.equipment-page {
