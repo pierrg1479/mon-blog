@@ -673,13 +673,44 @@ const sections = [
 		<Header />
 		<main class="equipment-main">
 			<article class="equipment-page">
-				<header class="page-header">
-					<h1>Mon matériel</h1>
-					<p class="last-updated">Dernière mise à jour : {lastUpdated}</p>
-					<p class="intro">
-						Voici la liste complète du matériel domotique que j'utilise réellement chez moi avec Home Assistant : tout ce qui est ici a été acheté par mes soins, installé et testé sur la durée. Je m'équipe progressivement depuis quelques années : j'ai commencé par le chauffage, puis j'ai ajouté des appareils Tapo, avant de basculer petit à petit vers un écosystème plus fiable en Zigbee.
-					</p>
-				</header>
+				<section class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+					<div class="grid gap-8 lg:grid-cols-2 lg:items-start">
+						<figure class="space-y-3">
+							<img
+								src="/images/mon-materiel-domotique.webp.placeholder.svg"
+								alt="Photo de mon matériel domotique (Home Assistant, Zigbee, Tapo, sécurité, chauffage)"
+								loading="eager"
+								class="w-full rounded-2xl border border-black/10 dark:border-white/10 shadow-sm object-cover aspect-[16/9]"
+							/>
+							<figcaption class="text-sm text-black/60 dark:text-white/60">
+								Photo prise chez moi : une partie de l'écosystème (Zigbee, Tapo, sécurité, chauffage).
+							</figcaption>
+						</figure>
+
+						<div class="space-y-5">
+							<h1 class="text-3xl sm:text-4xl font-semibold tracking-tight">Mon matériel domotique</h1>
+
+							<p class="text-base sm:text-lg text-black/80 dark:text-white/80">
+								Voici le matériel domotique que j'utilise réellement chez moi avec Home Assistant. Tout a été acheté par mes soins, installé et testé sur la durée. J'ai commencé par optimiser le chauffage, puis j'ai équipé la maison en Tapo, avant de migrer progressivement vers un écosystème Zigbee plus fiable.
+							</p>
+
+							<div class="flex flex-wrap gap-2 pt-1">
+								<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
+									Zigbee
+								</span>
+								<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
+									Tapo
+								</span>
+								<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
+									Sécurité
+								</span>
+								<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
+									Chauffage
+								</span>
+							</div>
+						</div>
+					</div>
+				</section>
 
 				{sections.map((section) => (
 					<section class="equipment-section">
@@ -708,35 +739,6 @@ const sections = [
 		display: flex;
 		flex-direction: column;
 		gap: 3rem;
-	}
-
-	.page-header {
-		text-align: left;
-		max-width: 820px;
-	}
-
-	.page-header h1 {
-		font-size: 2.5rem;
-		margin-bottom: 0.5rem;
-	}
-
-	.last-updated {
-		font-size: 0.95rem;
-		color: #6b7280;
-	}
-
-	:global(.dark) .last-updated {
-		color: #9ca3af;
-	}
-
-	.intro {
-		margin-top: 1rem;
-		color: #374151;
-		font-size: 1.05rem;
-	}
-
-	:global(.dark) .intro {
-		color: #d1d5db;
 	}
 
 	.equipment-section {
