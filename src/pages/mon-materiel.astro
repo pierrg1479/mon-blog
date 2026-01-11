@@ -5,6 +5,7 @@ import BaseHead from '../components/BaseHead.astro';
 import EquipmentTable from '../components/EquipmentTable.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import heroImg from '../assets/mon-materiel-domotique-vf.jpeg';
 
 type Equipment = {
 	name: string;
@@ -671,43 +672,52 @@ const sections = [
 		></noscript>
 		<!-- End Google Tag Manager (noscript) -->
 		<Header />
+		<section class="w-full">
+			<div class="relative overflow-hidden h-[200px] sm:h-[280px] lg:h-[360px]">
+				<img
+					src={heroImg.src}
+					alt="Mon matériel Home Assistant (testé chez moi)"
+					loading="eager"
+					class="h-full w-full object-cover"
+				/>
+
+				<!-- Overlay (dégradé vers le fond de page) -->
+				<div
+					class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-[var(--bg,white)] dark:to-[var(--bg,#0b0f0b)]"></div>
+
+				<!-- Titre -->
+				<div class="absolute inset-x-0 bottom-0">
+					<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6">
+						<h1 class="text-white drop-shadow text-xl sm:text-3xl font-semibold tracking-tight">
+							Mon matériel Home Assistant (testé chez moi)
+						</h1>
+					</div>
+				</div>
+			</div>
+		</section>
 		<main class="equipment-main">
 			<article class="equipment-page">
-				<section class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-					<div class="grid gap-8 lg:grid-cols-2 lg:items-start">
-						<figure class="space-y-3">
-							<img
-								src="/images/mon-materiel-domotique.webp.placeholder.svg"
-								alt="Photo de mon matériel domotique (Home Assistant, Zigbee, Tapo, sécurité, chauffage)"
-								loading="eager"
-								class="w-full rounded-2xl border border-black/10 dark:border-white/10 shadow-sm object-cover aspect-[16/9]"
-							/>
-							<figcaption class="text-sm text-black/60 dark:text-white/60">
-								Photo prise chez moi : une partie de l'écosystème (Zigbee, Tapo, sécurité, chauffage).
-							</figcaption>
-						</figure>
+				<section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+					<div class="space-y-5">
+						<h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Mon matériel domotique</h2>
 
-						<div class="space-y-5">
-							<h1 class="text-3xl sm:text-4xl font-semibold tracking-tight">Mon matériel domotique</h1>
+						<p class="text-base sm:text-lg text-black/80 dark:text-white/80">
+							Voici le matériel domotique que j'utilise réellement chez moi avec Home Assistant. Tout a été acheté par mes soins, installé et testé sur la durée. J'ai commencé par optimiser le chauffage, puis j'ai équipé la maison en Tapo, avant de migrer progressivement vers un écosystème Zigbee plus fiable.
+						</p>
 
-							<p class="text-base sm:text-lg text-black/80 dark:text-white/80">
-								Voici le matériel domotique que j'utilise réellement chez moi avec Home Assistant. Tout a été acheté par mes soins, installé et testé sur la durée. J'ai commencé par optimiser le chauffage, puis j'ai équipé la maison en Tapo, avant de migrer progressivement vers un écosystème Zigbee plus fiable.
-							</p>
-
-							<div class="flex flex-wrap gap-2 pt-1">
-								<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-									Zigbee
-								</span>
-								<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-									Tapo
-								</span>
-								<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-									Sécurité
-								</span>
-								<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-									Chauffage
-								</span>
-							</div>
+						<div class="flex flex-wrap gap-2 pt-1">
+							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
+								Zigbee
+							</span>
+							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
+								Tapo
+							</span>
+							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
+								Sécurité
+							</span>
+							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
+								Chauffage
+							</span>
 						</div>
 					</div>
 				</section>
