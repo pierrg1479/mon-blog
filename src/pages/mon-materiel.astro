@@ -5,6 +5,7 @@ import BaseHead from '../components/BaseHead.astro';
 import EquipmentTable from '../components/EquipmentTable.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import heroImg from '../assets/mon-materiel-domotique-vf.jpeg';
 
 type Equipment = {
 	name: string;
@@ -671,6 +672,30 @@ const sections = [
 		></noscript>
 		<!-- End Google Tag Manager (noscript) -->
 		<Header />
+		<section class="w-full">
+			<div class="relative w-full overflow-hidden">
+				<!-- Image -->
+				<img
+					src={heroImg.src}
+					alt="Mon matériel Home Assistant (testé chez moi)"
+					loading="eager"
+					class="w-full object-cover aspect-[21/9]"
+				/>
+
+				<!-- Overlay (dégradé vers le fond de page) -->
+				<div
+					class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-[var(--bg,white)] dark:to-[var(--bg,#0b0f0b)]"></div>
+
+				<!-- Titre -->
+				<div class="absolute inset-x-0 bottom-0">
+					<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-6 sm:pb-10">
+						<h1 class="text-2xl sm:text-4xl font-semibold tracking-tight text-white drop-shadow">
+							Mon matériel Home Assistant (testé chez moi)
+						</h1>
+					</div>
+				</div>
+			</div>
+		</section>
 		<main class="equipment-main">
 			<article class="equipment-page">
 				<section class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
