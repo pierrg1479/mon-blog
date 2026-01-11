@@ -737,6 +737,16 @@ const sections = [
 </html>
 
 <style>
+	/* Désactiver le gradient du body pour cette page */
+	:global(body) {
+		background: white !important;
+		background-size: auto !important;
+	}
+
+	:global(.dark body) {
+		background: rgb(17, 24, 39) !important;
+	}
+
 	.equipment-main {
 		width: calc(100% - 2em);
 		max-width: 1200px;
