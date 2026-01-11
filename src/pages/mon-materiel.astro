@@ -673,13 +673,12 @@ const sections = [
 		<!-- End Google Tag Manager (noscript) -->
 		<Header />
 		<section class="w-full">
-			<div class="relative w-full overflow-hidden">
-				<!-- Image -->
+			<div class="relative overflow-hidden h-[200px] sm:h-[280px] lg:h-[360px]">
 				<img
 					src={heroImg.src}
 					alt="Mon matériel Home Assistant (testé chez moi)"
 					loading="eager"
-					class="w-full object-cover aspect-[21/9]"
+					class="h-full w-full object-cover"
 				/>
 
 				<!-- Overlay (dégradé vers le fond de page) -->
@@ -688,8 +687,8 @@ const sections = [
 
 				<!-- Titre -->
 				<div class="absolute inset-x-0 bottom-0">
-					<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-6 sm:pb-10">
-						<h1 class="text-2xl sm:text-4xl font-semibold tracking-tight text-white drop-shadow">
+					<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6">
+						<h1 class="text-white drop-shadow text-xl sm:text-3xl font-semibold tracking-tight">
 							Mon matériel Home Assistant (testé chez moi)
 						</h1>
 					</div>
@@ -698,7 +697,7 @@ const sections = [
 		</section>
 		<main class="equipment-main">
 			<article class="equipment-page">
-				<section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+				<section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 					<div class="space-y-5">
 						<h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Mon matériel domotique</h2>
 
