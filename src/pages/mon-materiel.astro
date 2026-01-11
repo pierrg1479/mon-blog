@@ -591,14 +591,46 @@ const infrastructure: Equipment[] = [
 ];
 
 const sections = [
-	{ title: 'Infrastructure', items: infrastructure },
-	{ title: 'Prise et interrupteur', items: switchesAndLights },
-	{ title: 'Capteurs', items: sensors },
-	{ title: 'Chauffage', items: heating },
-	{ title: 'Sécurité', items: security },
-	{ title: 'Boutons et Fingerbot', items: buttons },
-	{ title: 'Ménage et entretien', items: cleaning },
-	{ title: 'Multimédia', items: multimedia },
+	{
+		title: 'Infrastructure',
+		items: infrastructure,
+		description: 'Le socle de mon installation : Home Assistant, Zigbee et tout ce qui doit rester fiable 24/7.'
+	},
+	{
+		title: 'Prises et interrupteurs',
+		items: switchesAndLights,
+		description: 'Le kit de base pour piloter et mesurer : couper, programmer, suivre la conso… sans prise de tête.'
+	},
+	{
+		title: 'Capteurs',
+		items: sensors,
+		description: 'Ce qui "donne des yeux" à la maison : ouverture, mouvement, fuite, température… et déclenche les automatisations.'
+	},
+	{
+		title: 'Chauffage',
+		items: heating,
+		description: 'Là où la domotique paye vite : pilotage fin par pièce, confort stable, et moins de gaspillage.'
+	},
+	{
+		title: 'Sécurité',
+		items: security,
+		description: 'Surveillance et accès : caméras, serrure, clavier… pour sécuriser sans transformer la maison en bunker.'
+	},
+	{
+		title: 'Boutons et Fingerbot',
+		items: buttons,
+		description: 'Les raccourcis physiques : un clic = une scène, et des "doigts" pour automatiser ce qui ne l\'était pas.'
+	},
+	{
+		title: 'Ménage et entretien',
+		items: cleaning,
+		description: 'Les corvées que je délègue : tonte et aspiration, avec un maximum d\'autonomie.'
+	},
+	{
+		title: 'Multimédia',
+		items: multimedia,
+		description: 'Musique et TV côté salon : contrôle centralisé depuis Home Assistant (et quelques automatisations sympas).'
+	},
 ];
 ---
 
@@ -645,8 +677,7 @@ const sections = [
 					<h1>Mon matériel</h1>
 					<p class="last-updated">Dernière mise à jour : {lastUpdated}</p>
 					<p class="intro">
-						Voici la liste complète du matériel domotique que j'utilise chez moi avec Home Assistant.
-						Tout ce qui est listé ici est réellement installé et testé, avec mes retours courts et directs.
+						Voici la liste complète du matériel domotique que j'utilise réellement chez moi avec Home Assistant : tout ce qui est ici a été acheté par mes soins, installé et testé sur la durée. Je m'équipe progressivement depuis quelques années : j'ai commencé par le chauffage, puis j'ai ajouté des appareils Tapo, avant de basculer petit à petit vers un écosystème plus fiable en Zigbee.
 					</p>
 				</header>
 
@@ -654,7 +685,7 @@ const sections = [
 					<section class="equipment-section">
 						<h2>{section.title}</h2>
 						<p class="section-intro">
-							Une sélection de produits testés au quotidien pour cette catégorie.
+							{section.description}
 						</p>
 						<EquipmentTable equipment={section.items} />
 					</section>
