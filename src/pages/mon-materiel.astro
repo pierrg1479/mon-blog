@@ -593,46 +593,56 @@ const infrastructure: Equipment[] = [
 
 const sections = [
 	{
+		id: 'infrastructure',
 		title: 'Infrastructure',
 		items: infrastructure,
 		description: 'Le socle de mon installation : Home Assistant, Zigbee et tout ce qui doit rester fiable 24/7.'
 	},
 	{
+		id: 'prises-interrupteurs',
 		title: 'Prises et interrupteurs',
 		items: switchesAndLights,
 		description: 'Le kit de base pour piloter et mesurer : couper, programmer, suivre la conso… sans prise de tête.'
 	},
 	{
+		id: 'capteurs',
 		title: 'Capteurs',
 		items: sensors,
 		description: 'Ce qui "donne des yeux" à la maison : ouverture, mouvement, fuite, température… et déclenche les automatisations.'
 	},
 	{
+		id: 'chauffage',
 		title: 'Chauffage',
 		items: heating,
 		description: 'Là où la domotique paye vite : pilotage fin par pièce, confort stable, et moins de gaspillage.'
 	},
 	{
+		id: 'securite',
 		title: 'Sécurité',
 		items: security,
 		description: 'Surveillance et accès : caméras, serrure, clavier… pour sécuriser sans transformer la maison en bunker.'
 	},
 	{
+		id: 'boutons-fingerbot',
 		title: 'Boutons et Fingerbot',
 		items: buttons,
 		description: 'Les raccourcis physiques : un clic = une scène, et des "doigts" pour automatiser ce qui ne l\'était pas.'
 	},
 	{
+		id: 'menage-entretien',
 		title: 'Ménage et entretien',
 		items: cleaning,
 		description: 'Les corvées que je délègue : tonte et aspiration, avec un maximum d\'autonomie.'
 	},
 	{
+		id: 'multimedia',
 		title: 'Multimédia',
 		items: multimedia,
 		description: 'Musique et TV côté salon : contrôle centralisé depuis Home Assistant (et quelques automatisations sympas).'
 	},
 ];
+const heroImgSrc = heroImg.src;
+
 ---
 
 <!doctype html>
@@ -671,58 +681,91 @@ const sections = [
 				style="display:none;visibility:hidden"></iframe
 		></noscript>
 		<!-- End Google Tag Manager (noscript) -->
-		<Header />
-		<section class="w-full">
-			<div class="relative w-full overflow-hidden h-[180px] sm:h-[240px] lg:h-[320px]">
-				<img
-					src={heroImg.src}
-					alt="Mon matériel Home Assistant (testé chez moi)"
-					loading="eager"
-					class="h-full w-full object-cover"
-				/>
+			<Header />
+			<section class="hero-split" aria-label="Intro">
+				<div class="hero-split__grid">
+					<figure class="hero-split__media">
+						<img
+							src={heroImgSrc}
+							alt="Mon matériel domotique Home Assistant (installé et testé chez moi)"
+							width="1200"
+							height="900"
+							loading="eager"
+							fetchpriority="high"
+							class="hero-split__image"
+						/>
+					</figure>
 
-				<!-- Overlay dégradé bas -> fond de page -->
-				<div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-white dark:to-[#0b0f0b]"></div>
+					<div class="hero-split__content">
+						<p class="hero-split__kicker">
+							Mon matériel domotique
+						</p>
 
-				<!-- Titre overlay -->
-				<div class="absolute inset-x-0 bottom-0">
-					<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6">
-						<h1 class="text-white drop-shadow text-xl sm:text-3xl font-semibold tracking-tight">
-							Mon matériel Home Assistant (testé chez moi)
+						<h1 class="hero-split__title">
+							Matériel Home Assistant testé
 						</h1>
+
+						<p class="hero-split__intro">
+							Sélection de matériel utilisé au quotidien, acheté par mes soins, installé et validé
+							sur la durée.
+						</p>
+
+						<nav aria-label="Accès rapides" class="hero-split__nav">
+							<ul class="hero-split__chips">
+								<li><a href="#infrastructure" class="hero-split__chip">Infrastructure</a></li>
+								<li><a href="#prises-interrupteurs" class="hero-split__chip">Zigbee</a></li>
+								<li><a href="#capteurs" class="hero-split__chip">Capteurs</a></li>
+								<li><a href="#chauffage" class="hero-split__chip">Chauffage</a></li>
+								<li><a href="#securite" class="hero-split__chip">Sécurité</a></li>
+							</ul>
+						</nav>
+
+						<div class="hero-split__cta">
+							<a
+								href="#infrastructure"
+								class="hero-split__button hero-split__button--primary"
+							>
+								Voir la liste
+							</a>
+
+							<a
+								href="#sommaire"
+								class="hero-split__button hero-split__button--secondary"
+							>
+								Aller au sommaire
+							</a>
+						</div>
 					</div>
 				</div>
-			</div>
-		</section>
+			</section>
 		<main class="equipment-main">
 			<article class="equipment-page">
-				<section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+				<section id="sommaire" class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 					<div class="space-y-5">
-						<h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Mon matériel domotique</h2>
-
 						<p class="text-base sm:text-lg text-black/80 dark:text-white/80">
 							Voici le matériel domotique que j'utilise réellement chez moi avec Home Assistant. Tout a été acheté par mes soins, installé et testé sur la durée. J'ai commencé par optimiser le chauffage, puis j'ai équipé la maison en Tapo, avant de migrer progressivement vers un écosystème Zigbee plus fiable.
 						</p>
 
-						<div class="flex flex-wrap gap-2 pt-1">
-							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-								Zigbee
-							</span>
-							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-								Tapo
-							</span>
-							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-								Sécurité
-							</span>
-							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-								Chauffage
-							</span>
-						</div>
+						<nav aria-label="Sommaire" class="sommaire-nav">
+							<ul class="sommaire-nav__list">
+								{sections.map((section) => (
+									<li>
+										<a
+											href={`#${section.id}`}
+											class="sommaire-nav__link"
+										>
+											{section.title}
+										</a>
+									</li>
+								))}
+							</ul>
+						</nav>
+
 					</div>
 				</section>
 
 				{sections.map((section) => (
-					<section class="equipment-section">
+					<section id={section.id} class="equipment-section">
 						<h2>{section.title}</h2>
 						<p class="section-intro">
 							{section.description}
@@ -748,10 +791,206 @@ const sections = [
 	}
 </style>
 
-<style>
-	.equipment-main {
-		width: calc(100% - 2em);
-		max-width: 1200px;
+	<style>
+		.hero-split {
+			max-width: 72rem;
+			margin: 0 auto;
+			padding: 2rem 1rem 1.5rem;
+		}
+
+		.hero-split__grid {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.hero-split__media {
+			order: 1;
+		}
+
+		.hero-split__image {
+			width: 100%;
+			display: block;
+			border-radius: 1rem;
+			border: 1px solid rgba(0, 0, 0, 0.1);
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+			aspect-ratio: 4 / 3;
+			object-fit: cover;
+			background: rgba(0, 0, 0, 0.05);
+		}
+
+		:global(.dark) .hero-split__image {
+			border-color: rgba(255, 255, 255, 0.1);
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		.hero-split__content {
+			order: 2;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		.hero-split__kicker {
+			font-size: 0.75rem;
+			font-weight: 600;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			color: rgba(0, 0, 0, 0.6);
+		}
+
+		:global(.dark) .hero-split__kicker {
+			color: rgba(255, 255, 255, 0.6);
+		}
+
+		.hero-split__title {
+			font-size: clamp(1.9rem, 2.6vw, 2.5rem);
+			line-height: 1.2;
+			font-weight: 600;
+			margin: 0;
+		}
+
+		.hero-split__intro {
+			color: rgba(0, 0, 0, 0.7);
+			max-width: 65ch;
+			margin: 0;
+		}
+
+		:global(.dark) .hero-split__intro {
+			color: rgba(255, 255, 255, 0.7);
+		}
+
+		.hero-split__nav {
+			padding-top: 0.25rem;
+		}
+
+		.hero-split__chips {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		.hero-split__chip {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0.35rem 0.75rem;
+			border-radius: 999px;
+			border: 1px solid rgba(0, 0, 0, 0.1);
+			font-size: 0.85rem;
+			color: rgba(0, 0, 0, 0.8);
+			text-decoration: none;
+			transition: background 0.2s ease;
+		}
+
+		.hero-split__chip:hover {
+			background: rgba(0, 0, 0, 0.05);
+		}
+
+		:global(.dark) .hero-split__chip {
+			border-color: rgba(255, 255, 255, 0.1);
+			color: rgba(255, 255, 255, 0.8);
+		}
+
+		:global(.dark) .hero-split__chip:hover {
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		.hero-split__cta {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.75rem;
+			padding-top: 0.5rem;
+		}
+
+		.hero-split__button {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0.55rem 1rem;
+			border-radius: 0.75rem;
+			font-size: 0.9rem;
+			font-weight: 600;
+			text-decoration: none;
+		}
+
+		.hero-split__button--primary {
+			background: #000;
+			color: #fff;
+		}
+
+		:global(.dark) .hero-split__button--primary {
+			background: #fff;
+			color: #000;
+		}
+
+		.hero-split__button--secondary {
+			border: 1px solid rgba(0, 0, 0, 0.1);
+			color: rgba(0, 0, 0, 0.85);
+		}
+
+		.hero-split__button--secondary:hover {
+			background: rgba(0, 0, 0, 0.05);
+		}
+
+		:global(.dark) .hero-split__button--secondary {
+			border-color: rgba(255, 255, 255, 0.1);
+			color: rgba(255, 255, 255, 0.85);
+		}
+
+		:global(.dark) .hero-split__button--secondary:hover {
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		.sommaire-nav__list {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		.sommaire-nav__link {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0.35rem 0.75rem;
+			border-radius: 999px;
+			border: 1px solid rgba(0, 0, 0, 0.1);
+			font-size: 0.85rem;
+			color: rgba(0, 0, 0, 0.8);
+			text-decoration: none;
+			transition: background 0.2s ease;
+		}
+
+		.sommaire-nav__link:hover {
+			background: rgba(0, 0, 0, 0.05);
+		}
+
+		:global(.dark) .sommaire-nav__link {
+			border-color: rgba(255, 255, 255, 0.1);
+			color: rgba(255, 255, 255, 0.8);
+		}
+
+		:global(.dark) .sommaire-nav__link:hover {
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		@media (min-width: 1024px) {
+			.hero-split__grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				align-items: center;
+				gap: 2.5rem;
+			}
+		}
+
+		.equipment-main {
+			width: calc(100% - 2em);
+			max-width: 1200px;
 		margin: 0 auto;
 		padding: 1rem 1em 4em;
 	}
