@@ -711,26 +711,26 @@ const heroImgSrc = heroImg.src;
 					</p>
 
 					<nav aria-label="Accès rapides" class="pt-1">
-						<ul class="flex flex-wrap gap-2">
-							<li><a href="#infrastructure" class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Infrastructure</a></li>
-							<li><a href="#prises-interrupteurs" class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Prises &amp; interrupteurs</a></li>
-							<li><a href="#capteurs" class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Capteurs</a></li>
-							<li><a href="#chauffage" class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Chauffage</a></li>
-							<li><a href="#securite" class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Sécurité</a></li>
+						<ul class="flex list-none flex-wrap gap-2">
+							<li><a href="#infrastructure" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Infrastructure</a></li>
+							<li><a href="#prises-interrupteurs" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Prises &amp; interrupteurs</a></li>
+							<li><a href="#capteurs" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Capteurs</a></li>
+							<li><a href="#chauffage" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Chauffage</a></li>
+							<li><a href="#securite" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Sécurité</a></li>
 						</ul>
 					</nav>
 
 					<div class="flex flex-wrap gap-3 pt-2">
 						<a
 							href="#infrastructure"
-							class="inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium bg-black text-white dark:bg-white dark:text-black"
+							class="no-underline inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium bg-black text-white dark:bg-white dark:text-black"
 						>
 							Voir la liste
 						</a>
 
 						<a
 							href="#sommaire"
-							class="inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5"
+							class="no-underline inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5"
 						>
 							Aller au sommaire
 						</a>
@@ -749,12 +749,12 @@ const heroImgSrc = heroImg.src;
 						</p>
 
 						<nav aria-label="Sommaire" class="pt-1">
-							<ul class="flex flex-wrap gap-2">
+							<ul class="flex list-none flex-wrap gap-2">
 								{sections.map((section) => (
 									<li>
 										<a
 											href={`#${section.id}`}
-											class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5"
+											class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5"
 										>
 											{section.title}
 										</a>
