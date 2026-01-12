@@ -641,8 +641,8 @@ const sections = [
 		description: 'Musique et TV côté salon : contrôle centralisé depuis Home Assistant (et quelques automatisations sympas).'
 	},
 ];
-
 const heroImgSrc = heroImg.src;
+
 ---
 
 <!doctype html>
@@ -681,80 +681,78 @@ const heroImgSrc = heroImg.src;
 				style="display:none;visibility:hidden"></iframe
 		></noscript>
 		<!-- End Google Tag Manager (noscript) -->
-		<Header />
-		<header class="mx-auto max-w-6xl px-4 pt-8 pb-6">
-			<div class="grid gap-6 lg:grid-cols-2 lg:items-center">
-				<figure class="order-1">
-					<img
-						src={heroImgSrc}
-						alt="Mon matériel domotique Home Assistant (installé et testé chez moi)"
-						width="1200"
-						height="900"
-						loading="eager"
-						fetchpriority="high"
-						class="w-full rounded-2xl border border-black/10 dark:border-white/10 shadow-sm aspect-[4/3] object-cover bg-black/5 dark:bg-white/5"
-					/>
-				</figure>
+			<Header />
+			<section class="mx-auto max-w-6xl px-4 pt-8 pb-6" aria-label="Intro">
+				<div class="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-10">
+					<figure class="order-1 lg:col-start-1">
+						<img
+							src={heroImgSrc}
+							alt="Mon matériel domotique Home Assistant (installé et testé chez moi)"
+							width="1200"
+							height="900"
+							loading="eager"
+							fetchpriority="high"
+							class="w-full rounded-2xl border border-black/10 dark:border-white/10 shadow-sm aspect-[4/3] object-cover bg-black/5 dark:bg-white/5"
+						/>
+					</figure>
 
-				<div class="order-2 space-y-4">
-					<p class="text-xs font-medium tracking-wider uppercase text-black/60 dark:text-white/60">
-						Mon matériel domotique
-					</p>
+					<div class="order-2 space-y-4 lg:col-start-2">
+						<p class="text-xs font-medium tracking-wider uppercase text-black/60 dark:text-white/60">
+							Mon matériel domotique
+						</p>
 
-					<h1 class="text-3xl md:text-4xl font-semibold leading-tight">
-						Mon matériel Home Assistant (testé chez moi)
-					</h1>
+						<h1 class="text-3xl md:text-4xl font-semibold leading-tight">
+							Matériel Home Assistant testé
+						</h1>
 
-					<p class="text-base text-black/70 dark:text-white/70 max-w-prose">
-						Voici la liste complète du matériel que j’utilise réellement avec Home Assistant :
-						acheté par mes soins, installé et testé sur la durée.
-					</p>
+						<p class="text-base text-black/70 dark:text-white/70 max-w-prose">
+							Sélection de matériel utilisé au quotidien, acheté par mes soins, installé et validé
+							sur la durée.
+						</p>
 
-					<nav aria-label="Accès rapides" class="pt-1">
-						<ul class="flex list-none flex-wrap gap-2">
-							<li><a href="#infrastructure" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Infrastructure</a></li>
-							<li><a href="#prises-interrupteurs" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Prises &amp; interrupteurs</a></li>
-							<li><a href="#capteurs" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Capteurs</a></li>
-							<li><a href="#chauffage" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Chauffage</a></li>
-							<li><a href="#securite" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Sécurité</a></li>
-						</ul>
-					</nav>
+						<nav aria-label="Accès rapides" class="pt-1">
+							<ul class="flex list-none flex-wrap gap-2">
+								<li><a href="#infrastructure" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Infrastructure</a></li>
+								<li><a href="#prises-interrupteurs" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Zigbee</a></li>
+								<li><a href="#capteurs" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Capteurs</a></li>
+								<li><a href="#chauffage" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Chauffage</a></li>
+								<li><a href="#securite" class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5">Sécurité</a></li>
+							</ul>
+						</nav>
 
-					<div class="flex flex-wrap gap-3 pt-2">
-						<a
-							href="#infrastructure"
-							class="no-underline inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium bg-black text-white dark:bg-white dark:text-black"
-						>
-							Voir la liste
-						</a>
+						<div class="flex flex-wrap gap-3 pt-2">
+							<a
+								href="#infrastructure"
+								class="no-underline inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium bg-black text-white dark:bg-white dark:text-black"
+							>
+								Voir la liste
+							</a>
 
-						<a
-							href="#sommaire"
-							class="no-underline inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5"
-						>
-							Aller au sommaire
-						</a>
+							<a
+								href="#sommaire"
+								class="no-underline inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5"
+							>
+								Aller au sommaire
+							</a>
+						</div>
 					</div>
 				</div>
-			</div>
-		</header>
+			</section>
 		<main class="equipment-main">
 			<article class="equipment-page">
 				<section id="sommaire" class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 					<div class="space-y-5">
-						<h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Mon matériel domotique</h2>
-
 						<p class="text-base sm:text-lg text-black/80 dark:text-white/80">
 							Voici le matériel domotique que j'utilise réellement chez moi avec Home Assistant. Tout a été acheté par mes soins, installé et testé sur la durée. J'ai commencé par optimiser le chauffage, puis j'ai équipé la maison en Tapo, avant de migrer progressivement vers un écosystème Zigbee plus fiable.
 						</p>
 
 						<nav aria-label="Sommaire" class="pt-1">
-							<ul class="!list-none flex flex-wrap gap-2">
+							<ul class="flex flex-wrap gap-2">
 								{sections.map((section) => (
 									<li>
 										<a
 											href={`#${section.id}`}
-											class="!no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 !text-black/80 dark:border-white/10 dark:!text-white/80 hover:bg-black/5 dark:hover:bg-white/5"
+											class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5"
 										>
 											{section.title}
 										</a>
@@ -763,20 +761,6 @@ const heroImgSrc = heroImg.src;
 							</ul>
 						</nav>
 
-						<div class="flex flex-wrap gap-2 pt-1">
-							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-								Zigbee
-							</span>
-							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-								Tapo
-							</span>
-							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-								Sécurité
-							</span>
-							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
-								Chauffage
-							</span>
-						</div>
 					</div>
 				</section>
 
