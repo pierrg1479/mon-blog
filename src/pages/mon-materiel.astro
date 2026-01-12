@@ -593,46 +593,56 @@ const infrastructure: Equipment[] = [
 
 const sections = [
 	{
+		id: 'infrastructure',
 		title: 'Infrastructure',
 		items: infrastructure,
 		description: 'Le socle de mon installation : Home Assistant, Zigbee et tout ce qui doit rester fiable 24/7.'
 	},
 	{
+		id: 'prises-interrupteurs',
 		title: 'Prises et interrupteurs',
 		items: switchesAndLights,
 		description: 'Le kit de base pour piloter et mesurer : couper, programmer, suivre la conso… sans prise de tête.'
 	},
 	{
+		id: 'capteurs',
 		title: 'Capteurs',
 		items: sensors,
 		description: 'Ce qui "donne des yeux" à la maison : ouverture, mouvement, fuite, température… et déclenche les automatisations.'
 	},
 	{
+		id: 'chauffage',
 		title: 'Chauffage',
 		items: heating,
 		description: 'Là où la domotique paye vite : pilotage fin par pièce, confort stable, et moins de gaspillage.'
 	},
 	{
+		id: 'securite',
 		title: 'Sécurité',
 		items: security,
 		description: 'Surveillance et accès : caméras, serrure, clavier… pour sécuriser sans transformer la maison en bunker.'
 	},
 	{
+		id: 'boutons-fingerbot',
 		title: 'Boutons et Fingerbot',
 		items: buttons,
 		description: 'Les raccourcis physiques : un clic = une scène, et des "doigts" pour automatiser ce qui ne l\'était pas.'
 	},
 	{
+		id: 'menage-entretien',
 		title: 'Ménage et entretien',
 		items: cleaning,
 		description: 'Les corvées que je délègue : tonte et aspiration, avec un maximum d\'autonomie.'
 	},
 	{
+		id: 'multimedia',
 		title: 'Multimédia',
 		items: multimedia,
 		description: 'Musique et TV côté salon : contrôle centralisé depuis Home Assistant (et quelques automatisations sympas).'
 	},
 ];
+
+const heroImgSrc = heroImg.src;
 ---
 
 <!doctype html>
@@ -672,37 +682,86 @@ const sections = [
 		></noscript>
 		<!-- End Google Tag Manager (noscript) -->
 		<Header />
-		<section class="w-full">
-			<div class="relative w-full overflow-hidden h-[180px] sm:h-[240px] lg:h-[320px]">
-				<img
-					src={heroImg.src}
-					alt="Mon matériel Home Assistant (testé chez moi)"
-					loading="eager"
-					class="h-full w-full object-cover"
-				/>
+		<header class="mx-auto max-w-6xl px-4 pt-8 pb-6">
+			<div class="grid gap-6 lg:grid-cols-2 lg:items-center">
+				<figure class="order-1">
+					<img
+						src={heroImgSrc}
+						alt="Mon matériel domotique Home Assistant (installé et testé chez moi)"
+						width="1200"
+						height="900"
+						loading="eager"
+						fetchpriority="high"
+						class="w-full rounded-2xl border border-black/10 dark:border-white/10 shadow-sm aspect-[4/3] object-cover bg-black/5 dark:bg-white/5"
+					/>
+				</figure>
 
-				<!-- Overlay dégradé bas -> fond de page -->
-				<div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-white dark:to-[#0b0f0b]"></div>
+				<div class="order-2 space-y-4">
+					<p class="text-xs font-medium tracking-wider uppercase text-black/60 dark:text-white/60">
+						Mon matériel domotique
+					</p>
 
-				<!-- Titre overlay -->
-				<div class="absolute inset-x-0 bottom-0">
-					<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6">
-						<h1 class="text-white drop-shadow text-xl sm:text-3xl font-semibold tracking-tight">
-							Mon matériel Home Assistant (testé chez moi)
-						</h1>
+					<h1 class="text-3xl md:text-4xl font-semibold leading-tight">
+						Mon matériel Home Assistant (testé chez moi)
+					</h1>
+
+					<p class="text-base text-black/70 dark:text-white/70 max-w-prose">
+						Voici la liste complète du matériel que j’utilise réellement avec Home Assistant :
+						acheté par mes soins, installé et testé sur la durée.
+					</p>
+
+					<nav aria-label="Accès rapides" class="pt-1">
+						<ul class="flex flex-wrap gap-2">
+							<li><a href="#infrastructure" class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Infrastructure</a></li>
+							<li><a href="#prises-interrupteurs" class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Prises &amp; interrupteurs</a></li>
+							<li><a href="#capteurs" class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Capteurs</a></li>
+							<li><a href="#chauffage" class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Chauffage</a></li>
+							<li><a href="#securite" class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Sécurité</a></li>
+						</ul>
+					</nav>
+
+					<div class="flex flex-wrap gap-3 pt-2">
+						<a
+							href="#infrastructure"
+							class="inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium bg-black text-white dark:bg-white dark:text-black"
+						>
+							Voir la liste
+						</a>
+
+						<a
+							href="#sommaire"
+							class="inline-flex items-center justify-center px-4 py-2 rounded-xl text-sm font-medium border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5"
+						>
+							Aller au sommaire
+						</a>
 					</div>
 				</div>
 			</div>
-		</section>
+		</header>
 		<main class="equipment-main">
 			<article class="equipment-page">
-				<section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+				<section id="sommaire" class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 					<div class="space-y-5">
 						<h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">Mon matériel domotique</h2>
 
 						<p class="text-base sm:text-lg text-black/80 dark:text-white/80">
 							Voici le matériel domotique que j'utilise réellement chez moi avec Home Assistant. Tout a été acheté par mes soins, installé et testé sur la durée. J'ai commencé par optimiser le chauffage, puis j'ai équipé la maison en Tapo, avant de migrer progressivement vers un écosystème Zigbee plus fiable.
 						</p>
+
+						<nav aria-label="Sommaire" class="pt-1">
+							<ul class="flex flex-wrap gap-2">
+								{sections.map((section) => (
+									<li>
+										<a
+											href={`#${section.id}`}
+											class="px-3 py-1.5 rounded-full text-sm border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5"
+										>
+											{section.title}
+										</a>
+									</li>
+								))}
+							</ul>
+						</nav>
 
 						<div class="flex flex-wrap gap-2 pt-1">
 							<span class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.03]">
@@ -722,7 +781,7 @@ const sections = [
 				</section>
 
 				{sections.map((section) => (
-					<section class="equipment-section">
+					<section id={section.id} class="equipment-section">
 						<h2>{section.title}</h2>
 						<p class="section-intro">
 							{section.description}
