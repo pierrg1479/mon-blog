@@ -736,17 +736,19 @@ const sections = [
 	</body>
 </html>
 
-<style>
+<style is:global>
 	/* Désactiver le gradient du body pour cette page */
-	:global(body) {
+	body {
 		background: white !important;
 		background-size: auto !important;
 	}
 
-	:global(.dark body) {
+	.dark body {
 		background: rgb(17, 24, 39) !important;
 	}
+</style>
 
+<style>
 	.equipment-main {
 		width: calc(100% - 2em);
 		max-width: 1200px;
