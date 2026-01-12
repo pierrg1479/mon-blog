@@ -749,12 +749,12 @@ const heroImgSrc = heroImg.src;
 						</p>
 
 						<nav aria-label="Sommaire" class="pt-1">
-							<ul class="flex list-none flex-wrap gap-2">
+							<ul class="!list-none flex flex-wrap gap-2">
 								{sections.map((section) => (
 									<li>
 										<a
 											href={`#${section.id}`}
-											class="no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 text-black/80 dark:border-white/10 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5"
+											class="!no-underline px-3 py-1.5 rounded-full text-sm border border-black/10 !text-black/80 dark:border-white/10 dark:!text-white/80 hover:bg-black/5 dark:hover:bg-white/5"
 										>
 											{section.title}
 										</a>
