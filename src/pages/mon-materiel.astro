@@ -698,43 +698,32 @@ const heroImgSrc = heroImg.src;
 
 					<div class="hero-split__content">
 						<p class="hero-split__kicker">
-							Mon matériel domotique
+							Matériel acheté, installé et testé
 						</p>
 
 						<h1 class="hero-split__title">
-							Matériel Home Assistant testé
+							Mon Matériel domotique
 						</h1>
 
 						<p class="hero-split__intro">
-							Sélection de matériel utilisé au quotidien, acheté par mes soins, installé et validé
-							sur la durée.
+							Voici le matériel domotique que j'utilise réellement chez moi avec Home Assistant.
+							Tout a été acheté par mes soins, installé et testé sur la durée. J'ai commencé par
+							optimiser le chauffage, puis j'ai équipé la maison en Tapo, avant de migrer
+							progressivement vers un écosystème Zigbee plus fiable.
 						</p>
 
 						<nav aria-label="Accès rapides" class="hero-split__nav">
 							<ul class="hero-split__chips">
 								<li><a href="#infrastructure" class="hero-split__chip">Infrastructure</a></li>
-								<li><a href="#prises-interrupteurs" class="hero-split__chip">Zigbee</a></li>
+								<li><a href="#prises-interrupteurs" class="hero-split__chip">Prises et interrupteurs</a></li>
 								<li><a href="#capteurs" class="hero-split__chip">Capteurs</a></li>
 								<li><a href="#chauffage" class="hero-split__chip">Chauffage</a></li>
 								<li><a href="#securite" class="hero-split__chip">Sécurité</a></li>
+								<li><a href="#boutons-fingerbot" class="hero-split__chip">Boutons et Fingerbot</a></li>
+								<li><a href="#menage-entretien" class="hero-split__chip">Ménage et entretien</a></li>
+								<li><a href="#multimedia" class="hero-split__chip">Multimédia</a></li>
 							</ul>
 						</nav>
-
-						<div class="hero-split__cta">
-							<a
-								href="#infrastructure"
-								class="hero-split__button hero-split__button--primary"
-							>
-								Voir la liste
-							</a>
-
-							<a
-								href="#sommaire"
-								class="hero-split__button hero-split__button--secondary"
-							>
-								Aller au sommaire
-							</a>
-						</div>
 					</div>
 				</div>
 			</section>
@@ -742,9 +731,7 @@ const heroImgSrc = heroImg.src;
 			<article class="equipment-page">
 				<section id="sommaire" class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 					<div class="space-y-5">
-						<p class="text-base sm:text-lg text-black/80 dark:text-white/80">
-							Voici le matériel domotique que j'utilise réellement chez moi avec Home Assistant. Tout a été acheté par mes soins, installé et testé sur la durée. J'ai commencé par optimiser le chauffage, puis j'ai équipé la maison en Tapo, avant de migrer progressivement vers un écosystème Zigbee plus fiable.
-						</p>
+		
 
 						<nav aria-label="Sommaire" class="sommaire-nav">
 							<ul class="sommaire-nav__list">
@@ -896,52 +883,6 @@ const heroImgSrc = heroImg.src;
 		}
 
 		:global(.dark) .hero-split__chip:hover {
-			background: rgba(255, 255, 255, 0.05);
-		}
-
-		.hero-split__cta {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 0.75rem;
-			padding-top: 0.5rem;
-		}
-
-		.hero-split__button {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			padding: 0.55rem 1rem;
-			border-radius: 0.75rem;
-			font-size: 0.9rem;
-			font-weight: 600;
-			text-decoration: none;
-		}
-
-		.hero-split__button--primary {
-			background: #000;
-			color: #fff;
-		}
-
-		:global(.dark) .hero-split__button--primary {
-			background: #fff;
-			color: #000;
-		}
-
-		.hero-split__button--secondary {
-			border: 1px solid rgba(0, 0, 0, 0.1);
-			color: rgba(0, 0, 0, 0.85);
-		}
-
-		.hero-split__button--secondary:hover {
-			background: rgba(0, 0, 0, 0.05);
-		}
-
-		:global(.dark) .hero-split__button--secondary {
-			border-color: rgba(255, 255, 255, 0.1);
-			color: rgba(255, 255, 255, 0.85);
-		}
-
-		:global(.dark) .hero-split__button--secondary:hover {
 			background: rgba(255, 255, 255, 0.05);
 		}
 
