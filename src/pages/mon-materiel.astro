@@ -747,6 +747,11 @@ const heroImgSrc = heroImg.src;
 
 <style is:global>
 	/* Désactiver le gradient du body pour cette page */
+	:root {
+		--equipment-max-width: 1200px;
+		--equipment-gutter: 1em;
+	}
+
 	body {
 		background: white !important;
 		background-size: auto !important;
@@ -758,11 +763,16 @@ const heroImgSrc = heroImg.src;
 </style>
 
 	<style>
-		.hero-split {
-			width: calc(100% - 2em);
-			max-width: 1200px;
+		.hero-split,
+		.equipment-main {
+			box-sizing: border-box;
+			width: min(100%, var(--equipment-max-width));
 			margin: 0 auto;
-			padding: 2rem 1em 1.5rem;
+			padding-inline: var(--equipment-gutter);
+		}
+
+		.hero-split {
+			padding-block: 2rem 1.5rem;
 		}
 
 		.hero-split__grid {
@@ -875,11 +885,8 @@ const heroImgSrc = heroImg.src;
 		}
 
 		.equipment-main {
-			width: calc(100% - 2em);
-			max-width: 1200px;
-		margin: 0 auto;
-		padding: 1rem 1em 4em;
-	}
+			padding-block: 1rem 4em;
+		}
 
 	.equipment-page {
 		display: flex;
