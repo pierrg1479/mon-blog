@@ -758,11 +758,17 @@ const heroImgSrc = heroImg.src;
 </style>
 
 	<style>
+		:root {
+			--equipment-max-width: 1200px;
+			--equipment-gutter: 1em;
+			--equipment-content-width: calc(100% - (var(--equipment-gutter) * 2));
+		}
+
 		.hero-split {
-			width: calc(100% - 2em);
-			max-width: 1200px;
+			width: var(--equipment-content-width);
+			max-width: var(--equipment-max-width);
 			margin: 0 auto;
-			padding: 2rem 1em 1.5rem;
+			padding: 2rem var(--equipment-gutter) 1.5rem;
 		}
 
 		.hero-split__grid {
@@ -875,11 +881,11 @@ const heroImgSrc = heroImg.src;
 		}
 
 		.equipment-main {
-			width: calc(100% - 2em);
-			max-width: 1200px;
-		margin: 0 auto;
-		padding: 1rem 1em 4em;
-	}
+			width: var(--equipment-content-width);
+			max-width: var(--equipment-max-width);
+			margin: 0 auto;
+			padding: 1rem var(--equipment-gutter) 4em;
+		}
 
 	.equipment-page {
 		display: flex;
