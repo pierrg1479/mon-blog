@@ -747,6 +747,15 @@ const heroImgSrc = heroImg.src;
 
 <style is:global>
 	/* Désactiver le gradient du body pour cette page */
+	:root {
+		--equipment-max-width: 1200px;
+		--equipment-gutter: 1em;
+		--equipment-content-width: min(
+			calc(100% - (var(--equipment-gutter) * 2)),
+			var(--equipment-max-width)
+		);
+	}
+
 	body {
 		background: white !important;
 		background-size: auto !important;
