@@ -53,124 +53,151 @@ import Footer from '../components/Footer.astro';
 					<p>
 						Ici, je partage ce que je mets en place chez moi : automatisations, intégrations, suivi de l'énergie et réglages fins pour le confort.
 					</p>
-                                        <p>
-                                                Vous trouverez des cas d'usage détaillés, du code prêt à adapter et des retours honnêtes sur ce qui fonctionne… et sur ce qui fonctionne moins bien, avec une obsession : optimiser sans compliquer.
-                                        </p>
+					<p>
+						Vous trouverez des cas d'usage détaillés, du code prêt à adapter et des retours honnêtes sur ce qui fonctionne… et sur ce qui fonctionne moins bien, avec une obsession : optimiser sans compliquer.
+					</p>
 
-## 🚀 La genèse : de la domotique à l’optimisation globale
+					<section class="about-section">
+						<h2>🚀 La genèse : de la domotique à l’optimisation globale</h2>
+						<p>
+							Mon parcours dans l’automatisation (automation) a commencé de façon très pragmatique, par deux besoins essentiels :
+						</p>
+						<ul class="bullet-list">
+							<li>la sécurité,</li>
+							<li>le pilotage du chauffage.</li>
+						</ul>
+						<p>
+							À l’époque, pas de Home Assistant ni d’infrastructure locale avancée. J’ai commencé avec des solutions grand public comme
+							<strong>Blink</strong>, puis <strong>Tapo</strong>.
+						</p>
+						<p>
+							Ces outils m’ont permis de découvrir le potentiel de la maison connectée… mais aussi ses limites :
+						</p>
+						<ul class="bullet-list">
+							<li>automatisations restreintes,</li>
+							<li>dépendance au cloud,</li>
+							<li>écosystèmes fermés,</li>
+							<li>interopérabilité quasi inexistante entre marques.</li>
+						</ul>
+						<p class="section-note">
+							Chaque appareil fonctionnait correctement… mais chacun dans son silo.
+						</p>
+					</section>
 
-Mon parcours dans l’automatisation (automation) a commencé de façon très pragmatique, par deux besoins essentiels :
+					<hr class="section-separator" />
 
-- la sécurité,
-- le pilotage du chauffage.
+					<section class="about-section">
+						<h2>🔁 Le tournant : reprendre le contrôle</h2>
+						<p>
+							Très vite, ces limites sont devenues bloquantes. J’ai alors fait le choix de migrer vers <strong>Home Assistant</strong>, et de remplacer
+							progressivement mes équipements par des solutions <strong>Zigbee</strong>, locales et interopérables.
+						</p>
+						<p>Ce changement a marqué un vrai tournant :</p>
+						<ul class="bullet-list">
+							<li>un système centralisé,</li>
+							<li>des automatisations avancées,</li>
+							<li>une logique cohérente,</li>
+							<li>plus de fiabilité,</li>
+							<li>moins de dépendance aux services cloud.</li>
+						</ul>
+						<p class="section-note">Depuis, mon installation n’a cessé d’évoluer.</p>
+					</section>
 
-À l’époque, pas de Home Assistant ni d’infrastructure locale avancée.  
-J’ai commencé avec des solutions grand public comme **Blink**, puis **Tapo**.
+					<hr class="section-separator" />
 
-Ces outils m’ont permis de découvrir le potentiel de la maison connectée… mais aussi ses limites :
+					<section class="about-section">
+						<h2>❤️ Mes automatisations préférées</h2>
+						<p>
+							Certaines automatisations sont devenues si naturelles que je n’y pense même plus — et c’est précisément le signe qu’elles sont réussies.
+						</p>
+						<div class="automation-grid">
+							<article class="automation-card">
+								<h3>🎷 Réveil en musique</h3>
+								<p>
+									Cinq minutes après mon réveil, mon ampli s’allume automatiquement et lance une playlist Jazz en lecture aléatoire. Aucune action
+									manuelle, aucun écran : juste la bonne ambiance pour commencer la journée.
+								</p>
+							</article>
+							<article class="automation-card">
+								<h3>💡 Éclairage extérieur intelligent</h3>
+								<p>
+									J’ai détourné des capteurs de mouvement prévus pour l’intérieur, installés dans des boîtes de dérivation étanches à l’extérieur. Ils
+									déclenchent automatiquement l’éclairage autour de la maison dès qu’un mouvement est détecté.
+								</p>
+								<p class="section-note">Simple, fiable, et extrêmement pratique au quotidien.</p>
+							</article>
+							<article class="automation-card">
+								<h3>📬 Détection intelligente du courrier</h3>
+								<p>Ma boîte aux lettres est connectée :</p>
+								<ul class="bullet-list">
+									<li>dépôt de courrier → notification immédiate sur mon téléphone,</li>
+									<li>retrait du courrier → la notification disparaît automatiquement.</li>
+								</ul>
+								<p class="section-note">Pas de rappel inutile, pas de doute : l’information est juste et contextualisée.</p>
+							</article>
+						</div>
+					</section>
 
-- automatisations restreintes,
-- dépendance au cloud,
-- écosystèmes fermés,
-- interopérabilité quasi inexistante entre marques.
+					<hr class="section-separator" />
 
-Chaque appareil fonctionnait correctement… mais chacun dans son silo.
+					<section class="about-section">
+						<h2>🏗️ Ma stack &amp; ma façon de travailler</h2>
+						<ul class="bullet-list">
+							<li><strong>Home Assistant Green</strong> comme cœur du système</li>
+							<li>une approche <strong>local-first</strong></li>
+							<li>des automatisations pensées comme de vrais <strong>process</strong>, pas comme des gadgets</li>
+						</ul>
+						<p>J’ai également développé un agent expert dédié à Home Assistant, utilisé comme copilote pour :</p>
+						<ul class="bullet-list">
+							<li>concevoir,</li>
+							<li>maintenir,</li>
+							<li>optimiser les automatisations.</li>
+						</ul>
+						<p>Aujourd’hui, une grande partie de mon travail repose sur :</p>
+						<ul class="bullet-list">
+							<li><strong>Claude Code</strong>,</li>
+							<li>et son <strong>MCP</strong>, utilisé comme outil d’ingénierie d’automatisation.</li>
+						</ul>
+						<p class="section-note">
+							L’IA n’est pas là pour “faire à ma place”, mais pour améliorer la qualité des décisions et la cohérence du système.
+						</p>
+					</section>
 
----
+					<hr class="section-separator" />
 
-## 🔁 Le tournant : reprendre le contrôle
+					<section class="about-section">
+						<h2>🧠 La vraie difficulté en domotique (WAF inside)</h2>
+						<p>
+							Le plus gros challenge en domotique n’est pas l’installation, la maintenance ou les correctifs… mais de la faire accepter et utiliser par son
+							entourage.
+						</p>
+						<p>Une automatisation techniquement parfaite ne vaut rien si :</p>
+						<ul class="bullet-list">
+							<li>elle surprend,</li>
+							<li>elle complique l’usage,</li>
+							<li>ou elle génère de la frustration.</li>
+						</ul>
+						<p class="highlight">👉 L’expérience utilisateur passe toujours avant la performance technique.</p>
+					</section>
 
-Très vite, ces limites sont devenues bloquantes.  
-J’ai alors fait le choix de migrer vers **Home Assistant**, et de remplacer progressivement mes équipements par des solutions **Zigbee**, locales et interopérables.
+					<hr class="section-separator" />
 
-Ce changement a marqué un vrai tournant :
-
-- un système centralisé,
-- des automatisations avancées,
-- une logique cohérente,
-- plus de fiabilité,
-- moins de dépendance aux services cloud.
-
-Depuis, mon installation n’a cessé d’évoluer.
-
----
-
-## ❤️ Mes automatisations préférées
-
-Certaines automatisations sont devenues si naturelles que je n’y pense même plus — et c’est précisément le signe qu’elles sont réussies.
-
-### 🎷 Réveil en musique
-
-Cinq minutes après mon réveil, mon ampli s’allume automatiquement et lance une playlist Jazz en lecture aléatoire.  
-Aucune action manuelle, aucun écran : juste la bonne ambiance pour commencer la journée.
-
-### 💡 Éclairage extérieur intelligent
-
-J’ai détourné des capteurs de mouvement prévus pour l’intérieur, installés dans des boîtes de dérivation étanches à l’extérieur.  
-Ils déclenchent automatiquement l’éclairage autour de la maison dès qu’un mouvement est détecté.
-
-Simple, fiable, et extrêmement pratique au quotidien.
-
-### 📬 Détection intelligente du courrier
-
-Ma boîte aux lettres est connectée :
-
-- dépôt de courrier → notification immédiate sur mon téléphone,
-- retrait du courrier → la notification disparaît automatiquement.
-
-Pas de rappel inutile, pas de doute : l’information est juste et contextualisée.
-
----
-
-## 🏗️ Ma stack & ma façon de travailler
-
-- **Home Assistant Green** comme cœur du système
-- une approche **local-first**
-- des automatisations pensées comme de vrais **process**, pas comme des gadgets
-
-J’ai également développé un agent expert dédié à Home Assistant, utilisé comme copilote pour :
-
-- concevoir,
-- maintenir,
-- optimiser les automatisations.
-
-Aujourd’hui, une grande partie de mon travail repose sur :
-
-- **Claude Code**,
-- et son **MCP**, utilisé comme outil d’ingénierie d’automatisation.
-
-L’IA n’est pas là pour “faire à ma place”, mais pour améliorer la qualité des décisions et la cohérence du système.
-
----
-
-## 🧠 La vraie difficulté en domotique (WAF inside)
-
-Le plus gros challenge en domotique n’est pas l’installation, la maintenance ou les correctifs…  
-mais de la faire accepter et utiliser par son entourage.
-
-Une automatisation techniquement parfaite ne vaut rien si :
-
-- elle surprend,
-- elle complique l’usage,
-- ou elle génère de la frustration.
-
-👉 **L’expérience utilisateur passe toujours avant la performance technique.**
-
----
-
-## 🔮 Projets en cours & à venir
-
-- Création d’une **mangeoire à oiseaux connectée**, capable de détecter et reconnaître les espèces
-- Amélioration du **monitoring du système**, avec hiérarchisation intelligente des alertes
-- Intégration de **Discord** comme outil central de notification et de supervision
-- Utilisation de **n8n** pour des workflows d’optimisation et d’alerting complexe
-                                        <p>
-                                                ✉️ Pour me contacter c'est par <a href="https://the-optimization-guy.vercel.app/contact">ici</a>.
-                                        </p>
-                                </div>
-                        </article>
-                </main>
-                <Footer />
+					<section class="about-section">
+						<h2>🔮 Projets en cours &amp; à venir</h2>
+						<ul class="bullet-list">
+							<li>Création d’une <strong>mangeoire à oiseaux connectée</strong>, capable de détecter et reconnaître les espèces</li>
+							<li>Amélioration du <strong>monitoring du système</strong>, avec hiérarchisation intelligente des alertes</li>
+							<li>Intégration de <strong>Discord</strong> comme outil central de notification et de supervision</li>
+							<li>Utilisation de <strong>n8n</strong> pour des workflows d’optimisation et d’alerting complexe</li>
+						</ul>
+					</section>
+					<p class="contact-line">
+						✉️ Pour me contacter c'est par <a href="https://the-optimization-guy.vercel.app/contact">ici</a>.
+					</p>
+				</div>
+			</article>
+		</main>
+		<Footer />
 	</body>
 </html>
 <style>
@@ -204,6 +231,54 @@ Une automatisation techniquement parfaite ne vaut rien si :
 	.title h1 {
 		margin: 0;
 		margin-bottom: 1em;
+	}
+	.about-section {
+		margin: 2.5rem 0;
+	}
+	.about-section h2 {
+		margin-bottom: 0.75rem;
+		font-size: 1.6rem;
+	}
+	.about-section h3 {
+		margin-bottom: 0.5rem;
+		font-size: 1.2rem;
+	}
+	.bullet-list {
+		padding-left: 1.25rem;
+		margin: 0.75rem 0 1.25rem;
+		display: grid;
+		gap: 0.5rem;
+	}
+	.section-note {
+		margin-top: 0.5rem;
+		color: rgb(var(--gray));
+	}
+	.section-separator {
+		border: none;
+		border-top: 1px solid rgba(var(--gray-light), 0.8);
+		margin: 2.5rem 0;
+	}
+	.automation-grid {
+		display: grid;
+		gap: 1.5rem;
+		margin-top: 1.5rem;
+	}
+	.automation-card {
+		background: rgba(var(--gray-light), 0.2);
+		border-radius: 16px;
+		padding: 1.5rem;
+		box-shadow: var(--box-shadow);
+	}
+	.highlight {
+		background: rgba(var(--accent), 0.12);
+		border-left: 4px solid rgb(var(--accent));
+		padding: 0.75rem 1rem;
+		border-radius: 12px;
+		font-weight: 600;
+	}
+	.contact-line {
+		margin-top: 2.5rem;
+		font-weight: 600;
 	}
 	hr {
 		border-top: 1px solid rgb(var(--gray-light));
