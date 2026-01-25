@@ -1,0 +1,359 @@
+---
+h1: 'Prises connectées : 238€/an économisés grâce aux automatisations intelligentes'
+title: 'Prises connectées : 238€/an économisés grâce aux automatisations intelligentes'
+description: 'Mesurer, optimiser, automatiser et sécuriser ses appareils pour économiser 238€/an avec des prises connectées.'
+pubDate: 'Mar 05 2025'
+heroImage: '../../assets/blog-placeholder-3.jpg'
+author:
+  name: Pierre
+  avatar: '/hannibal-cercle.png'
+  url: 'https://www.reddit.com/user/Patient-Gene703/'
+---
+
+Pendant des années, j'ai payé pour des appareils que je n'utilisais pas. TV en veille la journée, ampli hifi qui chauffait pour rien, robot de cuisine branché 24h/24, déshumidificateurs énergivores sans contrôle... Ces consommations invisibles représentaient **plus de 15% de ma facture électrique**.
+
+Aujourd'hui, grâce à des prises connectées pilotées par Home Assistant et des automatisations intelligentes, j'ai **éliminé 85% de ces gaspillages** et **sécurisé mes appareils à risque**. Voici ma méthode complète : mesurer, optimiser, automatiser, sécuriser.
+
+📊 **Les résultats en bref**
+💰 Économies réelles : 238€/an
+⚡ Consommation éliminée : 1 390 kWh/an
+🎯 Appareils optimisés : 9
+⏱️ ROI moyen : 3 mois
+🛡️ Sécurité : 2 appareils à risque surveillés
+
+## Mon matériel : 60€ pour tout contrôler
+
+### Les prises que j'utilise au quotidien
+
+Après avoir testé différents modèles, j'ai standardisé mon installation sur **deux types de prises** complémentaires :
+
+**Prises Tapo P110 (WiFi) - 4 unités**
+- **Prix :** ~10€/unité
+- **Protocole :** WiFi 2.4GHz
+- **Mesure :** Puissance instantanée (W), énergie cumulée (kWh)
+- **Intégration HA :** Native via composant Tapo
+- **Gros bouton physique :** Activation/désactivation tactile très pratique
+- **Utilisées pour :** TV, ampli, robot cuisine, bureau télétravail
+
+**Avantages Tapo P110 :**
+✅ Installation immédiate : plug & play sans hub
+✅ Bouton physique bien accessible
+✅ Application standalone fonctionnelle (pratique pour la famille)
+✅ Mesure précise et fiable
+
+**Inconvénients :**
+❌ Format imposant qui peut bloquer la prise adjacente
+❌ WiFi 2.4GHz uniquement (charge le réseau si nombreuses prises)
+
+**Prises Sonoff S60ZBTPF (Zigbee) - 2 unités ⭐**
+- **Prix :** ~10€/unité
+- **Protocole :** Zigbee 3.0
+- **Mesure :** Puissance, énergie, tension, intensité
+- **Format ultra-compact :** Ne bloque pas les prises voisines sur multiprise
+- **Utilisées pour :** Déshumidificateur garage, déshumidificateur bureau
+
+**Avantages Sonoff S60ZBTPF :**
+✅ **Encombrement minimal** : mon critère n°1 désormais
+✅ Zigbee : maillage réseau, pas de surcharge WiFi
+✅ Mesure complète et précise
+✅ Intégration HA parfaite (Zigbee2MQTT ou ZHA)
+✅ Bouton physique présent et fonctionnel
+
+💬 **Mon conseil après 6 mois :** Si je devais tout refaire, je prendrais **100% Sonoff S60ZBTPF** pour leur format compact. Sur une multiprise de bureau ou cuisine, elles ne gênent aucune autre prise. C'est un détail qui change tout au quotidien.
+
+### Investissement total
+
+| Matériel | Quantité | Prix unitaire | Total |
+|----------|----------|---------------|-------|
+| Tapo P110 (WiFi) | 4 | 10€ | 40€ |
+| Sonoff S60ZBTPF (Zigbee) | 2 | 10€ | 20€ |
+| **TOTAL** | **6 prises** | - | **60€** |
+
+⚠️ **Note importante :** J'ai volontairement **exclu la box internet** de ce système. Couper internet couperait mes caméras de surveillance, mes notifications push et certaines automatisations. La perte théorique de 18€/an ne vaut pas le risque opérationnel.
+
+## Détecter les appareils qui consomment inutilement
+
+### La méthode d'audit en 3 étapes
+
+Avant d'automatiser quoi que ce soit, j'ai passé **2 semaines à tout mesurer**. Impossible d'optimiser sans chiffres précis.
+
+**Étape 1 : Installer une prise connectée sur chaque appareil suspect**
+
+J'ai ciblé :
+- Tout appareil avec une LED allumée en permanence
+- Tout ce qui reste branché 24h/24 sans utilisation continue
+- Les gros consommateurs évidents (chauffage d'appoint, déshumidificateurs)
+
+**Étape 2 : Observer pendant 1 à 2 semaines**
+
+Home Assistant enregistre automatiquement :
+- La consommation instantanée (W)
+- La consommation cumulée (kWh)
+- Les plages horaires d'utilisation réelle
+
+**Étape 3 : Analyser et prioriser**
+
+Je me suis posé 3 questions pour chaque appareil :
+1. Combien consomme-t-il en veille ? (seuil : > 5W = cible prioritaire)
+2. Combien d'heures par jour est-il allumé inutilement ?
+3. Quel impact annuel en € ? (calcul : kWh × 0,17€)
+
+### Les coupables identifiés
+
+Voici le résultat de mon audit, classé par **impact économique décroissant** :
+
+| Appareil | Consommation | Problème détecté | Impact annuel estimé |
+|----------|--------------|------------------|----------------------|
+| **🥇 Déshumidificateur garage** | 360W actif | Fonctionnement non optimisé | **166€** |
+| **🥈 Déshumidificateur bureau** | 150W actif | Plages horaires trop larges | 75€ |
+| Robot cuisine | 12W veille | Branché 23h/jour inutilement | 17€ |
+| Bureau télétravail | 6W veille | Allumé week-end complet | 13€ |
+| TV salon | 9W veille | Veille toute la journée | 10€ |
+| Ampli NAD | 6W veille | Veille 17h/jour | 6€ |
+
+> "Quand j'ai mesuré précisément mes déshumidificateurs, j'ai réalisé qu'ils représentaient 80% de mon potentiel d'économie. Je savais qu'ils consommaient beaucoup, mais sans chiffres précis, impossible de savoir combien."
+
+### Ce que j'ai appris sur les veilles
+
+**Les veilles "classiques" (TV, ampli, robot, bureau) :**
+- Impact unitaire modéré : 6 à 17€/an par appareil
+- **Économie totale cumulée : 46€/an** pour 4 appareils
+- Solution simple : calendriers horaires
+
+**Les appareils actifs mal pilotés (déshumidificateurs) :**
+- Impact massif : 75 à 166€/an par appareil
+- **Économie totale cumulée : 192€/an** pour 2 appareils
+- Solution : calendriers intelligents + optimisation heures creuses
+
+**Conclusion :** Les **gros gains sont dans les gros consommateurs**, pas dans la chasse aux veilles. Privilégiez les appareils > 100W avant de multiplier les prises sur des veilles à 2W.
+
+## Optimiser la consommation d'appareils énergivores
+
+### Déshumidificateur garage : calendrier intelligent
+
+**Ma situation de départ :**
+- Maison ancienne (1949) avec garage très humide
+- Humidité ambiante : **~80%** (problème de condensation et moisissures)
+- Déshumidificateur 360W que je savais très gourmand
+- Allumages manuels aléatoires + quelques oublis
+- **Objectif : ramener l'humidité à 76%** (seuil acceptable pour garage)
+
+**Mon objectif :** Atteindre 76% d'humidité tout en minimisant la consommation
+
+**La solution : calendrier 6h/jour ciblé sur heures creuses**
+
+Après analyse, j'ai conçu un calendrier qui concentre le fonctionnement sur :
+- Les **heures creuses** (tarif avantageux)
+- Les **moments d'humidité maximale** (efficacité optimale)
+
+**Programme appliqué :**
+- **22h - 00h** (2h) - Heures creuses + humidité nocturne
+- **4h - 6h** (2h) - Heures creuses + condensation matinale
+- **12h - 14h** (2h) - Humidité mi-journée
+
+**Total : 6h/jour, dont 4h en heures creuses**
+
+**Résultats après 6 mois :**
+- Consommation annuelle : 788 kWh
+- Dont 526 kWh en heures creuses (gain tarifaire)
+- Humidité garage stable : **~76%** (objectif atteint)
+- **Économie mesurée : 166€/an**
+
+✅ **Objectif atteint :** Humidité ramenée de 80% à 76%
+✅ **Optimisation tarifaire :** 67% du fonctionnement en heures creuses
+✅ **Automatisation totale :** Zéro intervention manuelle, zéro oubli
+
+💡 **Astuce :** J'ai testé plusieurs configurations (8h, 7h, 6h) avant de valider celle-ci. Surveillez l'humidité pendant 2 semaines après chaque ajustement pour valider l'efficacité.
+
+### Déshumidificateur bureau : pilotage par seuil d'humidité
+
+**Ma situation de départ :**
+- Déshumidificateur 150W avec capteur interne approximatif
+- Déclenchements trop fréquents ou pas assez selon les jours
+- Fonctionnement parfois inutile
+
+**La solution : capteur externe + automatisation intelligente**
+
+J'ai remplacé le capteur interne par un **capteur Tapo T315** externe, bien plus précis.
+
+**Configuration appliquée :**
+- **Capteur externe Tapo T315** placé au centre de la pièce (mesure précise ±2%)
+- **Déclenchement :** Uniquement si humidité > 60%
+- **Arrêt :** Dès que humidité < 55% (avec stabilisation 10 min)
+- **Plage horaire :** 8h-23h uniquement (évite bruit nocturne)
+- **Durée max :** 5h30/jour (sécurité anti-dérive)
+
+**Résultats :**
+- Fonctionnement moyen : **5h30/jour max** (variable selon météo)
+- Humidité maintenue : 50-55% (zone confort idéale)
+- **Économie mesurée : 26€/an** vs fonctionnement anarchique initial
+
+✅ **Humidité optimale :** Maintenue dans la zone confort (50-55%)
+✅ **Réactivité :** S'adapte automatiquement à la météo
+✅ **Silence nocturne :** Aucun déclenchement la nuit
+
+💬 **Mon conseil :** Le pilotage par seuil d'humidité est **bien plus efficace** qu'un simple calendrier horaire pour les pièces à vivre. L'investissement d'un capteur Tapo T315 à 15€ se rentabilise rapidement.
+
+## Le ROI en détail : veilles vs énergivores
+
+### ROI sur les appareils en veille
+
+**Appareils concernés :**
+- TV salon (9W veille)
+- Ampli NAD (6W veille)
+- Robot cuisine (12W veille)
+- Bureau télétravail (6W veille)
+
+**Investissement :**
+- 4 prises Tapo P110 : 40€
+
+**Économies annuelles :**
+- TV : 10€/an
+- Ampli : 6€/an
+- Robot : 17€/an
+- Bureau : 13€/an
+- **Total : 46€/an**
+
+**ROI veilles : 40€ ÷ 46€ = 10 mois**
+
+### ROI sur les appareils énergivores
+
+**Appareils concernés :**
+- Déshumidificateur garage (360W)
+- Déshumidificateur bureau (150W)
+
+**Investissement :**
+- 2 prises Sonoff S60ZBTPF : 20€
+
+**Économies annuelles :**
+- Déshumidificateur garage : 166€/an
+- Déshumidificateur bureau : 26€/an
+- **Total : 192€/an**
+
+**ROI énergivores : 20€ ÷ 192€ = 1,2 mois**
+
+### Comparaison ROI
+
+| Catégorie | Investissement | Économie/an | ROI |
+|-----------|----------------|-------------|-----|
+| **Veilles** | 40€ | 46€ | **10 mois** |
+| **Énergivores** | 20€ | 192€ | **1,2 mois** |
+
+**Conclusion :** Le ROI sur les **appareils énergivores est 8× plus rapide** que sur les veilles. C'est là qu'il faut concentrer ses efforts en priorité.
+
+## Optimiser les charges des appareils
+
+Au-delà des économies directes, les prises connectées permettent d'**optimiser les charges** et de développer de **bonnes pratiques**.
+
+### Vélo électrique : charge intelligente
+
+**Configuration :**
+- Prise connectée dédiée au chargeur
+- Calendrier préférentiel **23h-7h** (heures creuses)
+- Notification si charge démarrée hors heures creuses
+- Coupure automatique après 8h
+
+**Usage :** Je privilégie les charges en heures creuses quand c'est possible, mais sans contrainte stricte. L'automatisation me rappelle juste l'optimisation tarifaire.
+
+### Robot cuisine : activation à la demande
+
+**Configuration :**
+- Prise éteinte **en permanence** par défaut
+- Allumage manuel via bouton Tapo P110
+- Utilisation réelle : ~30 min/jour
+
+**Économie :** 17€/an
+
+> "J'appuie sur le bouton de la prise en ouvrant le placard, c'est devenu totalement automatique. Zéro contrainte, économie maximale."
+
+## Se rassurer avec des arrêts automatiques
+
+Au-delà de l'économie, les prises connectées m'apportent une **sérénité au quotidien** en sécurisant les appareils à risque d'oubli.
+
+### Lisseur cheveux : coupure automatique sécurité
+
+**Le risque :** Lisseur oublié branché = risque incendie domestique
+
+**La solution : arrêt automatique 15 minutes**
+
+J'ai installé une **prise Tapo P110 dans la salle de bain** dédiée au lisseur.
+
+**Configuration appliquée :**
+- Prise éteinte par défaut
+- Allumage manuel via bouton physique
+- **Coupure automatique après 15 minutes de fonctionnement**
+- Notification push : *"Lisseur éteint automatiquement après 15min"*
+
+**Sécurité renforcée :**
+✅ Impossible de laisser le lisseur allumé toute la journée
+✅ Élimination du stress "ai-je bien éteint le lisseur ?"
+✅ Protection contre risque incendie
+✅ Économie bonus : suppression veille + coupure oublis
+
+💬 **Mon retour après 4 mois :** Cette automatisation est celle qui me rassure le plus au quotidien. **Zéro stress** en partant le matin.
+
+### Bureau télétravail : extinction week-end garantie
+
+**Configuration :**
+- Prise allumée uniquement lundi-vendredi 8h-18h
+- **Extinction automatique vendredi 18h**
+- **Coupure garantie tout le week-end**
+- Rallumage automatique lundi 8h
+
+**Bénéfices :**
+✅ Impossible d'oublier d'éteindre le vendredi soir
+✅ 48h de coupure totale chaque semaine
+✅ Préservation du matériel
+
+### Déshumidificateur garage : zéro charge mentale
+
+**Configuration :**
+- 3 plages quotidiennes automatiques (22h-00h, 4h-6h, 12h-14h)
+- **Aucune intervention manuelle nécessaire**
+
+**Tranquillité mentale :**
+✅ Zéro charge mentale : je n'y pense jamais
+✅ Optimisation garantie 365 jours/an
+
+## Bilan financier global
+
+### Investissement : 60€
+
+| Matériel | Coût |
+|----------|------|
+| 4 prises Tapo P110 | 40€ |
+| 2 prises Sonoff S60ZBTPF | 20€ |
+| **Total** | **60€** |
+
+### Économies annuelles : 238€
+
+| Appareil | Économie/an |
+|----------|-------------|
+| Déshumidificateur garage | 166€ |
+| Déshumidificateur bureau | 26€ |
+| Robot cuisine | 17€ |
+| Bureau télétravail | 13€ |
+| TV salon | 10€ |
+| Ampli NAD | 6€ |
+| **TOTAL** | **238€/an** |
+
+### ROI global : 3 mois
+
+- **Calcul :** 60€ ÷ 238€ = **3 mois**
+- **Projection 3 ans :** (238€ × 3) - 60€ = **654€**
+- **Projection 5 ans :** (238€ × 5) - 60€ = **1 130€**
+
+## Conclusion : mesurer avant d'optimiser
+
+Après 6 mois d'utilisation, je retiens trois leçons essentielles :
+
+**1. Les chiffres ne mentent jamais**
+Sans mesure précise, j'aurais perdu mon temps sur des veilles à 2W en ignorant mes déshumidificateurs qui représentaient 80% du potentiel d'économie. Les prises connectées transforment l'invisible en concret.
+
+**2. L'automatisation élimine la charge mentale**
+Plus besoin de penser à éteindre, couper, programmer. Le système s'en charge 365 jours par an, sans oubli, sans exception. C'est ça le vrai confort.
+
+**3. La sécurité n'a pas de prix**
+Le lisseur qui s'éteint automatiquement après 15 minutes vaut bien plus que les quelques euros économisés. La tranquillité d'esprit en partant le matin change tout.
+
+Pour 60€ investis, j'économise 238€ par an tout en gagnant en confort et en sécurité. Le ROI de 3 mois en fait l'un de mes meilleurs investissements domotiques. Si vous hésitez, commencez par mesurer vos gros consommateurs pendant 2 semaines : les chiffres vous convaincront.
