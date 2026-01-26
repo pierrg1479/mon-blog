@@ -182,85 +182,41 @@ En gardant ce rythme, j'ai obtenu un résultat stable, sans y penser une seule f
 - Humidité garage stabilisée : **~76%** (objectif atteint)
 - **Économie mesurée : 166 €/an**
 
-✅ **Humidité maîtrisée (80% → 76%)**
-✅ **Optimisation tarifaire (environ 67% du fonctionnement en heures creuses)**
-✅ **Automatisation complète (zéro intervention, zéro oubli)**
-
 ### Déshumidificateur bureau : pilotage par seuil d'humidité
 
-**Ma situation de départ :**
+**Ma situation de départ**
 - Déshumidificateur 150W avec capteur interne approximatif
-- Déclenchements trop fréquents ou pas assez selon les jours
-- Fonctionnement parfois inutile
+- Déclenchements trop fréquents… ou pas assez, selon les jours
+- Des cycles parfois inutiles, donc du bruit et de la conso pour rien
 
-**La solution : capteur externe + automatisation intelligente**
+**La solution : capteur externe + automatisation “au bon sens”**
 
-J'ai remplacé le capteur interne par un **capteur Tapo T315** externe, bien plus précis.
+Plutôt que de faire confiance au capteur intégré (souvent mal placé et imprécis), j'ai externalisé la mesure. J'ai installé un Tapo T315 au bon endroit, puis j'ai laissé Home Assistant décider quand il faut vraiment agir.
 
-**Configuration appliquée :**
-- **Capteur externe Tapo T315** placé au centre de la pièce (mesure précise ±2%)
-- **Déclenchement :** Uniquement si humidité > 60%
-- **Arrêt :** Dès que humidité < 55% (avec stabilisation 10 min)
-- **Plage horaire :** 8h-23h uniquement (évite bruit nocturne)
-- **Durée max :** 5h30/jour (sécurité anti-dérive)
+L'objectif est simple : déshumidifier uniquement quand c'est nécessaire, s'arrêter dès que le niveau redevient correct, et éviter les déclenchements la nuit.
 
-**Résultats :**
-- Fonctionnement moyen : **5h30/jour max** (variable selon météo)
-- Humidité maintenue : 50-55% (zone confort idéale)
-- **Économie mesurée : 26€/an** vs fonctionnement anarchique initial
+**Configuration appliquée**
+- **Capteur externe :** Tapo T315 placé au centre de la pièce (mesure annoncée ±2%)
+- **Démarrage :** uniquement si humidité > 60%
+- **Arrêt :** dès que l'humidité passe < 55%, avec stabilisation 10 minutes (pour éviter les on/off en boucle)
+- **Plage horaire :** 8h → 23h (pas de bruit la nuit)
+- **Sécurité :** durée max 5h30/jour (anti-dérive si capteur déconnecté ou météo extrême)
 
-✅ **Humidité optimale :** Maintenue dans la zone confort (50-55%)
-✅ **Réactivité :** S'adapte automatiquement à la météo
-✅ **Silence nocturne :** Aucun déclenchement la nuit
+**Résultats**
+- Fonctionnement variable selon la météo, mais plafonné à 5h30/jour
+- Humidité maintenue entre 50 et 55% (zone confort)
+- **Économie mesurée : 26 €/an** par rapport au fonctionnement "anarchique" du départ
 
-💬 **Mon conseil :** Le pilotage par seuil d'humidité est **bien plus efficace** qu'un simple calendrier horaire pour les pièces à vivre. L'investissement d'un capteur Tapo T315 à 15€ se rentabilise rapidement.
+## 📈 ROI : où vos prises connectées rapportent vraiment
 
-## 📈 Le ROI en détail : veilles vs énergivores
+Toutes les prises connectées ne se rentabilisent pas au même rythme. Sur les veilles, on gratte des euros petit à petit. Sur les appareils énergivores, le gain peut être immédiat, parce qu'on évite des heures de fonctionnement inutiles. Voilà le comparatif, chiffres à l'appui.
 
-### ROI sur les appareils en veille
+| Catégorie | Appareils concernés | Investissement | Économie annuelle | ROI estimé |
+| --- | --- | --- | --- | --- |
+| Veilles | TV salon (9W), ampli NAD (6W), robot cuisine (12W), bureau télétravail (6W) | 40€ (4× Tapo P110) | 46€/an | ~10 mois |
+| Énergivores | Déshumidificateur garage (360W), déshumidificateur bureau (150W) | 20€ (2× Sonoff S60ZBTPF) | 192€/an | ~1,2 mois |
 
-**Appareils concernés :**
-- TV salon (9W veille)
-- Ampli NAD (6W veille)
-- Robot cuisine (12W veille)
-- Bureau télétravail (6W veille)
-
-**Investissement :**
-- 4 prises Tapo P110 : 40€
-
-**Économies annuelles :**
-- TV : 10€/an
-- Ampli : 6€/an
-- Robot : 17€/an
-- Bureau : 13€/an
-- **Total : 46€/an**
-
-**ROI veilles : 40€ ÷ 46€ = 10 mois**
-
-### ROI sur les appareils énergivores
-
-**Appareils concernés :**
-- Déshumidificateur garage (360W)
-- Déshumidificateur bureau (150W)
-
-**Investissement :**
-- 2 prises Sonoff S60ZBTPF : 20€
-
-**Économies annuelles :**
-- Déshumidificateur garage : 166€/an
-- Déshumidificateur bureau : 26€/an
-- **Total : 192€/an**
-
-**ROI énergivores : 20€ ÷ 192€ = 1,2 mois**
-
-### Comparaison ROI
-
-| Catégorie | Investissement | Économie/an | ROI |
-|-----------|----------------|-------------|-----|
-| **Veilles** | 40€ | 46€ | **10 mois** |
-| **Énergivores** | 20€ | 192€ | **1,2 mois** |
-
-**Conclusion :** Le ROI sur les **appareils énergivores est 8× plus rapide** que sur les veilles. C'est là qu'il faut concentrer ses efforts en priorité.
+Oui, les veilles se rentabilisent. Mais le vrai "coup de turbo" sur le ROI vient des appareils qui consomment fort. Ici, le retour sur investissement est environ 8× plus rapide côté énergivores que côté veilles. Moralité : si vous devez prioriser, commencez par ce qui chauffe, souffle, compresse… bref, ce qui tourne longtemps et fort.
 
 ## 🔋 Optimiser les charges des appareils
 
