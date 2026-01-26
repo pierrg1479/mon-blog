@@ -10,16 +10,18 @@ author:
   url: 'https://www.reddit.com/user/Patient-Gene703/'
 ---
 
-Pendant des années, j'ai payé pour des appareils que je n'utilisais pas. TV en veille la journée, ampli hifi qui chauffait pour rien, robot de cuisine branché 24h/24, déshumidificateurs énergivores sans contrôle... Ces consommations invisibles représentaient **plus de 15% de ma facture électrique**.
+On entend souvent que les veilles coûtent cher. Parfois c’est vrai, parfois c’est largement surestimé. La seule façon de trancher : mesurer chez vous, avec vos habitudes, vos appareils, votre tarif.
 
-Aujourd'hui, grâce à des prises connectées pilotées par Home Assistant et des automatisations intelligentes, j'ai **éliminé 85% de ces gaspillages** et **sécurisé mes appareils à risque**. Voici ma méthode complète : mesurer, optimiser, automatiser, sécuriser.
+J’ai donc fait un audit à la maison avec des prises connectées et Home Assistant : suivi de puissance, historique, identification des périodes inutiles. En quelques jours, on voit très vite ce qui pèse réellement sur la facture… et ce qui ne mérite pas qu’on y passe du temps.
+
+Dans cet article, je vous partage la méthode complète pour reproduire l’approche : mesurer, prioriser, automatiser intelligemment (calendriers, seuils, heures creuses), et sécuriser les appareils à risque (coupures automatiques, garde-fous).
 
 <div class="callout callout--tip">
   <p class="callout__title">📊 Les résultats en bref</p>
   <p class="callout__content">💰 Économies réelles : 238€/an<br />⚡ Consommation éliminée : 1 390 kWh/an<br />🎯 Appareils optimisés : 9<br />⏱️ ROI moyen : 3 mois<br />🛡️ Sécurité : 2 appareils à risque surveillés</p>
 </div>
 
-## Mon matériel : 60€ pour tout contrôler
+## 🧰 Mon matériel : 60€ pour tout contrôler
 
 ### Les prises que j'utilise au quotidien
 
@@ -34,14 +36,20 @@ Après avoir testé différents modèles, j'ai standardisé mon installation sur
 - **Utilisées pour :** TV, ampli, robot cuisine, bureau télétravail
 
 **Avantages Tapo P110 :**
-✅ Installation immédiate : plug & play sans hub
-✅ Bouton physique bien accessible
-✅ Application standalone fonctionnelle (pratique pour la famille)
-✅ Mesure précise et fiable
+
+| Avantages | Détails |
+| --- | --- |
+| ✅ Installation immédiate | Plug & play sans hub |
+| ✅ Bouton physique bien accessible | Commande tactile pratique |
+| ✅ Application standalone fonctionnelle | Pratique pour la famille |
+| ✅ Mesure précise et fiable | Suivi clair des consommations |
 
 **Inconvénients :**
-❌ Format imposant qui peut bloquer la prise adjacente
-❌ WiFi 2.4GHz uniquement (charge le réseau si nombreuses prises)
+
+| Inconvénients | Détails |
+| --- | --- |
+| ❌ Format imposant | Peut bloquer la prise adjacente |
+| ❌ WiFi 2.4GHz uniquement | Charge le réseau si nombreuses prises |
 
 **Prises Sonoff S60ZBTPF (Zigbee) - 2 unités ⭐**
 - **Prix :** ~10€/unité
@@ -51,11 +59,14 @@ Après avoir testé différents modèles, j'ai standardisé mon installation sur
 - **Utilisées pour :** Déshumidificateur garage, déshumidificateur bureau
 
 **Avantages Sonoff S60ZBTPF :**
-✅ **Encombrement minimal** : mon critère n°1 désormais
-✅ Zigbee : maillage réseau, pas de surcharge WiFi
-✅ Mesure complète et précise
-✅ Intégration HA parfaite (Zigbee2MQTT ou ZHA)
-✅ Bouton physique présent et fonctionnel
+
+| Avantages | Détails |
+| --- | --- |
+| ✅ Encombrement minimal | Mon critère n°1 désormais |
+| ✅ Zigbee | Maillage réseau, pas de surcharge WiFi |
+| ✅ Mesure complète et précise | Puissance, énergie, tension, intensité |
+| ✅ Intégration HA parfaite | Zigbee2MQTT ou ZHA |
+| ✅ Bouton physique présent et fonctionnel | Utilisable sans application |
 
 <div class="callout callout--tip">
   <p class="callout__content">💬 <strong>Mon conseil après 6 mois :</strong> Si je devais tout refaire, je prendrais <strong>100% Sonoff S60ZBTPF</strong> pour leur format compact. Sur une multiprise de bureau ou cuisine, elles ne gênent aucune autre prise. C'est un détail qui change tout au quotidien.</p>
@@ -73,7 +84,7 @@ Après avoir testé différents modèles, j'ai standardisé mon installation sur
   <p class="callout__content">⚠️ J'ai volontairement <strong>exclu la box internet</strong> de ce système. Couper internet couperait mes caméras de surveillance, mes notifications push et certaines automatisations. La perte théorique de 18€/an ne vaut pas le risque opérationnel.</p>
 </div>
 
-## Détecter les appareils qui consomment inutilement
+## 🔎 Détecter les appareils qui consomment inutilement
 
 ### La méthode d'audit en 3 étapes
 
@@ -131,7 +142,7 @@ Voici le résultat de mon audit, classé par **impact économique décroissant**
   <p class="callout__content">✅ <strong>Conclusion :</strong> Les gros gains sont dans les gros consommateurs, pas dans la chasse aux veilles. Privilégiez les appareils &gt; 100W avant de multiplier les prises sur des veilles à 2W.</p>
 </div>
 
-## Optimiser la consommation d'appareils énergivores
+## ⚙️ Optimiser la consommation d'appareils énergivores
 
 ### Déshumidificateur garage : calendrier intelligent
 
@@ -198,7 +209,7 @@ J'ai remplacé le capteur interne par un **capteur Tapo T315** externe, bien plu
 
 💬 **Mon conseil :** Le pilotage par seuil d'humidité est **bien plus efficace** qu'un simple calendrier horaire pour les pièces à vivre. L'investissement d'un capteur Tapo T315 à 15€ se rentabilise rapidement.
 
-## Le ROI en détail : veilles vs énergivores
+## 📈 Le ROI en détail : veilles vs énergivores
 
 ### ROI sur les appareils en veille
 
@@ -245,7 +256,7 @@ J'ai remplacé le capteur interne par un **capteur Tapo T315** externe, bien plu
 
 **Conclusion :** Le ROI sur les **appareils énergivores est 8× plus rapide** que sur les veilles. C'est là qu'il faut concentrer ses efforts en priorité.
 
-## Optimiser les charges des appareils
+## 🔋 Optimiser les charges des appareils
 
 Au-delà des économies directes, les prises connectées permettent d'**optimiser les charges** et de développer de **bonnes pratiques**.
 
@@ -270,7 +281,7 @@ Au-delà des économies directes, les prises connectées permettent d'**optimise
 
 > "J'appuie sur le bouton de la prise en ouvrant le placard, c'est devenu totalement automatique. Zéro contrainte, économie maximale."
 
-## Se rassurer avec des arrêts automatiques
+## 🛡️ Se rassurer avec des arrêts automatiques
 
 Au-delà de l'économie, les prises connectées m'apportent une **sérénité au quotidien** en sécurisant les appareils à risque d'oubli.
 
@@ -319,7 +330,7 @@ J'ai installé une **prise Tapo P110 dans la salle de bain** dédiée au lisseur
 ✅ Zéro charge mentale : je n'y pense jamais
 ✅ Optimisation garantie 365 jours/an
 
-## Bilan financier global
+## 💶 Bilan financier global
 
 ### Investissement : 60€
 
@@ -347,7 +358,7 @@ J'ai installé une **prise Tapo P110 dans la salle de bain** dédiée au lisseur
 - **Projection 3 ans :** (238€ × 3) - 60€ = **654€**
 - **Projection 5 ans :** (238€ × 5) - 60€ = **1 130€**
 
-## Conclusion : mesurer avant d'optimiser
+## ✅ Conclusion : mesurer avant d'optimiser
 
 Après 6 mois d'utilisation, je retiens trois leçons essentielles :
 
