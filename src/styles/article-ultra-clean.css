@@ -35,7 +35,7 @@
   
   .title h1 {
     margin: 0 0 1.25rem 0;
-    font-size: 2.75rem;
+    font-size: 2.3rem;
     line-height: 1.15;
     font-weight: 800;
     letter-spacing: -0.02em;
@@ -298,7 +298,7 @@
   }
   
   .title h1 {
-    font-size: 2.5rem;
+    font-size: 2.1rem;
   }
 }
 
@@ -309,7 +309,7 @@
   }
   
   .title h1 {
-    font-size: 2rem;
+    font-size: 1.7rem;
   }
   
   .prose {
