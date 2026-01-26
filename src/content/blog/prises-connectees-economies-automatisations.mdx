@@ -25,7 +25,11 @@ Dans cet article, je vous partage la méthode complète pour reproduire l’appr
 
 ### Les prises que j'utilise au quotidien
 
-Après avoir testé différents modèles, j'ai standardisé mon installation sur **deux types de prises** complémentaires :
+J'ai commencé comme beaucoup de monde, avec des prises Tapo. C'était simple, pas cher, et ça m'a permis de faire mes premiers tests sans me prendre la tête. Très vite, ça m'a surtout appris une chose : ce n'est pas “la domotique” qui fait économiser, c'est le fait de mesurer et piloter les bons appareils.
+
+Ensuite, j'ai migré vers du Zigbee. C'est un protocole radio pensé pour la maison connectée, avec une bonne stabilité et une faible consommation. Et surtout, ça s'intègre très bien à Home Assistant.
+
+Pour mesurer et couper ce qui compte vraiment sans exploser le budget, j'ai démarré avec 4 prises Tapo P110 en Wi-Fi. Puis je suis passé à 2 prises Zigbee Sonoff S60ZBTPF, que je privilégie désormais pour une raison très simple : elles sont ultra-compactes (elles ne condamnent pas la prise d'à côté) et s'intègrent parfaitement à Home Assistant.
 
 **Prises Tapo P110 (WiFi) - 4 unités**
 - **Prix :** ~10€/unité
@@ -69,7 +73,7 @@ Après avoir testé différents modèles, j'ai standardisé mon installation sur
 | ✅ Bouton physique présent et fonctionnel | Utilisable sans application |
 
 <div class="callout callout--tip">
-  <p class="callout__content">💬 <strong>Mon conseil après 6 mois :</strong> Si je devais tout refaire, je prendrais <strong>100% Sonoff S60ZBTPF</strong> pour leur format compact. Sur une multiprise de bureau ou cuisine, elles ne gênent aucune autre prise. C'est un détail qui change tout au quotidien.</p>
+  <p class="callout__content">💬 <strong>Mon conseil :</strong> Si je devais tout refaire, je prendrais <strong>100% Sonoff S60ZBTPF</strong> pour leur format compact. Sur une multiprise de bureau ou cuisine, elles ne gênent aucune autre prise. C'est un détail qui change tout au quotidien.</p>
 </div>
 
 ### Investissement total
@@ -79,10 +83,6 @@ Après avoir testé différents modèles, j'ai standardisé mon installation sur
 | Tapo P110 (WiFi) | 4 | 10€ | 40€ |
 | Sonoff S60ZBTPF (Zigbee) | 2 | 10€ | 20€ |
 | **TOTAL** | **6 prises** | - | **60€** |
-
-<div class="callout callout--warning">
-  <p class="callout__content">⚠️ J'ai volontairement <strong>exclu la box internet</strong> de ce système. Couper internet couperait mes caméras de surveillance, mes notifications push et certaines automatisations. La perte théorique de 18€/an ne vaut pas le risque opérationnel.</p>
-</div>
 
 ## 🔎 Détecter les appareils qui consomment inutilement
 
@@ -110,6 +110,10 @@ Je me suis posé 3 questions pour chaque appareil :
 1. Combien consomme-t-il en veille ? (seuil : > 5W = cible prioritaire)
 2. Combien d'heures par jour est-il allumé inutilement ?
 3. Quel impact annuel en € ? (calcul : kWh × 0,17€)
+
+<div class="callout callout--warning">
+  <p class="callout__content">⚠️ J'ai volontairement <strong>exclu la box internet</strong> de ce système. Couper internet couperait mes caméras de surveillance, mes notifications push et certaines automatisations. La perte théorique de 18€/an ne vaut pas le risque opérationnel.</p>
+</div>
 
 ### Les coupables identifiés
 
