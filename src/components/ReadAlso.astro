@@ -10,46 +10,83 @@ const href = `/blog/${slug}/`;
 
 <aside class="read-also not-prose">
   <p class="read-also__heading">À lire aussi</p>
-  <a class="read-also__link" href={href}>{title}</a>
+  <a class="read-also__link" href={href}>
+    <span class="read-also__title">{title}</span>
+    <span class="read-also__arrow" aria-hidden="true">→</span>
+  </a>
 </aside>
 
 <style>
   .read-also {
-    margin: 2rem 0;
-    padding: 1.25rem 1.5rem;
-    border-top: 2px solid #b8d8d8;
-    border-bottom: 2px solid #b8d8d8;
+    margin: 2.5rem 0;
+    padding: 1.5rem 1.75rem;
+    border-left: 5px solid #ffd04d;
+    border-radius: 12px;
+    background: linear-gradient(to right, rgba(255, 208, 77, 0.1), rgba(255, 208, 77, 0.03));
+    transition: background 0.2s ease;
   }
 
   .read-also__heading {
-    margin: 0 0 0.35rem 0;
-    font-size: 1.25rem;
-    font-weight: 400;
-    color: #9ca3af;
+    margin: 0 0 0.5rem 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #d97706;
     line-height: 1.3;
   }
 
-  :global(html.dark) .read-also__heading {
-    color: #6b7280;
-  }
-
   .read-also__link {
-    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 1.0625rem;
     font-weight: 700;
     color: var(--black, #111827);
     text-decoration: none;
     line-height: 1.4;
+    transition: color 0.2s ease;
   }
 
   .read-also__link:hover {
-    text-decoration: underline;
+    color: #d97706;
+  }
+
+  .read-also__title {
+    min-width: 0;
+  }
+
+  .read-also__arrow {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    color: #d97706;
+    transition: transform 0.2s ease;
+  }
+
+  .read-also__link:hover .read-also__arrow {
+    transform: translateX(4px);
+  }
+
+  /* Dark mode */
+  :global(html.dark) .read-also {
+    background: linear-gradient(to right, rgba(255, 208, 77, 0.08), rgba(255, 208, 77, 0.02));
+    border-left-color: #fbbf24;
+  }
+
+  :global(html.dark) .read-also__heading {
+    color: #fbbf24;
   }
 
   :global(html.dark) .read-also__link {
     color: #e5e7eb;
   }
 
-  :global(html.dark) .read-also {
-    border-color: #4a7c7c;
+  :global(html.dark) .read-also__link:hover {
+    color: #fbbf24;
+  }
+
+  :global(html.dark) .read-also__arrow {
+    color: #fbbf24;
   }
 </style>
