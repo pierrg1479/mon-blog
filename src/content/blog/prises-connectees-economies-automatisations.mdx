@@ -25,7 +25,11 @@ Dans cet article, je vous partage la méthode complète pour reproduire l’appr
 
 ### Les prises que j'utilise au quotidien
 
-Après avoir testé différents modèles, j'ai standardisé mon installation sur **deux types de prises** complémentaires :
+J'ai commencé comme beaucoup de monde, avec des prises Tapo. C'était simple, pas cher, et ça m'a permis de faire mes premiers tests sans me prendre la tête. Très vite, ça m'a surtout appris une chose : ce n'est pas “la domotique” qui fait économiser, c'est le fait de mesurer et piloter les bons appareils.
+
+Ensuite, j'ai migré vers du Zigbee. C'est un protocole radio pensé pour la maison connectée, avec une bonne stabilité et une faible consommation. Et surtout, ça s'intègre très bien à Home Assistant.
+
+Pour mesurer et couper ce qui compte vraiment sans exploser le budget, j'ai démarré avec 4 prises Tapo P110 en Wi-Fi. Puis je suis passé à 2 prises Zigbee Sonoff S60ZBTPF, que je privilégie désormais pour une raison très simple : elles sont ultra-compactes (elles ne condamnent pas la prise d'à côté) et s'intègrent parfaitement à Home Assistant.
 
 **Prises Tapo P110 (WiFi) - 4 unités**
 - **Prix :** ~10€/unité
@@ -69,7 +73,7 @@ Après avoir testé différents modèles, j'ai standardisé mon installation sur
 | ✅ Bouton physique présent et fonctionnel | Utilisable sans application |
 
 <div class="callout callout--tip">
-  <p class="callout__content">💬 <strong>Mon conseil après 6 mois :</strong> Si je devais tout refaire, je prendrais <strong>100% Sonoff S60ZBTPF</strong> pour leur format compact. Sur une multiprise de bureau ou cuisine, elles ne gênent aucune autre prise. C'est un détail qui change tout au quotidien.</p>
+  <p class="callout__content">💬 <strong>Mon conseil :</strong> Si je devais tout refaire, je prendrais <strong>100% Sonoff S60ZBTPF</strong> pour leur format compact. Sur une multiprise de bureau ou cuisine, elles ne gênent aucune autre prise. C'est un détail qui change tout au quotidien.</p>
 </div>
 
 ### Investissement total
@@ -79,10 +83,6 @@ Après avoir testé différents modèles, j'ai standardisé mon installation sur
 | Tapo P110 (WiFi) | 4 | 10€ | 40€ |
 | Sonoff S60ZBTPF (Zigbee) | 2 | 10€ | 20€ |
 | **TOTAL** | **6 prises** | - | **60€** |
-
-<div class="callout callout--warning">
-  <p class="callout__content">⚠️ J'ai volontairement <strong>exclu la box internet</strong> de ce système. Couper internet couperait mes caméras de surveillance, mes notifications push et certaines automatisations. La perte théorique de 18€/an ne vaut pas le risque opérationnel.</p>
-</div>
 
 ## 🔎 Détecter les appareils qui consomment inutilement
 
@@ -110,6 +110,10 @@ Je me suis posé 3 questions pour chaque appareil :
 1. Combien consomme-t-il en veille ? (seuil : > 5W = cible prioritaire)
 2. Combien d'heures par jour est-il allumé inutilement ?
 3. Quel impact annuel en € ? (calcul : kWh × 0,17€)
+
+<div class="callout callout--warning">
+  <p class="callout__content">⚠️ J'ai volontairement <strong>exclu la box internet</strong> de ce système. Couper internet couperait mes caméras de surveillance, mes notifications push et certaines automatisations. La perte théorique de 18€/an ne vaut pas le risque opérationnel.</p>
+</div>
 
 ### Les coupables identifiés
 
@@ -146,7 +150,7 @@ Voici le résultat de mon audit, classé par **impact économique décroissant**
 
 ### Déshumidificateur garage : calendrier intelligent
 
-**Ma situation de départ :**
+**Ma situation de départ**
 - Maison ancienne (1949) avec garage très humide
 - Humidité ambiante : **~80%** (problème de condensation et moisissures)
 - Déshumidificateur 360W que je savais très gourmand
@@ -155,106 +159,64 @@ Voici le résultat de mon audit, classé par **impact économique décroissant**
 
 **Mon objectif :** Atteindre 76% d'humidité tout en minimisant la consommation
 
-**La solution : calendrier 6h/jour ciblé sur heures creuses**
+**La solution : un calendrier de 6h/jour, calé sur les bons moments**
 
-Après analyse, j'ai conçu un calendrier qui concentre le fonctionnement sur :
-- Les **heures creuses** (tarif avantageux)
-- Les **moments d'humidité maximale** (efficacité optimale)
+Après quelques jours de mesures, j'ai arrêté de "le faire tourner quand j'y pense". À la place, j'ai créé un planning simple : faire fonctionner le déshumidificateur quand c'est le plus utile, tout en profitant au maximum des heures creuses.
 
-**Programme appliqué :**
-- **22h - 00h** (2h) - Heures creuses + humidité nocturne
-- **4h - 6h** (2h) - Heures creuses + condensation matinale
-- **12h - 14h** (2h) - Humidité mi-journée
+L'idée est double :
+- **Tarif :** privilégier les heures creuses quand c'est possible.
+- **Efficacité :** viser les périodes où l'humidité monte naturellement (nuit, matin, milieu de journée).
 
-**Total : 6h/jour, dont 4h en heures creuses**
+**Programme retenu :**
+- **22h → 00h** (2h) : heures creuses + humidité nocturne
+- **4h → 6h** (2h) : heures creuses + condensation du matin
+- **12h → 14h** (2h) : pic d'humidité en journée
 
-**Résultats après 6 mois :**
-- Consommation annuelle : 788 kWh
-- Dont 526 kWh en heures creuses (gain tarifaire)
-- Humidité garage stable : **~76%** (objectif atteint)
-- **Économie mesurée : 166€/an**
+Soit **6h/jour**, dont **4h en heures creuses**.
 
-✅ **Objectif atteint :** Humidité ramenée de 80% à 76%
-✅ **Optimisation tarifaire :** 67% du fonctionnement en heures creuses
-✅ **Automatisation totale :** Zéro intervention manuelle, zéro oubli
+**Résultats après 6 mois**
 
-💡 **Astuce :** J'ai testé plusieurs configurations (8h, 7h, 6h) avant de valider celle-ci. Surveillez l'humidité pendant 2 semaines après chaque ajustement pour valider l'efficacité.
+En gardant ce rythme, j'ai obtenu un résultat stable, sans y penser une seule fois :
+- Consommation annuelle estimée : 788 kWh
+- Dont 526 kWh en heures creuses (donc une grosse partie au meilleur tarif)
+- Humidité garage stabilisée : **~76%** (objectif atteint)
+- **Économie mesurée : 166 €/an**
 
 ### Déshumidificateur bureau : pilotage par seuil d'humidité
 
-**Ma situation de départ :**
+**Ma situation de départ**
 - Déshumidificateur 150W avec capteur interne approximatif
-- Déclenchements trop fréquents ou pas assez selon les jours
-- Fonctionnement parfois inutile
+- Déclenchements trop fréquents… ou pas assez, selon les jours
+- Des cycles parfois inutiles, donc du bruit et de la conso pour rien
 
-**La solution : capteur externe + automatisation intelligente**
+**La solution : capteur externe + automatisation “au bon sens”**
 
-J'ai remplacé le capteur interne par un **capteur Tapo T315** externe, bien plus précis.
+Plutôt que de faire confiance au capteur intégré (souvent mal placé et imprécis), j'ai externalisé la mesure. J'ai installé un Tapo T315 au bon endroit, puis j'ai laissé Home Assistant décider quand il faut vraiment agir.
 
-**Configuration appliquée :**
-- **Capteur externe Tapo T315** placé au centre de la pièce (mesure précise ±2%)
-- **Déclenchement :** Uniquement si humidité > 60%
-- **Arrêt :** Dès que humidité < 55% (avec stabilisation 10 min)
-- **Plage horaire :** 8h-23h uniquement (évite bruit nocturne)
-- **Durée max :** 5h30/jour (sécurité anti-dérive)
+L'objectif est simple : déshumidifier uniquement quand c'est nécessaire, s'arrêter dès que le niveau redevient correct, et éviter les déclenchements la nuit.
 
-**Résultats :**
-- Fonctionnement moyen : **5h30/jour max** (variable selon météo)
-- Humidité maintenue : 50-55% (zone confort idéale)
-- **Économie mesurée : 26€/an** vs fonctionnement anarchique initial
+**Configuration appliquée**
+- **Capteur externe :** Tapo T315 placé au centre de la pièce (mesure annoncée ±2%)
+- **Démarrage :** uniquement si humidité > 60%
+- **Arrêt :** dès que l'humidité passe < 55%, avec stabilisation 10 minutes (pour éviter les on/off en boucle)
+- **Plage horaire :** 8h → 23h (pas de bruit la nuit)
+- **Sécurité :** durée max 5h30/jour (anti-dérive si capteur déconnecté ou météo extrême)
 
-✅ **Humidité optimale :** Maintenue dans la zone confort (50-55%)
-✅ **Réactivité :** S'adapte automatiquement à la météo
-✅ **Silence nocturne :** Aucun déclenchement la nuit
+**Résultats**
+- Fonctionnement variable selon la météo, mais plafonné à 5h30/jour
+- Humidité maintenue entre 50 et 55% (zone confort)
+- **Économie mesurée : 26 €/an** par rapport au fonctionnement "anarchique" du départ
 
-💬 **Mon conseil :** Le pilotage par seuil d'humidité est **bien plus efficace** qu'un simple calendrier horaire pour les pièces à vivre. L'investissement d'un capteur Tapo T315 à 15€ se rentabilise rapidement.
+## 📈 ROI : où vos prises connectées rapportent vraiment
 
-## 📈 Le ROI en détail : veilles vs énergivores
+Toutes les prises connectées ne se rentabilisent pas au même rythme. Sur les veilles, on gratte des euros petit à petit. Sur les appareils énergivores, le gain peut être immédiat, parce qu'on évite des heures de fonctionnement inutiles. Voilà le comparatif, chiffres à l'appui.
 
-### ROI sur les appareils en veille
+| Catégorie | Appareils concernés | Investissement | Économie annuelle | ROI estimé |
+| --- | --- | --- | --- | --- |
+| Veilles | TV salon (9W), ampli NAD (6W), robot cuisine (12W), bureau télétravail (6W) | 40€ (4× Tapo P110) | 46€/an | ~10 mois |
+| Énergivores | Déshumidificateur garage (360W), déshumidificateur bureau (150W) | 20€ (2× Sonoff S60ZBTPF) | 192€/an | ~1,2 mois |
 
-**Appareils concernés :**
-- TV salon (9W veille)
-- Ampli NAD (6W veille)
-- Robot cuisine (12W veille)
-- Bureau télétravail (6W veille)
-
-**Investissement :**
-- 4 prises Tapo P110 : 40€
-
-**Économies annuelles :**
-- TV : 10€/an
-- Ampli : 6€/an
-- Robot : 17€/an
-- Bureau : 13€/an
-- **Total : 46€/an**
-
-**ROI veilles : 40€ ÷ 46€ = 10 mois**
-
-### ROI sur les appareils énergivores
-
-**Appareils concernés :**
-- Déshumidificateur garage (360W)
-- Déshumidificateur bureau (150W)
-
-**Investissement :**
-- 2 prises Sonoff S60ZBTPF : 20€
-
-**Économies annuelles :**
-- Déshumidificateur garage : 166€/an
-- Déshumidificateur bureau : 26€/an
-- **Total : 192€/an**
-
-**ROI énergivores : 20€ ÷ 192€ = 1,2 mois**
-
-### Comparaison ROI
-
-| Catégorie | Investissement | Économie/an | ROI |
-|-----------|----------------|-------------|-----|
-| **Veilles** | 40€ | 46€ | **10 mois** |
-| **Énergivores** | 20€ | 192€ | **1,2 mois** |
-
-**Conclusion :** Le ROI sur les **appareils énergivores est 8× plus rapide** que sur les veilles. C'est là qu'il faut concentrer ses efforts en priorité.
+Oui, les veilles se rentabilisent. Mais le vrai "coup de turbo" sur le ROI vient des appareils qui consomment fort. Ici, le retour sur investissement est environ 8× plus rapide côté énergivores que côté veilles. Moralité : si vous devez prioriser, commencez par ce qui chauffe, souffle, compresse… bref, ce qui tourne longtemps et fort.
 
 ## 🔋 Optimiser les charges des appareils
 
