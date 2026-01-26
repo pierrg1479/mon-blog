@@ -39,9 +39,10 @@ export const getGitLastUpdatedDate = (entryId: string) => {
 };
 
 export async function getStaticPaths() {
-	const posts = (await getCollection('blog', ({ data }) => data.draft !== true)).sort(
+	const allPosts = (await getCollection('blog')).sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 	);
+	const publishedPosts = allPosts.filter(({ data }) => data.draft !== true);
 
 	const toAdjacentPost = (post: CollectionEntry<'blog'> | undefined) => {
 		if (!post) return undefined;
@@ -60,12 +61,15 @@ export async function getStaticPaths() {
 		};
 	};
 
-	return posts.map((post, index) => {
+	return allPosts.map((post) => {
 		const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
 		const gitUpdatedDate = getGitLastUpdatedDate(post.id);
 		const updatedDate = gitUpdatedDate || post.data.updatedDate || post.data.pubDate;
-		const previousPost = toAdjacentPost(posts[index + 1]);
-		const nextPost = toAdjacentPost(posts[index - 1]);
+
+		// Navigation prev/next uniquement pour les articles publiés
+		const publishedIndex = publishedPosts.findIndex((p) => p.id === post.id);
+		const previousPost = publishedIndex >= 0 ? toAdjacentPost(publishedPosts[publishedIndex + 1]) : undefined;
+		const nextPost = publishedIndex >= 0 ? toAdjacentPost(publishedPosts[publishedIndex - 1]) : undefined;
 
 		return {
 			params: { slug },

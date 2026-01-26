@@ -3,7 +3,7 @@ h1: 'Guide complet de la syntaxe Markdown'
 title: 'Guide complet de la syntaxe Markdown'
 description: 'Exemple de toutes les possibilités'
 pubDate: 'Dec 17 2024'
-draft: false
+draft: true
 heroImage: '../../assets/blog-placeholder-2.jpg'  # ← Différente image
 author:
   name: Pierre
@@ -12,6 +12,7 @@ author:
 ---
 
 import AffiliateInline from '../../components/AffiliateInline.astro';
+import ReadAlso from '../../components/ReadAlso.astro';
 
 export const mountainImages = [
   {
@@ -230,3 +231,10 @@ Voici une phrase avec une note de bas de page[^1].
   <p class="callout__title">Caution</p>
   <p class="callout__content">Soyez prudent avant de poursuivre cette action.</p>
 </div>
+
+## À lire aussi
+
+<ReadAlso
+  slug="prises-connectees-economies-automatisations"
+  title="Explorez les modes de financement pour créer son entreprise"
+/>
