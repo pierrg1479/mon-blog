@@ -220,6 +220,27 @@ L'objectif est simple : déshumidifier uniquement quand c'est nécessaire, s'arr
 - **Plage horaire :** 8h → 23h (pas de bruit la nuit)
 - **Sécurité :** durée max 5h30/jour (anti-dérive si capteur déconnecté ou météo extrême)
 
+<div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center'}}>
+  <figure style={{flex: '1 1 45%', minWidth: '300px', margin: 0}}>
+    <img
+      src="/images/humidite-bureau-deshumidificateur.png"
+      alt="Graphique Home Assistant montrant l'humidité du bureau entre 59% et 66% sur une journée, avec les variations liées au fonctionnement du déshumidificateur"
+    />
+    <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>
+      <strong>Impact du déshumidificateur sur l'humidité de la pièce</strong>
+    </figcaption>
+  </figure>
+  <figure style={{flex: '1 1 45%', minWidth: '300px', margin: 0}}>
+    <img
+      src="/images/consommation-deshumidificateur-bureau.png"
+      alt="Graphique Home Assistant montrant la consommation électrique du déshumidificateur bureau avec des cycles de fonctionnement à environ 150W"
+    />
+    <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>
+      <strong>Fonctionnement du déshumidificateur</strong>
+    </figcaption>
+  </figure>
+</div>
+
 **Résultats**
 - Fonctionnement variable selon la météo, mais plafonné à 5h30/jour
 - Humidité maintenue entre 50 et 55% (zone confort)
