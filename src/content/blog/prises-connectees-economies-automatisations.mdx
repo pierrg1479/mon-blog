@@ -257,6 +257,89 @@ L'objectif est simple : déshumidifier uniquement quand c'est nécessaire, s'arr
 - Humidité maintenue entre 50 et 55% (zone confort)
 - **Économie mesurée : 26 €/an** par rapport au fonctionnement "anarchique" du départ
 
+<details>
+  <summary>Le YAML complet de l'automatisation/summary>
+  ```yaml
+alias: Déshumidificateur Bureau - Gestion complète
+triggers:
+  - entity_id:
+      - sensor.capteur_de_temperature_humidite_bureau
+    above: 60
+    trigger: numeric_state
+  - entity_id:
+      - sensor.capteur_de_temperature_humidite_bureau
+    below: 60
+    trigger: numeric_state
+  - minutes: /5
+    trigger: time_pattern
+  - entity_id:
+      - input_select.mode_maison
+    to: Vacances
+    id: mode_vacances_activation
+    trigger: state
+conditions: []
+actions:
+  - choose:
+      - alias: Allumer si humidité > 60 % ET dans un créneau ET mode compatible
+        conditions:
+          - condition: numeric_state
+            entity_id: sensor.capteur_de_temperature_humidite_bureau
+            above: 60
+          - condition: not
+            conditions:
+              - condition: state
+                entity_id: input_select.mode_maison
+                state: Vacances
+          - condition: template
+            value_template: |-
+              {% if is_state('input_select.mode_maison', 'Absent') %}
+                {{ (now() - states.input_select.mode_maison.last_changed).total_seconds() < 1800 }}
+              {% else %}
+                true
+              {% endif %}
+          - condition: or
+            conditions:
+              - condition: and
+                conditions:
+                  - condition: time
+                    weekday:
+                      - mon
+                      - tue
+                      - wed
+                      - thu
+                      - fri
+                  - condition: or
+                    conditions:
+                      - condition: time
+                        after: "07:30:00"
+                        before: "08:45:00"
+                      - condition: time
+                        after: "13:00:00"
+                        before: "14:00:00"
+                      - condition: time
+                        after: "17:30:00"
+                        before: "22:00:00"
+              - condition: and
+                conditions:
+                  - condition: time
+                    weekday:
+                      - sat
+                      - sun
+                  - condition: time
+                    after: "09:00:00"
+                    before: "22:00:00"
+        sequence:
+          - target:
+              entity_id: switch.deshumidificateur_bureau
+            action: switch.turn_on
+    default:
+      - target:
+          entity_id: switch.deshumidificateur_bureau
+        action: switch.turn_off
+mode: restart
+```
+</details>
+
 **Le YAML complet de l'automatisation**
 ```yaml
 alias: Déshumidificateur Bureau - Gestion complète
