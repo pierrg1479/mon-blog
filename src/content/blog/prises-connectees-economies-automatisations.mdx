@@ -211,21 +211,21 @@ En gardant ce rythme, j'ai obtenu un résultat stable, sans y penser une seule f
 
 **La solution : capteur externe + automatisation**
 
-Plutôt que de faire confiance au capteur intégré (souvent mal placé et imprécis), j'ai externalisé la mesure. J'ai installé un Tapo T315 au bon endroit, puis j'ai laissé Home Assistant décider quand il faut vraiment agir.
+Plutôt que de faire confiance au capteur intégré (souvent mal placé et imprécis), j'ai externalisé la mesure. J'ai installé un Tapo T310 au bon endroit, puis j'ai laissé Home Assistant décider quand il faut vraiment agir.
 
 <AffiliateInline
-  href="https://amzn.to/45G4raT"
-  title="Capteur de température et humidité Tapo T315"
-  price="À partir de 28€"
-  imageSrc="/images/equipment/tapo-t315.jpeg"
+  href="https://amzn.to/3La0TXD"
+  title="Capteur de température et humidité Tapo T310"
+  price="À partir de 20€"
+  imageSrc="/images/equipment/tapo-t310.jpg"
   cta="Voir le produit"
-  dataAff="tapo-t315"
+  dataAff="tapo-t310"
 />
 
 L'objectif est simple : déshumidifier uniquement quand c'est nécessaire, s'arrêter dès que le niveau redevient correct, et éviter les déclenchements la nuit.
 
 **Configuration appliquée**
-- **Capteur externe :** Tapo T315 placé au centre de la pièce (mesure annoncée ±2%)
+- **Capteur externe :** Tapo T310 placé au centre de la pièce (mesure annoncée ±2%)
 - **Démarrage :** uniquement si humidité > 60%
 - **Arrêt :** dès que l'humidité passe < 55%, avec stabilisation 10 minutes (pour éviter les on/off en boucle)
 - **Plage horaire :** 8h → 23h (pas de bruit la nuit)
@@ -235,7 +235,7 @@ L'objectif est simple : déshumidifier uniquement quand c'est nécessaire, s'arr
   <figure style={{flex: '1 1 45%', minWidth: '280px', margin: 0}}>
     <img
       src="/images/humidite-bureau.png"
-      alt="Graphique montrant l'impact du déshumidificateur sur l'humidité de la pièce bureau, mesurée par le capteur Tapo T315"
+      alt="Graphique montrant l'impact du déshumidificateur sur l'humidité de la pièce bureau, mesurée par le capteur Tapo T310"
     />
     <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>
       <strong>Impact du déshumidificateur sur l'humidité de la pièce</strong>
