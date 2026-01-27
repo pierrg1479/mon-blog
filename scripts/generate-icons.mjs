@@ -5,7 +5,7 @@ import sharp from 'sharp';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const publicDir = join(__dirname, '..', 'public');
-const sourceImage = join(publicDir, 'hannibal-cercle.png');
+const sourceImage = join(publicDir, 'favicon.svg');
 
 const outputs = [
 	{ name: 'apple-touch-icon.png', size: 180 },
