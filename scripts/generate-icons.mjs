@@ -5,7 +5,14 @@ import sharp from 'sharp';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const publicDir = join(__dirname, '..', 'public');
-const sourceImage = join(publicDir, 'hannibal-cercle.png');
+
+// Path-based lightning bolt SVG for reliable rasterisation (librsvg cannot
+// render emoji text).  The browser-facing favicon.svg uses an <text>⚡</text>
+// element that the browser renders with the system emoji font.
+const lightningSvg = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <path d="M295 32 L112 272 L232 272 L176 480 L400 240 L272 240 Z"
+        fill="#F4C622" stroke="#D4A017" stroke-width="8" stroke-linejoin="round"/>
+</svg>`);
 
 const outputs = [
 	{ name: 'apple-touch-icon.png', size: 180 },
@@ -26,7 +33,7 @@ async function ensureIcons() {
 			try {
 				await writeFile(
 					destination,
-					await sharp(sourceImage).resize(size, size).png().toBuffer(),
+					await sharp(lightningSvg).resize(size, size).png().toBuffer(),
 					{ flag: 'wx' }
 				);
 				console.log(`Generated ${name} (${size}x${size})`);
