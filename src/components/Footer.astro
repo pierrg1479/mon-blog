@@ -3,7 +3,37 @@ const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} The Optimization Guy. Tous droits réservés.
+	<p class="copyright">&copy; {today.getFullYear()} The Optimization Guy. Tous droits réservés.</p>
+
+	<div class="rating-container" itemscope itemtype="https://schema.org/WebApplication">
+		<meta itemprop="name" content="The Optimization Guy">
+		<meta itemprop="applicationCategory" content="Domotique">
+		<div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+			<meta itemprop="ratingValue" content="4.7">
+			<meta itemprop="bestRating" content="5">
+			<meta itemprop="ratingCount" content="31">
+			<div class="stars-wrapper">
+				<div class="stars" aria-label="Note de 4,7 sur 5 étoiles">
+					<svg class="star filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+					<svg class="star filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+					<svg class="star filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+					<svg class="star filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+					<svg class="star partial" viewBox="0 0 24 24" aria-hidden="true">
+						<defs>
+							<linearGradient id="partialFill">
+								<stop offset="70%" stop-color="#ffd04d"/>
+								<stop offset="70%" stop-color="#d1d5db"/>
+							</linearGradient>
+						</defs>
+						<path fill="url(#partialFill)" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+					</svg>
+				</div>
+				<span class="rating-text">
+					<span itemprop="ratingValue">4,7</span>/5 basé sur <span itemprop="ratingCount">31</span> avis
+				</span>
+			</div>
+		</div>
+	</div>
 </footer>
 <style>
 	footer {
@@ -11,5 +41,45 @@ const today = new Date();
 		background: linear-gradient(var(--gray-gradient)) no-repeat;
 		color: rgb(var(--gray));
 		text-align: center;
+	}
+
+	.copyright {
+		margin: 0 0 1rem 0;
+	}
+
+	.rating-container {
+		display: flex;
+		justify-content: center;
+	}
+
+	.stars-wrapper {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.stars {
+		display: flex;
+		gap: 2px;
+	}
+
+	.star {
+		width: 20px;
+		height: 20px;
+	}
+
+	.star.filled {
+		fill: #ffd04d;
+	}
+
+	.star.partial path {
+		stroke: none;
+	}
+
+	.rating-text {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
 	}
 </style>
