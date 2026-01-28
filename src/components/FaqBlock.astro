@@ -19,7 +19,7 @@ const { items, title = "Questions fréquentes" } = Astro.props;
       <details class="faq-block__item">
         <summary class="faq-block__question">{item.question}</summary>
         <div class="faq-block__answer">
-          <p>{item.answer}</p>
+          <div set:html={item.answer} />
         </div>
       </details>
     ))}
@@ -144,6 +144,25 @@ const { items, title = "Questions fréquentes" } = Astro.props;
 
   .faq-block__answer p {
     margin: 0;
+  }
+
+  .faq-block__answer ul {
+    margin: 0.5rem 0 0 0;
+    padding-left: 1.25rem;
+    list-style-type: disc;
+  }
+
+  .faq-block__answer li {
+    margin: 0.25rem 0;
+  }
+
+  .faq-block__answer strong {
+    font-weight: 600;
+    color: rgb(30, 41, 59);
+  }
+
+  :global(html.dark) .faq-block__answer strong {
+    color: #e5e7eb;
   }
 
   @media (max-width: 768px) {
