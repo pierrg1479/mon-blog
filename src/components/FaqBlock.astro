@@ -42,9 +42,9 @@ const { items, title = "Questions fréquentes" } = Astro.props;
 
 <style>
   .faq-block {
-    margin: 2.5rem 0;
+    margin: 2rem 0;
     border: 1px solid rgba(229, 233, 240, 0.8);
-    border-radius: 14px;
+    border-radius: 12px;
     background: #fcfcfd;
     overflow: hidden;
   }
@@ -56,7 +56,7 @@ const { items, title = "Questions fréquentes" } = Astro.props;
 
   .faq-block__title {
     margin: 0;
-    padding: 1.25rem 1.5rem;
+    padding: 0.85rem 1.25rem;
     font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -100,12 +100,12 @@ const { items, title = "Questions fréquentes" } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
     cursor: pointer;
     font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 0.98rem;
+    line-height: 1.4;
     color: rgb(15, 18, 25);
     list-style: none;
     user-select: none;
@@ -156,10 +156,10 @@ const { items, title = "Questions fréquentes" } = Astro.props;
   }
 
   .faq-block__answer {
-    padding: 0 1.5rem 1.25rem 1.5rem;
+    padding: 0 1.25rem 0.9rem 1.25rem;
     color: rgb(96, 115, 159);
-    font-size: 0.95rem;
-    line-height: 1.7;
+    font-size: 0.92rem;
+    line-height: 1.6;
   }
 
   :global(html.dark) .faq-block__answer {
@@ -172,17 +172,17 @@ const { items, title = "Questions fréquentes" } = Astro.props;
 
   @media (max-width: 768px) {
     .faq-block__question {
-      padding: 0.875rem 1.25rem;
-      font-size: 0.95rem;
+      padding: 0.7rem 1rem;
+      font-size: 0.92rem;
     }
 
     .faq-block__answer {
-      padding: 0 1.25rem 1rem 1.25rem;
-      font-size: 0.9rem;
+      padding: 0 1rem 0.8rem 1rem;
+      font-size: 0.88rem;
     }
 
     .faq-block__title {
-      padding: 1rem 1.25rem;
+      padding: 0.75rem 1rem;
     }
   }
 </style>
