@@ -11,6 +11,7 @@ author:
 ---
 
 import AffiliateInline from '../../components/AffiliateInline.astro';
+import FaqBlock from '../../components/FaqBlock.astro';
 
 22 kg. C'est le poids de mon Moustache Lundi 27 une fois la batterie à plat. Autant dire qu'oublier de recharger avant un trajet, c'est transformer le vélo en enclume.
 
@@ -175,24 +176,19 @@ Cette automatisation règle un irritant du quotidien : **profiter des heures cre
 
 Si vous voulez aller plus loin ensuite, la suite logique c'est une petite notification "charge terminée" (ou une alerte si le vélo n'était pas branché). Mais même sans ça, vous avez déjà une recharge autonome, propre, et sans prise de tête.
 
-## ❓ FAQ
+## FAQ
 
-### Est-ce qu'une prise connectée "simple" suffit, ou faut-il une prise avec mesure de puissance ?
-
-Pour allumer à 22h01, une prise simple suffit.
-Mais pour couper automatiquement quand la charge est finie (ou si rien ne charge), il vous faut une prise qui remonte la puissance en watts (W) dans Home Assistant.
-
-### Comment choisir le bon seuil (5 W) pour dire "ça charge" / "ça ne charge plus" ?
-
-Le 5 W est un exemple qui marche avec un chargeur, pas une vérité universelle.
-Méthode rapide :
-- Regardez l'historique de puissance : charge active vs veille (vélo plein / pas branché),
-- Placez le seuil au-dessus de la veille, mais bien en dessous de la charge active,
-- Testez 1–2 cycles complets et ajustez (si votre chargeur "veille" à 6–8 W, montez plutôt à 10 W).
-
-### Mes heures creuses ne démarrent pas à 22h01 : je fais quoi ?
-
-Vous gardez la même logique, vous changez juste le déclencheur horaire. Dans l'article, l'allumage est à 22h01 parce que c'est le début des heures creuses.
-Deux options simples :
-- **Heure fixe** : remplacez 22h01 par votre horaire,
-- **Horaire variable** : déclenchez l'automatisation sur un indicateur "heures creuses" (si vous en avez un dans votre système), plutôt que sur une heure.
+<FaqBlock items={[
+  {
+    question: "Est-ce qu'une prise connectée \"simple\" suffit, ou faut-il une prise avec mesure de puissance ?",
+    answer: "Pour allumer à 22h01, une prise simple suffit.<br/>Mais pour couper automatiquement quand la charge est finie (ou si rien ne charge), il vous faut une prise qui remonte la puissance en watts (W) dans Home Assistant."
+  },
+  {
+    question: "Comment choisir le bon seuil (5 W) pour dire \"ça charge\" / \"ça ne charge plus\" ?",
+    answer: "Le 5 W est un exemple qui marche avec un chargeur, pas une vérité universelle.<br/>Méthode rapide :<ul><li>Regardez l'historique de puissance : charge active vs veille (vélo plein / pas branché),</li><li>Placez le seuil au-dessus de la veille, mais bien en dessous de la charge active,</li><li>Testez 1–2 cycles complets et ajustez (si votre chargeur \"veille\" à 6–8 W, montez plutôt à 10 W).</li></ul>"
+  },
+  {
+    question: "Mes heures creuses ne démarrent pas à 22h01 : je fais quoi ?",
+    answer: "Vous gardez la même logique, vous changez juste le déclencheur horaire. Dans l'article, l'allumage est à 22h01 parce que c'est le début des heures creuses.<br/>Deux options simples :<ul><li><strong>Heure fixe</strong> : remplacez 22h01 par votre horaire,</li><li><strong>Horaire variable</strong> : déclenchez l'automatisation sur un indicateur \"heures creuses\" (si vous en avez un dans votre système), plutôt que sur une heure.</li></ul>"
+  }
+]} />

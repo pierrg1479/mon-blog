@@ -12,6 +12,7 @@ author:
 
 import TallyEmbed from '../../components/TallyEmbed.astro';
 import AffiliateInline from '../../components/AffiliateInline.astro';
+import FaqBlock from '../../components/FaqBlock.astro';
 
 On entend tout et son contraire sur les thermostats connectés. J’ai donc cherché une réponse simple et vérifiable : est-ce que ça réduit vraiment la consommation de gaz, et surtout, combien ça représente en euros par an ?
 
@@ -295,25 +296,22 @@ Si vous envisagez de passer à Tado (ou à un système équivalent), je vous enc
 
 De mon côté, la prochaine étape sera de **remplacer Auto-Assist par des automatisations Home Assistant** pour garder les bénéfices tout en réduisant encore les coûts 😁
 
-## ❓ FAQ
+## FAQ
 
-### Auto-Assist Tado : indispensable ou option "confort" ?
-
-Ce n'est pas indispensable, mais ça change votre niveau d'automatisation.
-Sans Auto-Assist, Tado vous notifie (fenêtre ouverte, absence…) et vous devez valider.
-Avec Auto-Assist, ces actions deviennent automatiques.
-
-### Est-ce que je dois prévoir un plombier / changer des robinets de radiateur ?
-
-Parfois oui, et c'est un point que beaucoup découvrent trop tard.
-Si certains radiateurs ont des robinets non compatibles, vous ne pourrez pas monter une tête thermostatique connectée correctement. Dans mon cas, j'ai dû faire modifier 4 robinets, ce qui pèse vite dans le budget total.
-
-### Quels "coûts cachés" peuvent réduire la rentabilité dans le temps ?
-
-Trois classiques :
-- **Durée de vie / pannes** : la garantie Tado est de 2 ans (et, chez moi, rien n'a lâché à ce stade).
-- **Piles** : dans mon usage, 2 piles LR6 tiennent ~2 saisons par tête, pour moins de 2 €/an.
-- **Abonnement Auto-Assist** : si le prix augmente, la rentabilité baisse, d'où l'intérêt de prévoir une alternative (par exemple un pilotage via Home Assistant) si vous voulez éviter un coût récurrent.
+<FaqBlock items={[
+  {
+    question: "Auto-Assist Tado : indispensable ou option \"confort\" ?",
+    answer: "Ce n'est pas indispensable, mais ça change votre niveau d'automatisation.<br/>Sans Auto-Assist, Tado vous notifie (fenêtre ouverte, absence…) et vous devez valider.<br/>Avec Auto-Assist, ces actions deviennent automatiques."
+  },
+  {
+    question: "Est-ce que je dois prévoir un plombier / changer des robinets de radiateur ?",
+    answer: "Parfois oui, et c'est un point que beaucoup découvrent trop tard.<br/>Si certains radiateurs ont des robinets non compatibles, vous ne pourrez pas monter une tête thermostatique connectée correctement. Dans mon cas, j'ai dû faire modifier 4 robinets, ce qui pèse vite dans le budget total."
+  },
+  {
+    question: "Quels \"coûts cachés\" peuvent réduire la rentabilité dans le temps ?",
+    answer: "Trois classiques :<ul><li><strong>Durée de vie / pannes</strong> : la garantie Tado est de 2 ans (et, chez moi, rien n'a lâché à ce stade).</li><li><strong>Piles</strong> : dans mon usage, 2 piles LR6 tiennent ~2 saisons par tête, pour moins de 2 €/an.</li><li><strong>Abonnement Auto-Assist</strong> : si le prix augmente, la rentabilité baisse, d'où l'intérêt de prévoir une alternative (par exemple un pilotage via Home Assistant) si vous voulez éviter un coût récurrent.</li></ul>"
+  }
+]} />
 
 ---
 

@@ -12,6 +12,7 @@ author:
 
 import AffiliateInline from '../../components/AffiliateInline.astro';
 import ReadAlso from '../../components/ReadAlso.astro';
+import FaqBlock from '../../components/FaqBlock.astro';
 
 On entend souvent que les veilles coûtent cher. Parfois c’est vrai, parfois c’est largement surestimé. La seule façon de trancher : mesurer chez vous, avec vos habitudes, vos appareils, votre tarif.
 
@@ -419,32 +420,23 @@ Le lisseur (ou le fer à repasser) qui coupe automatiquement après 15 minutes, 
 
 Au final, avec ~60 € investis dans les prises (hors capteur optionnel), j'économise 238 € par an, tout en gagnant en confort et en sécurité. Avec un ROI d'environ 3 mois, c'est clairement l'un de mes meilleurs investissements domotiques. Si vous hésitez, faites simple : équipez 2 ou 3 "gros suspects", mesurez pendant 15 jours, puis automatisez ce qui saute aux yeux. Les chiffres feront le reste.
 
-## ❓ FAQ
+## FAQ
 
-### Est-ce que j'ai besoin de Home Assistant pour faire des économies avec des prises connectées ?
-
-Pas forcément. Vous pouvez déjà économiser avec l'app du constructeur grâce à des plannings simples : couper TV/ampli/coin bureau la nuit, par exemple.
-
-Home Assistant devient surtout utile si vous voulez des scénarios plus intelligents :
-- Piloter la prise selon des capteurs "externes" (pas ceux de la marque) : présence (PIR), ouverture de porte/fenêtre, température, humidité, luminosité, consommation électrique, etc.
-- Déclencher des règles multi-conditions (ex : "si personne à la maison ET il fait jour, alors coupe X")
-- Centraliser tous vos équipements (Wi-Fi, Zigbee, etc.) dans un seul endroit.
-
-### Wi-Fi ou Zigbee : qu'est-ce qui change vraiment pour des prises connectées ?
-
-En pratique :
-- **Wi-Fi** : simple à installer, pas de hub… mais si vous en mettez beaucoup, ça peut charger votre réseau Wi-Fi et dépend beaucoup de la qualité de la couverture.
-- **Zigbee** : nécessite un coordonnateur Zigbee (clé/dongle ou hub compatible), mais c'est pensé pour la domotique : réseau maillé (mesh), souvent plus stable, et ça évite d'ajouter des appareils sur le Wi-Fi.
-
-### Quels appareils éviter de couper avec une prise connectée ?
-
-Deux règles simples :
-- Ne coupez pas ce qui doit rester alimenté : box/routeur si ça impacte alarme, caméras, notifications, automatisations… mais aussi frigo/congélo, dispositifs médicaux, etc.
-- Respectez la puissance : vérifiez l'intensité max (souvent 16A) et évitez les usages "limite" en continu. Sur un gros consommateur, gardez une marge et surveillez : si la prise chauffe anormalement, on change de stratégie (ou de matériel).
-
-### Comment éviter que l'automatisation fasse ON/OFF en boucle avec un seuil (humidité, puissance, température…) ?
-
-C'est très courant avec une règle du type "si > X alors ON / sinon OFF". Pour stabiliser :
-- Utilisez une hystérésis (deux seuils) : ex. ON à 60% / OFF à 58%
-- Ajoutez une durée minimum ON/OFF : ex. "une fois allumé, je laisse 10 minutes"
-- Exigez une condition maintenue : ex. "puissance < 5W pendant 3 minutes" avant de couper (super utile pour la fin de charge).
+<FaqBlock items={[
+  {
+    question: "Est-ce que j'ai besoin de Home Assistant pour faire des économies avec des prises connectées ?",
+    answer: "Pas forcément. Vous pouvez déjà économiser avec l'app du constructeur grâce à des plannings simples : couper TV/ampli/coin bureau la nuit, par exemple.<br/><br/>Home Assistant devient surtout utile si vous voulez des scénarios plus intelligents :<ul><li>Piloter la prise selon des capteurs \"externes\" (pas ceux de la marque) : présence (PIR), ouverture de porte/fenêtre, température, humidité, luminosité, consommation électrique, etc.</li><li>Déclencher des règles multi-conditions (ex : \"si personne à la maison ET il fait jour, alors coupe X\")</li><li>Centraliser tous vos équipements (Wi-Fi, Zigbee, etc.) dans un seul endroit.</li></ul>"
+  },
+  {
+    question: "Wi-Fi ou Zigbee : qu'est-ce qui change vraiment pour des prises connectées ?",
+    answer: "En pratique :<ul><li><strong>Wi-Fi</strong> : simple à installer, pas de hub… mais si vous en mettez beaucoup, ça peut charger votre réseau Wi-Fi et dépend beaucoup de la qualité de la couverture.</li><li><strong>Zigbee</strong> : nécessite un coordonnateur Zigbee (clé/dongle ou hub compatible), mais c'est pensé pour la domotique : réseau maillé (mesh), souvent plus stable, et ça évite d'ajouter des appareils sur le Wi-Fi.</li></ul>"
+  },
+  {
+    question: "Quels appareils éviter de couper avec une prise connectée ?",
+    answer: "Deux règles simples :<ul><li>Ne coupez pas ce qui doit rester alimenté : box/routeur si ça impacte alarme, caméras, notifications, automatisations… mais aussi frigo/congélo, dispositifs médicaux, etc.</li><li>Respectez la puissance : vérifiez l'intensité max (souvent 16A) et évitez les usages \"limite\" en continu. Sur un gros consommateur, gardez une marge et surveillez : si la prise chauffe anormalement, on change de stratégie (ou de matériel).</li></ul>"
+  },
+  {
+    question: "Comment éviter que l'automatisation fasse ON/OFF en boucle avec un seuil (humidité, puissance, température…) ?",
+    answer: "C'est très courant avec une règle du type \"si > X alors ON / sinon OFF\". Pour stabiliser :<ul><li>Utilisez une hystérésis (deux seuils) : ex. ON à 60% / OFF à 58%</li><li>Ajoutez une durée minimum ON/OFF : ex. \"une fois allumé, je laisse 10 minutes\"</li><li>Exigez une condition maintenue : ex. \"puissance < 5W pendant 3 minutes\" avant de couper (super utile pour la fin de charge).</li></ul>"
+  }
+]} />
