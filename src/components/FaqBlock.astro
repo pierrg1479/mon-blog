@@ -1,0 +1,188 @@
+---
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface Props {
+  items: FaqItem[];
+  title?: string;
+}
+
+const { items, title = "Questions fréquentes" } = Astro.props;
+---
+
+<section class="faq-block not-prose">
+  <h2 class="faq-block__title">{title}</h2>
+  <div class="faq-block__list">
+    {items.map((item) => (
+      <details class="faq-block__item">
+        <summary class="faq-block__question">{item.question}</summary>
+        <div class="faq-block__answer">
+          <p>{item.answer}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+{/* Schema FAQ JSON-LD pour le SEO */}
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": items.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer,
+    },
+  })),
+})} />
+
+<style>
+  .faq-block {
+    margin: 2.5rem 0;
+    border: 1px solid rgba(229, 233, 240, 0.8);
+    border-radius: 14px;
+    background: #fcfcfd;
+    overflow: hidden;
+  }
+
+  :global(html.dark) .faq-block {
+    background: rgba(55, 65, 81, 0.3);
+    border-color: rgba(156, 163, 175, 0.2);
+  }
+
+  .faq-block__title {
+    margin: 0;
+    padding: 1.25rem 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #d97706;
+    border-bottom: 1px solid rgba(229, 233, 240, 0.6);
+  }
+
+  :global(html.dark) .faq-block__title {
+    color: #fbbf24;
+    border-bottom-color: rgba(156, 163, 175, 0.15);
+  }
+
+  .faq-block__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-block__item {
+    border-bottom: 1px solid rgba(229, 233, 240, 0.6);
+    transition: background 0.2s ease;
+  }
+
+  :global(html.dark) .faq-block__item {
+    border-bottom-color: rgba(156, 163, 175, 0.12);
+  }
+
+  .faq-block__item:last-child {
+    border-bottom: none;
+  }
+
+  .faq-block__item[open] {
+    background: rgba(255, 208, 77, 0.04);
+  }
+
+  :global(html.dark) .faq-block__item[open] {
+    background: rgba(255, 208, 77, 0.05);
+  }
+
+  .faq-block__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgb(15, 18, 25);
+    list-style: none;
+    user-select: none;
+    transition: color 0.2s ease, background 0.15s ease;
+  }
+
+  :global(html.dark) .faq-block__question {
+    color: #e5e7eb;
+  }
+
+  .faq-block__question:hover {
+    background: rgba(255, 208, 77, 0.06);
+  }
+
+  :global(html.dark) .faq-block__question:hover {
+    background: rgba(255, 208, 77, 0.08);
+  }
+
+  /* Masquer le marker natif */
+  .faq-block__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-block__question::marker {
+    content: "";
+  }
+
+  /* Chevron à droite */
+  .faq-block__question::after {
+    content: '';
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #d97706;
+    border-bottom: 2px solid #d97706;
+    transform: rotate(45deg);
+    transition: transform 0.25s ease;
+    margin-top: -3px;
+  }
+
+  :global(html.dark) .faq-block__question::after {
+    border-color: #fbbf24;
+  }
+
+  .faq-block__item[open] .faq-block__question::after {
+    transform: rotate(-135deg);
+    margin-top: 3px;
+  }
+
+  .faq-block__answer {
+    padding: 0 1.5rem 1.25rem 1.5rem;
+    color: rgb(96, 115, 159);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  :global(html.dark) .faq-block__answer {
+    color: #9ca3af;
+  }
+
+  .faq-block__answer p {
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .faq-block__question {
+      padding: 0.875rem 1.25rem;
+      font-size: 0.95rem;
+    }
+
+    .faq-block__answer {
+      padding: 0 1.25rem 1rem 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    .faq-block__title {
+      padding: 1rem 1.25rem;
+    }
+  }
+</style>

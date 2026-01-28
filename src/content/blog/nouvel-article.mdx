@@ -13,6 +13,7 @@ author:
 
 import AffiliateInline from '../../components/AffiliateInline.astro';
 import ReadAlso from '../../components/ReadAlso.astro';
+import FaqBlock from '../../components/FaqBlock.astro';
 
 export const mountainImages = [
   {
@@ -231,6 +232,31 @@ Voici une phrase avec une note de bas de page[^1].
   <p class="callout__title">Caution</p>
   <p class="callout__content">Soyez prudent avant de poursuivre cette action.</p>
 </div>
+
+## FAQ
+
+<FaqBlock items={[
+  {
+    question: "Qu'est-ce que la syntaxe Markdown ?",
+    answer: "Markdown est un langage de balisage léger créé par John Gruber en 2004. Il permet de formater du texte de manière simple et lisible, en utilisant des caractères spéciaux comme les astérisques, les dièses ou les crochets pour créer des titres, du gras, des liens, etc."
+  },
+  {
+    question: "Quelle est la différence entre Markdown et MDX ?",
+    answer: "MDX est une extension de Markdown qui permet d'intégrer des composants JSX directement dans le contenu Markdown. Cela offre plus de flexibilité pour créer du contenu interactif et réutilisable au sein de vos articles."
+  },
+  {
+    question: "Comment ajouter des images en Markdown ?",
+    answer: "Pour ajouter une image en Markdown, utilisez la syntaxe ![texte alternatif](chemin/vers/image.jpg). Le texte alternatif est affiché si l'image ne peut pas être chargée et améliore l'accessibilité."
+  },
+  {
+    question: "Est-ce que Markdown supporte les tableaux ?",
+    answer: "Oui, Markdown supporte les tableaux via une syntaxe utilisant des barres verticales (|) et des tirets (-). Les colonnes sont séparées par des | et l'en-tête est séparé du corps par une ligne de tirets."
+  },
+  {
+    question: "Comment créer un bloc de code avec coloration syntaxique ?",
+    answer: "Utilisez trois backticks (```) suivis du nom du langage pour ouvrir le bloc, puis trois backticks pour le fermer. Par exemple : ```javascript pour du code JavaScript. La coloration syntaxique sera automatiquement appliquée."
+  }
+]} />
 
 ## À lire aussi
 
