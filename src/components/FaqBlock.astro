@@ -42,116 +42,61 @@ const { items, title = "Questions fréquentes" } = Astro.props;
 
 <style>
   .faq-block {
-    margin: 2.5rem 0;
-    border: none;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #fefefe 0%, #f8f9fc 100%);
-    box-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.04),
-      0 4px 12px rgba(0, 0, 0, 0.03);
-    overflow: hidden;
-  }
-
-  :global(html.dark) .faq-block {
-    background: linear-gradient(135deg, rgba(55, 65, 81, 0.4) 0%, rgba(45, 55, 72, 0.35) 100%);
-    box-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.2),
-      0 4px 12px rgba(0, 0, 0, 0.15);
+    margin: 2rem 0;
   }
 
   .faq-block__title {
-    margin: 0;
-    padding: 1rem 1.5rem;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #d97706;
-    background: linear-gradient(90deg, rgba(217, 119, 6, 0.08) 0%, transparent 100%);
-    border-bottom: 1px solid rgba(217, 119, 6, 0.15);
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-
-  .faq-block__title::before {
-    content: '?';
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-    color: white;
-    border-radius: 50%;
-    font-size: 0.75rem;
-    font-weight: 800;
-  }
-
-  :global(html.dark) .faq-block__title {
-    color: #fbbf24;
-    background: linear-gradient(90deg, rgba(251, 191, 36, 0.1) 0%, transparent 100%);
-    border-bottom-color: rgba(251, 191, 36, 0.2);
-  }
-
-  :global(html.dark) .faq-block__title::before {
-    background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+    display: none;
   }
 
   .faq-block__list {
     display: flex;
     flex-direction: column;
+    gap: 0.75rem;
   }
 
   .faq-block__item {
     margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    border-bottom: 1px solid rgba(229, 233, 240, 0.7) !important;
-    border-radius: 0 !important;
-    background: transparent !important;
+    padding: 1.25rem 1.5rem !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 12px !important;
+    background: rgba(0, 0, 0, 0.02) !important;
     box-shadow: none !important;
-    transition: all 0.3s ease;
+    transition: background 0.2s ease, border-color 0.2s ease;
   }
 
   :global(html.dark) .faq-block__item {
-    border-bottom-color: rgba(156, 163, 175, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
   }
 
-  .faq-block__item:last-child {
-    border-bottom: none !important;
+  .faq-block__item:hover {
+    background: rgba(0, 0, 0, 0.04) !important;
   }
 
-  .faq-block__item[open] {
-    background: linear-gradient(90deg, rgba(217, 119, 6, 0.06) 0%, rgba(217, 119, 6, 0.02) 100%) !important;
-  }
-
-  :global(html.dark) .faq-block__item[open] {
-    background: linear-gradient(90deg, rgba(251, 191, 36, 0.08) 0%, rgba(251, 191, 36, 0.02) 100%) !important;
+  :global(html.dark) .faq-block__item:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
   }
 
   .faq-block__question {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
+    gap: 0.75rem;
+    padding: 0;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.95rem;
     line-height: 1.5;
     color: rgb(30, 41, 59);
     list-style: none;
     user-select: none;
-    transition: all 0.25s ease;
-    position: relative;
   }
 
   .faq-block__question::before {
-    content: '▸';
-    color: #d97706;
-    font-size: 0.9rem;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    content: '▶';
+    font-size: 0.875rem;
+    color: #6b7280;
+    transition: transform 0.3s ease;
     flex-shrink: 0;
   }
 
@@ -159,21 +104,20 @@ const { items, title = "Questions fréquentes" } = Astro.props;
     transform: rotate(90deg);
   }
 
+  .faq-block__question:hover::before {
+    color: #d97706;
+  }
+
   :global(html.dark) .faq-block__question {
     color: #e5e7eb;
   }
 
   :global(html.dark) .faq-block__question::before {
+    color: #9ca3af;
+  }
+
+  :global(html.dark) .faq-block__question:hover::before {
     color: #fbbf24;
-  }
-
-  .faq-block__question:hover {
-    background: linear-gradient(90deg, rgba(217, 119, 6, 0.08) 0%, transparent 100%);
-    padding-left: 1.75rem;
-  }
-
-  :global(html.dark) .faq-block__question:hover {
-    background: linear-gradient(90deg, rgba(251, 191, 36, 0.1) 0%, transparent 100%);
   }
 
   /* Masquer le marker natif */
@@ -185,58 +129,17 @@ const { items, title = "Questions fréquentes" } = Astro.props;
     content: "";
   }
 
-  /* Chevron à droite */
-  .faq-block__question::after {
-    content: '';
-    flex-shrink: 0;
-    width: 8px;
-    height: 8px;
-    border-right: 2px solid #d97706;
-    border-bottom: 2px solid #d97706;
-    transform: rotate(45deg);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
-    margin-top: -2px;
-    opacity: 0.7;
-  }
-
-  .faq-block__question:hover::after {
-    opacity: 1;
-  }
-
-  :global(html.dark) .faq-block__question::after {
-    border-color: #fbbf24;
-  }
-
-  .faq-block__item[open] .faq-block__question::after {
-    transform: rotate(-135deg);
-    margin-top: 2px;
-  }
-
   .faq-block__answer {
-    padding: 0 1.5rem 1.25rem 2.75rem !important;
+    padding: 1rem 0 0 1.5rem !important;
     color: rgb(71, 85, 105);
     font-size: 0.92rem;
     line-height: 1.7;
-    border-left: 3px solid rgba(217, 119, 6, 0.3);
-    margin-left: 1.5rem;
-    margin-bottom: 0.5rem;
-    animation: fadeSlideIn 0.3s ease-out;
-  }
-
-  @keyframes fadeSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(-8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    margin: 0;
+    border: none;
   }
 
   :global(html.dark) .faq-block__answer {
     color: #9ca3af;
-    border-left-color: rgba(251, 191, 36, 0.4);
   }
 
   .faq-block__answer p {
@@ -246,33 +149,24 @@ const { items, title = "Questions fréquentes" } = Astro.props;
   @media (max-width: 768px) {
     .faq-block {
       margin: 1.5rem 0;
-      border-radius: 12px;
     }
 
-    .faq-block__title {
-      padding: 0.85rem 1.25rem;
-      font-size: 0.75rem;
+    .faq-block__list {
+      gap: 0.5rem;
     }
 
-    .faq-block__title::before {
-      width: 20px;
-      height: 20px;
-      font-size: 0.7rem;
+    .faq-block__item {
+      padding: 1rem 1.25rem !important;
+      border-radius: 10px !important;
     }
 
     .faq-block__question {
-      padding: 0.85rem 1.25rem;
       font-size: 0.9rem;
     }
 
-    .faq-block__question:hover {
-      padding-left: 1.4rem;
-    }
-
     .faq-block__answer {
-      padding: 0 1.25rem 1rem 2.25rem !important;
+      padding: 0.875rem 0 0 1.375rem !important;
       font-size: 0.88rem;
-      margin-left: 1.25rem;
     }
   }
 </style>
