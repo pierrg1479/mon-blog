@@ -22,6 +22,40 @@ const outputs = [
 	{ name: 'icon-512.png', size: 512 },
 ];
 
+/** Build a multi-size ICO file from PNG buffers (PNG-in-ICO format). */
+function buildIco(pngBuffers, sizes) {
+	const count = pngBuffers.length;
+	const headerSize = 6;
+	const dirEntrySize = 16;
+	const dataOffset = headerSize + dirEntrySize * count;
+
+	// Header: reserved(2) + type(2, 1=ICO) + count(2)
+	const header = Buffer.alloc(headerSize);
+	header.writeUInt16LE(0, 0);
+	header.writeUInt16LE(1, 2);
+	header.writeUInt16LE(count, 4);
+
+	const dirEntries = [];
+	let offset = dataOffset;
+
+	for (let i = 0; i < count; i++) {
+		const entry = Buffer.alloc(dirEntrySize);
+		const s = sizes[i] >= 256 ? 0 : sizes[i]; // 0 means 256
+		entry.writeUInt8(s, 0);         // width
+		entry.writeUInt8(s, 1);         // height
+		entry.writeUInt8(0, 2);         // palette
+		entry.writeUInt8(0, 3);         // reserved
+		entry.writeUInt16LE(1, 4);      // color planes
+		entry.writeUInt16LE(32, 6);     // bits per pixel
+		entry.writeUInt32LE(pngBuffers[i].length, 8);  // data size
+		entry.writeUInt32LE(offset, 12); // data offset
+		dirEntries.push(entry);
+		offset += pngBuffers[i].length;
+	}
+
+	return Buffer.concat([header, ...dirEntries, ...pngBuffers]);
+}
+
 async function ensureIcons() {
 	await mkdir(publicDir, { recursive: true });
 
@@ -46,6 +80,23 @@ async function ensureIcons() {
 			}
 		})
 	);
+
+	// Generate multi-size favicon.ico (16x16, 32x32, 48x48)
+	const icoPath = join(publicDir, 'favicon.ico');
+	try {
+		const icoSizes = [16, 32, 48];
+		const pngBuffers = await Promise.all(
+			icoSizes.map((s) => sharp(lightningSvg).resize(s, s).png().toBuffer())
+		);
+		await writeFile(icoPath, buildIco(pngBuffers, icoSizes), { flag: 'wx' });
+		console.log(`Generated favicon.ico (${icoSizes.join(', ')})`);
+	} catch (error) {
+		if (error.code === 'EEXIST') {
+			console.log('Skipped existing favicon.ico');
+		} else {
+			throw error;
+		}
+	}
 }
 
 ensureIcons().catch((error) => {
