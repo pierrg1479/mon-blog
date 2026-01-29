@@ -11,7 +11,7 @@ const giscusConfigured = repo && repoId && category && categoryId;
 <section class="comments">
         {giscusConfigured ? (
                 <div class="commentsCard">
-                        <h2 class="commentsTitle">Commentaires</h2>
+                        <span class="commentsTitle">Commentaires</span>
                         <script
                                 src="https://giscus.app/client.js"
                                 data-repo={repo}
@@ -79,6 +79,7 @@ const giscusConfigured = repo && repoId && category && categoryId;
                 background: rgba(15, 23, 42, 0.03);
         }
         .commentsTitle {
+                display: block;
                 margin: 0 0 1rem 0;
                 font-size: 1.1rem;
                 opacity: 0.9;
