@@ -4,8 +4,6 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import AuthorBox from '../components/AuthorBox.astro';
 import '../styles/global.css';
-import '../styles/article-ultra-clean.css';
-import '../styles/article-patch.css';
 ---
 
 <!doctype html>
@@ -202,19 +200,50 @@ import '../styles/article-patch.css';
 		margin: 0;
 		margin-bottom: 1em;
 	}
-	.automation-grid {
-		display: flex;
-		flex-direction: column;
-	}
-	.automation-grid .callout {
-		margin: 0.75rem 0;
-	}
-	.automation-grid .callout:first-child {
-		margin-top: 0;
-	}
 	hr {
 		border-top: 1px solid rgb(var(--gray-light));
 		border-bottom: none;
 		margin: 0;
+	}
+	/* Callouts - mêmes styles que les articles */
+	.prose .callout {
+		margin: 1.5rem 0;
+		padding: 1.25rem;
+		border-radius: 12px;
+		border-left: 5px solid;
+	}
+	.prose .callout p {
+		margin: 0;
+	}
+	.prose .callout__title {
+		font-weight: 700;
+		font-size: 1.0625rem;
+		margin: 0 0 0.5rem 0;
+	}
+	.prose .callout--warning {
+		background: linear-gradient(to right, rgba(255, 208, 77, 0.12), rgba(255, 208, 77, 0.04));
+		border-color: #ffd04d;
+	}
+	.prose .callout--note {
+		background: linear-gradient(to right, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.04));
+		border-color: #3b82f6;
+	}
+	.prose .callout--tip {
+		background: linear-gradient(to right, rgba(34, 197, 94, 0.12), rgba(34, 197, 94, 0.04));
+		border-color: #22c55e;
+	}
+	/* Grille d'automatisations */
+	.automation-grid {
+		display: flex;
+		flex-direction: column;
+		margin: 1rem 0;
+	}
+	.automation-grid .callout {
+		margin: 0.5rem 0;
+	}
+	/* Listes */
+	.prose ul {
+		margin-top: 0.75rem;
+		margin-bottom: 1.5rem;
 	}
 </style>
