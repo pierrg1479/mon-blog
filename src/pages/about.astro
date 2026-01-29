@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import AuthorBox from '../components/AuthorBox.astro';
 import '../styles/global.css';
 ---
 
@@ -160,9 +161,7 @@ import '../styles/global.css';
 						<li>Utilisation de <strong>n8n</strong> pour des workflows d'optimisation et d'alerting complexe</li>
 					</ul>
 
-					<div class="callout callout--important">
-						<p class="callout__content">✉️ Pour me contacter c'est par <a href="https://the-optimization-guy.vercel.app/contact">ici</a>.</p>
-					</div>
+					<AuthorBox />
 				</div>
 			</article>
 		</main>
@@ -210,5 +209,12 @@ import '../styles/global.css';
 		border-top: 1px solid rgb(var(--gray-light));
 		border-bottom: none;
 		margin: 0;
+	}
+	/* Correction des marges dans les callouts */
+	.prose .callout p {
+		margin: 0;
+	}
+	.prose .callout .callout__title {
+		margin-bottom: 0.5rem;
 	}
 </style>
