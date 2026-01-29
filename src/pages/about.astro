@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import '../styles/global.css';
 ---
 
 <!doctype html>
@@ -57,136 +58,111 @@ import Footer from '../components/Footer.astro';
 						Vous trouverez des cas d'usage détaillés, du code prêt à adapter et des retours honnêtes sur ce qui fonctionne… et sur ce qui fonctionne moins bien, avec une obsession : optimiser sans compliquer.
 					</p>
 
-					<section class="about-section">
-						<h2>🚀 La genèse : de la domotique à l’optimisation globale</h2>
-						<p>
-							Mon parcours dans la domotique a commencé de façon très pragmatique, par deux besoins essentiels : la sécurité et le pilotage du chauffage.
-						</p>
-						<p>
-							J’ai commencé avec des solutions grand public comme <strong>Blink</strong>, puis <strong>Tapo</strong>.
-						</p>
-						<p>
-							Ces outils m’ont permis de découvrir le potentiel de la maison connectée… mais aussi ses limites :
-						</p>
-						<ul class="bullet-list">
-							<li>automatisations restreintes,</li>
-							<li>dépendance au cloud,</li>
-							<li>écosystèmes fermés,</li>
-							<li>interopérabilité quasi inexistante entre marques.</li>
-						</ul>
-					
-					</section>
-
-					<hr class="section-separator" />
-
-					<section class="about-section">
-						<h2>🔁 Le tournant : reprendre le contrôle</h2>
-						<p>
-							Très vite, ces limites sont devenues bloquantes. J’ai alors fait le choix de migrer vers <strong>Home Assistant</strong>, et de remplacer
-							progressivement mes équipements par des solutions <strong>Zigbee</strong>, locales et interopérables.
-						</p>
-						<p>Ce changement a marqué un vrai tournant :</p>
-						<ul class="bullet-list">
-							<li>un système centralisé,</li>
-							<li>des automatisations avancées,</li>
-							<li>une logique cohérente,</li>
-							<li>plus de fiabilité,</li>
-							<li>moins de dépendance aux services cloud.</li>
-						</ul>
-						<p class="section-note">Depuis, mon installation n’a cessé d’évoluer.</p>
-					</section>
-
-					<hr class="section-separator" />
-
-					<section class="about-section">
-						<h2>❤️ Mes automatisations préférées</h2>
-						<p>
-							Certaines automatisations sont devenues si naturelles que je n’y pense même plus et c’est précisément le signe qu’elles sont réussies.
-						</p>
-						<div class="automation-grid">
-							<article class="automation-card">
-								<h3>🎷 Réveil en musique</h3>
-								<p>
-									Cinq minutes après mon réveil, mon ampli s’allume automatiquement et lance une playlist Jazz en lecture aléatoire. Aucune action
-									manuelle, aucun écran : juste la bonne ambiance pour commencer la journée.
-								</p>
-							</article>
-							<article class="automation-card">
-								<h3>💡 Éclairage extérieur intelligent</h3>
-								<p>
-									J’ai détourné des capteurs de mouvement prévus pour l’intérieur, installés dans des boîtes de dérivation étanches à l’extérieur. Ils
-									déclenchent automatiquement l’éclairage autour de la maison dès qu’un mouvement est détecté.
-								</p>
-								<p class="section-note">Simple, fiable, et extrêmement pratique au quotidien.</p>
-							</article>
-							<article class="automation-card">
-								<h3>📬 Détection intelligente du courrier</h3>
-								<p>Ma boîte aux lettres est connectée :</p>
-								<ul class="bullet-list">
-									<li>dépôt de courrier → notification immédiate sur mon téléphone,</li>
-									<li>retrait du courrier → la notification disparaît automatiquement.</li>
-								</ul>
-								<p class="section-note">Pas de rappel inutile, pas de doute : l’information est juste et contextualisée.</p>
-							</article>
-						</div>
-					</section>
-
-					<hr class="section-separator" />
-
-					<section class="about-section">
-						<h2>🏗️ Ma stack &amp; ma façon de travailler</h2>
-						<ul class="bullet-list">
-							<li><strong>Home Assistant Green</strong> comme cœur du système</li>
-							<li>une approche <strong>local-first</strong></li>
-							<li>des automatisations pensées comme de vrais <strong>process</strong>, pas comme des gadgets</li>
-						</ul>
-						<p>J’ai également développé un agent expert dédié à Home Assistant, utilisé comme copilote pour :</p>
-						<ul class="bullet-list">
-							<li>concevoir,</li>
-							<li>maintenir,</li>
-							<li>optimiser les automatisations.</li>
-						</ul>
-						<p>Aujourd’hui, une grande partie de mon travail repose sur :</p>
-						<ul class="bullet-list">
-							<li><strong>Claude Code</strong>,</li>
-							<li>et son <strong>MCP</strong>, utilisé comme outil d’ingénierie d’automatisation.</li>
-						</ul>
-						<p class="section-note">
-							L’IA n’est pas là pour “faire à ma place”, mais pour améliorer la qualité des décisions et la cohérence du système.
-						</p>
-					</section>
-
-					<hr class="section-separator" />
-
-					<section class="about-section">
-						<h2>🧠 La vraie difficulté en domotique (WAF inside)</h2>
-						<p>
-							Le plus gros challenge en domotique n’est pas l’installation, la maintenance ou les correctifs… mais de la faire accepter et utiliser par son
-							entourage.
-						</p>
-						<p>Une automatisation techniquement parfaite ne vaut rien si :</p>
-						<ul class="bullet-list">
-							<li>elle surprend,</li>
-							<li>elle complique l’usage,</li>
-							<li>ou elle génère de la frustration.</li>
-						</ul>
-						<p class="highlight">👉 L’expérience utilisateur passe toujours avant la performance technique.</p>
-					</section>
-
-					<hr class="section-separator" />
-
-					<section class="about-section">
-						<h2>🔮 Projets en cours &amp; à venir</h2>
-						<ul class="bullet-list">
-							<li>Création d’une <strong>mangeoire à oiseaux connectée</strong>, capable de détecter et reconnaître les espèces</li>
-							<li>Amélioration du <strong>monitoring du système</strong>, avec hiérarchisation intelligente des alertes</li>
-							<li>Intégration de <strong>Discord</strong> comme outil central de notification et de supervision</li>
-							<li>Utilisation de <strong>n8n</strong> pour des workflows d’optimisation et d’alerting complexe</li>
-						</ul>
-					</section>
-					<p class="contact-line">
-						✉️ Pour me contacter c'est par <a href="https://the-optimization-guy.vercel.app/contact">ici</a>.
+					<h2>🚀 La genèse : de la domotique à l'optimisation globale</h2>
+					<p>
+						Mon parcours dans la domotique a commencé de façon très pragmatique, par deux besoins essentiels : la sécurité et le pilotage du chauffage.
 					</p>
+					<p>
+						J'ai commencé avec des solutions grand public comme <strong>Blink</strong>, puis <strong>Tapo</strong>.
+					</p>
+					<p>
+						Ces outils m'ont permis de découvrir le potentiel de la maison connectée… mais aussi ses limites :
+					</p>
+					<ul>
+						<li>automatisations restreintes,</li>
+						<li>dépendance au cloud,</li>
+						<li>écosystèmes fermés,</li>
+						<li>interopérabilité quasi inexistante entre marques.</li>
+					</ul>
+
+					<h2>🔁 Le tournant : reprendre le contrôle</h2>
+					<p>
+						Très vite, ces limites sont devenues bloquantes. J'ai alors fait le choix de migrer vers <strong>Home Assistant</strong>, et de remplacer progressivement mes équipements par des solutions <strong>Zigbee</strong>, locales et interopérables.
+					</p>
+					<p>Ce changement a marqué un vrai tournant :</p>
+					<ul>
+						<li>un système centralisé,</li>
+						<li>des automatisations avancées,</li>
+						<li>une logique cohérente,</li>
+						<li>plus de fiabilité,</li>
+						<li>moins de dépendance aux services cloud.</li>
+					</ul>
+					<div class="callout callout--note">
+						<p class="callout__content">Depuis, mon installation n'a cessé d'évoluer.</p>
+					</div>
+
+					<h2>❤️ Mes automatisations préférées</h2>
+					<p>
+						Certaines automatisations sont devenues si naturelles que je n'y pense même plus et c'est précisément le signe qu'elles sont réussies.
+					</p>
+
+					<div class="automation-grid">
+						<div class="callout callout--tip">
+							<p class="callout__title">🎷 Réveil en musique</p>
+							<p class="callout__content">
+								Cinq minutes après mon réveil, mon ampli s'allume automatiquement et lance une playlist Jazz en lecture aléatoire. Aucune action manuelle, aucun écran : juste la bonne ambiance pour commencer la journée.
+							</p>
+						</div>
+						<div class="callout callout--tip">
+							<p class="callout__title">💡 Éclairage extérieur intelligent</p>
+							<p class="callout__content">
+								J'ai détourné des capteurs de mouvement prévus pour l'intérieur, installés dans des boîtes de dérivation étanches à l'extérieur. Ils déclenchent automatiquement l'éclairage autour de la maison dès qu'un mouvement est détecté. Simple, fiable, et extrêmement pratique au quotidien.
+							</p>
+						</div>
+						<div class="callout callout--tip">
+							<p class="callout__title">📬 Détection intelligente du courrier</p>
+							<p class="callout__content">
+								Ma boîte aux lettres est connectée : dépôt de courrier = notification immédiate sur mon téléphone, retrait du courrier = la notification disparaît automatiquement. Pas de rappel inutile, pas de doute : l'information est juste et contextualisée.
+							</p>
+						</div>
+					</div>
+
+					<h2>🏗️ Ma stack &amp; ma façon de travailler</h2>
+					<ul>
+						<li><strong>Home Assistant Green</strong> comme cœur du système</li>
+						<li>une approche <strong>local-first</strong></li>
+						<li>des automatisations pensées comme de vrais <strong>process</strong>, pas comme des gadgets</li>
+					</ul>
+					<p>J'ai également développé un agent expert dédié à Home Assistant, utilisé comme copilote pour :</p>
+					<ul>
+						<li>concevoir,</li>
+						<li>maintenir,</li>
+						<li>optimiser les automatisations.</li>
+					</ul>
+					<p>Aujourd'hui, une grande partie de mon travail repose sur :</p>
+					<ul>
+						<li><strong>Claude Code</strong>,</li>
+						<li>et son <strong>MCP</strong>, utilisé comme outil d'ingénierie d'automatisation.</li>
+					</ul>
+					<div class="callout callout--note">
+						<p class="callout__content">L'IA n'est pas là pour "faire à ma place", mais pour améliorer la qualité des décisions et la cohérence du système.</p>
+					</div>
+
+					<h2>🧠 La vraie difficulté en domotique (WAF inside)</h2>
+					<p>
+						Le plus gros challenge en domotique n'est pas l'installation, la maintenance ou les correctifs… mais de la faire accepter et utiliser par son entourage.
+					</p>
+					<p>Une automatisation techniquement parfaite ne vaut rien si :</p>
+					<ul>
+						<li>elle surprend,</li>
+						<li>elle complique l'usage,</li>
+						<li>ou elle génère de la frustration.</li>
+					</ul>
+					<div class="callout callout--warning">
+						<p class="callout__content">L'expérience utilisateur passe toujours avant la performance technique.</p>
+					</div>
+
+					<h2>🔮 Projets en cours &amp; à venir</h2>
+					<ul>
+						<li>Création d'une <strong>mangeoire à oiseaux connectée</strong>, capable de détecter et reconnaître les espèces</li>
+						<li>Amélioration du <strong>monitoring du système</strong>, avec hiérarchisation intelligente des alertes</li>
+						<li>Intégration de <strong>Discord</strong> comme outil central de notification et de supervision</li>
+						<li>Utilisation de <strong>n8n</strong> pour des workflows d'optimisation et d'alerting complexe</li>
+					</ul>
+
+					<div class="callout callout--important">
+						<p class="callout__content">✉️ Pour me contacter c'est par <a href="https://the-optimization-guy.vercel.app/contact">ici</a>.</p>
+					</div>
 				</div>
 			</article>
 		</main>
@@ -225,53 +201,10 @@ import Footer from '../components/Footer.astro';
 		margin: 0;
 		margin-bottom: 1em;
 	}
-	.about-section {
-		margin: 2.5rem 0;
-	}
-	.about-section h2 {
-		margin-bottom: 0.75rem;
-		font-size: 1.6rem;
-	}
-	.about-section h3 {
-		margin-bottom: 0.5rem;
-		font-size: 1.2rem;
-	}
-	.bullet-list {
-		padding-left: 1.25rem;
-		margin: 0.75rem 0 1.25rem;
-		display: grid;
-		gap: 0.5rem;
-	}
-	.section-note {
-		margin-top: 0.5rem;
-		color: rgb(var(--gray));
-	}
-	.section-separator {
-		border: none;
-		border-top: 1px solid rgba(var(--gray-light), 0.8);
-		margin: 2.5rem 0;
-	}
 	.automation-grid {
 		display: grid;
-		gap: 1.5rem;
-		margin-top: 1.5rem;
-	}
-	.automation-card {
-		background: rgba(var(--gray-light), 0.2);
-		border-radius: 16px;
-		padding: 1.5rem;
-		box-shadow: var(--box-shadow);
-	}
-	.highlight {
-		background: rgba(var(--accent), 0.12);
-		border-left: 4px solid rgb(var(--accent));
-		padding: 0.75rem 1rem;
-		border-radius: 12px;
-		font-weight: 600;
-	}
-	.contact-line {
-		margin-top: 2.5rem;
-		font-weight: 600;
+		gap: 1rem;
+		margin: 1.5rem 0;
 	}
 	hr {
 		border-top: 1px solid rgb(var(--gray-light));
