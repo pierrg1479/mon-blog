@@ -451,6 +451,7 @@ const authorAvatar = author?.avatar
 			}
 
 			.nav-title {
+				display: block;
 				margin: 0;
 				font-size: 1.15rem;
 				color: #0f172a;
@@ -585,7 +586,7 @@ const authorAvatar = author?.avatar
 												<span aria-hidden="true">←</span>
 												<span class="direction-label">Article précédent</span>
 											</div>
-											<h3 class="nav-title">{previousPost.h1 ?? previousPost.title}</h3>
+											<span class="nav-title">{previousPost.h1 ?? previousPost.title}</span>
 											<div class="nav-meta">
 												<span aria-hidden="true">📅</span>
 												<FormattedDate date={previousPost.pubDate} />
@@ -620,7 +621,7 @@ const authorAvatar = author?.avatar
 												<span class="direction-label">Article suivant</span>
 												<span aria-hidden="true">→</span>
 											</div>
-											<h3 class="nav-title">{nextPost.h1 ?? nextPost.title}</h3>
+											<span class="nav-title">{nextPost.h1 ?? nextPost.title}</span>
 											<div class="nav-meta">
 												<span aria-hidden="true">📅</span>
 												<FormattedDate date={nextPost.pubDate} />
