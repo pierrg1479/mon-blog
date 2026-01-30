@@ -1,10 +1,16 @@
 ---
-// Composant pour ajouter une lightbox aux images
+// Composant pour ajouter une lightbox aux images - chargement différé pour performance
 ---
 
 <script>
-  // Import GLightbox depuis CDN
+  // Import GLightbox depuis CDN - chargé à l'interaction pour meilleure performance
+  let glightboxLoaded = false;
+  let glightboxInstance = null;
+
   const loadGLightbox = async () => {
+    if (glightboxLoaded) return;
+    glightboxLoaded = true;
+
     // Charger le CSS
     if (!document.querySelector('link[href*="glightbox"]')) {
       const link = document.createElement('link');
@@ -45,7 +51,7 @@
 
     // Initialiser GLightbox
     if (window.GLightbox) {
-      window.GLightbox({
+      glightboxInstance = window.GLightbox({
         touchNavigation: true,
         loop: true,
         autoplayVideos: false,
@@ -53,11 +59,40 @@
     }
   };
 
-  // Charger quand le DOM est prêt
+  // Précharger GLightbox quand les images deviennent visibles ou au hover
+  const setupLazyLoad = () => {
+    const images = document.querySelectorAll('article img:not(.no-lightbox)');
+    if (images.length === 0) return;
+
+    // Observer pour charger quand les images sont visibles
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Précharger après un délai pour ne pas bloquer le rendu initial
+            setTimeout(loadGLightbox, 100);
+            observer.disconnect();
+          }
+        });
+      }, { rootMargin: '200px' });
+
+      images.forEach(img => observer.observe(img));
+    } else {
+      // Fallback: charger après un délai
+      setTimeout(loadGLightbox, 3000);
+    }
+
+    // Charger aussi au premier hover sur une image
+    images.forEach(img => {
+      img.addEventListener('mouseenter', loadGLightbox, { once: true });
+    });
+  };
+
+  // Attendre que le DOM soit prêt
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadGLightbox);
+    document.addEventListener('DOMContentLoaded', setupLazyLoad);
   } else {
-    loadGLightbox();
+    setupLazyLoad();
   }
 </script>
 
