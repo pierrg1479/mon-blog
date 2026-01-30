@@ -10,51 +10,86 @@ const giscusConfigured = repo && repoId && category && categoryId;
 ---
 <section class="comments">
         {giscusConfigured ? (
-                <div class="commentsCard">
+                <div
+                        class="commentsCard"
+                        id="giscus-container"
+                        data-repo={repo}
+                        data-repo-id={repoId}
+                        data-category={category}
+                        data-category-id={categoryId}
+                >
                         <span class="commentsTitle">Commentaires</span>
-                        <script
-                                src="https://giscus.app/client.js"
-                                data-repo={repo}
-                                data-repo-id={repoId}
-                                data-category={category}
-                                data-category-id={categoryId}
-                                data-mapping="pathname"
-                                data-strict="1"
-                                data-reactions-enabled="1"
-                                data-emit-metadata="0"
-                                data-input-position="bottom"
-                                data-theme="light"
-                                data-lang="fr"
-                                crossorigin="anonymous"
-                                async>
-                        </script>
-                        <script>
-                                function setGiscusTheme(theme) {
+                        <div class="giscus-placeholder">Chargement des commentaires...</div>
+                </div>
+                <script>
+                        // Lazy load Giscus when comments section is visible
+                        let giscusLoaded = false;
+
+                        const loadGiscus = () => {
+                                if (giscusLoaded) return;
+                                giscusLoaded = true;
+
+                                const container = document.getElementById('giscus-container');
+                                if (!container) return;
+
+                                const placeholder = container.querySelector('.giscus-placeholder');
+                                if (placeholder) placeholder.remove();
+
+                                const isDark = document.documentElement.classList.contains('dark');
+                                const theme = isDark ? 'dark_dimmed' : 'light';
+
+                                const script = document.createElement('script');
+                                script.src = 'https://giscus.app/client.js';
+                                script.setAttribute('data-repo', container.dataset.repo);
+                                script.setAttribute('data-repo-id', container.dataset.repoId);
+                                script.setAttribute('data-category', container.dataset.category);
+                                script.setAttribute('data-category-id', container.dataset.categoryId);
+                                script.setAttribute('data-mapping', 'pathname');
+                                script.setAttribute('data-strict', '1');
+                                script.setAttribute('data-reactions-enabled', '1');
+                                script.setAttribute('data-emit-metadata', '0');
+                                script.setAttribute('data-input-position', 'bottom');
+                                script.setAttribute('data-theme', theme);
+                                script.setAttribute('data-lang', 'fr');
+                                script.crossOrigin = 'anonymous';
+                                script.async = true;
+                                container.appendChild(script);
+
+                                // Theme change observer
+                                const themeObserver = new MutationObserver(() => {
                                         const iframe = document.querySelector('iframe.giscus-frame');
                                         if (iframe?.contentWindow) {
+                                                const newTheme = document.documentElement.classList.contains('dark') ? 'dark_dimmed' : 'light';
                                                 iframe.contentWindow.postMessage(
-                                                        { giscus: { setConfig: { theme } } },
+                                                        { giscus: { setConfig: { theme: newTheme } } },
                                                         'https://giscus.app'
                                                 );
                                         }
-                                }
-
-                                const observer = new MutationObserver(() => {
-                                        const isDark = document.documentElement.classList.contains('dark');
-                                        setGiscusTheme(isDark ? 'dark_dimmed' : 'light');
                                 });
-
-                                observer.observe(document.documentElement, {
+                                themeObserver.observe(document.documentElement, {
                                         attributes: true,
                                         attributeFilter: ['class']
                                 });
+                        };
 
-                                setTimeout(() => {
-                                        const isDark = document.documentElement.classList.contains('dark');
-                                        setGiscusTheme(isDark ? 'dark_dimmed' : 'light');
-                                }, 1000);
-                        </script>
-                </div>
+                        // Use IntersectionObserver to lazy load
+                        if ('IntersectionObserver' in window) {
+                                const observer = new IntersectionObserver((entries) => {
+                                        entries.forEach(entry => {
+                                                if (entry.isIntersecting) {
+                                                        loadGiscus();
+                                                        observer.disconnect();
+                                                }
+                                        });
+                                }, { rootMargin: '200px' });
+
+                                const container = document.getElementById('giscus-container');
+                                if (container) observer.observe(container);
+                        } else {
+                                // Fallback for older browsers
+                                setTimeout(loadGiscus, 3000);
+                        }
+                </script>
         ) : (
 <p class="warning">Configurez Giscus via une seule série de variables d'environnement PUBLIC_GISCUS_* ou GISCUS_* pour activer les commentaires.</p>
         )}
@@ -87,5 +122,11 @@ const giscusConfigured = repo && repoId && category && categoryId;
         .warning {
                 margin: 0;
                 color: rgb(var(--accent));
+        }
+        .giscus-placeholder {
+                padding: 2rem;
+                text-align: center;
+                color: rgb(var(--gray));
+                font-size: 0.9rem;
         }
 </style>

@@ -554,7 +554,10 @@ const authorAvatar = author?.avatar
 												<img
 													src={previousPost.heroImage}
 													alt={`Illustration de ${previousPost.h1 ?? previousPost.title}`}
+													width="120"
+													height="80"
 													loading="lazy"
+													decoding="async"
 												/>
 											</div>
 										)}
@@ -589,7 +592,10 @@ const authorAvatar = author?.avatar
 												<img
 													src={nextPost.heroImage}
 													alt={`Illustration de ${nextPost.h1 ?? nextPost.title}`}
+													width="120"
+													height="80"
 													loading="lazy"
+													decoding="async"
 												/>
 											</div>
 										)}
