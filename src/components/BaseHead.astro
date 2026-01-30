@@ -30,6 +30,12 @@ const resolvedImageUrl = image.startsWith('http')
 <meta name="apple-mobile-web-app-title" content={SITE_TITLE} />
 <meta name="generator" content={Astro.generator} />
 
+<!-- Preconnect to external domains -->
+<link rel="preconnect" href="https://www.googletagmanager.com" />
+<link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
 <!-- Font preloads -->
 <link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
 <link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />

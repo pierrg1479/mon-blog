@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
@@ -15,38 +16,12 @@ const posts = (await getCollection('blog', ({ data }) => {
 <!doctype html>
 <html lang="fr">
 	<head>
-		<!-- Google Tag Manager -->
-		<script is:inline>
-			(function (w, d, s, l, i) {
-				w[l] = w[l] || [];
-				w[l].push({
-					'gtm.start': new Date().getTime(),
-					event: 'gtm.js',
-				});
-				const f = d.getElementsByTagName(s)[0];
-				const j = d.createElement(s);
-				const dl = l != 'dataLayer' ? '&l=' + l : '';
-				j.async = true;
-				j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-				f.parentNode.insertBefore(j, f);
-			})(window, document, 'script', 'dataLayer', 'GTM-PTBBTWQV');
-		</script>
-		<!-- End Google Tag Manager -->
 		<BaseHead
 			title="The Optimization Guy | Blog Domotique & Home Assistant"
 			description="Blog domotique pour s’amuser avec Home Assistant : idées d’automatisations, intégrations, dashboards, capteurs et bidouilles utiles 🤓🏠"
 		/>
 	</head>
 	<body>
-		<!-- Google Tag Manager (noscript) -->
-		<noscript
-			><iframe
-				src="https://www.googletagmanager.com/ns.html?id=GTM-PTBBTWQV"
-				height="0"
-				width="0"
-				style="display:none;visibility:hidden"></iframe
-		></noscript>
-		<!-- End Google Tag Manager (noscript) -->
 		<Header />
 		<main>
 			<h1>👋 Smart Home Lovers!</h1>
@@ -68,12 +43,15 @@ const posts = (await getCollection('blog', ({ data }) => {
 							<li>
 								<a href={`/blog/${slug}/`}>
 									{post.data.heroImage && (
-										<img
-											width="300"
-											height="200"
-											src={post.data.heroImage.src}
+										<Image
+											width={300}
+											height={200}
+											src={post.data.heroImage}
 											alt={displayTitle}
 											class="post-image"
+											loading="lazy"
+											format="webp"
+											quality={80}
 										/>
 									)}
 									<div class="content">
@@ -91,6 +69,24 @@ const posts = (await getCollection('blog', ({ data }) => {
 			</section>
 		</main>
 		<Footer />
+
+		<!-- Google Tag Manager - Deferred loading for better performance -->
+		<script is:inline>
+			const loadGTM = () => {
+				const gtmScript = document.createElement('script');
+				gtmScript.async = true;
+				gtmScript.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-PTBBTWQV';
+				document.head.appendChild(gtmScript);
+				window.dataLayer = window.dataLayer || [];
+				window.dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+			};
+			if ('requestIdleCallback' in window) {
+				requestIdleCallback(loadGTM, { timeout: 3000 });
+			} else {
+				setTimeout(loadGTM, 2000);
+			}
+		</script>
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PTBBTWQV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	</body>
 </html>
 <style>
