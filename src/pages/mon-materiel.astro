@@ -5,6 +5,7 @@ import BaseHead from '../components/BaseHead.astro';
 import EquipmentTable from '../components/EquipmentTable.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import { Image } from 'astro:assets';
 import heroImg from '../assets/mon-materiel-domotique-vf.jpeg';
 
 type Equipment = {
@@ -652,7 +653,6 @@ const sections = [
 		description: 'Musique et TV côté salon : contrôle centralisé depuis Home Assistant (et quelques automatisations sympas).'
 	},
 ];
-const heroImgSrc = heroImg.src;
 
 ---
 
@@ -670,13 +670,15 @@ const heroImgSrc = heroImg.src;
 			<section class="hero-split" aria-label="Intro">
 				<div class="hero-split__grid">
 					<figure class="hero-split__media">
-						<img
-							src={heroImgSrc}
+						<Image
+							src={heroImg}
 							alt="Mon matériel domotique Home Assistant (installé et testé chez moi)"
-							width="1200"
-							height="900"
+							width={1200}
+							height={900}
 							loading="eager"
 							fetchpriority="high"
+							format="webp"
+							quality={85}
 							class="hero-split__image"
 						/>
 					</figure>
