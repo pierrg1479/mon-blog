@@ -10,6 +10,8 @@ author:
   url: 'https://www.reddit.com/user/Patient-Gene703/'
 ---
 
+import FaqBlock from '../../components/FaqBlock.astro';
+
 Au début, la domotique, c'est grisant : une ampoule qui s'allume "toute seule", un capteur qui vous prévient, un bouton qui déclenche une scène… Et puis la réalité arrive. Chez nous, le déclic a été simple : quand un truc bug au mauvais moment (le matin pressé, ou le soir quand tout le monde est fatigué), la domotique ne "fait plus cool". Elle devient une source de friction.
 
 Après un an et une cinquantaine d'appareils, j'ai compris que le vrai enjeu n'est pas d'ajouter des gadgets. C'est de construire une installation stable, compréhensible, et acceptable au quotidien : économies, sécurité, réseau solide… et zéro prise de tête.
@@ -251,6 +253,27 @@ C'est typiquement le genre d'erreur qu'on regrette… quand les murs sont déjà
 | Ajouter des dépendances cloud sans besoin | Privilégiez le local et les standards |
 | Acheter au coup par coup | Standardisez, sinon vous vous créez un puzzle impossible à maintenir |
 | Acheter sans prévoir les retours | La domotique, c'est comme le bricolage : tester fait partie du jeu. Prenez là où renvoyer est simple (l'esprit "Leroy Merlin", version domotique) |
+
+## FAQ
+
+<FaqBlock items={[
+  {
+    question: "ZHA ou Zigbee2MQTT : je choisis quoi pour démarrer ?",
+    answer: "Si vous débutez et que vous avez peu d'appareils, ZHA est simple et rapide à prendre en main.<br/><br/>Si vous visez une installation qui va grossir, Zigbee2MQTT est souvent plus confortable sur la durée : compatibilité, réglages, diagnostic. Le vrai \"bon choix\", c'est surtout celui que vous ne devrez pas migrer dans 6 mois."
+  },
+  {
+    question: "Est-ce que le Wi-Fi est vraiment à éviter en domotique ?",
+    answer: "Non. Le Wi-Fi n'est pas \"mauvais\". Il devient problématique quand vous en mettez partout, surtout sur des appareils critiques ou nombreux. La bonne approche :<ul><li><strong>Zigbee</strong> pour la masse (capteurs, prises, éclairage)</li><li><strong>Wi-Fi</strong> pour quelques usages ciblés, sur un réseau solide (mesh si besoin)</li></ul>"
+  },
+  {
+    question: "Comment éviter le stress \"plus d'internet = plus de caméras/alarme\" ?",
+    answer: "La clé, c'est de prévoir un plan B. Exemple simple et très efficace : une prise GSM (carte SIM) qui permet de redémarrer la box à distance, même quand Internet est KO.<br/><br/>Et si vous voulez aller plus loin : privilégiez des équipements qui gardent un fonctionnement local minimal, même sans cloud."
+  },
+  {
+    question: "Par quoi commencer pour ne pas se dégoûter de Home Assistant ?",
+    answer: "Commencez par des automatisations non critiques : si ça bug, ça ne casse pas la maison.<br/><br/>Ensuite, mettez rapidement en place des modes maison (Présent / Absent / Nuit). C'est ce qui rend votre installation lisible, stable, et compréhensible… même 1 an plus tard."
+  }
+]} />
 
 ## Conclusion
 
