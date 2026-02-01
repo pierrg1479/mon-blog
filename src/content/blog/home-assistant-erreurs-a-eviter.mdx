@@ -1,0 +1,259 @@
+---
+h1: "Home Assistant : 9 erreurs que j'éviterais si je recommençais"
+title: "Home Assistant : 9 erreurs à éviter pour une domotique fiable"
+description: "Retour d'expérience après 50 appareils : piles, Wi-Fi, caméras, hubs… Les pièges à éviter et les choix simples pour une base stable."
+pubDate: "Feb 01 2026"
+draft: true
+author:
+  name: Pierre
+  avatar: '/hannibal-cercle.png'
+  url: 'https://www.reddit.com/user/Patient-Gene703/'
+---
+
+Au début, la domotique, c'est grisant : une ampoule qui s'allume "toute seule", un capteur qui vous prévient, un bouton qui déclenche une scène… Et puis la réalité arrive. Chez nous, le déclic a été simple : quand un truc bug au mauvais moment (le matin pressé, ou le soir quand tout le monde est fatigué), la domotique ne "fait plus cool". Elle devient une source de friction.
+
+Après un an et une cinquantaine d'appareils, j'ai compris que le vrai enjeu n'est pas d'ajouter des gadgets. C'est de construire une installation stable, compréhensible, et acceptable au quotidien : économies, sécurité, réseau solide… et zéro prise de tête.
+
+Voici les erreurs qui m'ont fait perdre du temps (et de l'énergie)… et les choix qui changent tout pour une domotique simple, fiable, et qui reste agréable à vivre.
+
+## Comprendre le contexte ou le problème
+
+Le piège classique, c'est de penser "fonctionnalités". Alors qu'en maison, vous devez penser "système".
+
+**Un système, ça se maintient.** Plus vous empilez de marques, de piles, de hubs et d'intégrations, plus vous augmentez la charge mentale.
+
+**Un système doit être robuste.** Si Home Assistant a un souci, la maison ne doit pas se transformer en escape game.
+
+**Un système doit être accepté.** La domotique passe beaucoup mieux si elle apporte du confort, des économies et de la sécurité, sans casser les habitudes.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Règle n°1 : conservez un fonctionnement "normal"</p>
+  <p class="callout__content">Interrupteurs, volets, chauffage : gardez un comportement cohérent, même si la partie "smart" tombe. La domotique doit améliorer la maison, pas la remplacer.</p>
+</div>
+
+## Les erreurs que j'éviterais… et quoi faire à la place
+
+### 1) Acheter des capteurs à piles "exotiques"
+
+**Erreur :** choisir des capteurs avec des piles peu courantes (souvent chères, difficiles à trouver).
+
+**À la place :**
+
+- privilégiez les capteurs en pile standard (AA / AAA / CR2032…),
+- ou mieux : des capteurs alimentés quand c'est possible (certains capteurs de présence mmWave, modules sur secteur, etc.).
+
+**Exemple vécu :** j'ai plusieurs bots SwitchBot, et ils tournent avec des piles CR2. Sauf que la CR2, ce n'est pas la pile qu'on a dans le tiroir "au cas où". Dans le magasin à côté de chez moi, c'est 3 à 4 € la pile.
+Le jour où vous en avez 2 ou 3 à remplacer la même semaine, ça pique. Et surtout : vous perdez du temps à courir après une pile "pas standard", au lieu de faire un remplacement en 30 secondes.
+
+**À l'inverse :** j'aime beaucoup les capteurs IKEA parce qu'une bonne partie tourne avec des piles AAA. Et ça, c'est le luxe : on en trouve partout, c'est moins cher, et vous pouvez en stocker facilement.
+
+**Astuce simple :** créez une alerte "batterie faible" dans Home Assistant (notification téléphone, message, ou carte dédiée). Vous anticipez la panne, vous regroupez les remplacements, et vous achetez le bon format au bon moment.
+
+### 2) Mettre du Wi-Fi partout "parce que c'est simple"
+
+**Erreur :** multiplier les objets Wi-Fi (ampoules, prises, caméras, alarmes…), puis découvrir les joies de la saturation, des déconnexions, des mises à jour… et du "tout dépend d'Internet".
+
+**Retour d'expérience (qui calme) :** pendant des vacances, ma box Internet a planté. Coupure.
+Résultat immédiat : plus de visibilité sur les caméras, plus de retour sur l'alarme, et une sensation très désagréable de ne plus savoir ce qu'il se passe à la maison. Ça génère du stress pour rien… et c'est exactement le contraire de l'objectif.
+
+**À la place :**
+
+- utilisez Zigbee comme protocole par défaut pour les capteurs/prises/ampoules,
+- gardez le Wi-Fi pour ce qui le justifie vraiment,
+- renforcez le socle réseau (c'est lui qui tient tout).
+
+<div class="callout callout--note">
+  <p class="callout__title">Définition — Wi-Fi mesh</p>
+  <p class="callout__content">Un Wi-Fi "mesh" utilise plusieurs points d'accès qui travaillent ensemble pour couvrir la maison sans zones mortes. Ça change tout si vous avez des étages, des murs épais, ou beaucoup d'objets connectés.</p>
+</div>
+
+**Et ma solution "anti-crise", ultra pratique :** je me suis équipé d'une prise GSM avec une carte SIM.
+Elle me permet d'éteindre et rallumer la prise de la box à distance, même sans Internet (puisqu'elle passe par le réseau mobile).
+Franchement : c'est simple, ça évite de paniquer, et je recommande.
+
+**Bon réflexe :**
+
+- tout ce qui est "infrastructure" → Ethernet quand possible (box, switch, points d'accès, serveur, NVR),
+- le Wi-Fi → pour le mobile et ce qui ne peut pas être câblé.
+
+### 3) Démarrer Zigbee sans penser à l'échelle
+
+Avec 10 appareils, presque tout est "facile". Avec 50, le moindre choix initial peut devenir une galère.
+
+**Erreur :** partir sur ZHA "pour aller vite", puis regretter quand l'installation grossit.
+
+**À la place :** si vous savez que vous allez monter en charge, partez directement sur Zigbee2MQTT.
+
+<div class="callout callout--note">
+  <p class="callout__title">Définition — ZHA vs Zigbee2MQTT</p>
+  <p class="callout__content"><strong>ZHA :</strong> intégré à Home Assistant, simple pour débuter.<br/><strong>Zigbee2MQTT :</strong> plus de compatibilité et de réglages fins, souvent plus confortable quand le parc grandit (diagnostic, options, support de périphériques).</p>
+</div>
+
+**Retour d'expérience : les répéteurs, ça change tout.**
+J'ai ajouté 2 répéteurs Zigbee Aeotec : un dans le garage, et un à l'autre bout de la maison.
+Résultat : mon réseau Zigbee est devenu beaucoup plus stable. Moins de capteurs "injoignables", moins de latence, moins de "pourquoi ça ne répond pas ?".
+
+<div class="callout callout--note">
+  <p class="callout__title">Définition — Réseau maillé (mesh)</p>
+  <p class="callout__content">Un réseau mesh est un réseau où certains appareils peuvent relayer le signal. En Zigbee, les appareils sur secteur (prises, modules, répéteurs) servent de relais et renforcent la portée.</p>
+</div>
+
+**3 actions qui évitent 80 % des problèmes Zigbee :**
+
+1. Placez le coordinateur intelligemment (pas collé au serveur, rallonge USB si besoin).
+2. Ajoutez des appareils Zigbee sur secteur (prises, modules, répéteurs) pour renforcer le maillage.
+3. Standardisez vos marques (voir point suivant).
+
+### 4) Multiplier les marques, donc les hubs et les apps
+
+**Erreur :** acheter "le meilleur produit" de 8 marques différentes, puis vous retrouver avec :
+
+- plusieurs hubs,
+- plusieurs apps,
+- des intégrations hétérogènes,
+- une maintenance permanente.
+
+**Mon cas concret (et ce que je referais autrement) :**
+J'ai commencé avec des caméras Blink (je ne recommande pas), puis j'ai migré sur Tapo, et enfin sur Reolink.
+Et au passage, j'ai accumulé les ponts/hubs : 2 hubs Tapo, 1 hub tado, 2 hubs SwitchBot, 1 hub Reolink, etc.
+
+Ça fonctionne… mais ça complexifie tout : mises à jour, comportements différents, comptes, dépendances, et diagnostic plus long quand il y a un souci.
+
+**À la place :**
+
+- fixez-vous une règle simple : 2 à 3 marques max par catégorie (capteurs, éclairage, caméras…),
+- privilégiez les appareils interopérables (local, standards, intégrations stables),
+- évitez les produits qui vous enferment dans une app/hub "obligatoire" si ce n'est pas un choix assumé.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Objectif : réduire la charge mentale</p>
+  <p class="callout__content">Moins de marques = moins de docs, moins de firmwares, moins de comportements différents, et plus de stabilité.</p>
+</div>
+
+### 5) Choisir des caméras sur batterie quand on veut du RTSP / un NVR
+
+**Erreur :** la caméra sur batterie paraît pratique… jusqu'au moment où vous voulez un flux fiable, exploitable, et continu.
+
+**À la place :**
+
+- privilégiez des caméras filaires,
+- vérifiez le support du flux RTSP avant achat,
+- si possible : réseau stable (idéalement câblé).
+
+<div class="callout callout--note">
+  <p class="callout__title">Définition — RTSP</p>
+  <p class="callout__content">RTSP est un protocole qui permet de récupérer un flux vidéo "standard". C'est souvent la base pour intégrer proprement une caméra dans un système de surveillance/NVR.</p>
+</div>
+
+**Pourquoi les caméras sur batterie posent souvent problème :**
+
+- elles coupent le flux pour économiser l'énergie,
+- elles se réveillent trop tard,
+- elles ne proposent pas toujours un RTSP stable.
+
+### 6) Pendant la rénovation, ne pas prévoir des prises "domotique"
+
+C'est typiquement le genre d'erreur qu'on regrette… quand les murs sont déjà finis.
+
+**Erreur :** placer les prises comme dans une maison "non domotisée", puis bricoler derrière (rallonges, chargeurs visibles, capteurs impossibles à alimenter).
+
+**À la place :** prévoyez des prises stratégiques (et parfois à des hauteurs différentes) pour :
+
+- brancher discrètement des rubans LED,
+- alimenter des capteurs de présence souvent sur secteur,
+- éviter les fils visibles.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Checklist — prises "malines" à prévoir</p>
+  <p class="callout__content">
+    • Derrière les rideaux (rubans LED)<br/>
+    • Proche des entrées (capteurs, répéteurs, sonnette)<br/>
+    • En hauteur / coin plafond (capteurs de présence alimentés)<br/>
+    • Placards / buanderie (infrastructure : hubs, switch, box, onduleur)<br/>
+    • Meuble TV (alim discrète, réseau, éclairage)
+  </p>
+</div>
+
+### 7) Sous-estimer la machine quand on vise de la vidéo / IA
+
+**Constat :** une base type Home Assistant Green est parfaite pour démarrer. Mais dès que vous ajoutez vidéo, analyse, et stockage, ça peut devenir trop juste.
+
+**Erreur :** dimensionner pour aujourd'hui, puis rajouter Frigate, des caméras, et du traitement.
+
+**À la place :**
+
+- démarrez léger si vous débutez, mais si la vidéo est dans votre roadmap : passez plus tôt sur un mini-PC (ou équivalent),
+- mettez le serveur et le réseau au propre (Ethernet, stockage, sauvegardes).
+
+<div class="callout callout--warning">
+  <p class="callout__title">Pourquoi la marge compte</p>
+  <p class="callout__content">La vidéo + l'analyse + l'enregistrement = charge continue. La stabilité vient souvent plus du matériel "tranquille" que du dernier capteur à la mode.</p>
+</div>
+
+### 8) Vouloir tout automatiser tout de suite
+
+**Erreur :** commencer par des automatisations "critiques" (chauffage, volets, lumières principales), et créer de la frustration au premier bug.
+
+**À la place :** commencez par des automatisations sans risque : si ça rate, personne ne râle.
+
+**Exemples très safe :**
+
+- allumer une lumière d'ambiance le soir,
+- notification "porte restée ouverte",
+- couper une multiprise non essentielle la nuit.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Règle simple</p>
+  <p class="callout__content">Si une automatisation qui bug vous énerve au quotidien, elle est trop critique pour votre phase de démarrage.</p>
+</div>
+
+### 9) Ne pas mettre des "modes maison" dès le début
+
+**Erreur :** empiler des automatisations indépendantes, puis ne plus comprendre "pourquoi ça s'allume" ou "pourquoi ça ne s'allume pas".
+
+**À la place :** implémentez vite 3–4 modes :
+
+- Présent
+- Absent
+- Nuit
+- Invités (optionnel)
+
+<div class="callout callout--note">
+  <p class="callout__title">Définition — Mode maison</p>
+  <p class="callout__content">Un "mode" est un état global (présent/absent/nuit…) qui sert de condition à vos automatisations. Ça rend le système lisible et évite les comportements incohérents.</p>
+</div>
+
+## Méthode simple pour bien démarrer (et éviter les regrets)
+
+1. **Fixez vos standards**
+   Piles standard + protocole par défaut (Zigbee) + 2–3 marques max par catégorie.
+
+2. **Sécurisez votre socle réseau**
+   Wi-Fi mesh si nécessaire, Ethernet pour l'infrastructure, et plan B en cas de box KO (la prise GSM, c'est un vrai "filet de sécurité").
+
+3. **Renforcez Zigbee**
+   Des prises/modules sur secteur + 1 ou 2 répéteurs bien placés si la maison est grande.
+
+4. **Déployez 3 automatisations "sans risque"**
+   Du confort, pas du vital.
+
+5. **Créez vos modes maison**
+   Présent/Absent/Nuit (minimum), et vous basculez tout le reste dessus.
+
+6. **Mettez en place les alertes**
+   Batterie faible, appareil indisponible, perte réseau… vous voulez être prévenu avant que ça devienne une panne.
+
+## Erreurs fréquentes et bonnes pratiques
+
+| Erreur fréquente | Bonne pratique |
+| --- | --- |
+| Tout migrer d'un coup | Migrez par zones (une pièce / une catégorie), stabilisez, puis étendez |
+| Ajouter des dépendances cloud sans besoin | Privilégiez le local et les standards |
+| Acheter au coup par coup | Standardisez, sinon vous vous créez un puzzle impossible à maintenir |
+| Acheter sans prévoir les retours | La domotique, c'est comme le bricolage : tester fait partie du jeu. Prenez là où renvoyer est simple (l'esprit "Leroy Merlin", version domotique) |
+
+## Conclusion
+
+Si je devais recommencer, je ferais moins de "coups de cœur" et plus de choix structurants : piles standard, Zigbee bien pensé (avec répéteurs), marques limitées, caméras filaires si RTSP, prises stratégiques en rénovation, et une base matérielle dimensionnée si la vidéo/IA arrive.
+
+**Votre action aujourd'hui :** choisissez une seule des erreurs ci-dessus, et corrigez-la sur vos prochains achats (ou votre prochaine évolution). Vous gagnerez tout de suite en stabilité… et vous profiterez enfin de votre domotique au lieu de la subir.
