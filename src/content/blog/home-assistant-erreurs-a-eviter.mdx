@@ -53,8 +53,8 @@ Le piège classique, c'est de penser "fonctionnalités". Alors qu'en maison, vou
 
 **Erreur :** multiplier les objets Wi-Fi (ampoules, prises, caméras, alarmes…), puis découvrir les joies de la saturation, des déconnexions, des mises à jour… et du "tout dépend d'Internet".
 
-**Retour d'expérience (qui calme) :** pendant des vacances, ma box Internet a planté. Coupure.
-Résultat immédiat : plus de visibilité sur les caméras, plus de retour sur l'alarme, et une sensation très désagréable de ne plus savoir ce qu'il se passe à la maison. Ça génère du stress pour rien… et c'est exactement le contraire de l'objectif.
+> **Retour d'expérience (qui calme) :** pendant des vacances, ma box Internet a planté. Coupure.
+> Résultat immédiat : plus de visibilité sur les caméras, plus de retour sur l'alarme, et une sensation très désagréable de ne plus savoir ce qu'il se passe à la maison. Ça génère du stress pour rien… et c'est exactement le contraire de l'objectif.
 
 **À la place :**
 
@@ -112,7 +112,7 @@ Résultat : mon réseau Zigbee est devenu beaucoup plus stable. Moins de capteur
 />
 
 <div class="callout callout--note">
-  <p class="callout__title">Définition — Réseau maillé (mesh)</p>
+  <p class="callout__title">Définition — Réseau maillé Zigbee</p>
   <p class="callout__content">Un réseau mesh est un réseau où certains appareils peuvent relayer le signal. En Zigbee, les appareils sur secteur (prises, modules, répéteurs) servent de relais et renforcent la portée.</p>
 </div>
 
@@ -133,9 +133,9 @@ Résultat : mon réseau Zigbee est devenu beaucoup plus stable. Moins de capteur
 
 **Mon cas concret (et ce que je referais autrement) :**
 J'ai commencé avec des caméras Blink (je ne recommande pas), puis j'ai migré sur Tapo, et enfin sur Reolink.
-Et au passage, j'ai accumulé les ponts/hubs : 2 hubs Tapo, 1 hub tado, 2 hubs SwitchBot, 1 hub Reolink, etc.
+Et au passage, j'ai accumulé les ponts/hubs : 2 hubs Tapo, 1 hub Tado, 2 hubs SwitchBot, 1 hub Reolink, etc.
 
-Ça fonctionne… mais ça complexifie tout : mises à jour, comportements différents, comptes, dépendances, et diagnostic plus long quand il y a un souci.
+Ça fonctionne… mais ça complexifie tout : mises à jour, comportements différents, comptes, dépendances, et diagnostic plus long quand il y a un souci. Sans compter que ça prend de la place et nécessite des prises disponibles.
 
 **À la place :**
 
@@ -157,6 +157,8 @@ Et au passage, j'ai accumulé les ponts/hubs : 2 hubs Tapo, 1 hub tado, 2 hubs S
 - privilégiez des caméras filaires,
 - vérifiez le support du flux RTSP avant achat,
 - si possible : réseau stable (idéalement câblé).
+
+De mon côté, je me suis équipé de caméras de la marque Reolink qui disposent de cette option et s'intègrent parfaitement à Home Assistant.
 
 <div class="callout callout--note">
   <p class="callout__title">Définition — RTSP</p>
@@ -205,7 +207,7 @@ C'est typiquement le genre d'erreur qu'on regrette… quand les murs sont déjà
 
 <div class="callout callout--warning">
   <p class="callout__title">Pourquoi la marge compte</p>
-  <p class="callout__content">La vidéo + l'analyse + l'enregistrement = charge continue. La stabilité vient souvent plus du matériel "tranquille" que du dernier capteur à la mode.</p>
+  <p class="callout__content">Je suis actuellement dans ce cas de figure : je souhaite mettre en place Frigate sur quelques caméras (reconnaissance d'oiseaux notamment), avec stockage des vidéos. Le Home Assistant Green est trop peu puissant pour cela.</p>
 </div>
 
 ### 7) Vouloir tout automatiser tout de suite
@@ -234,7 +236,8 @@ C'est typiquement le genre d'erreur qu'on regrette… quand les murs sont déjà
 - Présent
 - Absent
 - Nuit
-- Invités (optionnel)
+- Invités
+- Vacances
 
 <div class="callout callout--note">
   <p class="callout__title">Définition — Mode maison</p>
@@ -258,7 +261,7 @@ C'est typiquement le genre d'erreur qu'on regrette… quand les murs sont déjà
 
 <div class="callout callout--tip">
   <p class="callout__title">Astuce simple</p>
-  <p class="callout__content">Créez une alerte "batterie faible" dans Home Assistant (notification téléphone, message, ou carte dédiée). Vous anticipez la panne, vous regroupez les remplacements, et vous achetez le bon format au bon moment.</p>
+  <p class="callout__content">Créez une alerte "batterie faible" dans Home Assistant (notification téléphone, message, ou carte dédiée). Vous anticipez la panne, vous regroupez les remplacements, et vous achetez le bon format au bon moment. De mon côté, j'utilise le blueprint <a href="https://community.home-assistant.io/t/low-battery-notifications-actions/653754" target="_blank" rel="noopener">Low Battery Notifications & Actions</a> pour gérer cela.</p>
 </div>
 
 ## Méthode simple pour bien démarrer (et éviter les regrets)
@@ -292,9 +295,15 @@ C'est typiquement le genre d'erreur qu'on regrette… quand les murs sont déjà
 
 ## Conclusion
 
-Si je devais recommencer, je ferais moins de "coups de cœur" et plus de choix structurants : piles standard, Zigbee bien pensé (avec répéteurs), marques limitées, caméras filaires si RTSP, prises stratégiques en rénovation, et une base matérielle dimensionnée si la vidéo/IA arrive.
+Si je devais résumer, les vraies erreurs en domotique ne viennent pas d'un capteur mal placé ou d'une automatisation mal réglée.
+Elles viennent de décisions prises "au feeling" : une marque de plus, un protocole de plus, une caméra "vite fait", un stockage sous-dimensionné.
 
-**Votre action aujourd'hui :** choisissez une seule des erreurs ci-dessus, et corrigez-la sur vos prochains achats (ou votre prochaine évolution). Vous gagnerez tout de suite en stabilité… et vous profiterez enfin de votre domotique au lieu de la subir.
+Avec le temps, ça crée un système fragile.
+Pas forcément visible au début, mais qui finit par coûter cher : instabilité, maintenance, bidouilles, dépannage permanent.
+
+Aujourd'hui, j'ai une règle simple : je préfère une domotique cohérente à une domotique qui part dans tous les sens.
+Moins de surprises, moins de dépendances, plus de continuité.
+Et c'est là que Home Assistant devient ce qu'il devrait être : un outil qui s'efface.
 
 ## FAQ
 
