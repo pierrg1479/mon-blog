@@ -6,11 +6,14 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-const posts = (await getCollection('blog', ({ data }) => {
+const allPosts = (await getCollection('blog', ({ data }) => {
 	return data.draft !== true;
 })).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-).slice(0, 3);
+);
+
+const INITIAL_POSTS = 3;
+const LOAD_MORE_COUNT = 3;
 ---
 
 <!doctype html>
@@ -34,13 +37,14 @@ const posts = (await getCollection('blog', ({ data }) => {
 
 			<section class="latest-posts">
 				<h2>Dernières publications</h2>
-				<ul>
-					{posts.map((post) => {
+				<ul id="posts-list">
+					{allPosts.map((post, index) => {
 						const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
 						const displayTitle = post.data.h1 ?? post.data.title;
+						const isHidden = index >= INITIAL_POSTS;
 
 						return (
-							<li>
+							<li class={isHidden ? 'post-item hidden' : 'post-item'} data-index={index}>
 								<a href={`/blog/${slug}/`}>
 									{post.data.heroImage && (
 										<Image
@@ -66,6 +70,13 @@ const posts = (await getCollection('blog', ({ data }) => {
 						);
 					})}
 				</ul>
+				{allPosts.length > INITIAL_POSTS && (
+					<div class="load-more-container">
+						<button id="load-more-btn" data-total={allPosts.length} data-initial={INITIAL_POSTS} data-increment={LOAD_MORE_COUNT}>
+							Voir plus
+						</button>
+					</div>
+				)}
 			</section>
 		</main>
 		<Footer />
@@ -87,6 +98,37 @@ const posts = (await getCollection('blog', ({ data }) => {
 			}
 		</script>
 		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PTBBTWQV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				const loadMoreBtn = document.getElementById('load-more-btn');
+				if (!loadMoreBtn) return;
+
+				const total = parseInt(loadMoreBtn.dataset.total, 10);
+				const initial = parseInt(loadMoreBtn.dataset.initial, 10);
+				const increment = parseInt(loadMoreBtn.dataset.increment, 10);
+				let visibleCount = initial;
+
+				loadMoreBtn.addEventListener('click', () => {
+					const posts = document.querySelectorAll('#posts-list .post-item');
+					const newVisibleCount = Math.min(visibleCount + increment, total);
+
+					for (let i = visibleCount; i < newVisibleCount; i++) {
+						const post = posts[i];
+						if (post) {
+							post.classList.remove('hidden');
+							post.classList.add('fade-in');
+						}
+					}
+
+					visibleCount = newVisibleCount;
+
+					if (visibleCount >= total) {
+						loadMoreBtn.parentElement.style.display = 'none';
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
 <style>
@@ -192,4 +234,71 @@ const posts = (await getCollection('blog', ({ data }) => {
                         height: 250px;
                 }
         }
+
+	/* Load More Button */
+	.load-more-container {
+		display: flex;
+		justify-content: center;
+		margin-top: 2.5em;
+		padding-top: 1em;
+	}
+
+	#load-more-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.875em 2em;
+		font-size: 1rem;
+		font-weight: 600;
+		font-family: inherit;
+		color: rgb(var(--black));
+		background-color: transparent;
+		border: 2px solid rgb(var(--black));
+		border-radius: 8px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	#load-more-btn:hover {
+		background-color: rgb(var(--accent));
+		border-color: rgb(var(--accent));
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(255, 208, 77, 0.4);
+	}
+
+	#load-more-btn:active {
+		transform: translateY(0);
+	}
+
+	:global(.dark) #load-more-btn {
+		color: rgb(255, 255, 255);
+		border-color: rgb(255, 255, 255);
+	}
+
+	:global(.dark) #load-more-btn:hover {
+		background-color: rgb(var(--accent));
+		border-color: rgb(var(--accent));
+		color: rgb(var(--black));
+	}
+
+	/* Hidden posts */
+	.post-item.hidden {
+		display: none;
+	}
+
+	/* Fade in animation */
+	.post-item.fade-in {
+		animation: fadeIn 0.4s ease-out;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
 </style>
