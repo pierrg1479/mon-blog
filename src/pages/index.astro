@@ -73,7 +73,10 @@ const LOAD_MORE_COUNT = 3;
 				{allPosts.length > INITIAL_POSTS && (
 					<div class="load-more-container">
 						<button id="load-more-btn" data-total={allPosts.length} data-initial={INITIAL_POSTS} data-increment={LOAD_MORE_COUNT}>
-							Voir plus
+							<span>Voir plus d'articles</span>
+							<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="6 9 12 15 18 9"></polyline>
+							</svg>
 						</button>
 					</div>
 				)}
@@ -239,46 +242,50 @@ const LOAD_MORE_COUNT = 3;
 	.load-more-container {
 		display: flex;
 		justify-content: center;
-		margin-top: 2.5em;
-		padding-top: 1em;
+		margin-top: 1.5em;
 	}
 
 	#load-more-btn {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		padding: 0.875em 2em;
-		font-size: 1rem;
-		font-weight: 600;
+		gap: 0.5em;
+		padding: 0.75em 1.5em;
+		font-size: 0.9rem;
+		font-weight: 500;
 		font-family: inherit;
-		color: rgb(var(--black));
+		color: rgb(var(--gray));
 		background-color: transparent;
-		border: 2px solid rgb(var(--black));
-		border-radius: 8px;
+		border: none;
+		border-radius: 50px;
 		cursor: pointer;
-		transition: all 0.2s ease;
+		transition: all 0.25s ease;
+	}
+
+	#load-more-btn svg {
+		transition: transform 0.25s ease;
 	}
 
 	#load-more-btn:hover {
-		background-color: rgb(var(--accent));
-		border-color: rgb(var(--accent));
-		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(255, 208, 77, 0.4);
+		color: rgb(var(--accent-dark));
+		background-color: rgba(255, 208, 77, 0.15);
+	}
+
+	#load-more-btn:hover svg {
+		transform: translateY(3px);
 	}
 
 	#load-more-btn:active {
-		transform: translateY(0);
+		transform: scale(0.98);
 	}
 
 	:global(.dark) #load-more-btn {
-		color: rgb(255, 255, 255);
-		border-color: rgb(255, 255, 255);
+		color: rgb(156, 163, 175);
 	}
 
 	:global(.dark) #load-more-btn:hover {
-		background-color: rgb(var(--accent));
-		border-color: rgb(var(--accent));
-		color: rgb(var(--black));
+		color: rgb(var(--accent));
+		background-color: rgba(255, 208, 77, 0.1);
 	}
 
 	/* Hidden posts */
