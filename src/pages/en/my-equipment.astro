@@ -1,12 +1,12 @@
 ---
 export const prerender = true;
 
-import BaseHead from '../components/BaseHead.astro';
-import EquipmentTable from '../components/EquipmentTable.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
+import BaseHead from '../../components/BaseHead.astro';
+import EquipmentTable from '../../components/EquipmentTable.astro';
+import FooterEn from '../../components/FooterEn.astro';
+import HeaderEn from '../../components/HeaderEn.astro';
 import { Image } from 'astro:assets';
-import heroImg from '../assets/mon-materiel-domotique-vf.jpeg';
+import heroImg from '../../assets/mon-materiel-domotique-vf.jpeg';
 
 type Equipment = {
 	name: string;
@@ -20,25 +20,19 @@ type Equipment = {
 	articleUrl: string | null;
 };
 
-// Date de dernière mise à jour générée automatiquement
-const lastUpdated = new Date().toLocaleDateString('fr-FR', {
+const lastUpdated = new Date().toLocaleDateString('en-US', {
 	day: 'numeric',
 	month: 'long',
 	year: 'numeric'
 });
 
 const siteUrl = 'https://www.the-optimization-guy.com';
-const siteUrlBase = Astro.site?.href ?? Astro.url.origin;
-const alternates = [
-	{ hreflang: 'fr', href: new URL('/mon-materiel/', siteUrlBase).href },
-	{ hreflang: 'en', href: new URL('/en/my-equipment/', siteUrlBase).href },
-];
 
 const structuredProducts = [
 	{
 		name: 'Sonoff SNZB-04 Contact',
 		image: '/images/equipment/sonoff-snzb-04-contact.jpg',
-		description: 'Parfait pour portes et fenêtres.',
+		description: 'Perfect for doors and windows.',
 		url: 'https://domadoo.fr/sonoff-snzb-04?ref=the-optimization-guy',
 		brand: 'Sonoff',
 		price: '11.00',
@@ -46,15 +40,15 @@ const structuredProducts = [
 	{
 		name: 'Tado V3+ Thermostat',
 		image: '/images/equipment/Thermostat-Intelligent-Tado-v3+.jpg',
-		description: 'Le meilleur thermostat connecté, ROI rapide.',
+		description: 'The best smart thermostat, quick ROI.',
 		url: 'https://domadoo.fr/tado-v3?ref=the-optimization-guy',
 		brand: 'tado°',
 		price: '129.00',
 	},
 	{
-		name: 'Têtes thermostatiques Tado',
+		name: 'Tado Thermostatic Heads',
 		image: '/images/equipment/tete-thermostatique-tado-v3+.avif',
-		description: 'Granularité pièce par pièce, top en hiver.',
+		description: 'Room-by-room granularity, great in winter.',
 		url: 'https://domadoo.fr/tete-tado?ref=the-optimization-guy',
 		brand: 'tado°',
 		price: '79.00',
@@ -62,21 +56,20 @@ const structuredProducts = [
 	{
 		name: 'Switchbot Bot',
 		image: '/images/equipment/switchbot-bot.jpg',
-		description: 'Pratique pour automatiser un bouton existant.',
+		description: 'Handy for automating an existing button.',
 		url: 'https://domadoo.fr/switchbot-bot?ref=the-optimization-guy',
 		brand: 'SwitchBot',
 		price: '29.00',
 	},
-
 ];
 
 const structuredData = {
 	'@context': 'https://schema.org',
 	'@type': 'CollectionPage',
-	name: 'Mon matériel – The Optimization Guy',
-	url: `${siteUrl}/mon-materiel/`,
+	name: 'My Equipment – The Optimization Guy',
+	url: `${siteUrl}/en/my-equipment/`,
 	description:
-		'Découvrez tout le matériel recommandé par The Optimization Guy : équipements, outils et accessoires utilisés au quotidien.',
+		'Discover all the equipment recommended by The Optimization Guy: devices, tools and accessories used daily.',
 	mainEntity: structuredProducts.map((product) => ({
 		'@type': 'Product',
 		name: product.name,
@@ -99,15 +92,14 @@ const structuredData = {
 };
 
 const security: Equipment[] = [
-	// Caméras Reolink
 	{
 		name: 'Reolink Argus 4 Pro',
 		image: '/images/equipment/reolink-argus-4.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '204€',
 		rating: 3,
-		comment: 'Mauvaise expérience et vision 180° peu pratique.',
+		comment: 'Bad experience and 180° view is impractical.',
 		affiliateLink: 'https://amzn.to/3Z3c1Zs',
 		articleUrl: null,
 	},
@@ -115,10 +107,10 @@ const security: Equipment[] = [
 		name: 'Reolink Argus 3 Ultra',
 		image: '/images/equipment/reolink-argus-3-ultra.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '110€',
 		rating: 5,
-		comment: 'Fiable, bonne vision et autonome avec panneau solaire.',
+		comment: 'Reliable, great image, autonomous with solar panel.',
 		affiliateLink: 'https://amzn.to/4sriE5g',
 		articleUrl: null,
 	},
@@ -126,22 +118,21 @@ const security: Equipment[] = [
 		name: 'Reolink Lumus Pro',
 		image: '/images/equipment/reolink-lumus-pro.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '63€',
 		rating: 5,
-		comment: "Je l'utilise pour une mangeoire à oiseaux connectée.",
+		comment: 'I use it for a connected bird feeder.',
 		affiliateLink: 'https://amzn.to/3Nd9M3a',
 		articleUrl: null,
 	},
-	// Caméras Tapo
 	{
 		name: 'Tapo C225',
 		image: '/images/equipment/tapo-c225.jpg',
 		protocol: 'WiFi',
-		integration: 'Non',
+		integration: 'No',
 		price: '40€',
 		rating: 4,
-		comment: 'Connexion impossible sur HA et système à aimant facilitant le vol.',
+		comment: 'Cannot connect to HA and magnet system makes theft easier.',
 		affiliateLink: 'https://amzn.to/4jx3gAg',
 		articleUrl: null,
 	},
@@ -149,10 +140,10 @@ const security: Equipment[] = [
 		name: 'Tapo C510W',
 		image: '/images/equipment/tapo-c510w.jpg',
 		protocol: 'WiFi',
-		integration: 'Moyenne',
+		integration: 'Partial',
 		price: '34€',
 		rating: 4,
-		comment: 'Rapport qualité/prix top. Gros + avec son système de cache vie privée.',
+		comment: 'Great value for money. Big plus: privacy cover system.',
 		affiliateLink: 'https://amzn.to/4qaNGNj',
 		articleUrl: null,
 	},
@@ -160,22 +151,21 @@ const security: Equipment[] = [
 		name: 'Tapo C425',
 		image: '/images/equipment/tapo-c425.jpg',
 		protocol: 'WiFi',
-		integration: 'Moyenne',
+		integration: 'Partial',
 		price: '83€',
 		rating: 3,
-		comment: 'Connexion impossible sur HA et système à aimant facilitant le vol.',
+		comment: 'Cannot connect to HA and magnet system makes theft easier.',
 		affiliateLink: 'https://amzn.to/49ruJ1G',
 		articleUrl: null,
 	},
-	// Serrures et claviers
 	{
-		name: 'Serrure SwitchBot Smart Lock Ultra',
+		name: 'SwitchBot Smart Lock Ultra',
 		image: '/images/equipment/switchbot-lock-ultra.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '250€',
 		rating: 4,
-		comment: 'Pratique et rapide, quelques recalibrations nécessaires.',
+		comment: 'Practical and fast, some recalibration needed.',
 		affiliateLink: 'https://amzn.to/4pCOI3E',
 		articleUrl: null,
 	},
@@ -186,7 +176,7 @@ const security: Equipment[] = [
 		integration: '-',
 		price: '150€',
 		rating: 3,
-		comment: "Reconnaissance des visages parfois perfectible et lente.",
+		comment: 'Face recognition sometimes imperfect and slow.',
 		affiliateLink: 'https://amzn.to/4aNzc14',
 		articleUrl: null,
 	},
@@ -197,183 +187,175 @@ const security: Equipment[] = [
 		integration: '-',
 		price: '67€',
 		rating: 4,
-		comment: 'Très pratique mais un peu lent.',
+		comment: 'Very practical but a bit slow.',
 		affiliateLink: 'https://amzn.to/4pxqw2o',
 		articleUrl: null,
 	},
 ];
 
 const sensors: Equipment[] = [
-	// Capteurs d'ouverture
 	{
-		name: "Capteur d'ouverture Sonoff SNZB-04P",
+		name: 'Sonoff SNZB-04P Door/Window Sensor',
 		image: '/images/equipment/sonoff-zigbee-30-snzb-04p.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '12€',
 		rating: 5,
-		comment: "Celui que j'utilise le plus. Top.",
+		comment: 'The one I use the most. Top pick.',
 		affiliateLink: 'https://www.domadoo.fr/fr/produits-de-domotique/7058-sonoff-capteur-de-porte-ou-fenetre-zigbee-30-snzb-04p.html?domid=129',
 		articleUrl: null,
 	},
 	{
-		name: "Capteur d'ouverture Tapo T110",
+		name: 'Tapo T110 Door/Window Sensor',
 		image: '/images/equipment/tapo-t110.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '13€',
 		rating: 5,
-		comment: "J'en ai quelques-unes, discret et fiable.",
+		comment: 'I have several, discreet and reliable.',
 		affiliateLink: 'https://amzn.to/4qNpsIS',
 		articleUrl: null,
 	},
-	// Détecteurs de mouvement/présence
 	{
-		name: 'Détecteur de mouvement Sonoff SNZB-03P',
+		name: 'Sonoff SNZB-03P Motion Sensor',
 		image: '/images/equipment/sonoff-snzb-03p.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '15€',
 		rating: 4,
-		comment: 'Fonctionne bien mais imposant.',
+		comment: 'Works well but bulky.',
 		affiliateLink: 'https://www.domadoo.fr/fr/securite/6923-sonoff-detecteur-de-mouvement-zigbee-30-compatible-zigbee2mqtt-snzb-03p.html?domid=129',
 		articleUrl: null,
 	},
 	{
-		name: 'Détecteur de mouvement Tapo T100',
+		name: 'Tapo T100 Motion Sensor',
 		image: '/images/equipment/detecteur-mouvement-tapo-t100.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '19€',
 		rating: 5,
-		comment: 'Réactif et facile à intégrer.',
+		comment: 'Responsive and easy to integrate.',
 		affiliateLink: 'https://amzn.to/45Sw28P',
 		articleUrl: null,
 	},
 	{
-		name: 'Détecteur de présence Sonoff SNZB-06P',
+		name: 'Sonoff SNZB-06P Presence Sensor',
 		image: '/images/equipment/sonoff-snzb-06p.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '16€',
 		rating: 4,
-		comment: 'OK mais doit être branché.',
+		comment: 'OK but needs to be plugged in.',
 		affiliateLink: 'https://www.domadoo.fr/fr/alarme-connectee/6827-sonoff-capteur-de-presence-humaine-zigbee-30-technologie-radar-snzb-06p.html?domid=129',
 		articleUrl: null,
 	},
-	// Capteurs de température
 	{
-		name: 'Capteur de température Sonoff SNZB-02LD',
+		name: 'Sonoff SNZB-02LD Temperature Sensor',
 		image: '/images/equipment/sonoff-snzb02ld.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '20€',
 		rating: 5,
-		comment: "Je l'utilise pour mon congélateur, top.",
+		comment: 'I use it for my freezer, great.',
 		affiliateLink: 'https://www.domadoo.fr/fr/produits-de-domotique/7846-sonoff-capteur-de-temperature-zigbee-etanche-ip65-cable-deporte-snzb02ld.html?domid=129',
 		articleUrl: null,
 	},
 	{
-		name: 'Capteur de température et humidité Tapo T310',
+		name: 'Tapo T310 Temp & Humidity Sensor',
 		image: '/images/equipment/tapo-t310.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '20€',
 		rating: 5,
-		comment: 'Discret et petit.',
+		comment: 'Discreet and compact.',
 		affiliateLink: 'https://amzn.to/3La0TXD',
 		articleUrl: null,
 	},
 	{
-		name: 'Capteur de température et humidité Tapo T315',
+		name: 'Tapo T315 Temp & Humidity Sensor',
 		image: '/images/equipment/tapo-t315.jpeg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '28€',
 		rating: 5,
-		comment: 'Fiable et précis.',
+		comment: 'Reliable and accurate.',
 		affiliateLink: 'https://amzn.to/45G4raT',
 		articleUrl: null,
 	},
-	// Capteurs de fuite
 	{
-		name: 'Capteur de fuite Sonoff SNZB-05P',
+		name: 'Sonoff SNZB-05P Water Leak Sensor',
 		image: '/images/equipment/sonoff-snzb-05p.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '22€',
 		rating: 4,
-		comment: "J'en ai de nombreux chez moi, petit et discret.",
+		comment: 'I have many at home, small and discreet.',
 		affiliateLink: 'https://www.domadoo.fr/fr/produits-de-domotique/7183-sonoff-detecteur-d-inondation-zigbee-ip67-extensible-snzb-05p-6920075741810.html?domid=129',
 		articleUrl: null,
 	},
 	{
-		name: 'Capteur de fuite Tapo T300',
+		name: 'Tapo T300 Water Leak Sensor',
 		image: '/images/equipment/tapo-t300.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '22€',
 		rating: 4,
-		comment: 'Possède sa propre alarme mais est imposant.',
+		comment: 'Has its own alarm but is bulky.',
 		affiliateLink: 'https://amzn.to/3NcoE1O',
 		articleUrl: null,
 	},
-	// Capteurs de luminosité
 	{
-		name: 'Capteur de luminosité TS0222',
+		name: 'TS0222 Light Sensor',
 		image: '/images/equipment/capteur-luminosite.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '15€',
 		rating: 5,
-		comment: 'Ultra réactif.',
+		comment: 'Ultra responsive.',
 		affiliateLink: 'https://www.domadoo.fr/fr/produits-de-domotique/8025-mumubiz-capteur-de-luminosite-exterieur-zigbee-avec-panneau-solaire-tuya-smart-life.html?domid=129',
 		articleUrl: null,
 	},
 	{
-		name: 'Capteur de luminosité extérieur Mumubiz',
+		name: 'Mumubiz Outdoor Light Sensor',
 		image: '/images/equipment/mumubiz-capteur-de-luminosite.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '30€',
 		rating: 3,
-		comment: 'Peu réactif.',
+		comment: 'Slow to react.',
 		affiliateLink: 'https://www.domadoo.fr/fr/produits-de-domotique/8025-mumubiz-capteur-de-luminosite-exterieur-zigbee-avec-panneau-solaire-tuya-smart-life.html?domid=129',
 		articleUrl: null,
 	},
-	// Capteur de pluie
 	{
-		name: 'Capteur de pluie Mumubiz',
+		name: 'Mumubiz Rain Sensor',
 		image: '/images/equipment/mumubiz-capteur-de-pluie.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '35€',
 		rating: 3,
-		comment: 'Fonctionne bien mais détecte de la pluie avec la rosée.',
+		comment: 'Works but triggers on morning dew.',
 		affiliateLink: 'https://www.domadoo.fr/fr/produits-zigbee/7815-mumubiz-capteur-de-pluie-zigbee-ewelink-jeedom-home-assistant-zigbee2mqtt.html?domid=129',
 		articleUrl: null,
 	},
-	// Capteur de vibration
 	{
-		name: 'Capteur de vibration Third Reality 3RVS01031Z',
+		name: 'Third Reality 3RVS01031Z Vibration Sensor',
 		image: '/images/equipment/third-reality-3rvs01031z.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '20€',
 		rating: 5,
-		comment: 'Ultra sensible, top.',
+		comment: 'Ultra sensitive, excellent.',
 		affiliateLink: 'https://amzn.to/49PWi6c',
 		articleUrl: null,
 	},
-	// Détecteur de fumée
 	{
-		name: 'Détecteur de fumée Heiman',
+		name: 'Heiman Smoke Detector',
 		image: '/images/equipment/heiman-HS1SA.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '28€',
 		rating: 5,
-		comment: 'Super modèle, discret.',
+		comment: 'Great model, discreet.',
 		affiliateLink: 'https://amzn.to/49gFeWN',
 		articleUrl: null,
 	},
@@ -384,32 +366,32 @@ const heating: Equipment[] = [
 		name: 'Tado V3+ Thermostat',
 		image: '/images/equipment/Thermostat-Intelligent-Tado-v3+.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '129€',
 		rating: 5,
-		comment: 'Le meilleur thermostat connecté, ROI rapide.',
+		comment: 'The best smart thermostat, quick ROI.',
 		affiliateLink: 'https://amzn.to/4sBhe8g',
-		articleUrl: '/blog/test-tado-v3',
+		articleUrl: '/en/blog/tado-review-2-years-gas-savings',
 	},
 	{
-		name: 'Têtes thermostatiques Tado',
+		name: 'Tado Thermostatic Heads',
 		image: '/images/equipment/tete-thermostatique-tado-v3+.avif',
 		protocol: 'WiFi',
-		integration: 'Oui',
-		price: '79€/pièce',
+		integration: 'Yes',
+		price: '79€/unit',
 		rating: 5,
-		comment: 'Granularité pièce par pièce, top en hiver.',
+		comment: 'Room-by-room granularity, great in winter.',
 		affiliateLink: 'https://amzn.to/4qlY9Wg',
-		articleUrl: '/blog/tetes-thermostatiques-tado',
+		articleUrl: '/en/blog/tado-review-2-years-gas-savings',
 	},
 	{
-		name: 'Module fil pilote Nodon SIN-4-FP-21',
+		name: 'Nodon SIN-4-FP-21 Pilot Wire Module',
 		image: '/images/equipment/nodon-module-chauffage-fil-pilote-zigbee.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '40€',
 		rating: 5,
-		comment: 'Pilote mes 2 sèche-serviettes, marque FR.',
+		comment: 'Controls my 2 towel warmers, French brand.',
 		affiliateLink: 'https://www.domadoo.fr/fr/chauffage-connecte/6828-nodon-module-chauffage-fil-pilote-connecte-zigbee-30.html?domid=129',
 		articleUrl: null,
 	},
@@ -417,24 +399,24 @@ const heating: Equipment[] = [
 
 const cleaning: Equipment[] = [
 	{
-		name: 'Robot Tondeuse Dream A1',
+		name: 'Dreame A1 Robot Mower',
 		image: '/images/equipment/dreame_a1.jpg',
 		protocol: 'WiFi',
-		integration: 'Moyenne',
+		integration: 'Partial',
 		price: '1055€',
 		rating: 5,
-		comment: "Très fiable, j'adore !",
+		comment: 'Very reliable, I love it!',
 		affiliateLink: 'https://amzn.to/49PcAfu',
 		articleUrl: null,
 	},
 	{
-		name: 'Robot aspirateur Dream X50 Master',
+		name: 'Dreame X50 Master Robot Vacuum',
 		image: '/images/equipment/dream-x50-master.jpg',
 		protocol: 'WiFi',
-		integration: 'Moyenne',
+		integration: 'Partial',
 		price: '1074€',
 		rating: 5,
-		comment: 'Relié à ma plomberie, 100% autonome.',
+		comment: 'Connected to my plumbing, 100% autonomous.',
 		affiliateLink: 'https://amzn.to/457TDSK',
 		articleUrl: null,
 	},
@@ -442,95 +424,93 @@ const cleaning: Equipment[] = [
 
 const multimedia: Equipment[] = [
 	{
-		name: 'Ampli Nad C700',
+		name: 'NAD C700 Amplifier',
 		image: '/images/equipment/nad-c700.jpg',
 		protocol: 'Ethernet',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '1599€',
 		rating: 5,
-		comment: 'Magnifique, BluOS est le meilleur système pour la musique connectée.',
+		comment: 'Beautiful, BluOS is the best system for connected music.',
 		affiliateLink: 'https://amzn.to/3YuKaRP',
 		articleUrl: null,
 	},
 	{
-		name: 'Xiaomi TV Box S 3ème Génération',
+		name: 'Xiaomi TV Box S 3rd Generation',
 		image: '/images/equipment/xiaomi-tv-box-3.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '52€',
 		rating: 4,
-		comment: 'WiFi seulement. Automatisation à venir avec ma TV.',
+		comment: 'WiFi only. TV automation coming soon.',
 		affiliateLink: 'https://amzn.to/4jDnIQ6',
 		articleUrl: null,
 	},
 ];
 
 const switchesAndLights: Equipment[] = [
-	// Prises connectées
 	{
-		name: 'Prise Tapo P110',
+		name: 'Tapo P110 Smart Plug',
 		image: '/images/equipment/tapo-p110.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '13€',
 		rating: 4,
-		comment: 'Un peu grosse et quelques-unes tombées en panne après 1 an.',
+		comment: 'A bit bulky and a few failed after 1 year.',
 		affiliateLink: 'https://amzn.to/4qMxYYu',
 		articleUrl: null,
 	},
 	{
-		name: 'Prise Tapo P110M',
+		name: 'Tapo P110M Smart Plug',
 		image: '/images/equipment/tapo-p110m.jpeg',
 		protocol: 'WiFi + Matter',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '20€',
 		rating: 3,
-		comment: 'Idem et plus cher puisque Matter.',
+		comment: 'Same but pricier because of Matter.',
 		affiliateLink: 'https://amzn.to/3Z6wqg9',
 		articleUrl: null,
 	},
 	{
-		name: 'Prise Sonoff S60ZBTPF',
+		name: 'Sonoff S60ZBTPF Smart Plug',
 		image: '/images/equipment/SONOFF-S60ZBTPF.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '16€',
 		rating: 5,
-		comment: 'Taille parfaite et fiable.',
+		comment: 'Perfect size and reliable.',
 		affiliateLink: 'https://www.domadoo.fr/fr/produits-zigbee/7851-sonoff-prise-connectee-zigbee-16a-mesure-consommation.html?domid=129',
 		articleUrl: null,
 	},
-	// Interrupteurs
 	{
-		name: 'Interrupteur Tapo S210',
+		name: 'Tapo S210 Switch',
 		image: '/images/equipment/tapo-s210.png',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '22€',
 		rating: 4,
-		comment: 'Facile à installer par contre besoin de piles.',
+		comment: 'Easy to install but requires batteries.',
 		affiliateLink: 'https://amzn.to/3Z7iAu0',
 		articleUrl: null,
 	},
 	{
-		name: 'Interrupteur Tapo S220',
+		name: 'Tapo S220 Switch',
 		image: '/images/equipment/tapo-s220.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '24€',
 		rating: 4,
-		comment: 'Idem S210.',
+		comment: 'Same as S210.',
 		affiliateLink: 'https://amzn.to/3Z7j17C',
 		articleUrl: null,
 	},
 	{
-		name: 'Interrupteur Sonoff ZBM5-1C-80/86',
+		name: 'Sonoff ZBM5-1C-80/86 Switch',
 		image: '/images/equipment/SONOFF-Zigbee-ZBM5-1C-86W.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '22€',
 		rating: 5,
-		comment: 'Facile à installer et sans piles.',
+		comment: 'Easy to install and no batteries needed.',
 		affiliateLink: 'https://www.domadoo.fr/fr/interrupteur-mural-zigbee/7947-sonoff-interrupteur-mural-zigbee-1-canal-blanc-zbm5-1c-86w.html?domid=129',
 		articleUrl: null,
 	},
@@ -538,46 +518,46 @@ const switchesAndLights: Equipment[] = [
 
 const buttons: Equipment[] = [
 	{
-		name: 'Bot Switchbot',
+		name: 'SwitchBot Bot',
 		image: '/images/equipment/switchbot-bot.jpg',
 		protocol: 'Bluetooth',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '25€',
 		rating: 3,
-		comment: 'Bonne qualité mais piles exotiques et peu de réglages.',
+		comment: 'Good quality but exotic batteries and limited settings.',
 		affiliateLink: 'https://amzn.to/4aTLRQ8',
 		articleUrl: null,
 	},
 	{
-		name: 'Fingerbot MOES TS0001',
+		name: 'MOES TS0001 Fingerbot',
 		image: '/images/equipment/Fingerbot-TS0001.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '20€',
 		rating: 3,
-		comment: 'Qualité moyenne et consomme des piles.',
+		comment: 'Average quality and drains batteries.',
 		affiliateLink: 'https://www.domadoo.fr/fr/telecommandes-connectees/6903-moes-bouton-intelligent-fingerbot-zigbee-tuya-zs-fb-v3-ms.html?domid=129',
 		articleUrl: null,
 	},
 	{
-		name: 'Bouton Tapo S200D',
+		name: 'Tapo S200D Button',
 		image: '/images/equipment/tapo-s200b.jpg',
 		protocol: 'WiFi',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '17€',
 		rating: 2,
-		comment: '2 fonctions seulement et non connectable sur HA.',
+		comment: 'Only 2 functions and cannot connect to HA.',
 		affiliateLink: 'https://amzn.to/4jDU9hl',
 		articleUrl: null,
 	},
 	{
-		name: 'Bouton Sonoff SNZB-01P',
+		name: 'Sonoff SNZB-01P Button',
 		image: '/images/equipment/SONOFF SNZB-01P.jpg',
 		protocol: 'Zigbee',
-		integration: 'Non',
+		integration: 'No',
 		price: '11€',
 		rating: 5,
-		comment: 'Très pratique, plusieurs fonctions.',
+		comment: 'Very practical, multiple functions.',
 		affiliateLink: 'https://www.domadoo.fr/fr/peripheriques/6733-sonoff-bouton-connecte-sans-fil-zigbee-30.html?domid=129',
 		articleUrl: null,
 	},
@@ -588,43 +568,43 @@ const infrastructure: Equipment[] = [
 		name: 'Home Assistant Green',
 		image: '/images/equipment/home-assistant-green.jpg',
 		protocol: '-',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '109€',
 		rating: 5,
-		comment: 'Parfait pour commencer sur HA.',
+		comment: 'Perfect to get started with HA.',
 		affiliateLink: 'https://www.domadoo.fr/fr/produits-compatibles-home-assistant/7046-nabu-casa-box-domotique-home-assistant-green-0860011789703.html?domid=129',
 		articleUrl: null,
 	},
 	{
-		name: 'Répéteur Zigbee Aeotec',
+		name: 'Aeotec Zigbee Range Extender',
 		image: '/images/equipment/aotec-zigbee-repetiteur.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '30€',
 		rating: 5,
-		comment: 'Indispensable si vous avez une grande maison ou des murs épais.',
+		comment: 'Essential if you have a large home or thick walls.',
 		affiliateLink: 'https://www.domadoo.fr/fr/peripheriques/6288-aeotec-repeteur-routeur-zigbee-range-extender-zi-wg001-1220000017078.html?domid=129',
 		articleUrl: null,
 	},
 	{
-		name: 'Dongle ZigBee Sonoff EFR32MG21',
+		name: 'Sonoff EFR32MG21 Zigbee Dongle',
 		image: '/images/equipment/sonoff-efr32mg21.jpg',
 		protocol: 'Zigbee',
-		integration: 'Oui',
+		integration: 'Yes',
 		price: '25€',
 		rating: 5,
-		comment: 'Coordinateur Zigbee universel, compatible Home Assistant.',
+		comment: 'Universal Zigbee coordinator, compatible with Home Assistant.',
 		affiliateLink: 'https://www.amazon.fr/EFR32MG21-Coordinator-Universelle-Passerelle-Assistant/dp/B0B6P22YJC',
 		articleUrl: null,
 	},
 	{
-		name: 'Prise GSM avec carte SIM',
+		name: 'GSM Plug with SIM Card',
 		image: '/images/equipment/prise-gsm-sim.jpg',
 		protocol: 'GSM',
 		integration: '-',
 		price: '99€',
 		rating: 5,
-		comment: 'Permet de redémarrer ma box internet à distance, même sans internet.',
+		comment: 'Allows me to remotely restart my router, even without internet.',
 		affiliateLink: 'https://amzn.to/4as2GAU',
 		articleUrl: null,
 	},
@@ -635,116 +615,120 @@ const sections = [
 		id: 'infrastructure',
 		title: '🏢 Infrastructure',
 		items: infrastructure,
-		description: 'Le socle de mon installation : Home Assistant, Zigbee et tout ce qui doit rester fiable 24/7.'
+		description: 'The backbone of my setup: Home Assistant, Zigbee and everything that needs to stay reliable 24/7.'
 	},
 	{
-		id: 'prises-interrupteurs',
-		title: '🔌 Prises et interrupteurs',
+		id: 'smart-plugs-switches',
+		title: '🔌 Smart Plugs & Switches',
 		items: switchesAndLights,
-		description: 'Le kit de base pour piloter et mesurer : couper, programmer, suivre la conso… sans prise de tête.'
+		description: 'The essential kit to control and measure: cut power, schedule, track consumption… without headaches.'
 	},
 	{
-		id: 'capteurs',
-		title: '🧭 Capteurs',
+		id: 'sensors',
+		title: '🧭 Sensors',
 		items: sensors,
-		description: 'Ce qui "donne des yeux" à la maison : ouverture, mouvement, fuite, température… et déclenche les automatisations.'
+		description: 'What gives the home "eyes": door/window, motion, leak, temperature… and triggers automations.'
 	},
 	{
-		id: 'chauffage',
-		title: '🔥 Chauffage',
+		id: 'heating',
+		title: '🔥 Heating',
 		items: heating,
-		description: 'Là où la domotique paye vite : pilotage fin par pièce, confort stable, et moins de gaspillage.'
+		description: 'Where home automation pays off fast: fine room-by-room control, stable comfort, and less waste.'
 	},
 	{
-		id: 'securite',
-		title: '🔒 Sécurité',
+		id: 'security',
+		title: '🔒 Security',
 		items: security,
-		description: 'Surveillance et accès : caméras, serrure, clavier… pour sécuriser sans transformer la maison en bunker.'
+		description: 'Surveillance and access: cameras, smart lock, keypad… to stay secure without turning home into a bunker.'
 	},
 	{
-		id: 'boutons-fingerbot',
-		title: '🖲️ Boutons et Fingerbot',
+		id: 'buttons-fingerbot',
+		title: '🖲️ Buttons & Fingerbot',
 		items: buttons,
-		description: 'Les raccourcis physiques : un clic = une scène, et des "doigts" pour automatiser ce qui ne l\'était pas.'
+		description: 'Physical shortcuts: one click = one scene, and "fingers" to automate what wasn\'t.'
 	},
 	{
-		id: 'menage-entretien',
-		title: '🧹 Ménage et entretien',
+		id: 'cleaning-maintenance',
+		title: '🧹 Cleaning & Maintenance',
 		items: cleaning,
-		description: 'Les corvées que je délègue : tonte et aspiration, avec un maximum d\'autonomie.'
+		description: 'Chores I delegate: mowing and vacuuming, with maximum autonomy.'
 	},
 	{
 		id: 'multimedia',
-		title: '🎬 Multimédia',
+		title: '🎬 Multimedia',
 		items: multimedia,
-		description: 'Musique et TV côté salon : contrôle centralisé depuis Home Assistant (et quelques automatisations sympas).'
+		description: 'Music and TV in the living room: centralized control from Home Assistant (and some cool automations).'
 	},
 ];
 
+const siteUrlBase = Astro.site?.href ?? Astro.url.origin;
+const alternates = [
+	{ hreflang: 'en', href: new URL('/en/my-equipment/', siteUrlBase).href },
+	{ hreflang: 'fr', href: new URL('/mon-materiel/', siteUrlBase).href },
+];
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 	<head>
 		<BaseHead
-			title="Mon matériel domotique Home Assistant - The Optimization Guy"
-			description="Liste complète du matériel domotique que j'utilise au quotidien : caméras, capteurs, chauffage connecté, et mes recommandations."
+			title="My Home Automation Equipment – The Optimization Guy"
+			description="Complete list of the smart home equipment I use daily: cameras, sensors, connected heating, and my recommendations."
 			alternates={alternates}
 		/>
 		<script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
 	</head>
 	<body>
-			<Header />
-			<section class="hero-split" aria-label="Intro">
-				<div class="hero-split__grid">
-					<figure class="hero-split__media">
-						<Image
-							src={heroImg}
-							alt="Mon matériel domotique Home Assistant (installé et testé chez moi)"
-							width={1200}
-							height={900}
-							loading="eager"
-							fetchpriority="high"
-							format="webp"
-							quality={85}
-							class="hero-split__image"
-						/>
-					</figure>
+		<HeaderEn />
+		<section class="hero-split" aria-label="Intro">
+			<div class="hero-split__grid">
+				<figure class="hero-split__media">
+					<Image
+						src={heroImg}
+						alt="My Home Assistant smart home equipment (installed and tested at home)"
+						width={1200}
+						height={900}
+						loading="eager"
+						fetchpriority="high"
+						format="webp"
+						quality={85}
+						class="hero-split__image"
+					/>
+				</figure>
 
-					<div class="hero-split__content">
-						<p class="hero-split__kicker">
-							Matériel acheté, installé et testé
-						</p>
+				<div class="hero-split__content">
+					<p class="hero-split__kicker">
+						Purchased, installed and tested
+					</p>
 
-						<h1 class="hero-split__title">
-							Mon matériel domotique
-						</h1>
+					<h1 class="hero-split__title">
+						My Smart Home Equipment
+					</h1>
 
-						<p class="hero-split__intro">
-							Voici le matériel domotique que j'utilise réellement chez moi avec Home Assistant.
-							Tout a été acheté par mes soins, installé et testé sur la durée. J'ai commencé par
-							optimiser le chauffage, puis j'ai équipé la maison en Tapo, avant de migrer
-							progressivement vers un écosystème Zigbee plus fiable.
-						</p>
+					<p class="hero-split__intro">
+						Here is the smart home equipment I actually use at home with Home Assistant.
+						Everything has been purchased by me, installed and tested over time. I started by
+						optimizing heating, then equipped the home with Tapo devices, before progressively
+						migrating to a more reliable Zigbee ecosystem.
+					</p>
 
-						<nav aria-label="Accès rapides" class="hero-split__nav">
-							<ul class="hero-split__chips">
-								<li><a href="#infrastructure" class="hero-split__chip">Infrastructure</a></li>
-								<li><a href="#prises-interrupteurs" class="hero-split__chip">Prises et interrupteurs</a></li>
-								<li><a href="#capteurs" class="hero-split__chip">Capteurs</a></li>
-								<li><a href="#chauffage" class="hero-split__chip">Chauffage</a></li>
-								<li><a href="#securite" class="hero-split__chip">Sécurité</a></li>
-								<li><a href="#boutons-fingerbot" class="hero-split__chip">Boutons et Fingerbot</a></li>
-								<li><a href="#menage-entretien" class="hero-split__chip">Ménage et entretien</a></li>
-								<li><a href="#multimedia" class="hero-split__chip">Multimédia</a></li>
-							</ul>
-						</nav>
-					</div>
+					<nav aria-label="Quick access" class="hero-split__nav">
+						<ul class="hero-split__chips">
+							<li><a href="#infrastructure" class="hero-split__chip">Infrastructure</a></li>
+							<li><a href="#smart-plugs-switches" class="hero-split__chip">Smart Plugs & Switches</a></li>
+							<li><a href="#sensors" class="hero-split__chip">Sensors</a></li>
+							<li><a href="#heating" class="hero-split__chip">Heating</a></li>
+							<li><a href="#security" class="hero-split__chip">Security</a></li>
+							<li><a href="#buttons-fingerbot" class="hero-split__chip">Buttons & Fingerbot</a></li>
+							<li><a href="#cleaning-maintenance" class="hero-split__chip">Cleaning</a></li>
+							<li><a href="#multimedia" class="hero-split__chip">Multimedia</a></li>
+						</ul>
+					</nav>
 				</div>
-			</section>
+			</div>
+		</section>
 		<main class="equipment-main">
 			<article class="equipment-page">
-
 				{sections.map((section) => (
 					<section id={section.id} class="equipment-section">
 						<h2>{section.title}</h2>
@@ -756,7 +740,7 @@ const sections = [
 				))}
 			</article>
 		</main>
-		<Footer />
+		<FooterEn />
 
 		<!-- Google Tag Manager - Deferred loading for better performance -->
 		<script is:inline>
@@ -779,7 +763,6 @@ const sections = [
 </html>
 
 <style is:global>
-	/* Désactiver le gradient du body pour cette page */
 	:root {
 		--equipment-max-width: 1200px;
 		--equipment-gutter: 1em;
@@ -795,131 +778,131 @@ const sections = [
 	}
 </style>
 
-	<style>
-		.hero-split,
-		.equipment-main {
-			box-sizing: border-box;
-			width: min(100%, var(--equipment-max-width));
-			margin: 0 auto;
-			padding-inline: var(--equipment-gutter);
-		}
+<style>
+	.hero-split,
+	.equipment-main {
+		box-sizing: border-box;
+		width: min(100%, var(--equipment-max-width));
+		margin: 0 auto;
+		padding-inline: var(--equipment-gutter);
+	}
 
-		.hero-split {
-			padding-block: 2rem 1.5rem;
-		}
+	.hero-split {
+		padding-block: 2rem 1.5rem;
+	}
 
+	.hero-split__grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+
+	.hero-split__media {
+		order: 1;
+	}
+
+	.hero-split__image {
+		width: 100%;
+		display: block;
+		border-radius: 1rem;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		background: rgba(0, 0, 0, 0.05);
+	}
+
+	:global(.dark) .hero-split__image {
+		border-color: rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	.hero-split__content {
+		order: 2;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.hero-split__kicker {
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: rgba(0, 0, 0, 0.6);
+	}
+
+	:global(.dark) .hero-split__kicker {
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+	.hero-split__title {
+		font-size: clamp(1.9rem, 2.6vw, 2.5rem);
+		line-height: 1.2;
+		font-weight: 600;
+		margin: 0;
+	}
+
+	.hero-split__intro {
+		color: rgba(0, 0, 0, 0.7);
+		max-width: 65ch;
+		margin: 0;
+	}
+
+	:global(.dark) .hero-split__intro {
+		color: rgba(255, 255, 255, 0.7);
+	}
+
+	.hero-split__nav {
+		padding-top: 0.25rem;
+	}
+
+	.hero-split__chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.hero-split__chip {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.35rem 0.75rem;
+		border-radius: 999px;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		font-size: 0.85rem;
+		color: rgba(0, 0, 0, 0.8);
+		text-decoration: none;
+		transition: background 0.2s ease;
+	}
+
+	.hero-split__chip:hover {
+		background: rgba(0, 0, 0, 0.05);
+	}
+
+	:global(.dark) .hero-split__chip {
+		border-color: rgba(255, 255, 255, 0.1);
+		color: rgba(255, 255, 255, 0.8);
+	}
+
+	:global(.dark) .hero-split__chip:hover {
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	@media (min-width: 1024px) {
 		.hero-split__grid {
-			display: grid;
-			grid-template-columns: 1fr;
-			gap: 1.5rem;
-		}
-
-		.hero-split__media {
-			order: 1;
-		}
-
-		.hero-split__image {
-			width: 100%;
-			display: block;
-			border-radius: 1rem;
-			border: 1px solid rgba(0, 0, 0, 0.1);
-			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-			aspect-ratio: 4 / 3;
-			object-fit: cover;
-			background: rgba(0, 0, 0, 0.05);
-		}
-
-		:global(.dark) .hero-split__image {
-			border-color: rgba(255, 255, 255, 0.1);
-			background: rgba(255, 255, 255, 0.05);
-		}
-
-		.hero-split__content {
-			order: 2;
-			display: flex;
-			flex-direction: column;
-			gap: 1rem;
-		}
-
-		.hero-split__kicker {
-			font-size: 0.75rem;
-			font-weight: 600;
-			letter-spacing: 0.12em;
-			text-transform: uppercase;
-			color: rgba(0, 0, 0, 0.6);
-		}
-
-		:global(.dark) .hero-split__kicker {
-			color: rgba(255, 255, 255, 0.6);
-		}
-
-		.hero-split__title {
-			font-size: clamp(1.9rem, 2.6vw, 2.5rem);
-			line-height: 1.2;
-			font-weight: 600;
-			margin: 0;
-		}
-
-		.hero-split__intro {
-			color: rgba(0, 0, 0, 0.7);
-			max-width: 65ch;
-			margin: 0;
-		}
-
-		:global(.dark) .hero-split__intro {
-			color: rgba(255, 255, 255, 0.7);
-		}
-
-		.hero-split__nav {
-			padding-top: 0.25rem;
-		}
-
-		.hero-split__chips {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 0.5rem;
-			list-style: none;
-			margin: 0;
-			padding: 0;
-		}
-
-		.hero-split__chip {
-			display: inline-flex;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 			align-items: center;
-			justify-content: center;
-			padding: 0.35rem 0.75rem;
-			border-radius: 999px;
-			border: 1px solid rgba(0, 0, 0, 0.1);
-			font-size: 0.85rem;
-			color: rgba(0, 0, 0, 0.8);
-			text-decoration: none;
-			transition: background 0.2s ease;
+			gap: 2.5rem;
 		}
+	}
 
-		.hero-split__chip:hover {
-			background: rgba(0, 0, 0, 0.05);
-		}
-
-		:global(.dark) .hero-split__chip {
-			border-color: rgba(255, 255, 255, 0.1);
-			color: rgba(255, 255, 255, 0.8);
-		}
-
-		:global(.dark) .hero-split__chip:hover {
-			background: rgba(255, 255, 255, 0.05);
-		}
-
-		@media (min-width: 1024px) {
-			.hero-split__grid {
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-				align-items: center;
-				gap: 2.5rem;
-			}
-		}
-
-		.equipment-main {
-			padding-block: 1rem 4em;
-		}
+	.equipment-main {
+		padding-block: 1rem 4em;
+	}
 
 	.equipment-page {
 		display: flex;

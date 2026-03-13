@@ -2,13 +2,19 @@
 import '../styles/global.css';
 import { SITE_TITLE } from '../consts';
 
+interface AlternateUrl {
+	hreflang: string;
+	href: string;
+}
+
 interface Props {
 	title: string;
 	description: string;
 	image?: string;
+	alternates?: AlternateUrl[];
 }
 
-const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
+const { title, description, image = '/blog-placeholder-1.jpg', alternates = [] } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 const resolvedImageUrl = image.startsWith('http')
@@ -44,6 +50,11 @@ const resolvedImageUrl = image.startsWith('http')
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
+
+<!-- Hreflang alternate links -->
+{alternates.map((alt) => (
+	<link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+))}
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>

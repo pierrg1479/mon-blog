@@ -1,0 +1,244 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import HeaderEn from '../../components/HeaderEn.astro';
+import FooterEn from '../../components/FooterEn.astro';
+import AuthorBoxEn from '../../components/AuthorBoxEn.astro';
+import '../../styles/global.css';
+
+const siteUrl = Astro.site?.href ?? Astro.url.origin;
+const alternates = [
+	{ hreflang: 'en', href: new URL('/en/about', siteUrl).href },
+	{ hreflang: 'fr', href: new URL('/about', siteUrl).href },
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="Who am I? 👨‍💻 | The Optimization Guy" description="About The Optimization Guy" alternates={alternates} />
+	</head>
+	<body>
+		<HeaderEn />
+		<main>
+			<article>
+				<div class="hero-image">
+					<img src="/hannibal.jpg" alt="Who am I?" />
+				</div>
+				<div class="prose">
+					<div class="title">
+						<h1>Who am I? 👨‍💻</h1>
+						<hr />
+					</div>
+					<p>
+						👋 A smart home enthusiast, daily optimization fanatic and tinkerer, I originally just wanted to "better manage my heating"… then I discovered Home Assistant, and I never really left.
+					</p>
+					<p>
+						Here, I share what I set up at home: automations, integrations, energy monitoring and fine-tuning for everyday comfort.
+					</p>
+					<p>
+						You'll find detailed real-world use cases, ready-to-adapt code and honest feedback on what works… and what doesn't, all with one obsession: optimize without over-complicating.
+					</p>
+
+					<h2>🚀 The origin story: from home automation to global optimization</h2>
+					<p>
+						My journey into home automation started very pragmatically, driven by two essential needs: security and heating control.
+					</p>
+					<p>
+						I started with mainstream solutions like <strong>Blink</strong>, then <strong>Tapo</strong>.
+					</p>
+					<p>
+						These tools helped me discover the potential of connected homes… but also their limitations:
+					</p>
+					<ul>
+						<li>restricted automations,</li>
+						<li>cloud dependency,</li>
+						<li>closed ecosystems,</li>
+						<li>near-zero interoperability between brands.</li>
+					</ul>
+
+					<h2>🔁 The turning point: taking back control</h2>
+					<p>
+						Very quickly, these limitations became blockers. I then chose to migrate to <strong>Home Assistant</strong>, and progressively replace my devices with <strong>Zigbee</strong>-based, local and interoperable solutions.
+					</p>
+					<p>This change marked a real turning point:</p>
+					<ul>
+						<li>a centralized system,</li>
+						<li>advanced automations,</li>
+						<li>coherent logic,</li>
+						<li>greater reliability,</li>
+						<li>less dependency on cloud services.</li>
+					</ul>
+					<div class="callout callout--note">
+						<p class="callout__content">Since then, my setup has never stopped evolving.</p>
+					</div>
+
+					<h2>❤️ My favourite automations</h2>
+					<p>
+						Some automations have become so natural that I don't even think about them anymore — and that's precisely the sign that they're working perfectly.
+					</p>
+
+					<div class="automation-grid">
+						<div class="callout callout--tip">
+							<p class="callout__title">🎷 Wake up to music</p>
+							<p class="callout__content">
+								Five minutes after I wake up, my amplifier turns on automatically and plays a Jazz playlist on shuffle. No manual action, no screen: just the right atmosphere to start the day.
+							</p>
+						</div>
+						<div class="callout callout--tip">
+							<p class="callout__title">💡 Smart outdoor lighting</p>
+							<p class="callout__content">
+								I repurposed indoor motion sensors, installed in weatherproof junction boxes outside. They automatically trigger the lights around the house whenever movement is detected. Simple, reliable, and incredibly practical every day.
+							</p>
+						</div>
+						<div class="callout callout--tip">
+							<p class="callout__title">📬 Smart mailbox detection</p>
+							<p class="callout__content">
+								My mailbox is connected: mail delivered = instant notification on my phone, mail collected = the notification disappears automatically. No unnecessary reminders, no doubt: the information is accurate and contextualized.
+							</p>
+						</div>
+					</div>
+
+					<h2>🏗️ My stack &amp; how I work</h2>
+					<ul>
+						<li><strong>Home Assistant Green</strong> as the core of the system</li>
+						<li>a <strong>local-first</strong> approach</li>
+						<li>automations designed as real <strong>processes</strong>, not gadgets</li>
+					</ul>
+					<p>I also developed a Home Assistant expert agent, used as a co-pilot to:</p>
+					<ul>
+						<li>design,</li>
+						<li>maintain,</li>
+						<li>optimize automations.</li>
+					</ul>
+					<p>Today, a large part of my work relies on:</p>
+					<ul>
+						<li><strong>Claude Code</strong>,</li>
+						<li>and its <strong>MCP</strong>, used as an automation engineering tool.</li>
+					</ul>
+					<div class="callout callout--note">
+						<p class="callout__content">AI isn't there to "do things for me", but to improve the quality of decisions and the consistency of the system.</p>
+					</div>
+
+					<h2>🧠 The real challenge in home automation (WAF included)</h2>
+					<p>
+						The biggest challenge in home automation isn't the installation, maintenance or bug fixes… it's getting your household to accept and use it.
+					</p>
+					<p>A technically perfect automation is worthless if:</p>
+					<ul>
+						<li>it surprises people,</li>
+						<li>it complicates everyday use,</li>
+						<li>or it creates frustration.</li>
+					</ul>
+					<div class="callout callout--warning">
+						<p class="callout__content">User experience always comes before technical performance.</p>
+					</div>
+
+					<h2>🔮 Current &amp; upcoming projects</h2>
+					<ul>
+						<li>Building a <strong>connected bird feeder</strong>, capable of detecting and recognizing bird species</li>
+						<li>Improving <strong>system monitoring</strong>, with intelligent alert prioritization</li>
+						<li>Integrating <strong>Discord</strong> as a central notification and supervision tool</li>
+						<li>Using <strong>n8n</strong> for complex optimization and alerting workflows</li>
+					</ul>
+
+					<AuthorBoxEn />
+				</div>
+			</article>
+		</main>
+		<FooterEn />
+
+		<!-- Google Tag Manager - Deferred loading for better performance -->
+		<script is:inline>
+			const loadGTM = () => {
+				const gtmScript = document.createElement('script');
+				gtmScript.async = true;
+				gtmScript.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-PTBBTWQV';
+				document.head.appendChild(gtmScript);
+				window.dataLayer = window.dataLayer || [];
+				window.dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+			};
+			if ('requestIdleCallback' in window) {
+				requestIdleCallback(loadGTM, { timeout: 3000 });
+			} else {
+				setTimeout(loadGTM, 2000);
+			}
+		</script>
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PTBBTWQV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	</body>
+</html>
+<style>
+	main {
+		width: calc(100% - 2em);
+		max-width: 100%;
+		margin: 0;
+	}
+	.hero-image {
+		width: 100%;
+	}
+	.hero-image img {
+		display: block;
+		margin: 0 auto;
+		border-radius: 12px;
+		box-shadow: var(--box-shadow);
+	}
+	.prose {
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: auto;
+		padding: 1em;
+		color: rgb(var(--gray-dark));
+	}
+	.title {
+		margin-bottom: 1em;
+		padding: 1em 0;
+		text-align: center;
+		line-height: 1;
+	}
+	.title h1 {
+		margin: 0;
+		margin-bottom: 1em;
+	}
+	hr {
+		border-top: 1px solid rgb(var(--gray-light));
+		border-bottom: none;
+		margin: 0;
+	}
+	.prose .callout {
+		margin: 1.5rem 0;
+		padding: 1.25rem;
+		border-radius: 12px;
+		border-left: 5px solid;
+	}
+	.prose .callout p {
+		margin: 0;
+	}
+	.prose .callout__title {
+		font-weight: 700;
+		font-size: 1.0625rem;
+		margin: 0 0 0.5rem 0;
+	}
+	.prose .callout--warning {
+		background: linear-gradient(to right, rgba(255, 208, 77, 0.12), rgba(255, 208, 77, 0.04));
+		border-color: #ffd04d;
+	}
+	.prose .callout--note {
+		background: linear-gradient(to right, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.04));
+		border-color: #3b82f6;
+	}
+	.prose .callout--tip {
+		background: linear-gradient(to right, rgba(34, 197, 94, 0.12), rgba(34, 197, 94, 0.04));
+		border-color: #22c55e;
+	}
+	.automation-grid {
+		display: flex;
+		flex-direction: column;
+		margin: 1rem 0;
+	}
+	.automation-grid .callout {
+		margin: 0.5rem 0;
+	}
+	.prose ul {
+		margin-top: 0.75rem;
+		margin-bottom: 1.5rem;
+	}
+</style>

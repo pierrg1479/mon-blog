@@ -1,0 +1,325 @@
+---
+h1: "9 mistakes I made when starting with Home Assistant"
+title: "Home Assistant: 9 Mistakes to Avoid for a Reliable Smart Home"
+description: "Real-world feedback after 50 devices: batteries, Wi-Fi, cameras, hubs… The traps to avoid and the simple choices for a stable foundation."
+pubDate: "Feb 01 2026"
+heroImage: '../../assets/erreurs-home-assistant.jpg'
+draft: false
+author:
+  name: Pierre
+  avatar: '/hannibal-cercle.png'
+  url: 'https://www.reddit.com/user/Patient-Gene703/'
+---
+
+import FaqBlock from '../../components/FaqBlock.astro';
+import AffiliateInline from '../../components/AffiliateInline.astro';
+
+At first, home automation is exhilarating: a light that turns on "by itself", a sensor that alerts you, a button that triggers a scene… Then reality kicks in. For us, the wake-up call was simple: when something breaks at the wrong moment (on a rushed morning, or in the evening when everyone's tired), home automation stops being "cool". It becomes a source of friction.
+
+After a year and around fifty devices, I understood that the real challenge isn't adding gadgets. It's building a stable, understandable, and acceptable installation for everyday life: savings, security, a solid network… and zero headaches.
+
+Here are the mistakes that cost me time (and energy)… and the choices that make all the difference for a simple, reliable smart home that stays enjoyable to live with.
+
+<div class="callout callout--warning">
+  <p class="callout__title">Quick note:</p>
+  <p class="callout__content">This list isn't meant to be exhaustive. There are obviously plenty of other possible mistakes (and other important topics). But these are the ones that actually caused me problems, based on my goals and especially as my installation grew and my needs evolved. In other words, it's the most useful feedback I wish I'd read before getting started.</p>
+</div>
+
+## ❓ Why your smart home quickly becomes a nightmare
+
+The classic trap is thinking in terms of "features". Whereas at home, you need to think "system".
+
+- **A system needs maintenance.** The more brands, batteries, hubs and integrations you pile on, the more you increase mental load.
+- **A system must be robust.** If Home Assistant has an issue, your home shouldn't turn into an escape room.
+- **A system must be accepted.** Home automation works much better if it brings comfort, savings and security, without disrupting habits.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Essential rule: keep a "normal" fallback</p>
+  <p class="callout__content">Switches, blinds, heating: maintain consistent behavior even if the "smart" part fails. Home automation should improve the home, not replace it.</p>
+</div>
+
+## ⚠️ Mistakes I'd avoid… and what to do instead
+
+<figure>
+  <img src="/images/infographie-home-assistant-erreurs.jpg" alt="Infographic of mistakes to avoid in Home Assistant smart home setup" loading="lazy" decoding="async" />
+  <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>
+    <strong>Infographic of the 9 mistakes I wish I'd avoided when building my setup</strong>
+  </figcaption>
+</figure>
+
+### 1) Putting Wi-Fi everywhere "because it's simple"
+
+**Mistake:** multiplying Wi-Fi devices (bulbs, plugs, cameras, alarms…), then discovering the joys of network saturation, disconnections, firmware updates… and "everything depends on the internet".
+
+> **A sobering experience:** during a holiday, my internet router crashed. Blackout.
+> Immediate result: no visibility on cameras, no feedback from the alarm system, and a very unpleasant feeling of not knowing what's happening at home. It creates needless stress… which is the exact opposite of the goal.
+
+**Instead:**
+
+- use Zigbee as the default protocol for sensors/plugs/bulbs,
+- keep Wi-Fi for devices that genuinely need it,
+- strengthen your network foundation (it holds everything together).
+
+<div class="callout callout--note">
+  <p class="callout__title">Definition — Wi-Fi mesh</p>
+  <p class="callout__content">A "mesh" Wi-Fi uses multiple access points that work together to cover the home without dead zones. It's a game changer if you have multiple floors, thick walls, or many connected devices.</p>
+</div>
+
+**My "anti-crisis" solution, extremely practical:** I got a GSM plug with a SIM card.
+It lets me switch the router's socket off and on remotely, even without internet (it uses the mobile network).
+Honestly: it's simple, it prevents panic, and I recommend it.
+
+<AffiliateInline
+  href="https://amzn.to/4as2GAU"
+  title="GSM Plug with SIM Card"
+  price="From €30"
+  imageSrc="/images/equipment/prise-gsm-sim.jpg"
+  cta="View product"
+  dataAff="prise-gsm-sim"
+/>
+
+**Good practice:**
+
+- everything "infrastructure" → Ethernet where possible (router, switch, access points, server, NVR),
+- Wi-Fi → for mobile devices and anything that can't be cabled.
+
+### 2) Starting Zigbee without thinking about scale
+
+With 10 devices, almost everything is "easy". With 50, even the smallest initial choice can become a headache.
+
+**Mistake:** starting with ZHA "to get going quickly", then regretting it when the installation grows.
+
+**Instead:** if you know you're going to scale up, start directly with Zigbee2MQTT.
+
+<div class="callout callout--note">
+  <p class="callout__title">Definition — ZHA vs Zigbee2MQTT</p>
+  <p class="callout__content"><strong>ZHA:</strong> built into Home Assistant, simple to get started.<br/><strong>Zigbee2MQTT:</strong> more compatibility and fine-grained settings, often more comfortable when the device count grows (diagnostics, options, device support).</p>
+</div>
+
+**Feedback: repeaters are a game changer.**
+I added 2 Aeotec Zigbee repeaters: one in the garage, and one at the far end of the house.
+Result: my Zigbee network became much more stable. Fewer "unreachable" sensors, less latency, less "why isn't it responding?".
+
+<AffiliateInline
+  href="https://www.domadoo.fr/fr/peripheriques/6288-aeotec-repeteur-routeur-zigbee-range-extender-zi-wg001-1220000017078.html?domid=129"
+  title="Aeotec Zigbee Range Extender"
+  price="From €30"
+  imageSrc="/images/equipment/aotec-zigbee-repetiteur.jpg"
+  cta="View product"
+  dataAff="aeotec-zigbee-repeteur"
+/>
+
+<div class="callout callout--note">
+  <p class="callout__title">Definition — Zigbee mesh network</p>
+  <p class="callout__content">A mesh network is one where some devices can relay the signal. In Zigbee, mains-powered devices (plugs, modules, repeaters) act as relays and extend coverage.</p>
+</div>
+
+**3 actions that prevent 80% of Zigbee problems:**
+
+1. Position the coordinator intelligently (not right next to the server, use a USB extension if needed).
+2. Add mains-powered Zigbee devices (plugs, modules, repeaters) to strengthen the mesh.
+3. Standardize your brands (see next point).
+
+### 3) Spreading across too many brands — and therefore too many hubs and apps
+
+**Mistake:** buying "the best product" from 8 different brands, then ending up with:
+
+- multiple hubs,
+- multiple apps,
+- heterogeneous integrations,
+- permanent maintenance.
+
+**My concrete case (and what I'd do differently):**
+I started with Blink cameras (I don't recommend them), then migrated to Tapo, then to Reolink.
+Along the way, I accumulated hubs: 2 Tapo hubs, 1 Tado hub, 2 SwitchBot hubs, 1 Reolink hub, etc.
+
+It works… but it complicates everything: updates, different behaviors, accounts, dependencies, and longer troubleshooting when something breaks. Not to mention it takes up space and requires available sockets.
+
+**Instead:**
+
+- set yourself a simple rule: max 2–3 brands per category (sensors, lighting, cameras…),
+- favor interoperable devices (local, standards, stable integrations),
+- avoid products that lock you into a mandatory app/hub if it's not a deliberate choice.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Goal: reduce mental load</p>
+  <p class="callout__content">Fewer brands = fewer docs, fewer firmware versions, fewer different behaviors, and more stability.</p>
+</div>
+
+### 4) Choosing battery cameras when you want RTSP / an NVR
+
+**Mistake:** a battery camera seems practical… until you need a reliable, usable, continuous stream.
+
+**Instead:**
+
+- favor wired cameras,
+- check RTSP support before buying,
+- if possible: a stable network (ideally wired).
+
+Personally, I went with Reolink cameras which support this and integrate perfectly with Home Assistant.
+
+<div class="callout callout--note">
+  <p class="callout__title">Definition — RTSP</p>
+  <p class="callout__content">RTSP is a protocol that allows retrieving a "standard" video stream. It's often the basis for properly integrating a camera into a surveillance/NVR system.</p>
+</div>
+
+**Why battery cameras often cause problems:**
+
+- they cut the stream to save energy,
+- they wake up too late,
+- they don't always provide a stable RTSP stream.
+
+### 5) During renovation, not planning "smart home" sockets
+
+This is typically the kind of mistake you regret… when the walls are already done.
+
+**Mistake:** placing sockets as in a "non-automated" home, then improvising afterwards (extension cords, visible chargers, sensors impossible to power).
+
+**Instead:** plan strategic sockets (sometimes at different heights) for:
+
+- discreetly powering LED strips,
+- powering presence sensors that are often mains-powered,
+- avoiding visible cables.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Checklist — smart socket positions to plan</p>
+  <p class="callout__content">
+    • Behind curtains (LED strips)<br/>
+    • Near entrances (sensors, repeaters, doorbell)<br/>
+    • High up / ceiling corner (mains-powered presence sensors)<br/>
+    • Cupboards / utility room (infrastructure: hubs, switch, router, UPS)<br/>
+    • TV unit (discreet power, network, lighting)
+  </p>
+</div>
+
+### 6) Underestimating the hardware when targeting video / AI
+
+**Reality:** a base like Home Assistant Green is perfect to start. But as soon as you add video, analysis, and storage, it can become too tight.
+
+**Mistake:** sizing for today, then adding Frigate, cameras, and processing.
+
+**Instead:**
+
+- start light if you're just beginning, but if video is on your roadmap: switch earlier to a mini-PC (or equivalent),
+- get the server and network properly sorted (Ethernet, storage, backups).
+
+<div class="callout callout--warning">
+  <p class="callout__title">Why headroom matters</p>
+  <p class="callout__content">I'm currently in this situation: I want to set up Frigate on a few cameras (bird recognition in particular), with video storage. The Home Assistant Green is too underpowered for this.</p>
+</div>
+
+### 7) Wanting to automate everything at once
+
+**Mistake:** starting with "critical" automations (heating, blinds, main lights), and creating frustration at the first bug.
+
+**Instead:** start with low-risk automations: if they fail, nobody complains.
+
+**Very safe examples:**
+
+- turning on an ambient light in the evening,
+- "door left open" notification,
+- cutting a non-essential power strip at night.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Simple rule</p>
+  <p class="callout__content">If a broken automation annoys you daily, it's too critical for your starting phase.</p>
+</div>
+
+### 8) Not setting up "home modes" from the start
+
+**Mistake:** stacking independent automations, then no longer understanding "why is this turning on" or "why isn't this turning on".
+
+**Instead:** quickly implement 3–4 modes:
+
+- Home
+- Away
+- Night
+- Guest
+- Holiday
+
+<div class="callout callout--note">
+  <p class="callout__title">Definition — Home mode</p>
+  <p class="callout__content">A "mode" is a global state (home/away/night…) that serves as a condition for your automations. It makes the system readable and prevents inconsistent behavior.</p>
+</div>
+
+### 9) Buying sensors with "exotic" batteries
+
+**Mistake:** choosing sensors with uncommon batteries (often expensive, hard to find).
+
+**Instead:**
+
+- favor sensors with standard batteries (AA / AAA / CR2032…),
+- or better: mains-powered sensors where possible (some mmWave presence sensors, mains modules, etc.).
+
+**Real experience:**
+
+> I have several SwitchBot Bots, and they run on CR2 batteries. Except CR2 isn't the battery you have in the "just in case" drawer. At the shop near me, they cost €3–4 each. When you have 2 or 3 to replace in the same week, that stings. And above all: you waste time tracking down a "non-standard" battery, instead of doing a 30-second replacement.
+
+**On the flip side:** I love IKEA sensors because a good number of them run on AAA batteries. And that's a luxury: you can find them anywhere, they're cheaper, and you can easily stock up.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Simple tip</p>
+  <p class="callout__content">Create a "low battery" alert in Home Assistant (phone notification, message, or dedicated card). You anticipate the failure, group replacements, and buy the right format at the right time. I use the <a href="https://community.home-assistant.io/t/low-battery-notifications-actions/653754" target="_blank" rel="noopener">Low Battery Notifications & Actions</a> blueprint to manage this.</p>
+</div>
+
+## 👉 Simple method to get started right (and avoid regrets)
+
+1. **Set your standards**
+   Standard batteries + default protocol (Zigbee) + max 2–3 brands per category.
+
+2. **Secure your network foundation**
+   Mesh Wi-Fi if needed, Ethernet for infrastructure, and a Plan B if your router goes down (the GSM plug is a real "safety net").
+
+3. **Strengthen Zigbee**
+   Mains-powered plugs/modules + 1 or 2 well-placed repeaters if the house is large.
+
+4. **Deploy 3 "low-risk" automations**
+   Comfort, not critical functions.
+
+5. **Create your home modes**
+   Home/Away/Night (minimum), and base everything else on them.
+
+6. **Set up alerts**
+   Low battery, device unavailable, network loss… you want to be notified before it becomes a failure.
+
+## 🩺 Common mistakes and best practices
+
+| Common mistake | Best practice |
+| --- | --- |
+| Migrating everything at once | Migrate by zone (one room / one category), stabilize, then extend |
+| Adding cloud dependencies without need | Favor local and standards |
+| Buying ad hoc | Standardize, otherwise you create an impossible puzzle to maintain |
+| Buying without planning returns | Smart home is like DIY: testing is part of the game. Buy where returns are easy |
+
+## ✅ Conclusion
+
+If I had to summarize, the real mistakes in home automation don't come from a misplaced sensor or a misconfigured automation.
+They come from decisions made "on a whim": one more brand, one more protocol, a camera "quickly picked", undersized storage.
+
+Over time, this creates a fragile system.
+Not necessarily visible at first, but which ends up being expensive: instability, maintenance, workarounds, permanent troubleshooting.
+
+Today, I have a simple rule: I prefer a coherent smart home over one that goes in all directions.
+Fewer surprises, fewer dependencies, more continuity.
+And that's where Home Assistant becomes what it should be: a tool that gets out of the way.
+
+## FAQ
+
+<FaqBlock items={[
+  {
+    question: "ZHA or Zigbee2MQTT: which should I choose to get started?",
+    answer: "If you're just starting and have few devices, ZHA is simple and quick to get going.<br/><br/>If you're aiming for a setup that will grow, Zigbee2MQTT is often more comfortable in the long run: compatibility, settings, diagnostics. The real \"right choice\" is the one you won't have to migrate from in 6 months."
+  },
+  {
+    question: "Is Wi-Fi really to be avoided in home automation?",
+    answer: "No. Wi-Fi isn't \"bad\". It becomes problematic when you put it everywhere, especially on critical or numerous devices. The right approach:<ul><li><strong>Zigbee</strong> for the bulk (sensors, plugs, lighting)</li><li><strong>Wi-Fi</strong> for a few targeted uses, on a solid network (mesh if needed)</li></ul>"
+  },
+  {
+    question: "How do I avoid the stress of \"no internet = no cameras/alarm\"?",
+    answer: "The key is planning a Plan B. A simple and very effective example: a GSM plug (SIM card) that lets you restart the router remotely, even when the internet is down.<br/><br/>And if you want to go further: favor equipment that maintains minimal local operation even without cloud access."
+  },
+  {
+    question: "Where do I start to avoid getting put off Home Assistant?",
+    answer: "Start with non-critical automations: if they break, the home doesn't fall apart.<br/><br/>Then quickly set up home modes (Home / Away / Night). That's what makes your installation readable, stable, and understandable… even 1 year later."
+  }
+]} />
