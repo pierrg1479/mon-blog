@@ -2,6 +2,11 @@
 import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
 import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+	langHref?: string;
+}
+const { langHref = '/' } = Astro.props;
 ---
 
 <header>
@@ -52,6 +57,7 @@ import ThemeToggle from './ThemeToggle.astro';
 			<div class="theme-toggle">
 				<ThemeToggle />
 			</div>
+			<a href={langHref} class="lang-switch" aria-label="Passer en français">FR</a>
 			<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">
 				<span class="sr-only">Open menu</span>
 				<span class="bar"></span>
@@ -177,6 +183,35 @@ import ThemeToggle from './ThemeToggle.astro';
 	.theme-toggle {
 		display: flex;
 		align-items: center;
+	}
+
+	.lang-switch {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		border: 1px solid rgba(var(--black), 10%);
+		text-decoration: none;
+		color: rgb(var(--black));
+		font-weight: 600;
+		font-size: 0.78rem;
+		letter-spacing: 0.03em;
+		transition: all 0.2s ease;
+		flex-shrink: 0;
+	}
+	.lang-switch:hover {
+		background: rgba(var(--black), 5%);
+		border-color: rgba(var(--black), 20%);
+	}
+	:global(.dark) .lang-switch {
+		color: white;
+		border-color: rgba(255, 255, 255, 0.16);
+	}
+	:global(.dark) .lang-switch:hover {
+		background: rgba(255, 255, 255, 0.1);
+		border-color: rgba(255, 255, 255, 0.28);
 	}
 
 	.internal-links {

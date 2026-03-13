@@ -1,7 +1,7 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-const blogSchema = ({ image }: { image: () => z.ZodType<any> }) =>
+const blogSchema = ({ image }) =>
 	z.object({
 		h1: z.string().optional(),
 		title: z.string(),
