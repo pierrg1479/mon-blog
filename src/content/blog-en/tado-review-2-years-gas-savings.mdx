@@ -1,0 +1,317 @@
+---
+h1: 'Tado: real gas savings and honest feedback'
+title: 'Tado Review After 2 Years: Real Gas Savings?'
+description: 'Real-world feedback after 2 years with a Tado thermostat and heads: kWh, euros saved, comparison method and savings simulator.'
+pubDate: 'Dec 15 2025'
+heroImage: '../../assets/tado-combien-economie.jpg'
+author:
+  name: Pierre
+  avatar: '/hannibal-cercle.png'
+  url: 'https://www.reddit.com/user/Patient-Gene703/'
+---
+
+import TallyEmbed from '../../components/TallyEmbed.astro';
+import AffiliateInline from '../../components/AffiliateInline.astro';
+import FaqBlock from '../../components/FaqBlock.astro';
+
+You hear everything and the opposite about smart thermostats. So I looked for a simple, verifiable answer: does it really reduce gas consumption, and how much does that represent in euros per year?
+
+I've had Tado since 2023 (thermostat + thermostatic heads on a gas boiler), so I have enough hindsight to avoid impressions like "we felt less cold" or "we were more careful". With heating, between the weather, the kWh price and our habits, you need a reasonably rigorous method to compare.
+
+To see clearly, I **compared my consumption before and after Tado**, using a reproducible method. In this article, I show you how I did the calculation, my results, and above all **how to replicate the same analysis at your home** to find out if Tado (or an equivalent system) can really reduce your bill.
+
+## 🔍 My heating system and equipment in place
+
+<details>
+  <summary>ELM LEBLANC EGALIS Gas Boiler</summary>
+  <p>I heat with a gas wall-mounted ELM Leblanc Égalis boiler. Before Tado, the regulation was "classic":</p>
+  <ul>
+    <li>the boiler adjusted its water temperature based on the outside temperature via an outdoor sensor</li>
+    <li>and a thermostat + manual radiator valves managed indoor comfort.</li>
+  </ul>
+</details>
+
+<details>
+  <summary>Wood-burning stove</summary>
+  <p>I also have a wood stove used as supplementary heating. It mainly runs in the evenings and weekends, **from October to April.** Over this period, I consume on average **3 to 4 cubic metres of wood,** which reduces reliance on the gas boiler accordingly when it's in use.</p>
+</details>
+
+<details>
+  <summary>Tado V3+ Wired Thermostat</summary>
+  <p>This now controls the boiler. It's physically wired to the boiler and replaces the old thermostat. In practice, Tado can:</p>
+  <ul>
+    <li>adapt time schedules,</li>
+    <li>modulate the heating demand based on the measured temperature,</li>
+    <li>cut heating earlier or extend it slightly based on the home's thermal inertia.</li>
+  </ul>
+</details>
+
+<details>
+  <summary>9 Tado V3+ Thermostatic Heads</summary>
+  <p>They now replace the manual heads on all my radiators (except one to maintain water circulation in the network). Their role:</p>
+  <ul>
+    <li>regulate temperature room by room,</li>
+    <li>avoid overheating unused rooms,</li>
+    <li>automatically close a radiator when the setpoint is reached.</li>
+  </ul>
+</details>
+
+<details>
+  <summary>Tado Auto-Assist Option</summary>
+  <p>I also use the paid Auto-Assist option (€3.99/month). It automates in particular:</p>
+  <ul>
+    <li>presence detection management (geolocation),</li>
+    <li>open window detection (heating cut-off when a window is detected open),</li>
+    <li>certain fine adjustments without my intervention.</li>
+  </ul>
+</details>
+
+<AffiliateInline
+  href="https://amzn.to/49oyEME"
+  title="Tado V3+ Wired Smart Thermostat"
+  imageSrc="/images/tado-termostat-v3+.jpg"
+  cta="View product"
+  dataAff="tado-thermostat-v3+"
+/>
+
+<div class="callout callout--warning">
+  <p class="callout__content">👉 It's from this configuration (gas boiler with outdoor sensor, then gradual addition of Tado V3+: thermostat, thermostatic heads and Auto-Assist) that I analyzed my gas consumption and real savings.</p>
+</div>
+
+## 🧗 The major milestones of my installation
+
+| Month / Year | Event |
+| --- | --- |
+| January 2023 | Wood stove installation |
+| January 2024 | Tado thermostat installation on the boiler + 1 thermostatic head on a bedroom radiator |
+| July 2024 | Tado thermostatic heads installed on all radiators in the house |
+| October 2024 | Tado Auto-Assist activated |
+
+<AffiliateInline
+  href="https://amzn.to/49KVNt9"
+  title="Pack of 3 Tado Smart Thermostatic Heads"
+  imageSrc="/images/tete-tado-thermostatique (1).jpg"
+  cta="View product"
+  dataAff="tete-tado"
+/>
+
+<div class="callout callout--warning">
+  <p class="callout__title">What is Tado Auto-Assist?</p>
+  <p class="callout__content">Auto-Assist is a paid subscription (€3.99/month) from Tado. It automates certain smart features: reducing heating when you leave home, accounting for open windows, automatically returning to the scheduled plan. Without Auto-Assist, the app sends you notifications and you confirm the actions. With Auto-Assist, Tado handles them on your behalf to improve comfort and savings.</p>
+</div>
+
+## ❓ Why I had to completely rethink heating control
+
+Before, my heating worked, but I had two main problems.
+
+First, I couldn't **control heating remotely**. The boiler only followed a **fixed schedule**: same times, same temperatures, every day. If we came home earlier than planned, the house stayed cold. If we left unexpectedly for the weekend, the heating continued as if we were there. The only solution was to manually adjust the thermostat, which isn't exactly "modern comfort".
+
+The real big problem appeared with **the wood stove installation**. The main boiler thermostat was in the living room, exactly where the stove is too. When the stove heated the living room well, the thermostat detected a sufficient temperature and cut the heating, while the bedrooms remained cold. If I moved the thermostat to a bedroom to stay warm at night, it was the opposite effect: the boiler would heat to reach the right bedroom temperature, but the living room radiators kept running even though it was already more than warm enough from the stove.
+
+> In practice, with **a single thermostat for the whole house**, I had to choose between a comfortable living room with cold bedrooms, or pleasant bedrooms but an overheated living room with wasted energy.
+>
+> Pierre alias The Optimization Guy
+
+This constant imbalance between comfort and consumption was the starting point of my thinking to completely rethink how our heating was controlled.
+
+<div class="callout callout--note">
+  <p class="callout__content">ℹ️ With Tado, the thermostatic heads don't just open or close the radiator locally. In my configuration, they can also request heat from the boiler when there's a temperature gap in their room. The central thermostat is therefore no longer the only one deciding to start heating. This is what makes all the difference compared to classic thermostatic heads combined with a simple ambient thermostat: each room truly has a say in the boiler's operation.</p>
+</div>
+
+## 💰 How much did the Tado installation actually cost me?
+
+| **Equipment** | **Total price** |
+| --- | --- |
+| Modification of 4 radiator valves (plumber intervention) | €472 |
+| 9 Tado V3+ thermostatic heads | €402 |
+| 1 Tado V3+ wired thermostat | €110 |
+| 8 months of Auto-Assist subscription | €32 |
+| **Total** | **€1016** |
+
+<div class="callout callout--warning">
+  <p class="callout__content">👨‍🔧 To install thermostatic heads on all radiators, I had to **call in a plumber**. He replaced the valves on 4 radiators in the living room, dining room and office. These radiators previously had standard valves, incompatible with Tado thermostatic heads.</p>
+</div>
+
+## 📊 Tado's impact on my gas consumption
+
+<div style={{display: 'flex', gap: '1rem', margin: '2rem 0', flexWrap: 'wrap'}}>
+  <div style={{flex: 1, minWidth: '300px'}}>
+    <img src="/images/tado-programmation.jpg" alt="Tado weekly schedule" width="400" height="300" loading="lazy" decoding="async" style={{width: '100%', borderRadius: '8px'}} />
+    <p style={{textAlign: 'center', fontSize: '0.875rem', color: '#666', marginTop: '0.5rem'}}>Weekly programming</p>
+  </div>
+  <div style={{flex: 1, minWidth: '300px'}}>
+    <img src="/images/tado-mode-absent.jpg" alt="Tado away mode" width="400" height="300" loading="lazy" decoding="async" style={{width: '100%', borderRadius: '8px'}} />
+    <p style={{textAlign: 'center', fontSize: '0.875rem', color: '#666', marginTop: '0.5rem'}}>Away mode at 17°C</p>
+  </div>
+</div>
+
+<div class="callout callout--note">
+  <p class="callout__title">What temperatures do I heat to?</p>
+  <ul style={{margin: '0 0 0.5rem 1.25rem'}}>
+    <li><strong>Living areas (living room, kitchen, dining room)</strong>: 19°C during occupancy, <strong>18°C otherwise</strong>.</li>
+    <li><strong>Bedrooms</strong>: 18°C in the evening and night when occupied, <strong>16.5°C otherwise</strong>.</li>
+    <li><strong>Office</strong>: I'm fully remote, so my office is heated to <strong>19°C during weekday daytime hours</strong>.</li>
+  </ul>
+  <p class="callout__content" style={{marginTop: '0.5rem'}}>My savings are therefore calculated with these temperatures: if you heat more or less, your results may differ.</p>
+</div>
+
+### Monthly gas consumption trend (in kWh)
+
+<figure>
+  <img src="/images/evolution-consommation-gaz_kwh-mois.jpg" alt="Monthly gas consumption trend with Tado" width="800" height="400" loading="lazy" decoding="async" />
+  <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>My monthly gas consumption trend (in kWh)</figcaption>
+</figure>
+
+### Annual gas consumption trend (in kWh) and impact of changes
+
+<figure>
+  <img src="/images/evolution-consommation-gaz_kwh-annee.jpg" alt="Annual gas consumption trend" width="800" height="400" loading="lazy" decoding="async" />
+  <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>My annual gas consumption trend (in kWh)</figcaption>
+</figure>
+
+<div class="callout callout--caution">
+  <p class="callout__title">Disclaimer on article statistics</p>
+  <p class="callout__content">The figures and observations in this article are based on my own installation and personal situation (Western France). They can be influenced by many external factors: actual home occupancy (presence, absences, remote work, holidays), outside temperature, sunshine, home insulation, heating habits, etc. Your results may therefore differ from mine, even with a similar Tado configuration.</p>
+</div>
+
+❄️ **Year 2022 – No wood stove, no Tado**
+
+❄️ **Year 2023 – Wood stove but no Tado equipment**
+
+To isolate the Tado effect, I take **year 2023** as the baseline: the wood stove is already there, but **no Tado equipment** is installed. That winter, my consumption is approximately **13,934 kWh**.
+
+❄️ **Year 2024 – Tado thermostat + 1 thermostatic head**
+
+- With the smart thermostat on the boiler and one head in a bedroom, my consumption drops to **11,374 kWh**.
+- That's approximately **–18% compared to the previous year**, purely from finer heating control.
+
+❄️ **Year 2024-2025 – Heads everywhere + Auto-Assist**
+
+- A season later, I have thermostatic heads on all radiators and Auto-Assist activated. My consumption drops to **10,182 kWh**, **another –10% compared to the previous year.**
+
+<div class="callout callout--note">
+  <p class="callout__content">In summary: between the winter with stove only and the winter with Tado fully deployed, Tado helps me reduce my consumption by around 26%, on top of the savings already provided by the stove.</p>
+</div>
+
+### Do winter temperature differences explain my consumption differences?
+
+<figure>
+  <img src="/images/ecart-temperature-hiver.jpg" alt="Winter temperature differences and gas consumption" width="800" height="400" loading="lazy" decoding="async" />
+  <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>Winter temperature differences from year to year</figcaption>
+</figure>
+
+**Partly, but not the overall downward trend.**
+
+- From one winter to another, it's **a little** warmer or colder (≈ **1°C** between the warmest and coldest in my data). That can affect consumption.
+- But in my case, **even when the winter is colder** (2024–2025), my consumption **still drops** (**11,374 kWh → 10,182 kWh**).
+- So the weather explains part of the variations… but the **downward trend** mainly comes from my **finer control with Tado** (thermostat + heads + automations).
+
+## 🤑 Is Tado worth it? My return on investment
+
+Now that we know the Tado installation reduces my gas consumption by around **26%**, the real question becomes: **are the expenses incurred (hardware, heads, plumber, Auto-Assist) truly recovered, and in how long?**
+
+I'll compare the **total installation cost** to the gas savings achieved each year. The goal isn't just to say "I consume less", but to see whether Tado ultimately **pays for itself** after a few winters… or if it remains primarily a comfort investment.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Reference kWh price: €0.0896</p>
+  <p class="callout__content">For all calculations in this article, I used a price of <strong>€0.0896 incl. VAT per kWh of gas</strong>. This is a reference value based on my contract at the time of the analysis. In your case, the amount may vary depending on your supplier, your contract type and the period.</p>
+</div>
+
+### Annual savings in euros
+
+To measure Tado's effect, I start from **year 2023**, with a wood stove but **no Tado equipment**, i.e. consumption of **13,934 kWh**.
+
+**Savings achieved thanks to Tado:**
+
+- **Year 2024 – Thermostat + 1 thermostatic head**
+
+    → 11,374 kWh
+
+    → That's **2,560 kWh saved vs 2023**, approximately **€229** over the season.
+
+- **Year 2025 – Heads everywhere + Auto-Assist**
+
+    → 10,182 kWh
+
+    → That's **3,752 kWh saved vs 2023**, approximately **€336** over the season.
+
+In total, since installing Tado, that represents approximately **€566 in savings** on gas over 2 years.
+
+### Installation profitability
+
+- **Total Tado installation cost** (hardware, plumber, Auto-Assist): **€1,016**
+- **Savings already made over two winters**: **≈ €566**
+- **Remaining to recover**: approximately **€450**.
+
+Taking year 2025 as a baseline (approximately **€336 in annual savings**) and without a gas price increase, the installation should be **profitable in just under 4 heating seasons**.
+
+Since two winters have already passed, I need **1 to 2 more winters** to have fully covered my installation. Beyond that, it will essentially be net savings… with a bonus of better daily comfort.
+
+## 💶 Calculate your own Tado savings
+
+Use the calculator below to estimate, with your own figures (consumption, kWh price, installation cost), how much Tado could save you each year and how long before your installation pays for itself.
+
+<TallyEmbed />
+
+## 💸 What could reduce profitability over time
+
+### 1. Equipment lifespan
+
+Tado's warranty is 2 years. So far (touching wood), **no equipment has failed** at my place.
+
+### 2. Battery costs
+
+With my usage, **2 LR6 batteries last about 2 heating seasons** on a head, which represents **less than €2/year** in batteries.
+
+### 3. Auto-Assist subscription price changes
+
+If the price increases significantly, this can reduce part of the gains. This is what motivates me to think about **100% Home Assistant control** to get the same features… without a subscription.
+
+## 🤖 Next step: towards 100% Home Assistant control
+
+In the medium term, I plan to completely drop Auto-Assist and **rely solely on Home Assistant**. The idea is to recreate its key features with a few targeted automations: cutting radiators when a window is open, automatically lowering the temperature when nobody's home, etc.
+
+This should let me maintain equivalent features while saving the subscription cost, approximately **€28 per heating season**.
+
+For this, I plan to use the **[Home Assistant Advanced Heating Control](https://community.home-assistant.io/t/advanced-heating-control/469873)** blueprint, which seems to offer very detailed heating control… without having to reinvent everything from scratch.
+
+<figure>
+  <img src="/images/blueprint-Home-Assistant-Advanced-Heating-Control.jpg" alt="Home Assistant Advanced Heating Control Blueprint" width="800" height="400" loading="lazy" decoding="async" />
+  <figcaption style={{textAlign: 'center', color: '#666', fontSize: '0.95rem', marginTop: '0.5rem'}}>
+    <strong>Home Assistant Advanced Heating Control</strong>
+  </figcaption>
+</figure>
+
+## 🙌 Conclusion: what Tado really brought me
+
+To summarize, switching to Tado let me **reduce my gas consumption by around 26%**, for a **total investment of €1,016**. With a kWh price of €0.0896, that represents approximately **€566 in savings over two winters**, and an **installation that pays off in under 4 years**.
+
+Will you get exactly the same figures at your place? Probably not. Your insulation, lifestyle, local weather, home size or gas contract price will inevitably change the outcome.
+
+If you're considering switching to Tado (or an equivalent system), I'd encourage you to:
+- record your **gas consumption over at least one full season**,
+- check the **actual price of your kWh** on your bill,
+- and simulate what, at your home, a 20–30% reduction over several winters would mean.
+
+On my end, the next step will be to **replace Auto-Assist with Home Assistant automations** to keep the benefits while reducing costs further 😁
+
+## ❓ FAQ
+
+<FaqBlock items={[
+  {
+    question: "Tado Auto-Assist: essential or just a \"comfort\" option?",
+    answer: "It's not essential, but it changes your level of automation.<br/>Without Auto-Assist, Tado notifies you (open window, absence…) and you confirm the actions.<br/>With Auto-Assist, these actions become automatic."
+  },
+  {
+    question: "Do I need to call a plumber / change radiator valves?",
+    answer: "Sometimes yes, and that's something many people discover too late.<br/>If some radiators have incompatible valves, you won't be able to fit a smart thermostatic head properly. In my case, I had to have 4 valves changed, which quickly adds up in the total budget."
+  },
+  {
+    question: "What \"hidden costs\" can reduce profitability over time?",
+    answer: "Three classic ones:<ul><li><strong>Lifespan / failures</strong>: Tado's warranty is 2 years (and at my place, nothing has failed so far).</li><li><strong>Batteries</strong>: in my usage, 2 LR6 batteries last ~2 seasons per head, for less than €2/year.</li><li><strong>Auto-Assist subscription</strong>: if the price rises, profitability drops, hence the interest in planning an alternative (e.g. Home Assistant control) if you want to avoid a recurring cost.</li></ul>"
+  }
+]} />
+
+---
+
+<em>**This article is not sponsored**. I have no connection to Tado whatsoever and receive no commission on any products mentioned. I'm simply sharing my real-world feedback based on my own installation.</em>

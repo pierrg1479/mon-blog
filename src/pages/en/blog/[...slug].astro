@@ -1,22 +1,22 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import BlogPostEn from '../../../layouts/BlogPostEn.astro';
 import { execSync } from 'node:child_process';
 import path from 'node:path';
 
 export const prerender = true;
 
-// Mapping FR slug → EN slug for hreflang
-const frToEnSlugMap: Record<string, string> = {
-	'automatisation-recharge-velo-heures-creuses': 'automating-ebike-charging-off-peak-hours',
-	'home-assistant-erreurs-a-eviter': 'home-assistant-mistakes-to-avoid',
-	'prises-connectees-economies-automatisations': 'smart-plugs-savings-automations',
-	'tado-retour-2-ans-economies-gaz': 'tado-review-2-years-gas-savings',
+// Mapping EN slug → FR slug for hreflang
+const enToFrSlugMap: Record<string, string> = {
+	'automating-ebike-charging-off-peak-hours': 'automatisation-recharge-velo-heures-creuses',
+	'home-assistant-mistakes-to-avoid': 'home-assistant-erreurs-a-eviter',
+	'smart-plugs-savings-automations': 'prises-connectees-economies-automatisations',
+	'tado-review-2-years-gas-savings': 'tado-retour-2-ans-economies-gaz',
 };
 
 export const getGitLastUpdatedDate = (entryId: string) => {
 	try {
-		const basePath = path.join(process.cwd(), 'src', 'content', 'blog');
+		const basePath = path.join(process.cwd(), 'src', 'content', 'blog-en');
 		const possibleFiles = [
 			path.join(basePath, entryId),
 			path.join(basePath, `${entryId}.md`),
@@ -41,18 +41,18 @@ export const getGitLastUpdatedDate = (entryId: string) => {
 		}
 		return undefined;
 	} catch (error) {
-		console.error(`Erreur Git pour ${entryId}:`, error);
+		console.error(`Git error for ${entryId}:`, error);
 		return undefined;
 	}
 };
 
 export async function getStaticPaths() {
-	const allPosts = (await getCollection('blog')).sort(
+	const allPosts = (await getCollection('blog-en')).sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 	);
 	const publishedPosts = allPosts.filter(({ data }) => data.draft !== true);
 
-	const toAdjacentPost = (post: CollectionEntry<'blog'> | undefined) => {
+	const toAdjacentPost = (post: CollectionEntry<'blog-en'> | undefined) => {
 		if (!post) return undefined;
 		const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
 		const heroImage =
@@ -74,7 +74,6 @@ export async function getStaticPaths() {
 		const gitUpdatedDate = getGitLastUpdatedDate(post.id);
 		const updatedDate = gitUpdatedDate || post.data.updatedDate || post.data.pubDate;
 
-		// Navigation prev/next uniquement pour les articles publiés
 		const publishedIndex = publishedPosts.findIndex((p) => p.id === post.id);
 		const previousPost = publishedIndex >= 0 ? toAdjacentPost(publishedPosts[publishedIndex + 1]) : undefined;
 		const nextPost = publishedIndex >= 0 ? toAdjacentPost(publishedPosts[publishedIndex - 1]) : undefined;
@@ -85,7 +84,7 @@ export async function getStaticPaths() {
 				...post,
 				previousPost,
 				nextPost,
-				enSlug: frToEnSlugMap[slug],
+				frSlug: enToFrSlugMap[slug],
 				data: {
 					...post.data,
 					updatedDate,
@@ -95,18 +94,18 @@ export async function getStaticPaths() {
 	});
 }
 
-type Props = CollectionEntry<'blog'> & { previousPost?: any; nextPost?: any; enSlug?: string };
+type Props = CollectionEntry<'blog-en'> & { previousPost?: any; nextPost?: any; frSlug?: string };
 
 const post = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BlogPost
+<BlogPostEn
 	{...post.data}
 	previousPost={post.previousPost}
 	nextPost={post.nextPost}
-	enSlug={post.enSlug}
+	frSlug={post.frSlug}
 	content={post.body}
 >
 	<Content />
-</BlogPost>
+</BlogPostEn>

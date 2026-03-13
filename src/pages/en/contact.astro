@@ -1,42 +1,42 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE } from '../consts';
+import BaseHead from '../../components/BaseHead.astro';
+import HeaderEn from '../../components/HeaderEn.astro';
+import FooterEn from '../../components/FooterEn.astro';
+import { SITE_TITLE } from '../../consts';
 
 const siteUrl = Astro.site?.href ?? Astro.url.origin;
 const alternates = [
-	{ hreflang: 'fr', href: new URL('/contact', siteUrl).href },
 	{ hreflang: 'en', href: new URL('/en/contact', siteUrl).href },
+	{ hreflang: 'fr', href: new URL('/contact', siteUrl).href },
 ];
 ---
 
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 	<head>
-		<BaseHead title={`Contact - ${SITE_TITLE}`} description="Contactez The Optimization Guy" alternates={alternates} />
+		<BaseHead title={`Contact - ${SITE_TITLE}`} description="Contact The Optimization Guy" alternates={alternates} />
 	</head>
 	<body>
-		<Header />
+		<HeaderEn />
 		<main>
-			<h1>💭 Une question, une idée ?</h1>
+			<h1>💭 A question or an idea?</h1>
 			<p>
-				Vous voulez réagir à un article, partager votre propre automatisation ou poser une question sur votre installation ? Laissez-moi un message via le formulaire ci-dessous.
+				Want to react to an article, share your own automation or ask a question about your setup? Leave me a message via the form below.
 			</p>
-			
+
 			<div class="tally-container">
-				<iframe 
-					src="https://tally.so/embed/NprMzQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
-					width="100%" 
-					height="1200" 
-					frameborder="0" 
-					marginheight="0" 
-					marginwidth="0" 
+				<iframe
+					src="https://tally.so/embed/NprMzQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+					width="100%"
+					height="1200"
+					frameborder="0"
+					marginheight="0"
+					marginwidth="0"
 					title="Contact">
 				</iframe>
 			</div>
 		</main>
-		<Footer />
+		<FooterEn />
 
 		<!-- Google Tag Manager - Deferred loading for better performance -->
 		<script is:inline>
