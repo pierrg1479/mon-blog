@@ -6,7 +6,7 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-const allPosts = (await getCollection(‘blog’, ({ data }) => {
+const allPosts = (await getCollection('blog', ({ data }) => {
 	return data.draft !== true;
 })).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -17,8 +17,8 @@ const LOAD_MORE_COUNT = 3;
 
 const siteUrl = Astro.site?.href ?? Astro.url.origin;
 const alternates = [
-	{ hreflang: ‘fr’, href: new URL(‘/’, siteUrl).href },
-	{ hreflang: ‘en’, href: new URL(‘/en/’, siteUrl).href },
+	{ hreflang: 'fr', href: new URL('/', siteUrl).href },
+	{ hreflang: 'en', href: new URL('/en/', siteUrl).href },
 ];
 ---
 
@@ -27,7 +27,7 @@ const alternates = [
 	<head>
 		<BaseHead
 			title="The Optimization Guy | Blog Domotique & Home Assistant"
-			description="Blog domotique pour s’amuser avec Home Assistant : idées d’automatisations, intégrations, dashboards, capteurs et bidouilles utiles 🤓🏠"
+			description="Blog domotique pour s'amuser avec Home Assistant : idées d'automatisations, intégrations, dashboards, capteurs et bidouilles utiles 🤓🏠"
 			alternates={alternates}
 		/>
 	</head>
