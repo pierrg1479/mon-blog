@@ -6,13 +6,6 @@ import path from 'node:path';
 
 export const prerender = true;
 
-// Mapping FR slug → EN slug for hreflang
-const frToEnSlugMap: Record<string, string> = {
-	'automatisation-recharge-velo-heures-creuses': 'automating-ebike-charging-off-peak-hours',
-	'home-assistant-erreurs-a-eviter': 'home-assistant-mistakes-to-avoid',
-	'prises-connectees-economies-automatisations': 'smart-plugs-savings-automations',
-	'tado-retour-2-ans-economies-gaz': 'tado-review-2-years-gas-savings',
-};
 
 export const getGitLastUpdatedDate = (entryId: string) => {
 	try {
@@ -47,6 +40,14 @@ export const getGitLastUpdatedDate = (entryId: string) => {
 };
 
 export async function getStaticPaths() {
+	// Mapping FR slug → EN slug for hreflang
+	const frToEnSlugMap: Record<string, string> = {
+		'automatisation-recharge-velo-heures-creuses': 'automating-ebike-charging-off-peak-hours',
+		'home-assistant-erreurs-a-eviter': 'home-assistant-mistakes-to-avoid',
+		'prises-connectees-economies-automatisations': 'smart-plugs-savings-automations',
+		'tado-retour-2-ans-economies-gaz': 'tado-review-2-years-gas-savings',
+	};
+
 	const allPosts = (await getCollection('blog')).sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 	);
