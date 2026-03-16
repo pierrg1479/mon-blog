@@ -32,4 +32,4 @@ const blogEn = defineCollection({
 	schema: blogSchema,
 });
 
-export const collections = { blog, 'blog-en': blogEn };
+export const collections = { blog, blogEn };

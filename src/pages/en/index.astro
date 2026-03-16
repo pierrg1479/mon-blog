@@ -6,7 +6,7 @@ import FooterEn from '../../components/FooterEn.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import HeaderEn from '../../components/HeaderEn.astro';
 
-const allPosts = (await getCollection('blog-en', ({ data }) => {
+const allPosts = (await getCollection('blogEn', ({ data }) => {
 	return data.draft !== true;
 })).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()

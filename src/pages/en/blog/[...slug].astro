@@ -6,13 +6,6 @@ import path from 'node:path';
 
 export const prerender = true;
 
-// Mapping EN slug → FR slug for hreflang
-const enToFrSlugMap: Record<string, string> = {
-	'automating-ebike-charging-off-peak-hours': 'automatisation-recharge-velo-heures-creuses',
-	'home-assistant-mistakes-to-avoid': 'home-assistant-erreurs-a-eviter',
-	'smart-plugs-savings-automations': 'prises-connectees-economies-automatisations',
-	'tado-review-2-years-gas-savings': 'tado-retour-2-ans-economies-gaz',
-};
 
 export const getGitLastUpdatedDate = (entryId: string) => {
 	try {
@@ -47,7 +40,15 @@ export const getGitLastUpdatedDate = (entryId: string) => {
 };
 
 export async function getStaticPaths() {
-	const allPosts = (await getCollection('blog-en')).sort(
+	// Mapping EN slug → FR slug for hreflang
+	const enToFrSlugMap: Record<string, string> = {
+		'automating-ebike-charging-off-peak-hours': 'automatisation-recharge-velo-heures-creuses',
+		'home-assistant-mistakes-to-avoid': 'home-assistant-erreurs-a-eviter',
+		'smart-plugs-savings-automations': 'prises-connectees-economies-automatisations',
+		'tado-review-2-years-gas-savings': 'tado-retour-2-ans-economies-gaz',
+	};
+
+	const allPosts = (await getCollection('blogEn')).sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 	);
 	const publishedPosts = allPosts.filter(({ data }) => data.draft !== true);
@@ -94,7 +95,7 @@ export async function getStaticPaths() {
 	});
 }
 
-type Props = CollectionEntry<'blog-en'> & { previousPost?: any; nextPost?: any; frSlug?: string };
+type Props = CollectionEntry<'blogEn'> & { previousPost?: any; nextPost?: any; frSlug?: string };
 
 const post = Astro.props;
 const { Content } = await render(post);
