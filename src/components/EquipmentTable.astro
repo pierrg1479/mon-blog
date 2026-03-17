@@ -13,10 +13,40 @@ type Equipment = {
 
 interface Props {
 	equipment: Equipment[];
+	lang?: 'fr' | 'en';
 }
 
-const { equipment } = Astro.props;
+const { equipment, lang = 'fr' } = Astro.props;
 const safeEquipment = Array.isArray(equipment) ? equipment : [];
+
+const i18n = {
+	fr: {
+		visual: 'Visuel',
+		name: 'Nom',
+		protocol: 'Protocole',
+		integration: 'Intégration HA',
+		price: 'Prix',
+		rating: 'Mon avis',
+		comment: 'Commentaire',
+		action: 'Action',
+		cta: 'Voir le produit',
+		ratingLabel: (n: number) => `Note ${n} sur 5`,
+	},
+	en: {
+		visual: 'Visual',
+		name: 'Name',
+		protocol: 'Protocol',
+		integration: 'HA Integration',
+		price: 'Price',
+		rating: 'My rating',
+		comment: 'Comment',
+		action: 'Action',
+		cta: 'View product',
+		ratingLabel: (n: number) => `Rating ${n} out of 5`,
+	},
+};
+
+const t = i18n[lang];
 
 const renderStars = (rating?: number) => {
 	const safeRating = Math.min(5, Math.max(0, Math.round(rating ?? 0)));
@@ -32,20 +62,20 @@ const protocolClass = (protocol?: string) =>
 <table class="equipment-table">
 	<thead>
 		<tr>
-			<th scope="col">Visuel</th>
-			<th scope="col">Nom</th>
-			<th scope="col">Protocole</th>
-			<th scope="col">Intégration HA</th>
-			<th scope="col">Prix</th>
-			<th scope="col">Mon avis</th>
-			<th scope="col">Commentaire</th>
-			<th scope="col">Action</th>
+			<th scope="col">{t.visual}</th>
+			<th scope="col">{t.name}</th>
+			<th scope="col">{t.protocol}</th>
+			<th scope="col">{t.integration}</th>
+			<th scope="col">{t.price}</th>
+			<th scope="col">{t.rating}</th>
+			<th scope="col">{t.comment}</th>
+			<th scope="col">{t.action}</th>
 		</tr>
 	</thead>
 		<tbody>
 			{safeEquipment.map((item) => (
 				<tr>
-				<td data-label="Visuel">
+				<td data-label={t.visual}>
 					<img
 						src={item.image}
 						alt={item.name}
@@ -56,7 +86,7 @@ const protocolClass = (protocol?: string) =>
 						class="product-image"
 					/>
 				</td>
-				<td data-label="Nom">
+				<td data-label={t.name}>
 					{item.articleUrl ? (
 						<a href={item.articleUrl} class="product-name-link">
 							{item.name}
@@ -65,22 +95,22 @@ const protocolClass = (protocol?: string) =>
 						<span class="product-name">{item.name}</span>
 					)}
 				</td>
-				<td data-label="Protocole">
+				<td data-label={t.protocol}>
 					<span class={`protocol-badge ${protocolClass(item.protocol)}`}>
 						{item.protocol ?? '-'}
 					</span>
 				</td>
-				<td data-label="Intégration HA">
+				<td data-label={t.integration}>
 					<span class="integration-pill">{item.integration}</span>
 				</td>
-				<td data-label="Prix">{item.price}</td>
-				<td data-label="Mon avis">
-					<span class="rating" aria-label={`Note ${Math.min(5, Math.max(0, Math.round(item.rating ?? 0)))} sur 5`}>
+				<td data-label={t.price}>{item.price}</td>
+				<td data-label={t.rating}>
+					<span class="rating" aria-label={t.ratingLabel(Math.min(5, Math.max(0, Math.round(item.rating ?? 0))))}>
 						{renderStars(item.rating)}
 					</span>
 				</td>
-				<td data-label="Commentaire">{item.comment}</td>
-				<td data-label="Action">
+				<td data-label={t.comment}>{item.comment}</td>
+				<td data-label={t.action}>
 					{item.affiliateLink ? (
 						<a
 							href={item.affiliateLink}
@@ -88,7 +118,7 @@ const protocolClass = (protocol?: string) =>
 							rel="noopener noreferrer nofollow"
 							class="affiliate-cta"
 						>
-								Voir le produit
+								{t.cta}
 							</a>
 						) : (
 						<span class="no-cta">-</span>
