@@ -1,6 +1,7 @@
 ---
-title: 'Tablette murale Home Assistant : mon installation complète (Xiaomi + Fully Kiosk + support dédié)'
-description: 'Comment j''ai transformé une Xiaomi Redmi Pad SE 11" en tableau de bord mural connecté avec Home Assistant et Fully Kiosk Browser, avec un câble USB encastré dans le mur et un support spécifique au modèle.'
+h1: 'Tablette murale Home Assistant : mon installation complète (Xiaomi + Fully Kiosk)'
+title: 'Tablette murale Home Assistant : guide complet pas à pas'
+description: 'Comment transformer une Xiaomi Redmi Pad SE 11" en dashboard domotique mural avec Fully Kiosk Browser : câble encastré, batterie préservée, réveil automatique. Mon retour après plusieurs semaines.'
 pubDate: 'Jun 25 2026'
 heroImage: '../../assets/blog-placeholder-3.jpg'
 author:
