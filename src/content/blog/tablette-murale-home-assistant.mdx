@@ -10,6 +10,8 @@ author:
   url: 'https://www.reddit.com/user/Patient-Gene703/'
 ---
 
+import AffiliateInline from '../../components/AffiliateInline.astro';
+
 Depuis que j'ai Home Assistant, j'ai cherché un moyen d'avoir un point de contrôle central dans la maison, quelque chose de toujours visible, toujours disponible, sans avoir à sortir son téléphone. Une tablette murale s'est imposée comme la réponse évidente. Voici comment j'ai réalisé l'installation de A à Z.
 
 ## Le matériel
@@ -114,7 +116,14 @@ La solution logicielle (limiter la charge à 80 % dans Fully Kiosk) ne suffit pa
 
 J'ai opté pour une approche plus propre : une **prise connectée Sonoff Zigbee S60ZBTPF** couplée à une automatisation Home Assistant qui coupe physiquement l'alimentation quand la batterie est suffisamment chargée, et la rétablit quand elle redescend trop bas. La batterie oscille entre 30 % et 85 %, sans jamais être stressée aux extrêmes.
 
-<!-- PRODUCT_CARD: Prise connectée Zigbee Sonoff S60ZBTPF | 16€ | ⭐⭐⭐⭐⭐ | Taille parfaite et fiable. -->
+<AffiliateInline
+  href="https://www.domadoo.fr/fr/produits-zigbee/7851-sonoff-prise-connectee-zigbee-16a-mesure-consommation.html?domid=129"
+  title="Prise connectée Zigbee Sonoff S60ZBTPF"
+  price="À partir de 16 €"
+  imageSrc="/images/sonoff-iplug-zigbee-smart-plug-s60zbtpf%20(1).jpg"
+  cta="Voir le produit"
+  dataAff="sonoff-s60zbtpf"
+/>
 
 ### Les automatisations
 
