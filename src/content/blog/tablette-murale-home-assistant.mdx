@@ -139,6 +139,9 @@ J'ai créé deux automatisations distinctes, plus lisibles à maintenir qu'une s
 
 **Tablette Couloir – Démarrer charge** : allume la prise dès que la batterie passe sous 30 %. Une condition évite de rallumer la prise si elle est déjà active.
 
+<details>
+<summary>Voir le code YAML</summary>
+
 ```yaml
 alias: Tablette Couloir - Démarrer charge
 description: Active la prise tablette si la batterie passe sous 30%
@@ -157,7 +160,12 @@ actions:
 mode: single
 ```
 
+</details>
+
 **Tablette Couloir – Arrêter charge** : coupe la prise dès que la batterie dépasse 85 %. Même logique : une condition vérifie que la prise est bien allumée avant de l'éteindre.
+
+<details>
+<summary>Voir le code YAML</summary>
 
 ```yaml
 alias: Tablette Couloir - Arrêter charge
@@ -176,6 +184,8 @@ actions:
       entity_id: switch.prise_tablette
 mode: single
 ```
+
+</details>
 
 > `sensor.tablette_battery_level` est le capteur de batterie exposé par l'intégration Fully Kiosk. `switch.prise_tablette` est la prise Sonoff Zigbee dans le couloir.
 
