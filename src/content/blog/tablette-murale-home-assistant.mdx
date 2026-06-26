@@ -133,9 +133,6 @@ J'ai opté pour une approche plus propre : une **prise connectée Sonoff Zigbee 
 
 J'ai créé deux automatisations distinctes, plus lisibles à maintenir qu'une seule avec une logique de choix.
 
-![Panneau Diagnostic de Fully Kiosk Browser : niveau de batterie 30%, température, mémoire disponible et statut de l'appareil](/images/tablette-murale/fully-kiosk-diagnostic.jpg)
-*Le panneau Diagnostic de Fully Kiosk : batterie à 30 %, non branché, 4 Go de mémoire libre sur 8 Go. Tout ce qu'il faut pour surveiller l'état de la tablette depuis HA.*
-
 **Tablette Couloir – Démarrer charge** : allume la prise dès que la batterie passe sous 30 %. Une condition évite de rallumer la prise si elle est déjà active.
 
 ```yaml
@@ -197,8 +194,16 @@ Fully Kiosk analyse le flux de la caméra frontale en local pour détecter un ch
 
 Une fois configuré, ces paramètres sont aussi visibles et pilotables directement depuis la fiche de l'appareil dans Home Assistant :
 
-![Panneau Configuration de Fully Kiosk Browser : Motion detection activé, Screen off timer à 60 secondes, Kiosk lock désactivé](/images/tablette-murale/fully-kiosk-configuration.jpg)
-*Tous les paramètres clés accessibles depuis la fiche HA : Motion detection activé, extinction écran après 60 s d'inactivité.*
+<div style="display: flex; gap: 1rem; align-items: flex-start; justify-content: center;">
+  <figure style="flex: 1; max-width: 48%; margin: 0;">
+    <img src="/images/tablette-murale/fully-kiosk-configuration.jpg" alt="Panneau Configuration de Fully Kiosk Browser : Motion detection activé, Screen off timer à 60 secondes, Kiosk lock désactivé" style="width: 100%; border-radius: 8px;" />
+    <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Configuration : Motion detection activé, extinction après 60 s.</figcaption>
+  </figure>
+  <figure style="flex: 1; max-width: 48%; margin: 0;">
+    <img src="/images/tablette-murale/fully-kiosk-diagnostic.jpg" alt="Panneau Diagnostic de Fully Kiosk Browser : niveau de batterie 30%, température, mémoire disponible et statut de l'appareil" style="width: 100%; border-radius: 8px;" />
+    <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Diagnostic : batterie à 30 %, non branché, 4 Go libres sur 8 Go.</figcaption>
+  </figure>
+</div>
 
 Au-delà du confort, cette détection anticipée a un vrai avantage pratique : elle donne quelques secondes à la tablette pour charger le contenu avant que vous soyez devant. Les flux caméras notamment ont un petit lag au démarrage, et le fait que l'écran soit déjà allumé quand vous arrivez fait une vraie différence.
 
