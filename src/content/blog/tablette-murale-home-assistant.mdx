@@ -49,7 +49,8 @@ J'ai choisi un support spécifique au modèle plutôt qu'un support universel : 
 
 Si le budget est une contrainte, des alternatives existent sur [Printables](https://www.printables.com) ou [Thingiverse](https://www.thingiverse.com) : chercher "Xiaomi Redmi Pad SE 11 wall mount". Il faudra une imprimante 3D ou passer par un service d'impression à la demande.
 
-![Tablette Xiaomi Redmi Pad SE 11" installée sur le mur avec le dashboard Home Assistant](/images/tablette-murale/tablette-dashboard.jpg)
+![Tablette Xiaomi Redmi Pad SE 11" dans son support mural Route Lisi Designs, affichant le dashboard Home Assistant](/images/tablette-murale/tablette-dashboard.jpg)
+*La tablette installée dans son support, vue principale du dashboard : chips météo, présence, caméra rue, contrôles portail et serrures.*
 
 ---
 
@@ -106,7 +107,8 @@ Ajouter l'intégration **Fully Kiosk Browser** depuis *Paramètres → Appareils
 
 HA expose alors des entités pour allumer/éteindre l'écran, consulter le niveau de batterie, déclencher une alarme sonore, etc. Le capteur de niveau de batterie est la pièce centrale de l'étape suivante.
 
-![Contrôles Fully Kiosk dans Home Assistant, Screen et Screensaver](/images/tablette-murale/ha-fully-kiosk-controles.jpg)
+![Fiche appareil Fully Kiosk Browser dans Home Assistant : contrôles Screen et Screensaver, capteurs et journal d'activité](/images/tablette-murale/fully-kiosk-ha-appareil.jpg)
+*La fiche de l'appareil dans HA expose les contrôles directs (allumage écran, screensaver) ainsi que l'historique des événements.*
 
 ---
 
@@ -131,7 +133,8 @@ J'ai opté pour une approche plus propre : une **prise connectée Sonoff Zigbee 
 
 J'ai créé deux automatisations distinctes, plus lisibles à maintenir qu'une seule avec une logique de choix.
 
-![Automatisations batterie tablette dans Home Assistant](/images/tablette-murale/ha-automations-batterie.jpg)
+![Panneau Diagnostic de Fully Kiosk Browser : niveau de batterie 30%, température, mémoire disponible et statut de l'appareil](/images/tablette-murale/fully-kiosk-diagnostic.jpg)
+*Le panneau Diagnostic de Fully Kiosk : batterie à 30 %, non branché, 4 Go de mémoire libre sur 8 Go. Tout ce qu'il faut pour surveiller l'état de la tablette depuis HA.*
 
 **Tablette Couloir – Démarrer charge** : allume la prise dès que la batterie passe sous 30 %. Une condition évite de rallumer la prise si elle est déjà active.
 
@@ -194,7 +197,8 @@ Fully Kiosk analyse le flux de la caméra frontale en local pour détecter un ch
 
 Une fois configuré, ces paramètres sont aussi visibles et pilotables directement depuis la fiche de l'appareil dans Home Assistant :
 
-![Configuration Fully Kiosk dans Home Assistant, Motion detection activé, Screen off timer à 60s](/images/tablette-murale/ha-fully-kiosk-configuration.jpg)
+![Panneau Configuration de Fully Kiosk Browser : Motion detection activé, Screen off timer à 60 secondes, Kiosk lock désactivé](/images/tablette-murale/fully-kiosk-configuration.jpg)
+*Tous les paramètres clés accessibles depuis la fiche HA : Motion detection activé, extinction écran après 60 s d'inactivité.*
 
 Au-delà du confort, cette détection anticipée a un vrai avantage pratique : elle donne quelques secondes à la tablette pour charger le contenu avant que vous soyez devant. Les flux caméras notamment ont un petit lag au démarrage, et le fait que l'écran soit déjà allumé quand vous arrivez fait une vraie différence.
 
@@ -218,9 +222,11 @@ J'ai créé deux dashboards dans Home Assistant : un pour la tablette murale, un
 
 **Vue Divers** : robots aspirateurs (avec carte de plan pour chaque étage), robot tondeuse, électroménager (sèche-linge, lave-linge, lave-vaisselle), éclairages extérieurs, et un bloc bureau/garage pour l'humidité, le déshumidificateur et le chargeur vélo.
 
-![Vue accueil du dashboard Home Assistant sur la tablette murale](/images/tablette-murale/tablette-vue-accueil.jpg)
+![Vue accueil du dashboard Home Assistant sur la tablette murale : sécurité, volets, prévisions météo et contrôles portail](/images/tablette-murale/tablette-vue-accueil.jpg)
+*Vue accueil scrollée : alarme, modes de sécurité, volets, prévisions 4 jours, portail, serrures, porte de garage et collecte des poubelles.*
 
-![Vue musique du dashboard : contrôle Spotify et ampli NAD](/images/tablette-murale/tablette-vue-musique.jpg)
+![Vue musique du dashboard Home Assistant : contrôle Spotify en cours, ampli NAD et raccourcis playlists](/images/tablette-murale/tablette-vue-musique.jpg)
+*Vue musique : contrôle Spotify actif (lecture en cours à 79 %), ampli NAD et raccourcis vers les playlists fréquentes.*
 
 > **Sur la mise en page** : le format tablette murale impose des cartes larges et des boutons généreux. Tout doit être lisible et cliquable à environ 1,5 m de distance.
 
