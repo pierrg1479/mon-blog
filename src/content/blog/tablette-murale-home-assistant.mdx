@@ -223,7 +223,9 @@ Au-delà du confort, cette détection anticipée a un vrai avantage pratique : e
 
 J'avais d'abord testé une autre approche : un double appui sur l'écran pour l'allumer. C'était simple à mettre en place mais pas du tout satisfaisant en termes de réactivité. On se retrouvait à tapoter l'écran, attendre, retapoter. La détection par caméra frontale règle complètement ce problème.
 
-> **Note pratique** : la sensibilité est à calibrer selon l'éclairage ambiant. En conditions sombres, la caméra est moins réactive. On peut monter la sensibilité ou opter pour une luminosité de veille très basse plutôt qu'un écran totalement éteint.
+<div class="callout callout--warning">
+  <p class="callout__content">⚠️ <strong>Mise à jour :</strong> J'ai finalement désactivé la détection de mouvement par caméra frontale. Elle consommait trop rapidement la batterie, même sans être utilisée activement. J'ai basculé sur une automatisation déclenchée par un <strong>capteur de mouvement Zigbee Sonoff</strong> placé dans le couloir : même réactivité, consommation batterie négligeable.</p>
+</div>
 
 ---
 
