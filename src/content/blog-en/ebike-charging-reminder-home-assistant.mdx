@@ -127,11 +127,13 @@ Every evening at 8 pm, Home Assistant checks the Turbo range. If it is below 20 
 
 The automation doesn't run when the house is in Away, Holiday or Holiday-at-home mode. These modes are a dropdown helper (`input_select.mode_maison`).
 
-### If the notification doesn't arrive: 3 attempts, then an alert
+### If sending fails: 3 attempts, then an alert
 
-In Home Assistant, a phone's notify entity stores the time of the last message sent. The automation uses it to check that the reminder actually went out.
+In Home Assistant, a phone's notify entity stores the time of the last message sent. The automation uses it to check that Home Assistant was able to send the reminder.
 
-If the state hasn't changed, Home Assistant retries every 5 minutes, up to 3 times. After 3 failures, it sends an alert to my own phone so I can tell my wife. In the runs I was able to check, the first attempt always went through.
+Note that this doesn't prove the phone received it: the state changes as soon as the notification service accepts the message. If the phone is offline, the send still counts as successful, so there is no retry and no alert.
+
+If the state hasn't changed, the send failed: Home Assistant retries every 5 minutes, up to 3 times. After 3 failures, it sends an alert to my own phone so I can tell my wife. In the runs I was able to check, the first attempt always went through.
 
 <details>
 <summary>View YAML code</summary>
@@ -186,7 +188,7 @@ actions:
         target:
           entity_id: notify.my_phone
         data:
-          title: E-bike reminder not delivered
+          title: E-bike reminder not sent
           message: "3 attempts failed. Turbo range: {{ states('sensor.performance_line_px_reachable_range_turbo') | float(0) | round(0) | int }} km. Remember to charge the bike."
 mode: single
 ```

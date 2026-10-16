@@ -128,11 +128,13 @@ Chaque soir à 20h, Home Assistant vérifie l'autonomie Turbo. Si elle est sous 
 
 L'automatisation ne s'exécute pas quand la maison est en mode Absent, Vacances ou Vacances à la maison. Ces modes sont une liste déroulante (`input_select.mode_maison`).
 
-### Si la notification n'arrive pas : 3 essais, puis une alerte
+### Si l'envoi échoue : 3 essais, puis une alerte
 
-Dans Home Assistant, l'entité de notification d'un téléphone enregistre l'heure du dernier message envoyé. L'automatisation s'en sert pour vérifier que le rappel est bien parti.
+Dans Home Assistant, l'entité de notification d'un téléphone enregistre l'heure du dernier message envoyé. L'automatisation s'en sert pour vérifier que Home Assistant a bien pu envoyer le rappel.
 
-Si l'état n'a pas changé, Home Assistant réessaie toutes les 5 minutes, 3 fois au maximum. Après 3 échecs, il m'envoie une alerte sur mon propre téléphone pour que je prévienne ma femme. Sur les exécutions que j'ai pu consulter, le premier envoi a toujours suffi.
+Attention, cela ne prouve pas que le téléphone l'a reçu : l'état change dès que le service de notification accepte le message. Si le téléphone est hors réseau, l'envoi compte comme réussi et il n'y a ni nouvel essai ni alerte.
+
+Si l'état n'a pas changé, l'envoi a échoué : Home Assistant réessaie toutes les 5 minutes, 3 fois au maximum. Après 3 échecs, il m'envoie une alerte sur mon propre téléphone pour que je prévienne ma femme. Sur les exécutions que j'ai pu consulter, le premier envoi a toujours suffi.
 
 <details>
 <summary>Voir le code YAML</summary>
@@ -187,7 +189,7 @@ actions:
         target:
           entity_id: notify.mon_smartphone
         data:
-          title: Rappel vélo non délivré
+          title: Rappel vélo non envoyé
           message: "3 tentatives d'envoi ont échoué. Autonomie Turbo : {{ states('sensor.performance_line_px_reachable_range_turbo') | float(0) | round(0) | int }} km. Penser à recharger le vélo."
 mode: single
 ```
