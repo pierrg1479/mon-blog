@@ -10,6 +10,7 @@ import ReadingProgress from '../components/ReadingProgress.astro';
 import ArticleSchema from '../components/ArticleSchema.astro';
 import ImageLightbox from '../components/ImageLightbox.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import { canonicalFor } from '../schema';
 import '../styles/article-ultra-clean.css';
 import '../styles/article-patch.css';
 
@@ -50,7 +51,7 @@ const {
 } = Astro.props;
 
 const siteBase = Astro.site?.href ?? Astro.url.origin;
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+const canonicalUrl = canonicalFor(Astro.url.pathname);
 const displayTitle = h1 || title;
 
 const heroImageSource = heroImage
@@ -98,14 +99,23 @@ const authorAvatar = author?.avatar
 const alternates = [
 	{ hreflang: 'fr', href: canonicalUrl },
 ];
-if (enSlug) {
-	alternates.push({ hreflang: 'en', href: new URL(`/en/blog/${enSlug}/`, siteBase).href });
+const translationUrl = enSlug ? new URL(`/en/blog/${enSlug}/`, siteBase).href : undefined;
+if (translationUrl) {
+	alternates.push({ hreflang: 'en', href: translationUrl });
 }
 ---
 
 <html lang="fr">
 	<head>
-		<BaseHead title={title} description={description} image={heroImageSource} alternates={alternates} />
+		<BaseHead
+			title={title}
+			description={description}
+			image={heroImageSource}
+			alternates={alternates}
+			type="article"
+			publishedTime={pubDate}
+			modifiedTime={updatedDate}
+		/>
 		<ArticleSchema
 			title={title}
 			headline={displayTitle}
@@ -115,6 +125,8 @@ if (enSlug) {
 			image={schemaImage}
 			canonicalUrl={canonicalUrl}
 			author={author}
+			lang="fr"
+			translationUrl={translationUrl}
 		/>
 		<style>
 			main {

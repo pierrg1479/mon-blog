@@ -28,68 +28,6 @@ const lastUpdated = new Date().toLocaleDateString('en-US', {
 
 const siteUrl = 'https://www.the-optimization-guy.com';
 
-const structuredProducts = [
-	{
-		name: 'Sonoff SNZB-04 Contact',
-		image: '/images/equipment/sonoff-snzb-04-contact.jpg',
-		description: 'Perfect for doors and windows.',
-		url: 'https://domadoo.fr/sonoff-snzb-04?ref=the-optimization-guy',
-		brand: 'Sonoff',
-		price: '11.00',
-	},
-	{
-		name: 'Tado V3+ Thermostat',
-		image: '/images/equipment/Thermostat-Intelligent-Tado-v3+.jpg',
-		description: 'The best smart thermostat, quick ROI.',
-		url: 'https://domadoo.fr/tado-v3?ref=the-optimization-guy',
-		brand: 'tado°',
-		price: '129.00',
-	},
-	{
-		name: 'Tado Thermostatic Heads',
-		image: '/images/equipment/tete-thermostatique-tado-v3+.avif',
-		description: 'Room-by-room granularity, great in winter.',
-		url: 'https://domadoo.fr/tete-tado?ref=the-optimization-guy',
-		brand: 'tado°',
-		price: '79.00',
-	},
-	{
-		name: 'Switchbot Bot',
-		image: '/images/equipment/switchbot-bot.jpg',
-		description: 'Handy for automating an existing button.',
-		url: 'https://domadoo.fr/switchbot-bot?ref=the-optimization-guy',
-		brand: 'SwitchBot',
-		price: '29.00',
-	},
-];
-
-const structuredData = {
-	'@context': 'https://schema.org',
-	'@type': 'CollectionPage',
-	name: 'My Equipment – The Optimization Guy',
-	url: `${siteUrl}/en/my-equipment/`,
-	description:
-		'Discover all the equipment recommended by The Optimization Guy: devices, tools and accessories used daily.',
-	mainEntity: structuredProducts.map((product) => ({
-		'@type': 'Product',
-		name: product.name,
-		image: product.image.startsWith('http') ? product.image : `${siteUrl}${product.image}`,
-		description: product.description,
-		url: product.url,
-		brand: {
-			'@type': 'Brand',
-			name: product.brand,
-		},
-		offers: {
-			'@type': 'Offer',
-			url: product.url,
-			priceCurrency: 'EUR',
-			price: product.price,
-			availability: 'https://schema.org/InStock',
-			itemCondition: 'https://schema.org/NewCondition',
-		},
-	})),
-};
 
 const security: Equipment[] = [
 	{
@@ -371,7 +309,7 @@ const heating: Equipment[] = [
 		rating: 5,
 		comment: 'The best smart thermostat, quick ROI.',
 		affiliateLink: 'https://amzn.to/4sBhe8g',
-		articleUrl: '/en/blog/tado-review-2-years-gas-savings',
+		articleUrl: '/en/blog/tado-review-2-years-gas-savings/',
 	},
 	{
 		name: 'Tado Thermostatic Heads',
@@ -382,7 +320,7 @@ const heating: Equipment[] = [
 		rating: 5,
 		comment: 'Room-by-room granularity, great in winter.',
 		affiliateLink: 'https://amzn.to/4qlY9Wg',
-		articleUrl: '/en/blog/tado-review-2-years-gas-savings',
+		articleUrl: '/en/blog/tado-review-2-years-gas-savings/',
 	},
 	{
 		name: 'Nodon SIN-4-FP-21 Pilot Wire Module',
@@ -661,6 +599,32 @@ const sections = [
 	},
 ];
 
+// Données structurées : liste du matériel affiché sur la page (pas de Product/Offer, la page ne vend rien)
+const equipmentItems = sections.flatMap((section) => section.items);
+const toAbsolute = (path: string) => (path.startsWith('http') ? path : `${siteUrl}${path}`);
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@type': 'CollectionPage',
+	'@id': `${siteUrl}/en/my-equipment/#webpage`,
+	name: 'My Equipment – The Optimization Guy',
+	url: `${siteUrl}/en/my-equipment/`,
+	description: 'The smart home gear I use every day with Home Assistant: cameras, sensors, smart heating, lighting and my recommendations.',
+	inLanguage: 'en',
+	isPartOf: { '@id': `${siteUrl}/#website` },
+	image: toAbsolute(heroImg.src),
+	mainEntity: {
+		'@type': 'ItemList',
+		numberOfItems: equipmentItems.length,
+		itemListElement: equipmentItems.map((item, index) => ({
+			'@type': 'ListItem',
+			position: index + 1,
+			name: item.name,
+			image: toAbsolute(item.image),
+			...(item.articleUrl && { url: toAbsolute(item.articleUrl) }),
+		})),
+	},
+};
+
 const siteUrlBase = Astro.site?.href ?? Astro.url.origin;
 const alternates = [
 	{ hreflang: 'en', href: new URL('/en/my-equipment/', siteUrlBase).href },
@@ -675,6 +639,7 @@ const alternates = [
 			title="My Home Automation Equipment – The Optimization Guy"
 			description="Complete list of the smart home equipment I use daily: cameras, sensors, connected heating, and my recommendations."
 			alternates={alternates}
+			image={heroImg.src}
 		/>
 		<script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
 	</head>
