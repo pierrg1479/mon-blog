@@ -1,0 +1,263 @@
+---
+h1: 'Rappel de recharge du vélo électrique : ma solution avec Home Assistant'
+title: 'Rappel de recharge vélo électrique avec Home Assistant'
+description: "Recevez une alerte quand l'autonomie de votre vélo électrique Bosch ne suffit plus pour le trajet du lendemain, avec Home Assistant."
+pubDate: 'Oct 16 2026'
+heroImage: '../../assets/hero-rappel-recharge-velo-electrique.jpg'
+author:
+  name: Pierre
+  avatar: '/hannibal-cercle.png'
+  url: 'https://www.reddit.com/user/Patient-Gene703/'
+---
+
+import FaqBlock from '../../components/FaqBlock.astro';
+import ReadAlso from '../../components/ReadAlso.astro';
+
+Le deuxième vélo de la maison sert à un trajet domicile-travail de 16 km aller-retour. Le problème n'a jamais été de recharger. C'est d'y penser le soir, avant que la batterie soit trop basse pour le lendemain.
+
+L'écran du vélo affiche l'autonomie, encore faut-il penser à le regarder la veille. Résultat : du stress au moment de partir, et quelques mauvaises surprises.
+
+Aujourd'hui, Home Assistant s'en occupe. Il lit l'autonomie du vélo dans le cloud Bosch et envoie un rappel seulement si elle ne suffit pas pour le trajet du lendemain. Ensuite, la charge démarre seule en heures creuses. Voici l'installation complète : matériel, intégration, calcul du pourcentage, automatisation et retour d'expérience.
+
+## Le vélo et le matériel utilisé
+
+Le vélo est un [Riese & Müller Multitinker2 family](https://www.r-m.de/fr/bikes/multitinker2/multitinker2-family/), un vélo cargo urbain compact en roues de 20 pouces. Pour cet article, c'est son équipement Bosch qui compte :
+
+- **Moteur** : Bosch Performance Line PX, de la gamme Smart System
+- **Batterie** : Bosch PowerTube 625 Wh
+- **Écran** : Bosch Purion 200
+
+Côté maison :
+
+- **Home Assistant** avec l'intégration communautaire [Bosch eBike](https://github.com/Xunil99/ha-bosch-ebike), installée via HACS (version 1.19.58 chez moi)
+- **Une prise connectée Zigbee Sonoff S60ZBTPF** avec mesure de puissance, sur laquelle est branché le chargeur (j'en utilise plusieurs dans la maison, voir [comment les prises connectées m'ont aidé à réduire ma consommation](/blog/prises-connectees-economies-automatisations/))
+- **L'application Home Assistant** sur le téléphone de la personne qui utilise le vélo, pour recevoir les notifications
+- **Un [support mural pour le chargeur Bosch Smart System 4A (BPC3400)](https://www.amazon.fr/dp/B09VKZ3NPK)**, qui tient le chargeur d'origine au mur du garage. Pratique, cher pour une pièce imprimée en 3D, mais parfaitement adapté.
+
+## Comment Home Assistant connaît-il l'autonomie d'un vélo Bosch ?
+
+L'intégration Bosch eBike lit les données du vélo via l'API officielle Bosch Data Act, avec le compte Bosch du cycliste. Elle crée dans Home Assistant un appareil de plus de 70 entités, dont l'autonomie restante pour chaque mode d'assistance.
+
+### Quels vélos Bosch sont compatibles ?
+
+Ce rappel ne fonctionne qu'avec un moteur Bosch Smart System. D'après le [README de l'intégration](https://github.com/Xunil99/ha-bosch-ebike), les vélos de la génération précédente (eBike System 2) sont pris en charge en version alpha, mais l'API ne fournit pour eux ni l'autonomie par mode ni l'état de la batterie. L'ancien système Classic Line n'est pas pris en charge du tout.
+
+C'est pour ça que mon propre vélo, un Moustache Lundi 27 de 2022, n'a pas droit au rappel. Son moteur Bosch Active Line Plus appartient à l'eBike System 2 et son écran Intuvia n'est pas connecté : Home Assistant n'a aucune autonomie à lire.
+
+Autre limite : l'intégration exige un compte Bosch SingleKey ID enregistré dans l'Union européenne, car l'API Data Act n'est ouverte qu'aux comptes européens.
+
+### Installer l'intégration Bosch eBike
+
+Le README détaille chaque écran. En résumé :
+
+1. Liez le vélo à l'application Bosch eBike Flow avec un compte SingleKey ID.
+2. Sur le [portail Bosch Data Act](https://portal.bosch-ebike.com/data-act/app), créez une "app" (nommée par exemple Home Assistant) en renseignant les deux adresses `my.home-assistant.io` indiquées dans le README. Notez le Client-ID obtenu.
+3. Dans HACS, installez l'intégration Bosch eBike, puis redémarrez Home Assistant.
+4. Dans l'eBike Manager de Bosch, section Data Act, activez le service de votre app : Home Assistant s'ouvre, collez le Client-ID et connectez-vous au compte Bosch.
+5. Toujours dans l'eBike Manager, activez le partage de données pour le vélo, puis rechargez l'intégration dans Home Assistant.
+
+L'étape 5 est la plus facile à oublier : sans elle, l'intégration est installée mais aucune entité n'apparaît.
+
+### Les capteurs utiles pour la recharge
+
+Valeurs relevées un soir où la recharge s'imposait :
+
+| Capteur | Valeur | Ce que j'en fais |
+|---|---|---|
+| Autonomie Turbo | 15 km | Déclenche le rappel sous 20 km |
+| Autonomie Eco, Auto et mode intermédiaire | 32, 24 et 19 km | Calcul du pourcentage |
+| Autonomie batterie pleine estimée | 136 km (4,6 Wh/km) | Simple information |
+| Cycles de charge de la batterie | 5,6 | Suivi de l'usure |
+| Compteur kilométrique | 306 km | Simple information |
+
+### Les limites : pas de pourcentage, pas de temps réel
+
+Dans mon installation, l'intégration ne donne pas de pourcentage de batterie exploitable : le capteur "Last Ride Battery (%)" reste à "inconnu". Le README indique qu'un niveau de charge en direct demande un pont Bluetooth à base d'ESP32, que je n'ai pas installé.
+
+Les valeurs ne sont pas non plus en temps réel. L'intégration interroge Bosch toutes les 10 minutes, mais l'autonomie ne change que quand le vélo a synchronisé ses données. Cette synchronisation se fait quand le téléphone, avec l'application eBike Flow, se connecte au vélo à l'allumage. Chez nous, l'autonomie est donc mise à jour le matin au départ et au retour.
+
+## Estimer le pourcentage de batterie à partir de l'autonomie
+
+Pour afficher un pourcentage dans la notification et sur le tableau de bord, j'ai créé une entrée Modèle (Paramètres > Appareils et services > Entrées > Créer une entrée > Modèle > Capteur). Elle additionne les quatre autonomies et divise le total par 236,2 km. Unité : %, classe d'appareil : Batterie.
+
+236,2 km correspond à peu près à la somme des quatre autonomies batterie pleine. Les jours où la batterie était pleine ou presque, j'ai relevé entre 233 et 246 km, d'où le plafond à 100 %. C'est une estimation : elle suppose que l'autonomie baisse au même rythme que la charge.
+
+Pour l'adapter à votre vélo, relevez la somme de vos autonomies juste après une charge complète et remplacez 236,2 par votre valeur. Les noms des modes dépendent aussi du vélo : chez moi, un mode s'appelle `a100m40030`, le nom interne remonté par Bosch.
+
+<details>
+<summary>Voir le code YAML</summary>
+
+```jinja
+{% set ids = ['sensor.performance_line_px_reachable_range_eco',
+              'sensor.performance_line_px_reachable_range_auto',
+              'sensor.performance_line_px_reachable_range_a100m40030',
+              'sensor.performance_line_px_reachable_range_turbo'] %}
+{% set vals = ids | map('states') | select('is_number') | map('float') | list %}
+{% if vals | count == 4 %}
+  {{ [((vals | sum) / 236.2 * 100) | round(0), 100] | min }}
+{% else %}
+  {{ none }}
+{% endif %}
+```
+
+</details>
+
+## La règle : prévenir seulement si l'autonomie ne suffit pas pour demain
+
+Une notification envoyée tous les soirs finit par être ignorée. L'automatisation n'envoie donc un rappel que si la recharge est vraiment nécessaire.
+
+### Pourquoi 20 km en mode Turbo ?
+
+Le trajet domicile-travail fait 16 km aller-retour. J'ajoute environ 25 % de marge, ce qui donne un seuil de 20 km. Je me base sur le mode Turbo parce que c'est celui qui consomme le plus : si l'autonomie Turbo suffit, tous les autres modes suffisent aussi.
+
+### Un message différent selon le lendemain
+
+Chaque soir à 20h, Home Assistant vérifie l'autonomie Turbo. Si elle est sous 20 km :
+
+- du dimanche au jeudi, le message est direct : "Pense à recharger ton vélo", avec les kilomètres restants et le rappel que le trajet du lendemain en fait 16 ;
+- le vendredi et le samedi, il n'y a pas de trajet le lendemain : le message signale une batterie basse et propose de recharger pendant le week-end.
+
+<figure>
+  <img src="/images/rappel-recharge-velo/notification-rappel-recharge-velo.jpg" alt="Notification Home Assistant sur Android : Batterie vélo basse, il reste 15 km en Turbo (environ 38 %), pas de trajet demain mais recharge possible ce week-end" style="width: 100%; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La version du vendredi soir : pas de trajet le lendemain, le ton est plus détendu.</figcaption>
+</figure>
+
+### Pas de rappel en vacances
+
+L'automatisation ne s'exécute pas quand la maison est en mode Absent, Vacances ou Vacances à la maison. Ces modes sont une liste déroulante (`input_select.mode_maison`).
+
+### Si l'envoi échoue : 3 essais, puis une alerte
+
+Dans Home Assistant, l'entité de notification d'un téléphone enregistre l'heure du dernier message envoyé. L'automatisation s'en sert pour vérifier que Home Assistant a bien pu envoyer le rappel.
+
+Attention, cela ne prouve pas que le téléphone l'a reçu : l'état change dès que le service de notification accepte le message. Si le téléphone est hors réseau, l'envoi compte comme réussi et il n'y a ni nouvel essai ni alerte.
+
+Si l'état n'a pas changé, l'envoi a échoué : Home Assistant réessaie toutes les 5 minutes, 3 fois au maximum. Après 3 échecs, il m'envoie une alerte sur mon propre téléphone pour que je fasse passer le message. Sur les exécutions que j'ai pu consulter, le premier envoi a toujours suffi.
+
+<details>
+<summary>Voir le code YAML</summary>
+
+```yaml
+alias: Vélo - Rappel recharge
+description: >-
+  Chaque soir à 20h, prévient si l'autonomie Turbo est sous 20 km
+  (trajet de 16 km aller-retour + environ 25 % de marge).
+  Message ferme du dimanche au jeudi, détendu le vendredi et le samedi.
+  3 tentatives si l'envoi échoue, puis alerte.
+triggers:
+  - trigger: time
+    at: "20:00:00"
+conditions:
+  - condition: numeric_state
+    entity_id: sensor.performance_line_px_reachable_range_turbo
+    below: 20
+  - condition: not
+    conditions:
+      - condition: state
+        entity_id: input_select.mode_maison
+        state:
+          - Absent
+          - Vacances
+          - Vacances à la maison
+variables:
+  dernier_envoi_avant: "{{ states('notify.smartphone_cycliste') }}"
+actions:
+  - repeat:
+      sequence:
+        - action: notify.send_message
+          continue_on_error: true
+          target:
+            entity_id: notify.smartphone_cycliste
+          data:
+            title: "{% if now().weekday() in [4, 5] %}Batterie vélo basse{% else %}Pense à recharger ton vélo{% endif %}"
+            message: "{% set km = states('sensor.performance_line_px_reachable_range_turbo') | float(0) | round(0) | int %}{% set pct = states('sensor.batterie_velo_estimee') %}{% if now().weekday() in [4, 5] %}Il reste {{ km }} km en Turbo (≈ {{ pct }} %). Pas de trajet demain, mais tu peux la recharger tranquillement ce week-end.{% else %}Il reste {{ km }} km en Turbo (≈ {{ pct }} %) et ton trajet de demain en fait 16.{% endif %}"
+        - if:
+            - condition: template
+              value_template: "{{ states('notify.smartphone_cycliste') == dernier_envoi_avant and repeat.index < 3 }}"
+          then:
+            - delay: "00:05:00"
+      until:
+        - condition: template
+          value_template: "{{ states('notify.smartphone_cycliste') != dernier_envoi_avant or repeat.index >= 3 }}"
+  - if:
+      - condition: template
+        value_template: "{{ states('notify.smartphone_cycliste') == dernier_envoi_avant }}"
+    then:
+      - action: notify.send_message
+        target:
+          entity_id: notify.mon_smartphone
+        data:
+          title: Rappel vélo non envoyé
+          message: "3 tentatives d'envoi ont échoué. Autonomie Turbo : {{ states('sensor.performance_line_px_reachable_range_turbo') | float(0) | round(0) | int }} km. Penser à recharger le vélo."
+mode: single
+```
+
+</details>
+
+## Ensuite, la charge démarre seule en heures creuses
+
+Une fois le rappel reçu, il n'y a plus qu'une chose à faire : brancher le chargeur. La prise connectée reste éteinte jusqu'à 22h01, le début des heures creuses. Home Assistant l'allume alors, puis la coupe dès que la puissance reste sous 5 W pendant 2 minutes, signe que la charge est terminée.
+
+<ReadAlso
+  slug="automatisation-recharge-velo-heures-creuses"
+  title="Automatiser la recharge de son vélo électrique en heures creuses"
+/>
+
+Depuis cet article, j'ai rendu l'automatisation plus robuste. Si la prise Zigbee ne répond pas à 22h01, Home Assistant fait 3 tentatives, recommence vers 22h15 et ne m'alerte que si elle ne répond toujours pas.
+
+Voici ce que donne la chaîne complète sur une soirée réelle :
+
+1. **20h00** : il reste 16 km en Turbo (≈ 41 %), le rappel part.
+2. **22h01** : la prise s'allume, le chargeur tire environ 165 W.
+3. **Vers 0h30** : la puissance retombe et la prise se coupe. La charge a consommé 0,38 kWh au compteur de la prise.
+4. **Le lendemain matin** : après synchronisation, le vélo affiche 40 km d'autonomie en Turbo.
+
+<div class="callout callout--warning">
+  <p class="callout__content"><strong>Sécurité de la batterie :</strong> Bosch recommande de charger dans un endroit sec équipé de détecteurs de fumée, entre 0 et 40 °C, avec un chargeur compatible, et de ne pas laisser la batterie sans surveillance pendant la recharge (<a href="https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Akku_Guide/Akku_Guide/Bosch-eBike-Akkuguide-FR.pdf">guide de la batterie Bosch</a>). Une charge programmée la nuit s'écarte de cette dernière consigne. Chez moi, la charge se fait dans le garage, équipé d'un détecteur de fumée relié à Home Assistant, avec le chargeur d'origine, et la prise coupe l'alimentation dès la fin de charge. À vous de juger selon votre installation.</p>
+</div>
+
+## L'état du vélo en un coup d'œil sur le tableau de bord
+
+Sur mon tableau de bord Home Assistant, trois cartes Mushroom résument la situation. La première affiche l'autonomie Turbo et le pourcentage estimé, en rouge sous 20 km, en orange sous 30 km, en vert au-dessus. La deuxième dit "À recharger pour demain" ou "OK pour demain". La troisième montre l'état de la prise du chargeur.
+
+<figure>
+  <img src="/images/rappel-recharge-velo/dashboard-velo-autonomie-home-assistant.jpg" alt="Tableau de bord Home Assistant, section Vélo électrique : 15 km en Turbo et 38 %, alerte À recharger pour demain pour un trajet domicile-travail de 16 km aller-retour, prise du chargeur activée" style="width: 100%; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La section vélo du tableau de bord, un soir où la recharge s'impose.</figcaption>
+</figure>
+
+## Mon retour d'expérience
+
+Home Assistant garde le détail des cinq dernières exécutions. Sur ces cinq soirs, le rappel est parti deux fois et ne s'est pas déclenché les trois autres, l'autonomie étant suffisante.
+
+Il n'a pas évité de panne à proprement parler. Mais il a supprimé le stress du matin et les mauvaises surprises au moment de partir. Et il a été adopté sans discussion à la maison.
+
+Une limite à connaître : le rappel lit la dernière valeur synchronisée. Si le vélo n'a pas synchronisé depuis le dernier trajet, l'autonomie lue à 20h peut être plus haute que la réalité.
+
+## Conclusion
+
+La clé de cette installation est le seuil : un rappel envoyé seulement quand il le faut a plus de chances d'être lu qu'une notification quotidienne. Si votre vélo Bosch est en Smart System, l'intégration Bosch eBike vous donne tout ce qu'il faut pour le construire. Pour aller plus loin, le README décrit un pont Bluetooth à base d'ESP32 qui remonte le niveau de charge en direct.
+
+## FAQ
+
+<FaqBlock items={[
+  {
+    question: "Est-ce que ça marche avec mon vélo électrique Bosch ?",
+    answer: "Pour ce rappel, il faut un moteur Bosch Smart System. Les vélos eBike System 2 sont pris en charge en alpha mais ne remontent pas l'autonomie par mode, et l'ancien Classic Line n'est pas pris en charge."
+  },
+  {
+    question: "Faut-il l'application Bosch eBike Flow ?",
+    answer: "Oui. Le vélo doit être lié à l'application eBike Flow avec un compte SingleKey ID, et ce compte doit être enregistré dans l'Union européenne pour accéder à l'API Bosch Data Act."
+  },
+  {
+    question: "L'autonomie est-elle mise à jour en temps réel dans Home Assistant ?",
+    answer: "Non. L'intégration interroge Bosch toutes les 10 minutes, mais l'autonomie ne change qu'après une synchronisation, quand le téléphone se connecte au vélo à l'allumage. Chez moi, après une charge de nuit, la nouvelle valeur apparaît le lendemain matin."
+  },
+  {
+    question: "Pourquoi se baser sur le mode Turbo plutôt que sur le mode Eco ?",
+    answer: "Le mode Turbo est celui qui consomme le plus, donc son autonomie est la plus basse. Si elle couvre le trajet, tous les autres modes le couvrent aussi."
+  },
+  {
+    question: "Comment savoir si l'autonomie suffit pour mon trajet ?",
+    answer: "Prenez la distance de votre trajet aller-retour et ajoutez environ 25 % de marge. Avec 16 km aller-retour, j'arrive à un seuil de 20 km en Turbo."
+  }
+]} />
