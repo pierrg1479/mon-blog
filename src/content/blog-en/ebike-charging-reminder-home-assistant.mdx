@@ -16,7 +16,7 @@ The second bike in our house is used for commuting: a 16 km round trip (about 10
 
 The bike's display shows the remaining range, but you have to think of checking it the night before. The result: stressful departures and a few unpleasant surprises.
 
-Since late September 2026, Home Assistant handles it. It reads the bike's range from the Bosch cloud and only sends a reminder when that range won't cover the next day's commute. Then charging starts on its own during off-peak hours. Here is the full setup: hardware, integration, battery percentage estimate, automation and real-world results.
+Now Home Assistant handles it. It reads the bike's range from the Bosch cloud and only sends a reminder when that range won't cover the next day's commute. Then charging starts on its own during off-peak hours. Here is the full setup: hardware, integration, battery percentage estimate, automation and real-world results.
 
 ## The bike and the hardware
 
@@ -60,7 +60,7 @@ Step 5 is the easiest one to miss: without it, the integration is installed but 
 
 ### The sensors that matter for charging
 
-Values recorded on October 16, 2026:
+Values recorded on an evening when charging was needed:
 
 | Sensor | Value | What I use it for |
 |---|---|---|
@@ -81,7 +81,7 @@ The values aren't real time either. The integration polls Bosch every 10 minutes
 
 To show a percentage in the notification and on the dashboard, I created a Template helper (Settings > Devices & services > Helpers > Create helper > Template > Sensor). It adds up the four ranges and divides the total by 236.2 km. Unit: %, device class: Battery.
 
-236.2 km is roughly the sum of the four ranges with a full battery. On days when the battery was full or nearly full, I recorded between 233 and 246 km (October 13 and 15, 2026), hence the 100% cap. It is an estimate: it assumes the range drops at the same pace as the charge.
+236.2 km is roughly the sum of the four ranges with a full battery. On days when the battery was full or nearly full, I recorded between 233 and 246 km, hence the 100% cap. It is an estimate: it assumes the range drops at the same pace as the charge.
 
 To adapt it to your bike, write down the sum of your ranges right after a full charge and replace 236.2 with your own value. Mode names also depend on the bike: one of mine is called `a100m40030`, the internal name reported by Bosch.
 
@@ -201,12 +201,12 @@ Once the reminder arrives, there is only one thing left to do: plug in the charg
 
 Since that article, I made the automation more robust. If the Zigbee plug doesn't respond at 10:01 pm, Home Assistant makes 3 attempts, tries again around 10:15 pm, and only alerts me if it still doesn't respond.
 
-Here is the full chain on October 14, 2026:
+Here is the full chain on a real evening:
 
 1. **8:00 pm**: 16 km left in Turbo (≈ 41%), the reminder goes out.
 2. **10:01 pm**: the plug turns on, the charger draws about 165 W.
 3. **Around 12:30 am**: power drops and the plug turns off. The charge used 0.38 kWh on the plug's meter.
-4. **Next day at 8:44 am**: after syncing, the bike shows 40 km of Turbo range.
+4. **Next morning**: after syncing, the bike shows 40 km of Turbo range.
 
 <div class="callout callout--warning">
   <p class="callout__content"><strong>Battery safety:</strong> Bosch recommends charging in a dry place fitted with smoke detectors, between 0 and 40 °C (32 to 104 °F), with a compatible charger, and not leaving the battery unattended while charging (<a href="https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Akku_Guide/Akku_Guide/Bosch-eBike-Battery-Guide-EN-US.pdf">Bosch battery guide</a>). Scheduled overnight charging departs from that last recommendation. In my case, charging happens in the garage, which has a smoke detector connected to Home Assistant, with the original charger, and the plug cuts power as soon as charging ends. Make your own call based on your setup.</p>
@@ -223,7 +223,7 @@ On my Home Assistant dashboard, three Mushroom cards sum it up. The first shows 
 
 ## My experience so far
 
-The reminder has been running since September 30, 2026. Home Assistant keeps the details of the last five runs: from October 12 to 16, the reminder went out on two evenings (the 14th and the 16th) and stayed silent on the other three, since the range was sufficient.
+Home Assistant keeps the details of the last five runs. Over those five evenings, the reminder went out twice and stayed silent the other three times, since the range was sufficient.
 
 It hasn't saved us from a dead battery as such. But it removed the morning stress and the unpleasant surprises when leaving. And it was adopted at home without any pushback.
 
