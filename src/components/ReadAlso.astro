@@ -2,14 +2,16 @@
 export interface Props {
   slug: string;
   title: string;
+  lang?: 'fr' | 'en';
 }
 
-const { slug, title } = Astro.props;
-const href = `/blog/${slug}/`;
+const { slug, title, lang = 'fr' } = Astro.props;
+const href = lang === 'en' ? `/en/blog/${slug}/` : `/blog/${slug}/`;
+const heading = lang === 'en' ? 'Read also' : 'À lire aussi';
 ---
 
 <aside class="read-also not-prose">
-  <p class="read-also__heading">À lire aussi</p>
+  <p class="read-also__heading">{heading}</p>
   <a class="read-also__link" href={href}>
     <span class="read-also__title">{title}</span>
     <span class="read-also__arrow" aria-hidden="true">→</span>
