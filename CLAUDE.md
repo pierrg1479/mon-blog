@@ -54,7 +54,6 @@ Elles s'appliquent aux nouveaux articles. Les 5 articles publiés avant octobre 
 - Le `title` est publié tel quel, sans suffixe de marque : **65 caractères au plus**, requête principale le plus à gauche possible. Il décrit la page, il ne l'emballe pas.
 - Le `h1` peut être plus naturel que le `title`, mais un seul H1 par page.
 - `description` : **150 caractères au plus**, unique sur le site, contient la requête ciblée, **commence par un verbe d'action** (Automatisez, Réduisez, Installez...) et dit ce que le lecteur va obtenir, pas ce que la page contient. Jamais "Cet article vous explique".
-- **Pas d'année** dans le `title`, le `h1` ni la `description` : un article daté vieillit au 1er janvier. La fraîcheur passe par `updatedDate`.
 - Ni prix, ni point d'exclamation dans la `description` : un prix périme sans prévenir.
 - Slug court, en minuscules, avec la requête principale. Ne jamais changer le slug ou le `title` d'un article qui ramène du trafic sans relevé avant/après.
 
@@ -67,7 +66,7 @@ Elles s'appliquent aux nouveaux articles. Les 5 articles publiés avant octobre 
 - Tableau : 3 colonnes, 8 lignes au plus, la dernière porte l'avis de Pierre.
 - FAQ (`FaqBlock`, qui émet le `FAQPage`) : 3 à 6 questions formulées comme le lecteur les poserait, réponses de 1 à 3 phrases.
 - Liens internes dans le corps : 5 au plus, ancres descriptives. Mettre à jour les anciens articles pertinents pour pointer vers le nouveau.
-- Pas de superlatif ni d'emphase, pas de gras à toutes les lignes, pas d'emoji dans le `title`, le `h1` et les H2, pas de conclusion qui répète l'intro.
+- Pas de superlatif ni d'emphase, pas de gras à toutes les lignes, pas de conclusion qui répète l'intro.
 
 ### Écrire pour être cité (moteurs IA)
 
