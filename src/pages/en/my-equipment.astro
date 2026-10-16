@@ -601,7 +601,7 @@ const sections = [
 
 // Données structurées : liste du matériel affiché sur la page (pas de Product/Offer, la page ne vend rien)
 const equipmentItems = sections.flatMap((section) => section.items);
-const toAbsolute = (path: string) => (path.startsWith('http') ? path : `${siteUrl}${path}`);
+const toAbsolute = (path: string) => new URL(path, siteUrl).href;
 const structuredData = {
 	'@context': 'https://schema.org',
 	'@type': 'CollectionPage',
