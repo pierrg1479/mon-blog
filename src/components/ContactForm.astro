@@ -1,0 +1,246 @@
+---
+interface Props {
+	lang: 'fr' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const t = {
+	fr: {
+		name: 'Votre nom',
+		namePlaceholder: 'Facultatif',
+		email: 'Votre adresse e-mail',
+		emailHint: 'Uniquement pour vous répondre, jamais partagée.',
+		subject: 'Sujet',
+		subjectPlaceholder: 'Ex. : problème avec mon automatisation de chauffage',
+		message: 'Votre message',
+		messagePlaceholder: 'Décrivez votre question ou votre idée. Si ça concerne votre installation, précisez votre matériel et ce que vous avez déjà essayé.',
+		send: 'Envoyer le message',
+		sending: 'Envoi en cours…',
+		ok: 'Merci, votre message est bien parti ! Je vous réponds dès que possible.',
+		invalid: 'Vérifiez votre adresse e-mail et votre message (10 caractères minimum).',
+		error: "L'envoi a échoué. Réessayez dans un instant.",
+	},
+	en: {
+		name: 'Your name',
+		namePlaceholder: 'Optional',
+		email: 'Your email address',
+		emailHint: 'Only used to reply to you, never shared.',
+		subject: 'Subject',
+		subjectPlaceholder: 'E.g. issue with my heating automation',
+		message: 'Your message',
+		messagePlaceholder: "Describe your question or idea. If it's about your setup, mention your hardware and what you've already tried.",
+		send: 'Send message',
+		sending: 'Sending…',
+		ok: "Thanks, your message has been sent! I'll get back to you as soon as possible.",
+		invalid: 'Please check your email address and message (at least 10 characters).',
+		error: 'Sending failed. Please try again in a moment.',
+	},
+}[lang];
+
+// Retour du formulaire envoyé sans JavaScript (redirection depuis /api/contact).
+const status = Astro.url.searchParams.get('status');
+const initialStatus = status === 'ok' || status === 'invalid' || status === 'error' ? status : null;
+---
+
+<form
+	id="contact-form"
+	class="contact-form"
+	action="/api/contact"
+	method="post"
+	data-sending={t.sending}
+	data-ok={t.ok}
+	data-invalid={t.invalid}
+	data-error={t.error}
+>
+	<input type="hidden" name="lang" value={lang} />
+	<input type="hidden" name="started_at" value="" />
+
+	<!-- Champ piège pour les robots, invisible pour les humains -->
+	<div class="hp" aria-hidden="true">
+		<label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+	</div>
+
+	<div class="row">
+		<div class="field">
+			<label for="cf-name">{t.name}</label>
+			<input id="cf-name" name="name" type="text" maxlength="100" autocomplete="name" placeholder={t.namePlaceholder} />
+		</div>
+		<div class="field">
+			<label for="cf-email">{t.email} <span class="req" aria-hidden="true">*</span></label>
+			<input id="cf-email" name="email" type="email" required maxlength="200" autocomplete="email" aria-describedby="cf-email-hint" />
+			<small id="cf-email-hint">{t.emailHint}</small>
+		</div>
+	</div>
+
+	<div class="field">
+		<label for="cf-subject">{t.subject}</label>
+		<input id="cf-subject" name="subject" type="text" maxlength="200" placeholder={t.subjectPlaceholder} />
+	</div>
+
+	<div class="field">
+		<label for="cf-message">{t.message} <span class="req" aria-hidden="true">*</span></label>
+		<textarea id="cf-message" name="message" required minlength="10" maxlength="5000" rows="8" placeholder={t.messagePlaceholder}></textarea>
+	</div>
+
+	<button type="submit">{t.send}</button>
+
+	<p class="status" role="status" aria-live="polite" data-state={initialStatus ?? undefined}>
+		{initialStatus && t[initialStatus]}
+	</p>
+</form>
+
+<script>
+	const form = document.querySelector<HTMLFormElement>('#contact-form');
+	if (form) {
+		const startedAt = form.querySelector<HTMLInputElement>('input[name="started_at"]')!;
+		startedAt.value = String(Date.now());
+
+		const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+		const statusEl = form.querySelector<HTMLParagraphElement>('.status')!;
+		const label = button.textContent;
+
+		const show = (state: 'ok' | 'invalid' | 'error') => {
+			statusEl.dataset.state = state;
+			statusEl.textContent = form.dataset[state] ?? '';
+		};
+
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			button.disabled = true;
+			button.textContent = form.dataset.sending ?? '';
+			statusEl.textContent = '';
+			delete statusEl.dataset.state;
+
+			try {
+				const res = await fetch(form.action, {
+					method: 'POST',
+					body: new FormData(form),
+					headers: { Accept: 'application/json' },
+				});
+				const { status } = await res.json();
+				show(status === 'ok' || status === 'invalid' ? status : 'error');
+				if (status === 'ok') {
+					form.reset();
+					startedAt.value = String(Date.now());
+				}
+			} catch {
+				show('error');
+			} finally {
+				button.disabled = false;
+				button.textContent = label;
+			}
+		});
+	}
+</script>
+
+<style>
+	.contact-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		font-size: 1rem;
+	}
+	.row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.25rem;
+	}
+	@media (max-width: 600px) {
+		.row {
+			grid-template-columns: 1fr;
+		}
+	}
+	.field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+	label {
+		font-weight: 600;
+		color: rgb(var(--gray-dark));
+	}
+	.req {
+		color: rgb(var(--accent-dark));
+	}
+	small {
+		color: rgb(var(--gray));
+		font-size: 0.85rem;
+	}
+	input,
+	textarea {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 0.7rem 0.85rem;
+		font: inherit;
+		font-size: 16px;
+		line-height: 1.5;
+		color: rgb(var(--black));
+		background: transparent;
+		border: 1px solid rgba(var(--gray), 0.45);
+		border-radius: 8px;
+		transition: border-color 0.15s, box-shadow 0.15s;
+	}
+	textarea {
+		resize: vertical;
+		min-height: 10rem;
+	}
+	input::placeholder,
+	textarea::placeholder {
+		color: rgba(var(--gray), 0.85);
+	}
+	input:focus,
+	textarea:focus {
+		outline: none;
+		border-color: rgb(var(--accent));
+		box-shadow: 0 0 0 3px rgba(var(--accent), 0.35);
+	}
+	button {
+		align-self: flex-start;
+		padding: 0.75rem 1.5rem;
+		font: inherit;
+		font-weight: 700;
+		color: rgb(15, 18, 25);
+		background: rgb(var(--accent));
+		border: none;
+		border-radius: 8px;
+		cursor: pointer;
+		transition: filter 0.15s;
+	}
+	button:hover {
+		filter: brightness(0.95);
+	}
+	button:focus-visible {
+		outline: 3px solid rgba(var(--accent), 0.5);
+		outline-offset: 2px;
+	}
+	button:disabled {
+		opacity: 0.6;
+		cursor: wait;
+	}
+	.status {
+		margin: 0;
+		min-height: 1.5em;
+	}
+	.status[data-state='ok'] {
+		color: #15803d;
+	}
+	.status[data-state='invalid'],
+	.status[data-state='error'] {
+		color: #b91c1c;
+	}
+	:global(.dark) .status[data-state='ok'] {
+		color: #4ade80;
+	}
+	:global(.dark) .status[data-state='invalid'],
+	:global(.dark) .status[data-state='error'] {
+		color: #f87171;
+	}
+	.hp {
+		position: absolute;
+		left: -10000px;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+</style>

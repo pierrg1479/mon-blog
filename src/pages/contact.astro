@@ -3,6 +3,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE } from '../consts';
+import ContactForm from '../components/ContactForm.astro';
 
 const siteUrl = Astro.site?.href ?? Astro.url.origin;
 const alternates = [
@@ -24,17 +25,7 @@ const alternates = [
 				Vous voulez réagir à un article, partager votre propre automatisation ou poser une question sur votre installation ? Laissez-moi un message via le formulaire ci-dessous.
 			</p>
 			
-			<div class="tally-container">
-				<iframe 
-					src="https://tally.so/embed/NprMzQ?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
-					width="100%" 
-					height="1200" 
-					frameborder="0" 
-					marginheight="0" 
-					marginwidth="0" 
-					title="Contact">
-				</iframe>
-			</div>
+			<ContactForm lang="fr" />
 		</main>
 		<Footer />
 
@@ -76,11 +67,5 @@ const alternates = [
 	}
 	p {
 		margin-bottom: 2em;
-	}
-	.tally-container {
-		width: 100%;
-	}
-	.tally-container iframe {
-		border: none;
 	}
 </style>
