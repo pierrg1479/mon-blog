@@ -1,0 +1,257 @@
+---
+h1: 'Never Forget to Charge Your E-Bike Again with Home Assistant'
+title: 'E-bike Charging Reminder with Home Assistant (Bosch Smart System)'
+description: "Get a phone alert when your Bosch e-bike range won't cover tomorrow's commute, using Home Assistant and the Bosch eBike integration."
+pubDate: 'Oct 16 2026'
+heroImage: '../../assets/rappel-recharge-velo-dashboard.jpg'
+author:
+  name: Pierre
+  avatar: '/hannibal-cercle.png'
+  url: 'https://www.reddit.com/user/Patient-Gene703/'
+---
+
+import FaqBlock from '../../components/FaqBlock.astro';
+
+The second bike in our house is my wife's commuter: a 16 km round trip (about 10 miles) to work and back. Charging it was never the problem. Remembering to do it the evening before, while the battery still has enough range, was.
+
+The bike's display shows the remaining range, but you have to think of checking it the night before. The result: stressful departures and a few unpleasant surprises.
+
+Since late September 2026, Home Assistant handles it. It reads the bike's range from the Bosch cloud and only sends a reminder when that range won't cover the next day's commute. Then charging starts on its own during off-peak hours. Here is the full setup: hardware, integration, battery percentage estimate, automation and real-world results.
+
+## The bike and the hardware
+
+The bike is a [Riese & Müller Multitinker2 family](https://www.r-m.de/en-gb/bikes/multitinker2/multitinker2-family/), a compact urban cargo bike on 20-inch wheels. What matters for this article is its Bosch equipment:
+
+- **Motor**: Bosch Performance Line PX, part of the Smart System range
+- **Battery**: Bosch PowerTube 625 Wh
+- **Display**: Bosch Purion 200
+- **Weight**: 35.8 kg (79 lb) according to Riese & Müller (smallest frame size, battery included)
+
+On the smart home side:
+
+- **Home Assistant** with the community [Bosch eBike integration](https://github.com/Xunil99/ha-bosch-ebike), installed through HACS (version 1.19.58 in my case)
+- **A Sonoff S60ZBTPF Zigbee smart plug** with power monitoring, powering the charger (I use several of them around the house, see [how smart plugs helped me cut my electricity bill](/en/blog/smart-plugs-savings-automations/))
+- **The Home Assistant companion app** on my wife's phone, to receive the notifications
+- **A [wall mount for the Bosch Smart System 4A charger (BPC3400)](https://www.amazon.fr/dp/B09VKZ3NPK)** (Amazon France), which holds the original charger on the garage wall. Handy, expensive for a 3D-printed part, but a perfect fit.
+
+## How does Home Assistant know a Bosch e-bike's range?
+
+The Bosch eBike integration reads the bike's data through Bosch's official Data Act API, using the rider's Bosch account. It creates a device with more than 70 entities in Home Assistant, including the remaining range for each assist mode.
+
+### Which Bosch e-bikes are compatible?
+
+This reminder only works with a Bosch Smart System motor. According to the [integration's README](https://github.com/Xunil99/ha-bosch-ebike), bikes from the previous generation (eBike System 2) are supported in alpha, but the API provides neither per-mode range nor battery data for them. The older Classic Line system is not supported at all.
+
+That's why my own bike, a 2022 Moustache Lundi 27, doesn't get a reminder. Its Bosch Active Line Plus motor belongs to eBike System 2 and its Intuvia display isn't connected: Home Assistant has no range to read.
+
+There is one more hard limit, especially if you are outside Europe: the integration requires a Bosch SingleKey ID account registered in the European Union. The Data Act API is only open to EU accounts, so accounts from other regions cannot authenticate.
+
+### Installing the Bosch eBike integration
+
+The README walks through every screen. In short:
+
+1. Link the bike to the Bosch eBike Flow app with a SingleKey ID account.
+2. On the [Bosch Data Act portal](https://portal.bosch-ebike.com/data-act/app), create an "app" (for example "Home Assistant") using the two `my.home-assistant.io` addresses listed in the README. Write down the Client-ID you get.
+3. In HACS, install the Bosch eBike integration, then restart Home Assistant.
+4. In Bosch's eBike Manager, under Data Act, activate the service for your app: Home Assistant opens, paste the Client-ID and sign in to your Bosch account.
+5. Still in the eBike Manager, turn on data sharing for the bike, then reload the integration in Home Assistant.
+
+Step 5 is the easiest one to miss: without it, the integration is installed but no entities show up.
+
+### The sensors that matter for charging
+
+Values recorded on October 16, 2026:
+
+| Sensor | Value | What I use it for |
+|---|---|---|
+| Turbo range | 15 km | Triggers the reminder below 20 km |
+| Eco, Auto and middle mode range | 32, 24 and 19 km | Battery percentage estimate |
+| Estimated full-battery range | 136 km (4.6 Wh/km) | Information only |
+| Battery charge cycles | 5.6 | Tracking wear |
+| Odometer | 306 km | Information only |
+| Last known location | (hidden) | I don't display it anywhere |
+
+### The limits: no percentage, no real time
+
+In my setup, the integration provides no usable battery percentage: the "Last Ride Battery (%)" sensor stays "unknown". The README explains that a live state of charge requires an ESP32-based Bluetooth bridge, which I haven't installed.
+
+The values aren't real time either. The integration polls Bosch every 10 minutes, but the range only changes after the bike has synced its data. On October 15, 2026, for example, it changed at 7:23 am, 8:44 am, 6:32 pm and 8:32 pm, and nowhere in between.
+
+## Estimating the battery percentage from the range
+
+To show a percentage in the notification and on the dashboard, I created a Template helper (Settings > Devices & services > Helpers > Create helper > Template > Sensor). It adds up the four ranges and divides the total by 236.2 km. Unit: %, device class: Battery.
+
+236.2 km is roughly the sum of the four ranges with a full battery. On days when the battery was full or nearly full, I recorded between 233 and 246 km (October 13 and 15, 2026), hence the 100% cap. It is an estimate: it assumes the range drops at the same pace as the charge.
+
+To adapt it to your bike, write down the sum of your ranges right after a full charge and replace 236.2 with your own value. Mode names also depend on the bike: one of mine is called `a100m40030`, the internal name reported by Bosch.
+
+<details>
+<summary>View YAML code</summary>
+
+```jinja
+{% set ids = ['sensor.performance_line_px_reachable_range_eco',
+              'sensor.performance_line_px_reachable_range_auto',
+              'sensor.performance_line_px_reachable_range_a100m40030',
+              'sensor.performance_line_px_reachable_range_turbo'] %}
+{% set vals = ids | map('states') | select('is_number') | map('float') | list %}
+{% if vals | count == 4 %}
+  {{ [((vals | sum) / 236.2 * 100) | round(0), 100] | min }}
+{% else %}
+  {{ none }}
+{% endif %}
+```
+
+</details>
+
+## The rule: only remind when the range won't cover tomorrow
+
+A notification sent every evening ends up being ignored. So the automation only sends a reminder when charging is actually needed.
+
+### Why 20 km in Turbo mode?
+
+My wife's commute is 16 km round trip. I add about 25% margin, which gives a 20 km threshold (about 12 miles). I use Turbo mode because it uses the most energy: if the Turbo range is enough, every other mode is enough too.
+
+### A different message depending on the next day
+
+Every evening at 8 pm, Home Assistant checks the Turbo range. If it is below 20 km:
+
+- Sunday to Thursday, the message is direct: "charge your bike", with the remaining range and a reminder that tomorrow's commute is 16 km;
+- Friday and Saturday, there is no commute the next day: the message flags a low battery and suggests charging over the weekend.
+
+<figure>
+  <img src="/images/rappel-recharge-velo/notification-rappel-recharge-velo.jpg" alt="Home Assistant notification on Android, in French: low bike battery, 15 km left in Turbo (about 38%), no commute tomorrow but you can charge it over the weekend" style="width: 100%; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">The Friday evening version (in French): no commute tomorrow, so a more relaxed tone.</figcaption>
+</figure>
+
+### No reminder during holidays
+
+The automation doesn't run when the house is in Away, Holiday or Holiday-at-home mode. These modes are a dropdown helper (`input_select.mode_maison`).
+
+### If the notification doesn't arrive: 3 attempts, then an alert
+
+In Home Assistant, a phone's notify entity stores the time of the last message sent. The automation uses it to check that the reminder actually went out.
+
+If the state hasn't changed, Home Assistant retries every 5 minutes, up to 3 times. After 3 failures, it sends an alert to my own phone so I can tell my wife. In the runs I was able to check, the first attempt always went through.
+
+<details>
+<summary>View YAML code</summary>
+
+```yaml
+alias: E-bike - Charging reminder
+description: >-
+  Every evening at 8 pm, notify if the Turbo range is below 20 km
+  (16 km round-trip commute + about 25% margin).
+  Firm message Sunday to Thursday, relaxed on Friday and Saturday.
+  3 attempts if sending fails, then an alert.
+triggers:
+  - trigger: time
+    at: "20:00:00"
+conditions:
+  - condition: numeric_state
+    entity_id: sensor.performance_line_px_reachable_range_turbo
+    below: 20
+  - condition: not
+    conditions:
+      - condition: state
+        entity_id: input_select.house_mode
+        state:
+          - Away
+          - Holiday
+          - Holiday at home
+variables:
+  last_sent_before: "{{ states('notify.rider_phone') }}"
+actions:
+  - repeat:
+      sequence:
+        - action: notify.send_message
+          continue_on_error: true
+          target:
+            entity_id: notify.rider_phone
+          data:
+            title: "{% if now().weekday() in [4, 5] %}Low e-bike battery{% else %}Time to charge your e-bike{% endif %}"
+            message: "{% set km = states('sensor.performance_line_px_reachable_range_turbo') | float(0) | round(0) | int %}{% set pct = states('sensor.estimated_bike_battery') %}{% if now().weekday() in [4, 5] %}{{ km }} km left in Turbo (≈ {{ pct }}%). No commute tomorrow, but you can charge it over the weekend.{% else %}{{ km }} km left in Turbo (≈ {{ pct }}%) and tomorrow's commute is 16.{% endif %}"
+        - if:
+            - condition: template
+              value_template: "{{ states('notify.rider_phone') == last_sent_before and repeat.index < 3 }}"
+          then:
+            - delay: "00:05:00"
+      until:
+        - condition: template
+          value_template: "{{ states('notify.rider_phone') != last_sent_before or repeat.index >= 3 }}"
+  - if:
+      - condition: template
+        value_template: "{{ states('notify.rider_phone') == last_sent_before }}"
+    then:
+      - action: notify.send_message
+        target:
+          entity_id: notify.my_phone
+        data:
+          title: E-bike reminder not delivered
+          message: "3 attempts failed. Turbo range: {{ states('sensor.performance_line_px_reachable_range_turbo') | float(0) | round(0) | int }} km. Remember to charge the bike."
+mode: single
+```
+
+</details>
+
+## Then charging starts on its own during off-peak hours
+
+Once reminded, my wife only has one thing to do: plug in the charger. The smart plug stays off until 10:01 pm, when my off-peak tariff starts. Home Assistant then turns it on, and cuts it once power stays below 5 W for 2 minutes, which means charging is done. I covered that automation in [Automating E-Bike Charging During Off-Peak Hours](/en/blog/automating-ebike-charging-off-peak-hours/).
+
+Since that article, I made the automation more robust. If the Zigbee plug doesn't respond at 10:01 pm, Home Assistant makes 3 attempts, tries again around 10:15 pm, and only alerts me if it still doesn't respond.
+
+Here is the full chain on October 14, 2026:
+
+1. **8:00 pm**: 16 km left in Turbo (≈ 41%), the reminder goes out.
+2. **10:01 pm**: the plug turns on, the charger draws about 165 W.
+3. **Around 12:30 am**: power drops and the plug turns off. The charge used 0.38 kWh on the plug's meter.
+4. **Next day at 8:44 am**: after syncing, the bike shows 40 km of Turbo range.
+
+<div class="callout callout--warning">
+  <p class="callout__content"><strong>Battery safety:</strong> Bosch recommends charging in a dry place fitted with smoke detectors, between 0 and 40 °C (32 to 104 °F), with a compatible charger, and not leaving the battery unattended while charging (<a href="https://www.bosch-ebike.com/fileadmin/EBC/Service/Downloads/Akku_Guide/Akku_Guide/Bosch-eBike-Battery-Guide-EN-US.pdf">Bosch battery guide</a>). Scheduled overnight charging departs from that last recommendation. In my case, charging happens in the garage, which has a smoke detector connected to Home Assistant, with the original charger, and the plug cuts power as soon as charging ends. Make your own call based on your setup.</p>
+</div>
+
+## The bike's status at a glance on the dashboard
+
+On my Home Assistant dashboard, three Mushroom cards sum it up. The first shows the Turbo range and estimated percentage, in red below 20 km, orange below 30 km and green above. The second says "charge for tomorrow" or "OK for tomorrow". The third shows the charger plug's state.
+
+<figure>
+  <img src="/images/rappel-recharge-velo/dashboard-velo-autonomie-home-assistant.jpg" alt="Home Assistant dashboard in French, e-bike section: 15 km in Turbo and 38%, a charge-for-tomorrow alert for a 16 km round-trip commute, charger plug on" style="width: 100%; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">The e-bike section of my dashboard (in French), on an evening when charging is needed.</figcaption>
+</figure>
+
+## My experience so far
+
+The reminder has been running since September 30, 2026. Home Assistant keeps the details of the last five runs: from October 12 to 16, the reminder went out on two evenings (the 14th and the 16th) and stayed silent on the other three, since the range was sufficient.
+
+It hasn't saved us from a dead battery as such. But it removed the morning stress and the unpleasant surprises when leaving. And it passed the WAF test: my wife approves.
+
+One limit to keep in mind: the reminder reads the last synced value. If the bike hasn't synced since its last ride, the range read at 8 pm may be higher than reality.
+
+## Conclusion
+
+The key to this setup is the threshold: a reminder sent only when needed is more likely to be read than a daily notification. If your Bosch e-bike runs the Smart System and your Bosch account is in the EU, the Bosch eBike integration gives you everything you need to build it. To go further, the README describes an ESP32 Bluetooth bridge that reports the state of charge live.
+
+## FAQ
+
+<FaqBlock items={[
+  {
+    question: "Does this work with my Bosch e-bike?",
+    answer: "For this reminder, you need a Bosch Smart System motor. eBike System 2 bikes are supported in alpha but don't report per-mode range, and the older Classic Line isn't supported."
+  },
+  {
+    question: "Does the Bosch eBike integration work outside Europe?",
+    answer: "No. It requires a Bosch SingleKey ID account registered in the European Union, because the Bosch Data Act API is only open to EU accounts."
+  },
+  {
+    question: "Is the range updated in real time in Home Assistant?",
+    answer: "No. The integration polls Bosch every 10 minutes, but the range only changes after the bike syncs. In my case, after an overnight charge, the new value shows up the next morning."
+  },
+  {
+    question: "Why use Turbo mode instead of Eco mode?",
+    answer: "Turbo uses the most energy, so its range is the lowest. If it covers the commute, every other mode does too."
+  },
+  {
+    question: "How do I know if the range is enough for my commute?",
+    answer: "Take your round-trip distance and add about 25% margin. With a 16 km round trip, I end up with a 20 km threshold in Turbo."
+  }
+]} />
