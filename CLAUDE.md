@@ -36,6 +36,8 @@ Faire du blog une référence Home Assistant en français et en anglais, avec du
 
 Adaptées des règles d'article du site Guibolles (`guibolles-site/.claude/skills/article/`).
 
+Elles s'appliquent aux nouveaux articles. Les 5 articles publiés avant octobre 2026 ne sont pas à remettre en conformité (décision de Pierre du 16/10/2026) : ne pas proposer de les réoptimiser.
+
 ### Intention et cannibalisation
 
 - Une page, une intention, une requête principale. Le blog prend l'intention informationnelle ("comment", "avis", "retour d'expérience") ; un comparatif d'achat pur reste possible mais toujours appuyé sur du vécu.
