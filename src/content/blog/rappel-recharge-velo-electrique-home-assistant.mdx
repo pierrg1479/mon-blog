@@ -76,7 +76,7 @@ Valeurs relevées le 16 octobre 2026 :
 
 Dans mon installation, l'intégration ne donne pas de pourcentage de batterie exploitable : le capteur "Last Ride Battery (%)" reste à "inconnu". Le README indique qu'un niveau de charge en direct demande un pont Bluetooth à base d'ESP32, que je n'ai pas installé.
 
-Les valeurs ne sont pas non plus en temps réel. L'intégration interroge Bosch toutes les 10 minutes, mais l'autonomie ne change que quand le vélo a synchronisé ses données. Le 15 octobre 2026, par exemple, elle a bougé à 7h23, 8h44, 18h32 et 20h32, et nulle part entre ces heures.
+Les valeurs ne sont pas non plus en temps réel. L'intégration interroge Bosch toutes les 10 minutes, mais l'autonomie ne change que quand le vélo a synchronisé ses données. Cette synchronisation se fait quand le téléphone, avec l'application eBike Flow, se connecte au vélo à l'allumage. Chez nous, l'autonomie est donc mise à jour le matin au départ et au retour.
 
 ## Estimer le pourcentage de batterie à partir de l'autonomie
 
@@ -252,7 +252,7 @@ La clé de cette installation est le seuil : un rappel envoyé seulement quand i
   },
   {
     question: "L'autonomie est-elle mise à jour en temps réel dans Home Assistant ?",
-    answer: "Non. L'intégration interroge Bosch toutes les 10 minutes, mais l'autonomie ne change qu'après une synchronisation du vélo. Chez moi, après une charge de nuit, la nouvelle valeur apparaît le lendemain matin."
+    answer: "Non. L'intégration interroge Bosch toutes les 10 minutes, mais l'autonomie ne change qu'après une synchronisation, quand le téléphone se connecte au vélo à l'allumage. Chez moi, après une charge de nuit, la nouvelle valeur apparaît le lendemain matin."
   },
   {
     question: "Pourquoi se baser sur le mode Turbo plutôt que sur le mode Eco ?",

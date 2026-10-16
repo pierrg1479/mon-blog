@@ -75,7 +75,7 @@ Values recorded on October 16, 2026:
 
 In my setup, the integration provides no usable battery percentage: the "Last Ride Battery (%)" sensor stays "unknown". The README explains that a live state of charge requires an ESP32-based Bluetooth bridge, which I haven't installed.
 
-The values aren't real time either. The integration polls Bosch every 10 minutes, but the range only changes after the bike has synced its data. On October 15, 2026, for example, it changed at 7:23 am, 8:44 am, 6:32 pm and 8:32 pm, and nowhere in between.
+The values aren't real time either. The integration polls Bosch every 10 minutes, but the range only changes after the bike has synced its data. That sync happens when the phone, running the eBike Flow app, connects to the bike as it is switched on. In our case, the range is updated in the morning when leaving and again on the way back.
 
 ## Estimating the battery percentage from the range
 
@@ -246,7 +246,7 @@ The key to this setup is the threshold: a reminder sent only when needed is more
   },
   {
     question: "Is the range updated in real time in Home Assistant?",
-    answer: "No. The integration polls Bosch every 10 minutes, but the range only changes after the bike syncs. In my case, after an overnight charge, the new value shows up the next morning."
+    answer: "No. The integration polls Bosch every 10 minutes, but the range only changes after a sync, when the phone connects to the bike as it is switched on. In my case, after an overnight charge, the new value shows up the next morning."
   },
   {
     question: "Why use Turbo mode instead of Eco mode?",
