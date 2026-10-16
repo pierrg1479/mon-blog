@@ -13,7 +13,7 @@ author:
 import FaqBlock from '../../components/FaqBlock.astro';
 import ReadAlso from '../../components/ReadAlso.astro';
 
-Le deuxième vélo de la maison sert au trajet domicile-travail de ma femme : 16 km aller-retour. Le problème n'a jamais été de recharger. C'est d'y penser le soir, avant que la batterie soit trop basse pour le lendemain.
+Le deuxième vélo de la maison sert à un trajet domicile-travail de 16 km aller-retour. Le problème n'a jamais été de recharger. C'est d'y penser le soir, avant que la batterie soit trop basse pour le lendemain.
 
 L'écran du vélo affiche l'autonomie, encore faut-il penser à le regarder la veille. Résultat : du stress au moment de partir, et quelques mauvaises surprises.
 
@@ -32,7 +32,7 @@ Côté maison :
 
 - **Home Assistant** avec l'intégration communautaire [Bosch eBike](https://github.com/Xunil99/ha-bosch-ebike), installée via HACS (version 1.19.58 chez moi)
 - **Une prise connectée Zigbee Sonoff S60ZBTPF** avec mesure de puissance, sur laquelle est branché le chargeur (j'en utilise plusieurs dans la maison, voir [comment les prises connectées m'ont aidé à réduire ma consommation](/blog/prises-connectees-economies-automatisations/))
-- **L'application Home Assistant** sur le téléphone de ma femme, pour recevoir les notifications
+- **L'application Home Assistant** sur le téléphone de la personne qui utilise le vélo, pour recevoir les notifications
 - **Un [support mural pour le chargeur Bosch Smart System 4A (BPC3400)](https://www.amazon.fr/dp/B09VKZ3NPK)**, qui tient le chargeur d'origine au mur du garage. Pratique, cher pour une pièce imprimée en 3D, mais parfaitement adapté.
 
 ## Comment Home Assistant connaît-il l'autonomie d'un vélo Bosch ?
@@ -110,7 +110,7 @@ Une notification envoyée tous les soirs finit par être ignorée. L'automatisat
 
 ### Pourquoi 20 km en mode Turbo ?
 
-Le trajet de ma femme fait 16 km aller-retour. J'ajoute environ 25 % de marge, ce qui donne un seuil de 20 km. Je me base sur le mode Turbo parce que c'est celui qui consomme le plus : si l'autonomie Turbo suffit, tous les autres modes suffisent aussi.
+Le trajet domicile-travail fait 16 km aller-retour. J'ajoute environ 25 % de marge, ce qui donne un seuil de 20 km. Je me base sur le mode Turbo parce que c'est celui qui consomme le plus : si l'autonomie Turbo suffit, tous les autres modes suffisent aussi.
 
 ### Un message différent selon le lendemain
 
@@ -134,7 +134,7 @@ Dans Home Assistant, l'entité de notification d'un téléphone enregistre l'heu
 
 Attention, cela ne prouve pas que le téléphone l'a reçu : l'état change dès que le service de notification accepte le message. Si le téléphone est hors réseau, l'envoi compte comme réussi et il n'y a ni nouvel essai ni alerte.
 
-Si l'état n'a pas changé, l'envoi a échoué : Home Assistant réessaie toutes les 5 minutes, 3 fois au maximum. Après 3 échecs, il m'envoie une alerte sur mon propre téléphone pour que je prévienne ma femme. Sur les exécutions que j'ai pu consulter, le premier envoi a toujours suffi.
+Si l'état n'a pas changé, l'envoi a échoué : Home Assistant réessaie toutes les 5 minutes, 3 fois au maximum. Après 3 échecs, il m'envoie une alerte sur mon propre téléphone pour que je fasse passer le message. Sur les exécutions que j'ai pu consulter, le premier envoi a toujours suffi.
 
 <details>
 <summary>Voir le code YAML</summary>
@@ -198,7 +198,7 @@ mode: single
 
 ## Ensuite, la charge démarre seule en heures creuses
 
-Une fois prévenue, ma femme n'a qu'une chose à faire : brancher le chargeur. La prise connectée reste éteinte jusqu'à 22h01, le début des heures creuses. Home Assistant l'allume alors, puis la coupe dès que la puissance reste sous 5 W pendant 2 minutes, signe que la charge est terminée.
+Une fois le rappel reçu, il n'y a plus qu'une chose à faire : brancher le chargeur. La prise connectée reste éteinte jusqu'à 22h01, le début des heures creuses. Home Assistant l'allume alors, puis la coupe dès que la puissance reste sous 5 W pendant 2 minutes, signe que la charge est terminée.
 
 <ReadAlso
   slug="automatisation-recharge-velo-heures-creuses"
@@ -231,7 +231,7 @@ Sur mon tableau de bord Home Assistant, trois cartes Mushroom résument la situa
 
 Le rappel tourne depuis le 30 septembre 2026. Home Assistant garde le détail des cinq dernières exécutions : du 12 au 16 octobre, le rappel est parti deux soirs (le 14 et le 16) et ne s'est pas déclenché les trois autres, l'autonomie étant suffisante.
 
-Il n'a pas évité de panne à proprement parler. Mais il a supprimé le stress du matin et les mauvaises surprises au moment de partir. Et le WAF est validé : ma femme approuve.
+Il n'a pas évité de panne à proprement parler. Mais il a supprimé le stress du matin et les mauvaises surprises au moment de partir. Et il a été adopté sans discussion à la maison.
 
 Une limite à connaître : le rappel lit la dernière valeur synchronisée. Si le vélo n'a pas synchronisé depuis le dernier trajet, l'autonomie lue à 20h peut être plus haute que la réalité.
 

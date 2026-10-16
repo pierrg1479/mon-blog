@@ -12,7 +12,7 @@ author:
 
 import FaqBlock from '../../components/FaqBlock.astro';
 
-The second bike in our house is my wife's commuter: a 16 km round trip (about 10 miles) to work and back. Charging it was never the problem. Remembering to do it the evening before, while the battery still has enough range, was.
+The second bike in our house is used for commuting: a 16 km round trip (about 10 miles) to work and back. Charging it was never the problem. Remembering to do it the evening before, while the battery still has enough range, was.
 
 The bike's display shows the remaining range, but you have to think of checking it the night before. The result: stressful departures and a few unpleasant surprises.
 
@@ -31,7 +31,7 @@ On the smart home side:
 
 - **Home Assistant** with the community [Bosch eBike integration](https://github.com/Xunil99/ha-bosch-ebike), installed through HACS (version 1.19.58 in my case)
 - **A Sonoff S60ZBTPF Zigbee smart plug** with power monitoring, powering the charger (I use several of them around the house, see [how smart plugs helped me cut my electricity bill](/en/blog/smart-plugs-savings-automations/))
-- **The Home Assistant companion app** on my wife's phone, to receive the notifications
+- **The Home Assistant companion app** on the rider's phone, to receive the notifications
 - **A [wall mount for the Bosch Smart System 4A charger (BPC3400)](https://www.amazon.fr/dp/B09VKZ3NPK)** (Amazon France), which holds the original charger on the garage wall. Handy, expensive for a 3D-printed part, but a perfect fit.
 
 ## How does Home Assistant know a Bosch e-bike's range?
@@ -109,7 +109,7 @@ A notification sent every evening ends up being ignored. So the automation only 
 
 ### Why 20 km in Turbo mode?
 
-My wife's commute is 16 km round trip. I add about 25% margin, which gives a 20 km threshold (about 12 miles). I use Turbo mode because it uses the most energy: if the Turbo range is enough, every other mode is enough too.
+The commute is 16 km round trip. I add about 25% margin, which gives a 20 km threshold (about 12 miles). I use Turbo mode because it uses the most energy: if the Turbo range is enough, every other mode is enough too.
 
 ### A different message depending on the next day
 
@@ -133,7 +133,7 @@ In Home Assistant, a phone's notify entity stores the time of the last message s
 
 Note that this doesn't prove the phone received it: the state changes as soon as the notification service accepts the message. If the phone is offline, the send still counts as successful, so there is no retry and no alert.
 
-If the state hasn't changed, the send failed: Home Assistant retries every 5 minutes, up to 3 times. After 3 failures, it sends an alert to my own phone so I can tell my wife. In the runs I was able to check, the first attempt always went through.
+If the state hasn't changed, the send failed: Home Assistant retries every 5 minutes, up to 3 times. After 3 failures, it sends an alert to my own phone so I can pass the message on. In the runs I was able to check, the first attempt always went through.
 
 <details>
 <summary>View YAML code</summary>
@@ -197,7 +197,7 @@ mode: single
 
 ## Then charging starts on its own during off-peak hours
 
-Once reminded, my wife only has one thing to do: plug in the charger. The smart plug stays off until 10:01 pm, when my off-peak tariff starts. Home Assistant then turns it on, and cuts it once power stays below 5 W for 2 minutes, which means charging is done. I covered that automation in [Automating E-Bike Charging During Off-Peak Hours](/en/blog/automating-ebike-charging-off-peak-hours/).
+Once the reminder arrives, there is only one thing left to do: plug in the charger. The smart plug stays off until 10:01 pm, when my off-peak tariff starts. Home Assistant then turns it on, and cuts it once power stays below 5 W for 2 minutes, which means charging is done. I covered that automation in [Automating E-Bike Charging During Off-Peak Hours](/en/blog/automating-ebike-charging-off-peak-hours/).
 
 Since that article, I made the automation more robust. If the Zigbee plug doesn't respond at 10:01 pm, Home Assistant makes 3 attempts, tries again around 10:15 pm, and only alerts me if it still doesn't respond.
 
@@ -225,7 +225,7 @@ On my Home Assistant dashboard, three Mushroom cards sum it up. The first shows 
 
 The reminder has been running since September 30, 2026. Home Assistant keeps the details of the last five runs: from October 12 to 16, the reminder went out on two evenings (the 14th and the 16th) and stayed silent on the other three, since the range was sufficient.
 
-It hasn't saved us from a dead battery as such. But it removed the morning stress and the unpleasant surprises when leaving. And it passed the WAF test: my wife approves.
+It hasn't saved us from a dead battery as such. But it removed the morning stress and the unpleasant surprises when leaving. And it was adopted at home without any pushback.
 
 One limit to keep in mind: the reminder reads the last synced value. If the bike hasn't synced since its last ride, the range read at 8 pm may be higher than reality.
 
