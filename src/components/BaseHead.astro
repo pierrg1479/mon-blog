@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE_TITLE } from '../consts';
+import { SITE_URL, canonicalFor, langFromPath, siteGraph } from '../schema';
 
 interface AlternateUrl {
 	hreflang: string;
@@ -12,14 +13,32 @@ interface Props {
 	description: string;
 	image?: string;
 	alternates?: AlternateUrl[];
+	type?: 'website' | 'article';
+	publishedTime?: Date;
+	modifiedTime?: Date;
 }
 
-const { title, description, image = '/blog-placeholder-1.jpg', alternates = [] } = Astro.props;
+const {
+	title,
+	description,
+	image = '/hannibal.jpg',
+	alternates = [],
+	type = 'website',
+	publishedTime,
+	modifiedTime,
+} = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+const lang = langFromPath(Astro.url.pathname);
+const canonicalURL = canonicalFor(Astro.url.pathname);
 const resolvedImageUrl = image.startsWith('http')
 	? image
 	: new URL(image, Astro.site ?? Astro.url).href;
+
+// La version FR sert de page par défaut pour les autres langues
+const xDefault = alternates.find((alt) => alt.hreflang === 'fr');
+const ogLocale = lang === 'en' ? 'en_US' : 'fr_FR';
+const ogLocaleAlternate = lang === 'en' ? 'fr_FR' : 'en_US';
+const hasTranslation = alternates.some((alt) => alt.hreflang !== lang);
 ---
 
 <!-- Global Metadata -->
@@ -55,6 +74,7 @@ const resolvedImageUrl = image.startsWith('http')
 {alternates.map((alt) => (
 	<link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
 ))}
+{xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
@@ -62,15 +82,28 @@ const resolvedImageUrl = image.startsWith('http')
 <meta name="description" content={description} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:locale" content={ogLocale} />
+{hasTranslation && <meta property="og:locale:alternate" content={ogLocaleAlternate} />}
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={resolvedImageUrl} />
+{type === 'article' && publishedTime && (
+	<meta property="article:published_time" content={publishedTime.toISOString()} />
+)}
+{type === 'article' && modifiedTime && (
+	<meta property="article:modified_time" content={modifiedTime.toISOString()} />
+)}
+{type === 'article' && <meta property="article:author" content={`${SITE_URL}/about/`} />}
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalURL} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={resolvedImageUrl} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@OptimizGuy" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={resolvedImageUrl} />
+
+<!-- Données structurées du site et de l'auteur -->
+<script type="application/ld+json" set:html={JSON.stringify(siteGraph(lang))} />

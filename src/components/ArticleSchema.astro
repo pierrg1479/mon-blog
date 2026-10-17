@@ -1,4 +1,6 @@
 ---
+import { PERSON_ID, SITE_URL, WEBSITE_ID, personRef, type Lang } from '../schema';
+
 interface Props {
 	title: string;
 	headline?: string;
@@ -11,6 +13,9 @@ interface Props {
 		url?: string;
 	};
 	canonicalUrl: string;
+	lang: Lang;
+	// URL de la version traduite de l'article (FR <-> EN)
+	translationUrl?: string;
 }
 
 const {
@@ -20,58 +25,58 @@ const {
 	image,
 	datePublished,
 	dateModified,
-	author = { name: 'Pierre', url: 'https://www.reddit.com/user/Patient-Gene703/' },
+	author,
 	canonicalUrl,
+	lang,
+	translationUrl,
 } = Astro.props;
 
-const schemaHeadline = headline || title;
+const toIso = (date: Date | string) => (typeof date === 'string' ? date : date.toISOString());
 
-const defaultAuthor = { name: 'Pierre', url: 'https://www.reddit.com/user/Patient-Gene703/' };
-const resolvedAuthor = {
-	name: author?.name || defaultAuthor.name,
-	url: author?.url || defaultAuthor.url,
+// Un auteur invité garde sa propre fiche, sinon on pointe vers la fiche de Pierre
+const schemaAuthor =
+	author?.name && author.name !== personRef.name
+		? { '@type': 'Person', name: author.name, ...(author.url && { url: author.url }) }
+		: personRef;
+
+const homeUrl = lang === 'en' ? `${SITE_URL}/en/` : `${SITE_URL}/`;
+const translationLang: Lang = lang === 'en' ? 'fr' : 'en';
+
+const article = {
+	'@type': 'BlogPosting',
+	'@id': `${canonicalUrl}#article`,
+	headline: headline || title,
+	description,
+	image: image || `${SITE_URL}/hannibal.jpg`,
+	datePublished: toIso(datePublished),
+	dateModified: toIso(dateModified ?? datePublished),
+	inLanguage: lang,
+	url: canonicalUrl,
+	mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+	isPartOf: { '@id': WEBSITE_ID },
+	author: schemaAuthor,
+	publisher: { '@id': PERSON_ID },
+	...(translationUrl && {
+		[lang === 'en' ? 'translationOfWork' : 'workTranslation']: {
+			'@type': 'BlogPosting',
+			'@id': `${translationUrl}#article`,
+			url: translationUrl,
+			inLanguage: translationLang,
+		},
+	}),
 };
 
-const publisher = {
-	'@type': 'Organization',
-	name: 'The Optimization Guy',
-	logo: {
-		'@type': 'ImageObject',
-		url: new URL('/hannibal-cercle.png', Astro.site).href,
-	},
+const breadcrumb = {
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{ '@type': 'ListItem', position: 1, name: lang === 'en' ? 'Home' : 'Accueil', item: homeUrl },
+		{ '@type': 'ListItem', position: 2, name: headline || title, item: canonicalUrl },
+	],
 };
-
-const defaultImage = new URL('/hannibal.jpg', Astro.site).href;
 
 const schema = {
 	'@context': 'https://schema.org',
-	'@type': 'Article',
-	headline: schemaHeadline,
-	description,
-	image: image || defaultImage,
-	datePublished:
-		typeof datePublished === 'string' ? datePublished : datePublished.toISOString(),
-	dateModified: dateModified
-		? typeof dateModified === 'string'
-			? dateModified
-			: dateModified.toISOString()
-		: typeof datePublished === 'string'
-			? datePublished
-			: datePublished.toISOString(),
-	author: {
-		'@type': 'Person',
-		name: resolvedAuthor.name,
-		url: resolvedAuthor.url,
-	},
-	publisher,
-	mainEntityOfPage: {
-		'@type': 'WebPage',
-		'@id': canonicalUrl,
-	},
-	speakable: {
-		'@type': 'SpeakableSpecification',
-		cssSelector: ['.hero-title', '.prose > p:first-of-type'],
-	},
+	'@graph': [article, breadcrumb],
 };
 ---
 

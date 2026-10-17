@@ -7,8 +7,8 @@ import ContactForm from '../components/ContactForm.astro';
 
 const siteUrl = Astro.site?.href ?? Astro.url.origin;
 const alternates = [
-	{ hreflang: 'fr', href: new URL('/contact', siteUrl).href },
-	{ hreflang: 'en', href: new URL('/en/contact', siteUrl).href },
+	{ hreflang: 'fr', href: new URL('/contact/', siteUrl).href },
+	{ hreflang: 'en', href: new URL('/en/contact/', siteUrl).href },
 ];
 ---
 
