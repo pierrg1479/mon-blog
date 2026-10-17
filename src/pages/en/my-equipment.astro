@@ -2,7 +2,7 @@
 export const prerender = true;
 
 import BaseHead from '../../components/BaseHead.astro';
-import EquipmentTable from '../../components/EquipmentTable.astro';
+import EquipmentCatalog from '../../components/EquipmentCatalog.astro';
 import FooterEn from '../../components/FooterEn.astro';
 import HeaderEn from '../../components/HeaderEn.astro';
 import { Image } from 'astro:assets';
@@ -731,6 +731,11 @@ const sections = [
 
 // Données structurées : liste du matériel affiché sur la page (pas de Product/Offer, la page ne vend rien)
 const equipmentItems = sections.flatMap((section) => section.items);
+const heroStats = [
+	{ value: equipmentItems.length, label: 'devices tested' },
+	{ value: sections.filter((section) => section.items.length > 0).length, label: 'categories' },
+	{ value: equipmentItems.filter((item) => item.rating === 5).length, label: 'rated 5/5' },
+];
 const toAbsolute = (path: string) => new URL(path, siteUrl).href;
 const structuredData = {
 	'@context': 'https://schema.org',
@@ -807,34 +812,19 @@ const alternates = [
 						migrating to a more reliable Zigbee ecosystem.
 					</p>
 
-					<nav aria-label="Quick access" class="hero-split__nav">
-						<ul class="hero-split__chips">
-							<li><a href="#infrastructure" class="hero-split__chip">Infrastructure</a></li>
-							<li><a href="#smart-plugs-switches" class="hero-split__chip">Smart Plugs & Switches</a></li>
-							<li><a href="#lighting" class="hero-split__chip">Lighting</a></li>
-							<li><a href="#sensors" class="hero-split__chip">Sensors</a></li>
-							<li><a href="#heating" class="hero-split__chip">Heating</a></li>
-							<li><a href="#security" class="hero-split__chip">Security</a></li>
-							<li><a href="#buttons-fingerbot" class="hero-split__chip">Buttons & Fingerbot</a></li>
-							<li><a href="#cleaning-maintenance" class="hero-split__chip">Cleaning</a></li>
-							<li><a href="#multimedia" class="hero-split__chip">Multimedia</a></li>
-						</ul>
-					</nav>
+					<ul class="hero-split__stats">
+						{heroStats.map((stat) => (
+							<li>
+								<strong>{stat.value}</strong>
+								<span>{stat.label}</span>
+							</li>
+						))}
+					</ul>
 				</div>
 			</div>
 		</section>
 		<main class="equipment-main">
-			<article class="equipment-page">
-				{sections.map((section) => (
-					<section id={section.id} class="equipment-section">
-						<h2>{section.title}</h2>
-						<p class="section-intro">
-							{section.description}
-						</p>
-						<EquipmentTable equipment={section.items} lang="en" />
-					</section>
-				))}
-			</article>
+			<EquipmentCatalog sections={sections} lang="en" />
 		</main>
 		<FooterEn />
 
@@ -875,164 +865,146 @@ const alternates = [
 </style>
 
 <style>
-	.hero-split,
-	.equipment-main {
-		box-sizing: border-box;
-		width: min(100%, var(--equipment-max-width));
-		margin: 0 auto;
-		padding-inline: var(--equipment-gutter);
-	}
+		.hero-split,
+		.equipment-main {
+			box-sizing: border-box;
+			width: min(100%, var(--equipment-max-width));
+			margin: 0 auto;
+			padding-inline: var(--equipment-gutter);
+		}
 
-	.hero-split {
-		padding-block: 2rem 1.5rem;
-	}
+		.hero-split {
+			padding-block: 2rem 1.5rem;
+		}
 
-	.hero-split__grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-	}
-
-	.hero-split__media {
-		order: 1;
-	}
-
-	.hero-split__image {
-		width: 100%;
-		display: block;
-		border-radius: 1rem;
-		border: 1px solid rgba(0, 0, 0, 0.1);
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-		aspect-ratio: 4 / 3;
-		object-fit: cover;
-		background: rgba(0, 0, 0, 0.05);
-	}
-
-	:global(.dark) .hero-split__image {
-		border-color: rgba(255, 255, 255, 0.1);
-		background: rgba(255, 255, 255, 0.05);
-	}
-
-	.hero-split__content {
-		order: 2;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.hero-split__kicker {
-		font-size: 0.75rem;
-		font-weight: 600;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		color: rgba(0, 0, 0, 0.6);
-	}
-
-	:global(.dark) .hero-split__kicker {
-		color: rgba(255, 255, 255, 0.6);
-	}
-
-	.hero-split__title {
-		font-size: clamp(1.9rem, 2.6vw, 2.5rem);
-		line-height: 1.2;
-		font-weight: 600;
-		margin: 0;
-	}
-
-	.hero-split__intro {
-		color: rgba(0, 0, 0, 0.7);
-		max-width: 65ch;
-		margin: 0;
-	}
-
-	:global(.dark) .hero-split__intro {
-		color: rgba(255, 255, 255, 0.7);
-	}
-
-	.hero-split__nav {
-		padding-top: 0.25rem;
-	}
-
-	.hero-split__chips {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
-
-	.hero-split__chip {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0.35rem 0.75rem;
-		border-radius: 999px;
-		border: 1px solid rgba(0, 0, 0, 0.1);
-		font-size: 0.85rem;
-		color: rgba(0, 0, 0, 0.8);
-		text-decoration: none;
-		transition: background 0.2s ease;
-	}
-
-	.hero-split__chip:hover {
-		background: rgba(0, 0, 0, 0.05);
-	}
-
-	:global(.dark) .hero-split__chip {
-		border-color: rgba(255, 255, 255, 0.1);
-		color: rgba(255, 255, 255, 0.8);
-	}
-
-	:global(.dark) .hero-split__chip:hover {
-		background: rgba(255, 255, 255, 0.05);
-	}
-
-	@media (min-width: 1024px) {
 		.hero-split__grid {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-			align-items: center;
-			gap: 2.5rem;
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
 		}
-	}
 
-	.equipment-main {
-		padding-block: 1rem 4em;
-	}
-
-	.equipment-page {
-		display: flex;
-		flex-direction: column;
-		gap: 3rem;
-	}
-
-	.equipment-section {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.section-intro {
-		margin: 0;
-		color: rgb(var(--gray));
-		font-size: 1rem;
-	}
-
-	:global(.dark) .section-intro {
-		color: rgb(var(--gray));
-	}
-
-	.equipment-section h2 {
-		font-size: 1.8rem;
-		margin-bottom: 0.25rem;
-	}
-
-	@media (max-width: 768px) {
-		.page-header h1 {
-			font-size: 2rem;
+		.hero-split__media {
+			order: 2;
+			margin: 0;
 		}
-		.equipment-section h2 {
-			font-size: 1.5rem;
+
+		.hero-split__image {
+			width: 100%;
+			display: block;
+			border-radius: 1rem;
+			border: 1px solid rgba(0, 0, 0, 0.1);
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+			aspect-ratio: 16 / 9;
+			object-fit: cover;
+			background: rgba(0, 0, 0, 0.05);
+		}
+
+		:global(.dark) .hero-split__image {
+			border-color: rgba(255, 255, 255, 0.1);
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		.hero-split__content {
+			order: 1;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		.hero-split__kicker {
+			margin: 0;
+			font-size: 0.75rem;
+			font-weight: 600;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			color: rgba(0, 0, 0, 0.6);
+		}
+
+		:global(.dark) .hero-split__kicker {
+			color: rgba(255, 255, 255, 0.6);
+		}
+
+		.hero-split__title {
+			font-size: clamp(1.9rem, 2.6vw, 2.5rem);
+			line-height: 1.2;
+			font-weight: 600;
+			margin: 0;
+		}
+
+		.hero-split__intro {
+			color: rgba(0, 0, 0, 0.7);
+			max-width: 65ch;
+			margin: 0;
+		}
+
+		:global(.dark) .hero-split__intro {
+			color: rgba(255, 255, 255, 0.7);
+		}
+
+		.hero-split__stats {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.75rem;
+			margin: 0.25rem 0 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.hero-split__stats li {
+			display: flex;
+			flex-direction: column;
+			min-width: 7.5rem;
+			margin: 0;
+			padding: 0.75rem 1rem;
+			border: 1px solid rgba(var(--gray), 0.18);
+			border-radius: 12px;
+			background: rgba(var(--accent), 0.08);
+			line-height: 1.2;
+		}
+
+		.hero-split__stats strong {
+			color: rgb(var(--black));
+			font-size: 1.6rem;
+		}
+
+		.hero-split__stats span {
+			color: rgb(var(--gray));
+			font-size: 0.8rem;
+		}
+
+		@media (min-width: 1024px) {
+			.hero-split__grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				align-items: center;
+				gap: 2.5rem;
+			}
+
+			.hero-split__media {
+				order: 1;
+			}
+
+			.hero-split__image {
+				aspect-ratio: 4 / 3;
+			}
+		}
+
+		.equipment-main {
+			padding-block: 1rem 4em;
+		}
+
+	@media (max-width: 720px) {
+		.hero-split {
+			padding-block: 1.5rem 1rem;
+		}
+
+		.hero-split__stats li {
+			flex: 1 1 0;
+			min-width: 0;
+			padding: 0.6rem 0.75rem;
+		}
+
+		.hero-split__stats strong {
+			font-size: 1.35rem;
 		}
 	}
 </style>

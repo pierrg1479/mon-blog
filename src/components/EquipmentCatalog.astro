@@ -1,0 +1,841 @@
+---
+// Catalogue du matériel : navigation des catégories, filtres et cartes produits (FR et EN)
+type Equipment = {
+	name: string;
+	image: string;
+	protocol?: string;
+	integration: string;
+	price: string;
+	rating?: number;
+	comment: string;
+	affiliateLink: string | null;
+	articleUrl: string | null;
+};
+
+type Section = {
+	id: string;
+	title: string;
+	description: string;
+	items: Equipment[];
+};
+
+interface Props {
+	sections: Section[];
+	lang?: 'fr' | 'en';
+}
+
+const { sections, lang = 'fr' } = Astro.props;
+
+const i18n = {
+	fr: {
+		nav: 'Catégories du matériel',
+		filters: 'Filtrer le matériel',
+		protocol: 'Protocole',
+		all: 'Tous',
+		other: 'Autres',
+		favorites: 'Coups de cœur 5/5',
+		count: (n: number) => `${n} appareil${n > 1 ? 's' : ''}`,
+		empty: 'Aucun appareil ne correspond à ces filtres.',
+		reset: 'Afficher tout le matériel',
+		ha: (value: string) => `Intégration HA : ${value}`,
+		review: 'Lire mon test',
+		cta: (shop: string | null) => (shop ? `Voir sur ${shop}` : 'Voir le produit'),
+		newTab: '(nouvel onglet)',
+		rating: (n: number) => `Mon avis : ${n} sur 5`,
+	},
+	en: {
+		nav: 'Equipment categories',
+		filters: 'Filter equipment',
+		protocol: 'Protocol',
+		all: 'All',
+		other: 'Other',
+		favorites: 'Favourites 5/5',
+		count: (n: number) => `${n} device${n > 1 ? 's' : ''}`,
+		empty: 'No device matches these filters.',
+		reset: 'Show all equipment',
+		ha: (value: string) => `HA integration: ${value}`,
+		review: 'Read my review',
+		cta: (shop: string | null) => (shop ? `View on ${shop}` : 'View product'),
+		newTab: '(new tab)',
+		rating: (n: number) => `My rating: ${n} out of 5`,
+	},
+};
+const t = i18n[lang];
+
+const visibleSections = sections.filter((section) => section.items.length > 0);
+const allItems = visibleSections.flatMap((section) => section.items);
+
+// Regroupe les protocoles pour le filtre : Zigbee, Wi-Fi (Matter compris), Bluetooth, le reste
+const protocolGroup = (protocol?: string) => {
+	const value = (protocol ?? '').toLowerCase();
+	if (value.includes('zigbee')) return 'zigbee';
+	if (value.includes('wifi')) return 'wifi';
+	if (value.includes('bluetooth')) return 'bluetooth';
+	return 'other';
+};
+const protocolFilters = [
+	{ key: 'zigbee', label: 'Zigbee' },
+	{ key: 'wifi', label: 'Wi-Fi' },
+	{ key: 'bluetooth', label: 'Bluetooth' },
+	{ key: 'other', label: t.other },
+]
+	.map((filter) => ({
+		...filter,
+		count: allItems.filter((item) => protocolGroup(item.protocol) === filter.key).length,
+	}))
+	.filter((filter) => filter.count > 0);
+const favoritesCount = allItems.filter((item) => item.rating === 5).length;
+
+const splitTitle = (title: string) => {
+	const match = title.match(/^([^\p{L}]+)\s*(.*)$/u);
+	return match ? { icon: match[1].trim(), label: match[2] } : { icon: '', label: title };
+};
+
+const clampRating = (rating?: number) => Math.min(5, Math.max(0, Math.round(rating ?? 0)));
+
+const protocolClass = (protocol?: string) =>
+	`eq-badge--${(protocol ?? '-').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'none'}`;
+
+const integrationClass = (integration: string) => {
+	const value = integration.toLowerCase();
+	if (value === 'oui' || value === 'yes') return 'eq-badge--ok';
+	if (value === 'moyenne' || value === 'partial') return 'eq-badge--partial';
+	return '';
+};
+
+const shopName = (url: string) => {
+	try {
+		const host = new URL(url).hostname.replace(/^www\./, '');
+		if (host === 'amzn.to' || host.startsWith('amazon.')) return 'Amazon';
+		if (host.startsWith('domadoo.')) return 'Domadoo';
+		if (host.startsWith('ldlc.')) return 'LDLC';
+		if (host.startsWith('expert4house.')) return 'Expert4House';
+		return null;
+	} catch {
+		return null;
+	}
+};
+
+const hasValue = (value?: string) => Boolean(value && value.trim() !== '-' && value.trim() !== '');
+---
+
+<div class="eq-catalog" data-catalog>
+	<nav class="eq-nav" aria-label={t.nav} data-catalog-nav>
+		<ul class="eq-nav__list">
+			{visibleSections.map((section) => {
+				const { icon, label } = splitTitle(section.title);
+				return (
+					<li data-nav-item={section.id}>
+						<a href={`#${section.id}`} class="eq-nav__chip" data-nav-link={section.id}>
+							{icon && <span aria-hidden="true">{icon}</span>}
+							<span>{label}</span>
+							<span class="eq-nav__count" data-nav-count>{section.items.length}</span>
+						</a>
+					</li>
+				);
+			})}
+		</ul>
+	</nav>
+
+	<div class="eq-filters" role="group" aria-label={t.filters} data-catalog-filters hidden>
+		<div class="eq-filters__group">
+			<span class="eq-filters__label">{t.protocol}</span>
+			<button type="button" class="eq-filter" aria-pressed="true" data-protocol-filter="all">{t.all}</button>
+			{protocolFilters.map((filter) => (
+				<button type="button" class="eq-filter" aria-pressed="false" data-protocol-filter={filter.key}>
+					{filter.label} <span class="eq-filter__count">{filter.count}</span>
+				</button>
+			))}
+		</div>
+		<div class="eq-filters__group">
+			<button type="button" class="eq-filter eq-filter--fav" aria-pressed="false" data-favorites-filter>
+				<span aria-hidden="true">★</span> {t.favorites} <span class="eq-filter__count">{favoritesCount}</span>
+			</button>
+			<p class="eq-filters__result" aria-live="polite" data-result-count>{t.count(allItems.length)}</p>
+		</div>
+	</div>
+
+	<p class="eq-empty" data-empty hidden>
+		{t.empty}
+		<button type="button" class="eq-empty__reset" data-reset>{t.reset}</button>
+	</p>
+
+	{visibleSections.map((section) => {
+		const { icon, label } = splitTitle(section.title);
+		return (
+			<section id={section.id} class="eq-section" data-section>
+				<div class="eq-section__head">
+					<h2>
+						{icon && <span class="eq-section__icon" aria-hidden="true">{icon}</span>}
+						{label}
+						<span class="eq-section__count" data-section-count>{section.items.length}</span>
+					</h2>
+					<p class="eq-section__intro">{section.description}</p>
+				</div>
+				<ul class="eq-grid">
+					{section.items.map((item) => {
+						const rating = clampRating(item.rating);
+						const shop = item.affiliateLink ? shopName(item.affiliateLink) : null;
+						return (
+							<li class="eq-card" data-item data-protocol={protocolGroup(item.protocol)} data-rating={rating}>
+								<img
+									src={item.image}
+									alt={item.name}
+									width="96"
+									height="96"
+									loading="lazy"
+									decoding="async"
+									class="eq-card__img no-lightbox"
+								/>
+								<div class="eq-card__body">
+									<h3 class="eq-card__name">
+										{item.articleUrl ? <a href={item.articleUrl}>{item.name}</a> : item.name}
+									</h3>
+									<div class="eq-card__meta">
+										<span class="eq-stars" role="img" aria-label={t.rating(rating)}>
+											{Array.from({ length: 5 }, (_, index) => (
+												<span class={index < rating ? 'is-on' : ''} aria-hidden="true">★</span>
+											))}
+										</span>
+										{hasValue(item.price) && <span class="eq-card__price">{item.price}</span>}
+									</div>
+									<div class="eq-card__badges">
+										{hasValue(item.protocol) && (
+											<span class={`eq-badge ${protocolClass(item.protocol)}`}>{item.protocol}</span>
+										)}
+										{hasValue(item.integration) && (
+											<span class={`eq-badge ${integrationClass(item.integration)}`}>
+												{t.ha(item.integration.toLowerCase())}
+											</span>
+										)}
+									</div>
+									<p class="eq-card__comment">{item.comment}</p>
+									{(item.articleUrl || item.affiliateLink) && (
+										<div class="eq-card__actions">
+											{item.articleUrl && (
+												<a href={item.articleUrl} class="eq-btn eq-btn--ghost">{t.review}</a>
+											)}
+											{item.affiliateLink && (
+												<a
+													href={item.affiliateLink}
+													target="_blank"
+													rel="noopener noreferrer nofollow sponsored"
+													class="eq-btn eq-btn--primary"
+												>
+													{t.cta(shop)}
+													<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<path d="M7 17 17 7M9 7h8v8" />
+													</svg>
+													<span class="sr-only">{t.newTab}</span>
+												</a>
+											)}
+										</div>
+									)}
+								</div>
+							</li>
+						);
+					})}
+				</ul>
+			</section>
+		);
+	})}
+</div>
+
+<script define:vars={{ countLabels: { one: t.count(1), many: t.count(2) } }}>
+	const catalog = document.querySelector('[data-catalog]');
+	if (catalog) {
+		const nav = catalog.querySelector('[data-catalog-nav]');
+		const navList = nav.querySelector('ul');
+		const filters = catalog.querySelector('[data-catalog-filters]');
+		const protocolButtons = [...catalog.querySelectorAll('[data-protocol-filter]')];
+		const favoritesButton = catalog.querySelector('[data-favorites-filter]');
+		const resultCount = catalog.querySelector('[data-result-count]');
+		const empty = catalog.querySelector('[data-empty]');
+		const sections = [...catalog.querySelectorAll('[data-section]')];
+		const header = document.querySelector('header');
+
+		// La barre de catégories se colle sous le header, quelle que soit sa hauteur
+		const syncHeaderHeight = () => {
+			const height = header ? header.getBoundingClientRect().height : 0;
+			document.documentElement.style.setProperty('--eq-header-h', `${Math.round(height)}px`);
+		};
+		syncHeaderHeight();
+		window.addEventListener('resize', syncHeaderHeight, { passive: true });
+
+		const formatCount = (n) =>
+			(n > 1 ? countLabels.many : countLabels.one).replace(/\d+/, String(n));
+
+		let protocol = 'all';
+		let favoritesOnly = false;
+
+		const applyFilters = () => {
+			let total = 0;
+			sections.forEach((section) => {
+				const items = [...section.querySelectorAll('[data-item]')];
+				let visible = 0;
+				items.forEach((item) => {
+					const match =
+						(protocol === 'all' || item.dataset.protocol === protocol) &&
+						(!favoritesOnly || item.dataset.rating === '5');
+					item.hidden = !match;
+					if (match) visible += 1;
+				});
+				total += visible;
+				section.hidden = visible === 0;
+				section.querySelector('[data-section-count]').textContent = String(visible);
+				const navItem = nav.querySelector(`[data-nav-item="${section.id}"]`);
+				if (navItem) {
+					navItem.hidden = visible === 0;
+					navItem.querySelector('[data-nav-count]').textContent = String(visible);
+				}
+			});
+			resultCount.textContent = formatCount(total);
+			empty.hidden = total > 0;
+			protocolButtons.forEach((button) =>
+				button.setAttribute('aria-pressed', String(button.dataset.protocolFilter === protocol))
+			);
+			favoritesButton.setAttribute('aria-pressed', String(favoritesOnly));
+		};
+
+		protocolButtons.forEach((button) =>
+			button.addEventListener('click', () => {
+				protocol = button.dataset.protocolFilter;
+				applyFilters();
+			})
+		);
+		favoritesButton.addEventListener('click', () => {
+			favoritesOnly = !favoritesOnly;
+			applyFilters();
+		});
+		catalog.querySelector('[data-reset]').addEventListener('click', () => {
+			protocol = 'all';
+			favoritesOnly = false;
+			applyFilters();
+		});
+		filters.hidden = false;
+
+		// Met en évidence la catégorie en cours de lecture dans la barre
+		const links = new Map(
+			[...nav.querySelectorAll('[data-nav-link]')].map((link) => [link.dataset.navLink, link])
+		);
+		const setActive = (id) => {
+			links.forEach((link, key) => {
+				const active = key === id;
+				link.classList.toggle('is-active', active);
+				if (active) {
+					link.setAttribute('aria-current', 'true');
+					const left = link.offsetLeft - (navList.clientWidth - link.offsetWidth) / 2;
+					navList.scrollTo({ left, behavior: 'smooth' });
+				} else {
+					link.removeAttribute('aria-current');
+				}
+			});
+		};
+		if ('IntersectionObserver' in window) {
+			const observer = new IntersectionObserver(
+				(entries) => {
+					const visible = entries
+						.filter((entry) => entry.isIntersecting)
+						.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+					if (visible[0]) setActive(visible[0].target.id);
+				},
+				{ rootMargin: '-35% 0px -60% 0px' }
+			);
+			sections.forEach((section) => observer.observe(section));
+		}
+	}
+</script>
+
+<style>
+	.eq-catalog {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	/* ---------- Barre des catégories ---------- */
+	.eq-nav {
+		position: sticky;
+		top: var(--eq-header-h, 72px);
+		z-index: 5;
+		margin: 0 calc(var(--equipment-gutter, 1rem) * -1);
+		padding: 0.6rem var(--equipment-gutter, 1rem);
+		background: rgba(255, 255, 255, 0.92);
+		backdrop-filter: saturate(1.4) blur(8px);
+		-webkit-backdrop-filter: saturate(1.4) blur(8px);
+		border-bottom: 1px solid rgba(var(--gray), 0.15);
+	}
+
+	:global(.dark) .eq-nav {
+		background: rgba(17, 24, 39, 0.92);
+	}
+
+	.eq-nav__list {
+		display: flex;
+		gap: 0.5rem;
+		margin: 0;
+		padding: 0.1rem 0;
+		list-style: none;
+		overflow-x: auto;
+		scrollbar-width: none;
+		-webkit-mask-image: linear-gradient(to right, transparent, #000 12px, #000 calc(100% - 24px), transparent);
+		mask-image: linear-gradient(to right, transparent, #000 12px, #000 calc(100% - 24px), transparent);
+	}
+
+	.eq-nav__list::-webkit-scrollbar {
+		display: none;
+	}
+
+	.eq-nav__list li {
+		flex-shrink: 0;
+		margin: 0;
+	}
+
+	.eq-nav__list li:first-child {
+		padding-left: 4px;
+	}
+
+	.eq-nav__list li:last-child {
+		padding-right: 20px;
+	}
+
+	.eq-catalog .eq-nav__chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		min-height: 36px;
+		padding: 0.3rem 0.8rem;
+		border: 1px solid rgba(var(--gray), 0.25);
+		border-radius: 999px;
+		color: rgb(var(--black));
+		font-size: 0.8rem;
+		font-weight: 600;
+		text-decoration: none;
+		white-space: nowrap;
+		transition: background 0.15s ease, border-color 0.15s ease;
+	}
+
+	.eq-catalog .eq-nav__chip:hover {
+		color: rgb(var(--black));
+		background: rgba(var(--accent), 0.12);
+		border-color: rgba(var(--accent), 0.6);
+	}
+
+	.eq-catalog .eq-nav__chip.is-active {
+		background: rgb(var(--accent));
+		border-color: rgb(var(--accent));
+		color: #111827;
+	}
+
+	.eq-nav__count {
+		min-width: 1.4em;
+		padding: 0 0.35em;
+		border-radius: 999px;
+		background: rgba(var(--gray), 0.15);
+		font-size: 0.72rem;
+		text-align: center;
+	}
+
+	.eq-nav__chip.is-active .eq-nav__count {
+		background: rgba(17, 24, 39, 0.12);
+	}
+
+	/* ---------- Filtres ---------- */
+	.eq-filters {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem 1.5rem;
+	}
+
+	.eq-filters[hidden] {
+		display: none;
+	}
+
+	.eq-filters__group {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.eq-filters__label {
+		margin-right: 0.25rem;
+		color: rgb(var(--gray));
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.eq-filter {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		min-height: 36px;
+		padding: 0.3rem 0.8rem;
+		border: 1px solid rgba(var(--gray), 0.3);
+		border-radius: 8px;
+		background: transparent;
+		color: rgb(var(--black));
+		font: inherit;
+		font-size: 0.8rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background 0.15s ease, border-color 0.15s ease;
+	}
+
+	.eq-filter:hover {
+		border-color: rgb(var(--accent));
+	}
+
+	.eq-filter[aria-pressed='true'] {
+		background: rgb(var(--black));
+		border-color: rgb(var(--black));
+		color: rgb(var(--gray-light));
+	}
+
+	:global(.dark) .eq-filter[aria-pressed='true'] {
+		color: #111827;
+	}
+
+	.eq-filter--fav[aria-pressed='true'] {
+		background: rgb(var(--accent));
+		border-color: rgb(var(--accent));
+		color: #111827;
+	}
+
+	.eq-filter__count {
+		opacity: 0.6;
+		font-size: 0.72rem;
+	}
+
+	.eq-filters__result {
+		margin: 0 0 0 0.25rem;
+		color: rgb(var(--gray));
+		font-size: 0.8rem;
+	}
+
+	.eq-filter:focus-visible,
+	.eq-empty__reset:focus-visible,
+	.eq-catalog a:focus-visible {
+		outline: 3px solid rgba(var(--accent), 0.7);
+		outline-offset: 2px;
+	}
+
+	.eq-empty {
+		margin: 1rem 0;
+		padding: 1.5rem;
+		border: 1px dashed rgba(var(--gray), 0.4);
+		border-radius: 12px;
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+
+	.eq-empty[hidden] {
+		display: none;
+	}
+
+	.eq-empty__reset {
+		display: block;
+		margin: 0.75rem auto 0;
+		padding: 0.5rem 1rem;
+		border: none;
+		border-radius: 8px;
+		background: rgb(var(--accent));
+		color: #111827;
+		font: inherit;
+		font-size: 0.85rem;
+		font-weight: 700;
+		cursor: pointer;
+	}
+
+	/* ---------- Sections ---------- */
+	.eq-section {
+		margin-top: 1.5rem;
+		scroll-margin-top: calc(var(--eq-header-h, 72px) + 5rem);
+	}
+
+	.eq-section[hidden] {
+		display: none;
+	}
+
+	.eq-section__head {
+		margin-bottom: 1.25rem;
+	}
+
+	.eq-section h2 {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin: 0 0 0.35rem;
+		font-size: 1.6rem;
+	}
+
+	.eq-section__icon {
+		font-size: 0.9em;
+	}
+
+	.eq-section__count {
+		padding: 0.1rem 0.55rem;
+		border-radius: 999px;
+		background: rgba(var(--gray), 0.12);
+		color: rgb(var(--gray));
+		font-size: 0.8rem;
+		font-weight: 700;
+	}
+
+	.eq-section__intro {
+		max-width: 70ch;
+		margin: 0;
+		color: rgb(var(--gray));
+		font-size: 0.95rem;
+	}
+
+	/* ---------- Cartes ---------- */
+	.eq-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+		gap: 1rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.eq-card {
+		display: grid;
+		grid-template-columns: 96px 1fr;
+		gap: 1rem;
+		margin: 0;
+		padding: 1rem;
+		border: 1px solid rgba(var(--gray), 0.18);
+		border-radius: 14px;
+		background: #fff;
+		box-shadow: 0 1px 3px rgba(var(--gray), 0.1);
+		transition: border-color 0.15s ease, box-shadow 0.15s ease;
+	}
+
+	.eq-card[hidden] {
+		display: none;
+	}
+
+	.eq-card:hover {
+		border-color: rgba(var(--accent), 0.55);
+		box-shadow: 0 6px 18px rgba(var(--gray), 0.16);
+	}
+
+	:global(.dark) .eq-card {
+		background: #1f2937;
+		box-shadow: none;
+	}
+
+	.eq-card__img {
+		display: block;
+		width: 96px;
+		height: 96px;
+		border-radius: 10px;
+		background: #fff;
+		object-fit: contain;
+	}
+
+	.eq-card__body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+		min-width: 0;
+	}
+
+	.eq-card__name {
+		margin: 0;
+		font-size: 1rem;
+		line-height: 1.3;
+	}
+
+	.eq-card__name a {
+		color: inherit;
+		text-decoration: underline;
+		text-decoration-color: rgb(var(--accent));
+		text-decoration-thickness: 2px;
+		text-underline-offset: 3px;
+	}
+
+	.eq-card__meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.eq-stars {
+		display: inline-flex;
+		gap: 1px;
+		color: rgba(var(--gray), 0.35);
+		font-size: 0.95rem;
+		line-height: 1;
+	}
+
+	.eq-stars .is-on {
+		color: #f5b301;
+	}
+
+	.eq-card__price {
+		color: rgb(var(--black));
+		font-size: 0.9rem;
+		font-weight: 700;
+	}
+
+	.eq-card__badges {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+	}
+
+	.eq-badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.15rem 0.55rem;
+		border-radius: 999px;
+		background: rgba(var(--gray), 0.12);
+		color: rgb(var(--gray-dark));
+		font-size: 0.72rem;
+		font-weight: 600;
+		line-height: 1.5;
+	}
+
+	.eq-badge--zigbee {
+		background: #dbeafe;
+		color: #1e40af;
+	}
+	.eq-badge--wifi,
+	.eq-badge--wifi-matter {
+		background: #dcfce7;
+		color: #166534;
+	}
+	.eq-badge--bluetooth {
+		background: #e0f2fe;
+		color: #075985;
+	}
+	.eq-badge--ok {
+		background: rgba(34, 197, 94, 0.12);
+		color: #15803d;
+	}
+	.eq-badge--partial {
+		background: rgba(245, 158, 11, 0.15);
+		color: #b45309;
+	}
+
+	:global(.dark) .eq-badge--zigbee {
+		background: #1e3a8a;
+		color: #bfdbfe;
+	}
+	:global(.dark) .eq-badge--wifi,
+	:global(.dark) .eq-badge--wifi-matter {
+		background: #14532d;
+		color: #bbf7d0;
+	}
+	:global(.dark) .eq-badge--bluetooth {
+		background: #0c4a6e;
+		color: #bae6fd;
+	}
+	:global(.dark) .eq-badge--ok {
+		background: rgba(34, 197, 94, 0.18);
+		color: #86efac;
+	}
+	:global(.dark) .eq-badge--partial {
+		background: rgba(245, 158, 11, 0.18);
+		color: #fcd34d;
+	}
+
+	.eq-card__comment {
+		margin: 0;
+		color: rgb(var(--gray-dark));
+		font-size: 0.85rem;
+		line-height: 1.55;
+	}
+
+	.eq-card__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: auto;
+		padding-top: 0.35rem;
+	}
+
+	.eq-catalog .eq-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.35rem;
+		min-height: 40px;
+		padding: 0.45rem 0.9rem;
+		border: 1px solid transparent;
+		border-radius: 8px;
+		font-size: 0.8rem;
+		font-weight: 700;
+		line-height: 1.2;
+		text-decoration: none;
+		transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+	}
+
+	.eq-catalog .eq-btn--primary {
+		background: rgb(var(--accent));
+		color: #111827;
+	}
+
+	.eq-catalog .eq-btn--primary:hover {
+		color: #111827;
+		transform: translateY(-1px);
+		box-shadow: 0 6px 14px rgba(var(--accent), 0.35);
+	}
+
+	.eq-catalog .eq-btn--ghost {
+		border-color: rgba(var(--gray), 0.35);
+		color: rgb(var(--black));
+	}
+
+	.eq-catalog .eq-btn--ghost:hover {
+		color: rgb(var(--black));
+		border-color: rgb(var(--accent));
+	}
+
+	@media (max-width: 720px) {
+		.eq-filters {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.eq-section h2 {
+			font-size: 1.35rem;
+		}
+
+		.eq-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.eq-card {
+			grid-template-columns: 72px 1fr;
+			gap: 0.85rem;
+			padding: 0.85rem;
+		}
+
+		.eq-card__img {
+			width: 72px;
+			height: 72px;
+		}
+
+		.eq-card__actions .eq-btn {
+			flex: 1 1 auto;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.eq-catalog * {
+			transition: none !important;
+		}
+
+		.eq-catalog .eq-btn--primary:hover {
+			transform: none;
+		}
+	}
+</style>
