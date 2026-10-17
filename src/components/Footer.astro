@@ -1,83 +1,241 @@
 ---
-const today = new Date();
+// Pied de page du site (FR et EN)
+interface Props {
+	lang?: 'fr' | 'en';
+}
+
+const { lang = 'fr' } = Astro.props;
+const year = new Date().getFullYear();
+
+const t = {
+	fr: {
+		home: '/',
+		tagline: 'Home Assistant au quotidien, testé chez moi.',
+		nav: 'Liens du pied de page',
+		links: [
+			{ href: '/', label: 'Accueil' },
+			{ href: '/about/', label: 'À propos' },
+			{ href: '/mon-materiel/', label: 'Mon matériel' },
+			{ href: '/contact/', label: 'Contact' },
+			{ href: '/rss.xml', label: 'RSS' },
+		],
+		joke: '4,7/5 : même la box domotique valide',
+	},
+	en: {
+		home: '/en/',
+		tagline: 'Everyday Home Assistant, tested at home.',
+		nav: 'Footer links',
+		links: [
+			{ href: '/en/', label: 'Home' },
+			{ href: '/en/about/', label: 'About' },
+			{ href: '/en/my-equipment/', label: 'My equipment' },
+			{ href: '/en/contact/', label: 'Contact' },
+		],
+		joke: '4.7/5 · even my smart home hub approves',
+	},
+}[lang];
 ---
 
-<footer>
-	<p class="copyright">&copy; {today.getFullYear()} The Optimization Guy. Tous droits réservés.</p>
+<footer class="site-footer">
+	<div class="site-footer__inner">
+		<div class="site-footer__brand">
+			<a href={t.home} class="site-footer__logo"><span aria-hidden="true">⚡</span> The Optimization Guy</a>
+			<p class="site-footer__tagline">{t.tagline}</p>
+		</div>
 
-	<div class="rating-container" itemscope itemtype="https://schema.org/WebApplication">
-		<meta itemprop="name" content="The Optimization Guy">
-		<meta itemprop="applicationCategory" content="Domotique">
-		<div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
-			<meta itemprop="ratingValue" content="4.7">
-			<meta itemprop="bestRating" content="5">
-			<meta itemprop="ratingCount" content="31">
-			<div class="stars-wrapper">
-				<div class="stars" role="img" aria-label="Note de 4,7 sur 5 étoiles">
-					<svg class="star filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-					<svg class="star filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-					<svg class="star filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-					<svg class="star filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-					<svg class="star partial" viewBox="0 0 24 24" aria-hidden="true">
-						<defs>
-							<linearGradient id="partialFill">
-								<stop offset="70%" stop-color="#ffd04d"/>
-								<stop offset="70%" stop-color="#d1d5db"/>
-							</linearGradient>
-						</defs>
-						<path fill="url(#partialFill)" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-					</svg>
-				</div>
-				<span class="rating-text">4,7/5 : même la box domotique valide</span>
-			</div>
+		<nav class="site-footer__nav" aria-label={t.nav}>
+			<ul>
+				{t.links.map((link) => (
+					<li><a href={link.href}>{link.label}</a></li>
+				))}
+			</ul>
+		</nav>
+
+		<div class="site-footer__social">
+			<a href="https://x.com/OptimizGuy" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+				<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+				</svg>
+			</a>
+			<a href="https://www.reddit.com/user/Patient-Gene703/" target="_blank" rel="noopener noreferrer" aria-label="Reddit">
+				<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
+				</svg>
+			</a>
+			<a href="https://www.linkedin.com/in/pgincheleau/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+				<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+				</svg>
+			</a>
 		</div>
 	</div>
+
+	<div class="site-footer__bottom">
+		<p>&copy; {year} The Optimization Guy</p>
+		<p class="site-footer__joke"><span aria-hidden="true">★</span> {t.joke}</p>
+	</div>
 </footer>
+
 <style>
-	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
+	.site-footer {
+		margin-top: 2rem;
+		border-top: 1px solid rgba(var(--gray), 0.18);
+		background: rgba(var(--gray-light), 0.35);
 		color: rgb(var(--gray));
-		text-align: center;
+		font-size: 0.85rem;
+		line-height: 1.5;
 	}
 
-	.copyright {
-		margin: 0 0 1rem 0;
+	:global(.dark) .site-footer {
+		background: rgba(0, 0, 0, 0.2);
 	}
 
-	.rating-container {
-		display: flex;
-		justify-content: center;
+	.site-footer__inner,
+	.site-footer__bottom {
+		box-sizing: border-box;
+		width: min(100%, 1200px);
+		margin: 0 auto;
+		padding-inline: 1.5rem;
 	}
 
-	.stars-wrapper {
-		display: flex;
+	.site-footer__inner {
+		display: grid;
+		grid-template-columns: 1fr auto auto;
 		align-items: center;
-		gap: 0.5rem;
-		flex-wrap: wrap;
-		justify-content: center;
+		gap: 2rem;
+		padding-block: 1.5rem;
 	}
 
-	.stars {
+	.site-footer__brand {
+		min-width: 0;
+	}
+
+	.site-footer .site-footer__logo {
+		color: rgb(var(--black));
+		font-size: 0.95rem;
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.site-footer__tagline {
+		margin: 0.15rem 0 0;
+	}
+
+	.site-footer__nav ul {
 		display: flex;
-		gap: 2px;
+		flex-wrap: wrap;
+		gap: 0.25rem 1.25rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
 	}
 
-	.star {
-		width: 20px;
-		height: 20px;
+	.site-footer__nav li {
+		margin: 0;
 	}
 
-	.star.filled {
-		fill: #ffd04d;
+	.site-footer a {
+		color: rgb(var(--gray-dark));
+		text-decoration: none;
 	}
 
-	.star.partial path {
-		stroke: none;
+	.site-footer__nav a:hover {
+		color: rgb(var(--black));
+		text-decoration: underline;
+		text-decoration-color: rgb(var(--accent));
+		text-decoration-thickness: 2px;
+		text-underline-offset: 4px;
 	}
 
-	.rating-text {
-		font-size: 0.9rem;
-		color: rgb(var(--gray));
+	.site-footer__social {
+		display: flex;
+		gap: 0.5rem;
+	}
+
+	.site-footer__social a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		background: rgba(var(--gray), 0.12);
+		transition: background 0.15s ease, color 0.15s ease;
+	}
+
+	.site-footer__social a:hover {
+		background: rgb(var(--accent));
+		color: #111827;
+	}
+
+	.site-footer__social svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	.site-footer a:focus-visible {
+		outline: 2px solid rgb(var(--accent));
+		outline-offset: 3px;
+		border-radius: 4px;
+	}
+
+	.site-footer__bottom {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.25rem 1rem;
+		padding-block: 0.9rem;
+		border-top: 1px solid rgba(var(--gray), 0.12);
+		font-size: 0.78rem;
+	}
+
+	.site-footer__bottom p {
+		margin: 0;
+	}
+
+	.site-footer__joke span {
+		color: #f5b301;
+	}
+
+	@media (max-width: 860px) {
+		.site-footer__inner {
+			grid-template-columns: 1fr auto;
+		}
+
+		.site-footer__nav {
+			grid-column: 1 / -1;
+			grid-row: 2;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.site-footer__inner {
+			grid-template-columns: 1fr;
+			justify-items: center;
+			gap: 1rem;
+			padding-block: 1.25rem 1rem;
+			text-align: center;
+		}
+
+		.site-footer__nav,
+		.site-footer__social {
+			grid-column: auto;
+			grid-row: auto;
+		}
+
+		.site-footer__nav ul {
+			justify-content: center;
+		}
+
+		.site-footer__social a {
+			width: 40px;
+			height: 40px;
+		}
+
+		.site-footer__bottom {
+			justify-content: center;
+			text-align: center;
+			padding-bottom: 1.25rem;
+		}
 	}
 </style>
