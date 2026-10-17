@@ -10,12 +10,16 @@ const blogSchema = ({ image }) =>
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		heroImage: image().optional(),
+		// Texte alternatif de l'image principale (par défaut : le H1)
+		heroAlt: z.string().optional(),
 		author: z.object({
 			name: z.string(),
 			avatar: z.string(),
 			url: z.string().url().optional(),
 		}),
 		draft: z.boolean().optional(),
+		// Slugs des articles à proposer en fin d'article (complétés par les plus récents)
+		related: z.array(z.string()).optional(),
 	});
 
 const blog = defineCollection({

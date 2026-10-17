@@ -132,7 +132,7 @@ const alternates = isEn ? [enAlternate, frAlternate] : [frAlternate, enAlternate
 									)}
 									<div class="content">
 										<p class="date">
-											<FormattedDate date={post.data.pubDate} />
+											<FormattedDate date={post.data.pubDate} lang={isEn ? "en" : "fr"} />
 										</p>
 										<h3>{displayTitle}</h3>
 										{post.data.description && <p class="description">{post.data.description}</p>}

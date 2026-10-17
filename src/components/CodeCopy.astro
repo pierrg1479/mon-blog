@@ -1,0 +1,135 @@
+---
+// Bouton "Copier" sur les blocs de code des articles (FR et EN)
+interface Props {
+	lang?: 'fr' | 'en';
+}
+
+const { lang = 'fr' } = Astro.props;
+
+const labels = {
+	fr: { copy: 'Copier', copied: 'Copié', failed: 'Échec', aria: 'Copier le code' },
+	en: { copy: 'Copy', copied: 'Copied', failed: 'Failed', aria: 'Copy code' },
+}[lang];
+---
+
+<script is:inline define:vars={{ labels }}>
+	// API presse-papiers, avec repli sur execCommand quand elle est refusée
+	const copyText = async (text) => {
+		try {
+			await navigator.clipboard.writeText(text);
+			return true;
+		} catch {
+			const area = document.createElement('textarea');
+			area.value = text;
+			area.setAttribute('readonly', '');
+			area.style.position = 'fixed';
+			area.style.opacity = '0';
+			document.body.appendChild(area);
+			area.select();
+			const ok = document.execCommand('copy');
+			area.remove();
+			return ok;
+		}
+	};
+
+	document.querySelectorAll('.prose pre').forEach((pre) => {
+		if (pre.parentElement?.classList.contains('code-block')) return;
+
+		const wrapper = document.createElement('div');
+		wrapper.className = 'code-block';
+		pre.parentNode.insertBefore(wrapper, pre);
+		wrapper.appendChild(pre);
+
+		const button = document.createElement('button');
+		button.type = 'button';
+		button.className = 'code-copy';
+		button.textContent = labels.copy;
+		button.setAttribute('aria-label', labels.aria);
+		wrapper.appendChild(button);
+
+		let timer;
+		button.addEventListener('click', async () => {
+			const text = (pre.querySelector('code') ?? pre).innerText.replace(/\n$/, '');
+			if (await copyText(text)) {
+				button.textContent = labels.copied;
+				button.classList.add('is-done');
+			} else {
+				button.textContent = labels.failed;
+			}
+			clearTimeout(timer);
+			timer = setTimeout(() => {
+				button.textContent = labels.copy;
+				button.classList.remove('is-done');
+			}, 2000);
+		});
+	});
+</script>
+
+<style is:global>
+	.prose .code-block {
+		position: relative;
+	}
+
+	.prose .code-block > pre {
+		margin: 0;
+		padding-top: 2.75rem;
+	}
+
+	.prose .code-copy {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.5rem;
+		z-index: 1;
+		min-height: 32px;
+		padding: 0.3rem 0.7rem;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 6px;
+		background: rgba(255, 255, 255, 0.1);
+		color: #e1e4e8;
+		font: inherit;
+		font-size: 0.75rem;
+		font-weight: 700;
+		cursor: pointer;
+		opacity: 0.85;
+		transition: opacity 0.15s ease, background 0.15s ease;
+	}
+
+	.prose .code-copy:hover,
+	.prose .code-copy:focus-visible {
+		opacity: 1;
+		background: rgba(255, 255, 255, 0.2);
+	}
+
+	.prose .code-copy:focus-visible {
+		outline: 2px solid #ffd04d;
+		outline-offset: 2px;
+	}
+
+	.prose .code-copy.is-done {
+		border-color: #ffd04d;
+		background: #ffd04d;
+		color: #111827;
+	}
+
+	/* Bloc replié (Voir le code YAML) : le padding du bloc est porté par le wrapper */
+	.prose details:not(.toc) > .code-block {
+		padding: 0;
+		margin-top: 1.25rem;
+	}
+
+	@media (max-width: 480px) {
+		.prose .code-block > pre {
+			padding: 2.75rem 1rem 1rem;
+		}
+
+		.article-content .prose details:not(.toc) {
+			padding: 1rem 0.75rem;
+		}
+	}
+
+	@media print {
+		.prose .code-copy {
+			display: none;
+		}
+	}
+</style>

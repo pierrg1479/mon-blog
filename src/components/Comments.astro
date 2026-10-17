@@ -7,6 +7,16 @@ const categoryId =
         import.meta.env.PUBLIC_GISCUS_CATEGORY_ID ?? import.meta.env.GISCUS_CATEGORY_ID;
 
 const giscusConfigured = repo && repoId && category && categoryId;
+
+interface Props {
+	lang?: 'fr' | 'en';
+}
+
+const { lang = 'fr' } = Astro.props;
+const t = {
+	fr: { title: 'Commentaires', loading: 'Chargement des commentaires...' },
+	en: { title: 'Comments', loading: 'Loading comments...' },
+}[lang];
 ---
 <section class="comments">
         {giscusConfigured ? (
@@ -17,9 +27,10 @@ const giscusConfigured = repo && repoId && category && categoryId;
                         data-repo-id={repoId}
                         data-category={category}
                         data-category-id={categoryId}
+                        data-lang={lang}
                 >
-                        <span class="commentsTitle">Commentaires</span>
-                        <div class="giscus-placeholder">Chargement des commentaires...</div>
+                        <span class="commentsTitle">{t.title}</span>
+                        <div class="giscus-placeholder">{t.loading}</div>
                 </div>
                 <script>
                         // Lazy load Giscus when comments section is visible
@@ -50,7 +61,7 @@ const giscusConfigured = repo && repoId && category && categoryId;
                                 script.setAttribute('data-emit-metadata', '0');
                                 script.setAttribute('data-input-position', 'bottom');
                                 script.setAttribute('data-theme', theme);
-                                script.setAttribute('data-lang', 'fr');
+                                script.setAttribute('data-lang', container.dataset.lang ?? 'fr');
                                 script.crossOrigin = 'anonymous';
                                 script.async = true;
                                 container.appendChild(script);

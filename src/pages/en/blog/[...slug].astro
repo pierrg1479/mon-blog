@@ -1,43 +1,10 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPostEn from '../../../layouts/BlogPostEn.astro';
-import { execSync } from 'node:child_process';
-import path from 'node:path';
+import type { RelatedPost } from '../../../components/RelatedPosts.astro';
 
 export const prerender = true;
 
-
-export const getGitLastUpdatedDate = (entryId: string) => {
-	try {
-		const basePath = path.join(process.cwd(), 'src', 'content', 'blog-en');
-		const possibleFiles = [
-			path.join(basePath, entryId),
-			path.join(basePath, `${entryId}.md`),
-			path.join(basePath, `${entryId}.mdx`),
-		];
-
-		for (const filePath of possibleFiles) {
-			try {
-				const isoDate = execSync(`git log -1 --format=%cI -- "${filePath}"`, {
-					encoding: 'utf-8',
-				}).trim();
-
-				if (isoDate) {
-					const parsedDate = new Date(isoDate);
-					if (!Number.isNaN(parsedDate.getTime())) {
-						return parsedDate;
-					}
-				}
-			} catch {
-				continue;
-			}
-		}
-		return undefined;
-	} catch (error) {
-		console.error(`Git error for ${entryId}:`, error);
-		return undefined;
-	}
-};
 
 export async function getStaticPaths() {
 	// Mapping EN slug → FR slug for hreflang
@@ -47,6 +14,7 @@ export async function getStaticPaths() {
 		'home-assistant-mistakes-to-avoid': 'home-assistant-erreurs-a-eviter',
 		'smart-plugs-savings-automations': 'prises-connectees-economies-automatisations',
 		'tado-review-2-years-gas-savings': 'tado-retour-2-ans-economies-gaz',
+		'wall-mounted-home-assistant-tablet': 'tablette-murale-home-assistant',
 	};
 
 	const allPosts = (await getCollection('blogEn')).sort(
@@ -54,49 +22,38 @@ export async function getStaticPaths() {
 	);
 	const publishedPosts = allPosts.filter(({ data }) => data.draft !== true);
 
-	const toAdjacentPost = (post: CollectionEntry<'blog-en'> | undefined) => {
-		if (!post) return undefined;
-		const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
-		const heroImage =
-			typeof post.data.heroImage === 'string'
-				? post.data.heroImage
-				: post.data.heroImage?.src;
+	const toCard = (post: (typeof publishedPosts)[number]) => ({
+		slug: post.id,
+		title: post.data.title,
+		h1: post.data.h1,
+		description: post.data.description,
+		heroImage: post.data.heroImage,
+	});
 
-		return {
-			slug,
-			title: post.data.title,
-			h1: post.data.h1,
-			pubDate: post.data.pubDate,
-			heroImage,
-		};
+	// À lire ensuite : les articles choisis dans `related`, complétés par les plus récents
+	const relatedFor = (post: (typeof publishedPosts)[number]) => {
+		const others = publishedPosts.filter((candidate) => candidate.id !== post.id);
+		const picked = (post.data.related ?? [])
+			.map((slug) => others.find((candidate) => candidate.id === slug))
+			.filter((candidate) => candidate !== undefined);
+		const fill = others.filter((candidate) => !picked.includes(candidate));
+		return [...picked, ...fill].slice(0, 3).map(toCard);
 	};
 
-	return allPosts.map((post) => {
-		const slug = post.slug ?? post.id.replace(/\.mdx?$/, '');
-		const gitUpdatedDate = getGitLastUpdatedDate(post.id);
-		const updatedDate = gitUpdatedDate || post.data.updatedDate || post.data.pubDate;
+	// Les brouillons ne sont générés qu'en local
+	const builtPosts = import.meta.env.PROD ? publishedPosts : allPosts;
 
-		const publishedIndex = publishedPosts.findIndex((p) => p.id === post.id);
-		const previousPost = publishedIndex >= 0 ? toAdjacentPost(publishedPosts[publishedIndex + 1]) : undefined;
-		const nextPost = publishedIndex >= 0 ? toAdjacentPost(publishedPosts[publishedIndex - 1]) : undefined;
-
-		return {
-			params: { slug },
-			props: {
-				...post,
-				previousPost,
-				nextPost,
-				frSlug: enToFrSlugMap[slug],
-				data: {
-					...post.data,
-					updatedDate,
-				},
-			},
-		};
-	});
+	return builtPosts.map((post) => ({
+		params: { slug: post.id },
+		props: {
+			...post,
+			relatedPosts: relatedFor(post),
+			frSlug: enToFrSlugMap[post.id],
+		},
+	}));
 }
 
-type Props = CollectionEntry<'blogEn'> & { previousPost?: any; nextPost?: any; frSlug?: string };
+type Props = CollectionEntry<'blogEn'> & { relatedPosts: RelatedPost[]; frSlug?: string };
 
 const post = Astro.props;
 const { Content, headings } = await render(post);
@@ -104,8 +61,7 @@ const { Content, headings } = await render(post);
 
 <BlogPostEn
 	{...post.data}
-	previousPost={post.previousPost}
-	nextPost={post.nextPost}
+	relatedPosts={post.relatedPosts}
 	frSlug={post.frSlug}
 	content={post.body}
 	headings={headings}
