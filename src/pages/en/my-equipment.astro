@@ -64,10 +64,21 @@ const security: Equipment[] = [
 		articleUrl: null,
 	},
 	{
+		name: 'Reolink Argus PT Ultra',
+		image: '/images/equipment/reolink-argus-pt-ultra.jpg',
+		protocol: 'WiFi',
+		integration: 'Yes',
+		price: '150€',
+		rating: 5,
+		comment: 'Pan-tilt and 4K: one camera covers the whole garden, self-powered with a solar panel.',
+		affiliateLink: 'https://www.amazon.fr/dp/B0BZD4P25M',
+		articleUrl: null,
+	},
+	{
 		name: 'Tapo C225',
 		image: '/images/equipment/tapo-c225.jpg',
 		protocol: 'WiFi',
-		integration: 'No',
+		integration: 'Yes',
 		price: '40€',
 		rating: 4,
 		comment: 'Cannot connect to HA and magnet system makes theft easier.',
@@ -218,6 +229,28 @@ const sensors: Equipment[] = [
 		rating: 5,
 		comment: 'Reliable and accurate.',
 		affiliateLink: 'https://amzn.to/45G4raT',
+		articleUrl: null,
+	},
+	{
+		name: 'Sonoff SNZB-02P Temp & Humidity Sensor',
+		image: '/images/equipment/sonoff-snzb-02p.png',
+		protocol: 'Zigbee',
+		integration: 'Yes',
+		price: '10€',
+		rating: 5,
+		comment: 'Small, accurate and very cheap.',
+		affiliateLink: 'https://www.domadoo.fr/fr/chauffage-connecte/6732-sonoff-capteur-de-temperature-et-d-humidite-zigbee-30-avec-support.html?domid=129',
+		articleUrl: null,
+	},
+	{
+		name: 'Netatmo Weather Station',
+		image: '/images/equipment/netatmo-station-meteo.jpg',
+		protocol: 'WiFi',
+		integration: 'Yes',
+		price: '150€',
+		rating: 5,
+		comment: 'Temperature, humidity, CO2 and pressure, indoors and outdoors.',
+		affiliateLink: 'https://www.amazon.fr/dp/B0098MGWA8',
 		articleUrl: null,
 	},
 	{
@@ -492,7 +525,7 @@ const buttons: Equipment[] = [
 		name: 'Sonoff SNZB-01P Button',
 		image: '/images/equipment/SONOFF SNZB-01P.jpg',
 		protocol: 'Zigbee',
-		integration: 'No',
+		integration: 'Yes',
 		price: '11€',
 		rating: 5,
 		comment: 'Very practical, multiple functions.',
@@ -546,6 +579,97 @@ const infrastructure: Equipment[] = [
 		affiliateLink: 'https://amzn.to/4as2GAU',
 		articleUrl: null,
 	},
+	{
+		name: 'Reolink Home Hub',
+		image: '/images/equipment/reolink-home-hub.jpg',
+		protocol: 'WiFi',
+		integration: 'Yes',
+		price: '130€',
+		rating: 5,
+		comment: 'Centralizes Reolink cameras and stores footage locally, no subscription.',
+		affiliateLink: 'https://www.amazon.fr/dp/B0CZRGVJZF',
+		articleUrl: null,
+	},
+	{
+		name: 'Reolink Home Hub Lite',
+		image: '/images/equipment/reolink-home-hub-lite.jpg',
+		protocol: 'Ethernet',
+		integration: 'Yes',
+		price: '80€',
+		rating: 4,
+		comment: 'Compact version of the hub, enough for a few cameras.',
+		affiliateLink: 'https://www.ldlc.com/fiche/PB00750736.html',
+		articleUrl: null,
+	},
+	{
+		name: 'Tapo H200 Hub',
+		image: '/images/equipment/tapo-h200.jpg',
+		protocol: 'WiFi',
+		integration: 'Yes',
+		price: '35€',
+		rating: 4,
+		comment: 'Required for Tapo sensors and buttons, which then show up in HA.',
+		affiliateLink: 'https://www.amazon.fr/dp/B0C8BJ9ZLB',
+		articleUrl: null,
+	},
+	{
+		name: 'Tapo H500 Hub',
+		image: '/images/equipment/tapo-h500.jpg',
+		protocol: 'WiFi',
+		integration: 'Yes',
+		price: '124€',
+		rating: 4,
+		comment: 'More powerful hub with local storage for Tapo cameras.',
+		affiliateLink: 'https://www.amazon.fr/dp/B0F7Y3PMK8',
+		articleUrl: null,
+	},
+	{
+		name: 'Xiaomi Redmi Pad SE 11" Tablet',
+		image: '/images/equipment/redmi-pad-se.jpg',
+		protocol: 'WiFi',
+		integration: 'Yes',
+		price: '134€',
+		rating: 5,
+		comment: 'My wall-mounted Home Assistant screen with Fully Kiosk, great value for money.',
+		affiliateLink: 'https://www.amazon.fr/dp/B0CDLT5LS7',
+		articleUrl: '/en/blog/wall-mounted-home-assistant-tablet/',
+	},
+];
+
+const lights: Equipment[] = [
+	{
+		name: 'Tapo L630 Spotlight',
+		image: '/images/equipment/tapo-l630.jpg',
+		protocol: 'WiFi',
+		integration: 'Yes',
+		price: '9€',
+		rating: 4,
+		comment: 'Color GU10 spots for the garden, easy to integrate.',
+		affiliateLink: 'https://www.amazon.fr/dp/B0B6CKMLQH',
+		articleUrl: null,
+	},
+	{
+		name: 'Zigbee RGBCCT Bulb TS0505B',
+		image: '/images/equipment/ampoule-zigbee-rgbcct-ts0505b.png',
+		protocol: 'Zigbee',
+		integration: 'Yes',
+		price: '7€',
+		rating: 4,
+		comment: 'Cheap color bulb that also strengthens the Zigbee mesh.',
+		affiliateLink: 'https://www.domadoo.fr/fr/eclairage-connecte/6757-moes-ampoule-connectee-rgbww-zigbee-synchronisation-musique.html?domid=129',
+		articleUrl: null,
+	},
+	{
+		name: 'Sonoff L3-5M-P LED Strip',
+		image: '/images/equipment/sonoff-l3-ruban-led.jpg',
+		protocol: 'WiFi',
+		integration: 'Yes',
+		price: '30€',
+		rating: 4,
+		comment: '5 m WiFi LED strip, integrated locally through eWeLink.',
+		affiliateLink: 'https://www.expert4house.com/fr/maison-intelligente/eclairage/bandes-led/bande-led-intelligente-sonoff-l3-rvb-5m',
+		articleUrl: null,
+	},
 ];
 
 const sections = [
@@ -560,6 +684,12 @@ const sections = [
 		title: '🔌 Smart Plugs & Switches',
 		items: switchesAndLights,
 		description: 'The essential kit to control and measure: cut power, schedule, track consumption… without headaches.'
+	},
+	{
+		id: 'lighting',
+		title: '💡 Lighting',
+		items: lights,
+		description: 'Smart bulbs, spots and LED strips: ambiance, scenes and automatic outdoor lighting.'
 	},
 	{
 		id: 'sensors',
@@ -681,6 +811,7 @@ const alternates = [
 						<ul class="hero-split__chips">
 							<li><a href="#infrastructure" class="hero-split__chip">Infrastructure</a></li>
 							<li><a href="#smart-plugs-switches" class="hero-split__chip">Smart Plugs & Switches</a></li>
+							<li><a href="#lighting" class="hero-split__chip">Lighting</a></li>
 							<li><a href="#sensors" class="hero-split__chip">Sensors</a></li>
 							<li><a href="#heating" class="hero-split__chip">Heating</a></li>
 							<li><a href="#security" class="hero-split__chip">Security</a></li>
