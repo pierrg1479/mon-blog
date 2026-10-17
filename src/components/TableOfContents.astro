@@ -1,0 +1,415 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+type Props = {
+	headings: MarkdownHeading[];
+	lang: 'fr' | 'en';
+	variant: 'rail' | 'inline';
+	readingTime?: number;
+};
+
+const { headings = [], lang, variant, readingTime = 0 } = Astro.props;
+
+const t = {
+	fr: { title: 'Sommaire', label: "Sommaire de l'article", top: 'Haut de page', left: 'min restantes', done: 'Lecture terminée' },
+	en: { title: 'Contents', label: 'Table of contents', top: 'Back to top', left: 'min left', done: 'Finished' },
+}[lang];
+
+// Les titres commencent parfois par un emoji ("## 🔍 Mon système...") : on l'enlève du sommaire
+const cleanText = (text: string) =>
+	text.replace(/^(?:\p{Extended_Pictographic}|️|‍|\s)+/u, '').trim();
+
+type Group = { slug: string; text: string; children: { slug: string; text: string }[] };
+
+const groups: Group[] = [];
+for (const heading of headings) {
+	if (heading.depth !== 2 && heading.depth !== 3) continue;
+	const item = { slug: heading.slug, text: cleanText(heading.text) };
+	if (heading.depth === 3 && groups.length > 0) {
+		groups[groups.length - 1].children.push(item);
+	} else {
+		groups.push({ ...item, children: [] });
+	}
+}
+
+const hasToc = groups.length >= 2;
+---
+
+{hasToc && variant === 'rail' && (
+	<nav class="toc-rail" aria-label={t.label} data-toc-rail data-reading-time={readingTime} data-left={t.left} data-done={t.done}>
+		<div class="toc-rail__head">
+			<span class="toc-rail__title">{t.title}</span>
+			{readingTime > 0 && (
+				<span class="toc-rail__time" data-toc-time>{readingTime} {t.left}</span>
+			)}
+		</div>
+		<div class="toc-rail__scroll" data-toc-scroll>
+			<div class="toc-rail__track" data-toc-list>
+			<span class="toc-rail__fill" aria-hidden="true"></span>
+			<ol class="toc-rail__list">
+				{groups.map((group) => (
+					<li class="toc-rail__group" data-toc-group>
+						<a class="toc-rail__link" href={`#${group.slug}`} data-toc-link>{group.text}</a>
+						{group.children.length > 0 && (
+							<div class="toc-rail__sub">
+								<ol>
+									{group.children.map((child) => (
+										<li>
+											<a class="toc-rail__link toc-rail__link--sub" href={`#${child.slug}`} data-toc-link>{child.text}</a>
+										</li>
+									))}
+								</ol>
+							</div>
+						)}
+					</li>
+				))}
+			</ol>
+			</div>
+		</div>
+		<button type="button" class="toc-rail__top" data-toc-top>
+			<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+				<path d="M12 19V5M5 12l7-7 7 7" />
+			</svg>
+			{t.top}
+		</button>
+	</nav>
+)}
+
+{hasToc && variant === 'inline' && (
+	<details class="toc toc--inline">
+		<summary>{t.title}</summary>
+		<div class="toc-content">
+			<ul class="toc-list">
+				{groups.map((group) => (
+					<>
+						<li class="toc-h2"><a href={`#${group.slug}`} data-toc-link>{group.text}</a></li>
+						{group.children.map((child) => (
+							<li class="toc-h3"><a href={`#${child.slug}`} data-toc-link>{child.text}</a></li>
+						))}
+					</>
+				))}
+			</ul>
+		</div>
+	</details>
+)}
+
+<style>
+	.toc-rail {
+		--toc-track: #e5e7eb;
+		--toc-muted: #64748b;
+		--toc-strong: #0f172a;
+		--toc-accent: #ffd04d;
+		--toc-accent-strong: #f2b705;
+		--toc-hover: rgba(255, 208, 77, 0.14);
+		position: sticky;
+		top: var(--toc-top, 6.5rem);
+		display: flex;
+		flex-direction: column;
+		max-height: calc(100vh - var(--toc-top, 6.5rem) - 1.5rem);
+		font-size: 0.875rem;
+		line-height: 1.45;
+	}
+
+	:global(.dark) .toc-rail {
+		--toc-track: rgba(255, 255, 255, 0.1);
+		--toc-muted: #94a3b8;
+		--toc-strong: #f8fafc;
+		--toc-hover: rgba(255, 208, 77, 0.1);
+	}
+
+	.toc-rail__head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.75rem;
+		padding: 0 0 0.875rem 1rem;
+	}
+
+	.toc-rail__title {
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--toc-strong);
+	}
+
+	.toc-rail__time {
+		font-size: 0.75rem;
+		color: var(--toc-muted);
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+
+	.toc-rail__scroll {
+		min-height: 0;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		scrollbar-width: thin;
+		scrollbar-color: var(--toc-track) transparent;
+	}
+
+	.toc-rail__list,
+	.toc-rail__sub ol {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.toc-rail__track {
+		position: relative;
+	}
+
+	/* Rail gris + remplissage jaune jusqu'à la section en cours */
+	.toc-rail__track::before,
+	.toc-rail__fill {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 2px;
+		border-radius: 2px;
+	}
+
+	.toc-rail__track::before {
+		bottom: 0;
+		background: var(--toc-track);
+	}
+
+	.toc-rail__fill {
+		height: var(--toc-fill, 0px);
+		background: var(--toc-accent);
+		transition: height 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+	}
+
+	.toc-rail__group,
+	.toc-rail__sub li {
+		margin: 0;
+	}
+
+	.toc-rail__link {
+		position: relative;
+		display: block;
+		padding: 0.4rem 0.5rem 0.4rem 1rem;
+		border-radius: 0 6px 6px 0;
+		color: var(--toc-muted);
+		text-decoration: none;
+		transition: color 0.2s ease, background-color 0.2s ease;
+	}
+
+	.toc-rail__link::before {
+		content: '';
+		position: absolute;
+		left: -1px;
+		top: 0.4rem;
+		bottom: 0.4rem;
+		width: 4px;
+		border-radius: 4px;
+		background: var(--toc-accent-strong);
+		transform: scaleY(0);
+		transition: transform 0.25s ease;
+	}
+
+	.toc-rail__link:hover {
+		color: var(--toc-strong);
+		background: var(--toc-hover);
+		text-decoration: none;
+	}
+
+	.toc-rail__link:focus-visible {
+		outline: 2px solid var(--toc-accent-strong);
+		outline-offset: -2px;
+	}
+
+	.toc-rail__link.is-active {
+		color: var(--toc-strong);
+		font-weight: 600;
+	}
+
+	.toc-rail__link.is-active::before {
+		transform: scaleY(1);
+	}
+
+	.toc-rail__link--sub {
+		padding-left: 1.75rem;
+		font-size: 0.8125rem;
+	}
+
+	/* Les H3 ne se déplient que pour la section en cours */
+	.toc-rail__sub {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.3s ease;
+	}
+
+	.toc-rail__sub > ol {
+		overflow: hidden;
+	}
+
+	.toc-rail__group.is-open > .toc-rail__sub {
+		grid-template-rows: 1fr;
+	}
+
+	.toc-rail__group:not(.is-open) .toc-rail__link--sub {
+		visibility: hidden;
+		transition: visibility 0s 0.3s, color 0.2s ease;
+	}
+
+	.toc-rail__top {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		align-self: flex-start;
+		margin: 1rem 0 0 0.5rem;
+		padding: 0.35rem 0.5rem;
+		border: 0;
+		border-radius: 6px;
+		background: none;
+		color: var(--toc-muted);
+		font: inherit;
+		font-size: 0.8125rem;
+		cursor: pointer;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.25s ease, color 0.2s ease, background-color 0.2s ease;
+	}
+
+	.toc-rail.is-scrolled .toc-rail__top {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.toc-rail__top:hover {
+		color: var(--toc-strong);
+		background: var(--toc-hover);
+	}
+
+	.toc-rail__top:focus-visible {
+		outline: 2px solid var(--toc-accent-strong);
+		outline-offset: 2px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.toc-rail *,
+		.toc-rail *::before {
+			transition: none !important;
+		}
+	}
+</style>
+
+<script>
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+	const headerOffset = () => document.querySelector('header')?.offsetHeight ?? 0;
+
+	const targetOf = (link: HTMLAnchorElement) =>
+		document.getElementById(decodeURIComponent(link.getAttribute('href')!.slice(1)));
+
+	// Clic sur une entrée : défilement doux, focus sur le titre, ancre dans l'URL
+	document.querySelectorAll<HTMLAnchorElement>('a[data-toc-link]').forEach((link) => {
+		link.addEventListener('click', (event) => {
+			const target = targetOf(link);
+			if (!target) return;
+			event.preventDefault();
+			target.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
+			if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+			target.focus({ preventScroll: true });
+			history.replaceState(null, '', `#${target.id}`);
+		});
+	});
+
+	const rail = document.querySelector<HTMLElement>('[data-toc-rail]');
+
+	if (rail) {
+		const list = rail.querySelector<HTMLElement>('[data-toc-list]')!;
+		const scroller = rail.querySelector<HTMLElement>('[data-toc-scroll]')!;
+		const timeEl = rail.querySelector<HTMLElement>('[data-toc-time]');
+		const end = document.querySelector<HTMLElement>('[data-article-end]');
+		const start = document.querySelector<HTMLElement>('.prose');
+		const readingTime = Number(rail.dataset.readingTime) || 0;
+
+		const entries = Array.from(rail.querySelectorAll<HTMLAnchorElement>('a[data-toc-link]'))
+			.map((link) => ({ link, target: targetOf(link), group: link.closest<HTMLElement>('[data-toc-group]') }))
+			.filter((entry): entry is { link: HTMLAnchorElement; target: HTMLElement; group: HTMLElement | null } => !!entry.target);
+
+		let activeIndex = -2;
+
+		const updateFill = () => {
+			const active = entries[activeIndex];
+			if (!active) {
+				list.style.setProperty('--toc-fill', '0px');
+				return;
+			}
+			const listTop = list.getBoundingClientRect().top;
+			const linkBox = active.link.getBoundingClientRect();
+			list.style.setProperty('--toc-fill', `${linkBox.bottom - listTop}px`);
+		};
+
+		const keepVisible = (link: HTMLElement) => {
+			const box = link.getBoundingClientRect();
+			const view = scroller.getBoundingClientRect();
+			if (box.top >= view.top + 24 && box.bottom <= view.bottom - 24) return;
+			const offset = box.top - view.top - view.height / 3;
+			scroller.scrollBy({ top: offset, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+		};
+
+		const setActive = (index: number) => {
+			if (index === activeIndex) return;
+			activeIndex = index;
+			const activeGroup = entries[index]?.group ?? null;
+			entries.forEach(({ link, group }, i) => {
+				const isActive = i === index;
+				link.classList.toggle('is-active', isActive);
+				if (isActive) link.setAttribute('aria-current', 'location');
+				else link.removeAttribute('aria-current');
+				group?.classList.toggle('is-open', group === activeGroup);
+			});
+			updateFill();
+			if (entries[index]) keepVisible(entries[index].link);
+		};
+
+		const update = () => {
+			const offset = headerOffset();
+			rail.style.setProperty('--toc-top', `${offset + 32}px`);
+
+			// Section en cours : le dernier titre passé sous le header
+			const line = offset + 48;
+			let index = -1;
+			for (let i = 0; i < entries.length; i++) {
+				if (entries[i].target.getBoundingClientRect().top <= line) index = i;
+				else break;
+			}
+			setActive(index);
+			rail.classList.toggle('is-scrolled', index >= 0);
+
+			// Temps de lecture restant, mesuré sur le corps de l'article
+			if (timeEl && start && end && readingTime > 0) {
+				const top = start.getBoundingClientRect().top;
+				const bottom = end.getBoundingClientRect().top;
+				const progress = Math.min(1, Math.max(0, (window.innerHeight * 0.4 - top) / (bottom - top)));
+				const left = Math.ceil(readingTime * (1 - progress));
+				timeEl.textContent = progress >= 0.98 ? rail.dataset.done! : `${Math.max(1, left)} ${rail.dataset.left}`;
+			}
+		};
+
+		let ticking = false;
+		const onScroll = () => {
+			if (ticking) return;
+			ticking = true;
+			requestAnimationFrame(() => {
+				update();
+				ticking = false;
+			});
+		};
+
+		rail.querySelector('[data-toc-top]')?.addEventListener('click', () => {
+			window.scrollTo({ top: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+		});
+
+		// Le dépliage des H3 décale les entrées : on recale le remplissage pendant l'animation
+		new ResizeObserver(updateFill).observe(list);
+
+		window.addEventListener('scroll', onScroll, { passive: true });
+		window.addEventListener('resize', onScroll, { passive: true });
+		update();
+	}
+</script>

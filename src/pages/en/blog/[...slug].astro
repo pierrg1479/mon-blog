@@ -99,7 +99,7 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'blogEn'> & { previousPost?: any; nextPost?: any; frSlug?: string };
 
 const post = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 ---
 
 <BlogPostEn
@@ -108,6 +108,7 @@ const { Content } = await render(post);
 	nextPost={post.nextPost}
 	frSlug={post.frSlug}
 	content={post.body}
+	headings={headings}
 >
 	<Content />
 </BlogPostEn>

@@ -10,6 +10,8 @@ import ReadingProgress from '../components/ReadingProgress.astro';
 import ArticleSchema from '../components/ArticleSchema.astro';
 import ImageLightbox from '../components/ImageLightbox.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import type { MarkdownHeading } from 'astro';
 import { canonicalFor } from '../schema';
 import '../styles/article-ultra-clean.css';
 import '../styles/article-patch.css';
@@ -33,6 +35,7 @@ type Props = {
 	author?: any;
 	previousPost?: AdjacentPost;
 	nextPost?: AdjacentPost;
+	headings?: MarkdownHeading[];
 	frSlug?: string;
 };
 
@@ -46,6 +49,7 @@ const {
 	content,
 	author,
 	previousPost,
+	headings = [],
 	nextPost,
 	frSlug,
 } = Astro.props;
@@ -298,6 +302,56 @@ if (translationUrl) {
 			.dark .article-content {
 				background: #0f172a;
 				box-shadow: 0 -4px 30px rgba(15, 23, 42, 0.65);
+			}
+
+			/* Sommaire collant à gauche sur grand écran */
+			.article-shell {
+				position: relative;
+				z-index: 5;
+			}
+
+			.toc-aside {
+				display: none;
+			}
+
+			.prose :global(:is(h2, h3)[id]) {
+				scroll-margin-top: 7.5rem;
+			}
+
+			@media (min-width: 1180px) {
+				.article-shell {
+					display: grid;
+					grid-template-columns: minmax(16.5rem, 1fr) minmax(0, 800px) minmax(0, 1fr);
+					margin-top: -2rem;
+				}
+
+				.article-shell > .article-content {
+					grid-column: 2;
+					margin: 0;
+					width: 100%;
+					box-sizing: border-box;
+				}
+
+				.toc-aside {
+					display: block;
+					grid-column: 1;
+					grid-row: 1;
+					justify-self: end;
+					width: 100%;
+					max-width: 18rem;
+					box-sizing: border-box;
+					padding: 4.5rem 1.5rem 2rem 0.75rem;
+				}
+
+				.prose :global(.toc--inline) {
+					display: none;
+				}
+			}
+
+			@media print {
+				.toc-aside {
+					display: none !important;
+				}
 			}
 
 			@media (max-width: 768px) {
@@ -562,9 +616,15 @@ if (translationUrl) {
 					</a>
 				</div>
 
+		<div class="article-shell">
+			<aside class="toc-aside">
+				<TableOfContents headings={headings} lang="en" variant="rail" readingTime={readingTime} />
+			</aside>
 		<div class="article-content">
 				<div class="prose">
+					<TableOfContents headings={headings} lang="en" variant="inline" />
 					<slot />
+					<div data-article-end aria-hidden="true"></div>
 					<ShareButtons title={displayTitle} />
 					<AuthorBoxEn />
 					<Comments />
@@ -649,78 +709,11 @@ if (translationUrl) {
 					)}
 				</div>
 			</div>
+		</div>
 		</article>
 	</main>
 	<FooterEn />
 	<ImageLightbox />
-	<!-- Deferred TOC generation script -->
-	<script>
-		// Auto table of contents generation - deferred for performance
-		const initTOC = () => {
-			const article = document.querySelector('.prose');
-			if (!article) return;
-
-			const headings = Array.from(article.querySelectorAll('h2, h3, h4')).filter(
-				heading => !heading.closest('.author-box, .comments')
-			);
-			if (headings.length === 0) return;
-
-			const toc = document.createElement('details');
-			toc.className = 'toc';
-
-			const summary = document.createElement('summary');
-			summary.textContent = 'Table of Contents';
-			toc.appendChild(summary);
-
-			const tocContent = document.createElement('div');
-			tocContent.className = 'toc-content';
-
-			const tocList = document.createElement('ul');
-			tocList.className = 'toc-list';
-
-			headings.forEach((heading, index) => {
-				if (!heading.id) {
-					const headingText = heading.textContent
-						.toLowerCase()
-						.replace(/[^a-z0-9]+/g, '-')
-						.replace(/(^-|-$)/g, '');
-					heading.id = headingText || `heading-${index}`;
-				}
-
-				const li = document.createElement('li');
-				li.className = `toc-${heading.tagName.toLowerCase()}`;
-
-				const link = document.createElement('a');
-				link.href = `#${heading.id}`;
-				link.textContent = heading.textContent;
-
-				link.addEventListener('click', function(e) {
-					e.preventDefault();
-					heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-					history.pushState(null, null, `#${heading.id}`);
-				});
-
-				li.appendChild(link);
-				tocList.appendChild(li);
-			});
-
-			tocContent.appendChild(tocList);
-			toc.appendChild(tocContent);
-
-			const titleBlock = article.querySelector('.title');
-			if (titleBlock) {
-				titleBlock.after(toc);
-			} else {
-				article.insertBefore(toc, article.firstChild);
-			}
-		};
-
-		if ('requestIdleCallback' in window) {
-			requestIdleCallback(initTOC);
-		} else {
-			setTimeout(initTOC, 0);
-		}
-	</script>
 
 	<!-- Google Tag Manager - Deferred loading for better performance -->
 	<script is:inline>
