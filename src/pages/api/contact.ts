@@ -8,6 +8,11 @@ const MIN_FILL_MS = 3000;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Lu au runtime (variables Vercel), avec repli sur import.meta.env pour le dev local.
+function env(name: string): string | undefined {
+	return process.env[name] || import.meta.env[name];
+}
+
 type Fields = { name: string; email: string; subject: string; message: string; lang: 'fr' | 'en' };
 
 function field(data: FormData, key: string): string {
@@ -28,11 +33,11 @@ function respond(request: Request, lang: string, status: 'ok' | 'error' | 'inval
 }
 
 async function sendEmail(f: Fields): Promise<boolean> {
-	const apiKey = import.meta.env.RESEND_API_KEY;
-	const to = import.meta.env.CONTACT_TO_EMAIL;
-	const from = import.meta.env.CONTACT_FROM_EMAIL || 'The Optimization Guy <onboarding@resend.dev>';
+	const apiKey = env('RESEND_API_KEY');
+	const to = env('CONTACT_TO_EMAIL');
+	const from = env('CONTACT_FROM_EMAIL') || 'The Optimization Guy <onboarding@resend.dev>';
 	if (!apiKey || !to) {
-		console.error('[contact] RESEND_API_KEY ou CONTACT_TO_EMAIL manquant');
+		console.error('[contact] variable manquante :', !apiKey ? 'RESEND_API_KEY' : '', !to ? 'CONTACT_TO_EMAIL' : '');
 		return false;
 	}
 
