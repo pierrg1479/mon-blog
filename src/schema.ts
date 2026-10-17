@@ -7,17 +7,26 @@ export const WEBSITE_ID = `${SITE_URL}/#website`;
 export const PERSON_ID = `${SITE_URL}/about/#person`;
 export const AUTHOR_NAME = 'Pierre';
 
+// Profils publics de l'auteur : LinkedIn en premier, c'est le signal d'identité le plus fort
+export const AUTHOR_SAME_AS = [
+	'https://www.linkedin.com/in/pgincheleau/',
+	'https://x.com/OptimizGuy',
+	'https://www.reddit.com/user/Patient-Gene703/',
+];
+
 export type Lang = 'fr' | 'en';
 
 export const langFromPath = (pathname: string): Lang =>
 	pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'fr';
 
-// Référence courte à l'auteur, utilisée dans les articles
+// Référence à l'auteur, utilisée dans les articles : sameAs y figure aussi pour que
+// le bloc BlogPosting identifie l'auteur à lui seul, sans dépendre de la fusion des @id
 export const personRef = {
 	'@type': 'Person',
 	'@id': PERSON_ID,
 	name: AUTHOR_NAME,
 	url: `${SITE_URL}/about/`,
+	sameAs: AUTHOR_SAME_AS,
 };
 
 export const siteGraph = (lang: Lang) => ({
@@ -40,7 +49,6 @@ export const siteGraph = (lang: Lang) => ({
 			alternateName: SITE_NAME,
 			image: `${SITE_URL}/hannibal-cercle.png`,
 			knowsAbout: ['Home Assistant', 'Home automation', 'Energy optimization'],
-			sameAs: ['https://x.com/OptimizGuy', 'https://www.reddit.com/user/Patient-Gene703/'],
 		},
 	],
 });
