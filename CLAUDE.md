@@ -19,7 +19,7 @@ Faire du blog une référence Home Assistant en français et en anglais, avec du
 4. **Images** : dans `public/images/<slug>/`, hero dans `src/assets/`. Flouter ou recadrer tout ce qui relève de la confidentialité (noms, caméras, adresse).
 5. **Traduction EN** dans `src/content/blog-en/<slug-traduit>.mdx` : adapter (unités, exemples, requêtes anglaises), pas traduire mot à mot. Ajouter la paire de slugs dans `frToEnSlugMap` (`src/pages/blog/[...slug].astro`) et `enToFrSlugMap` (`src/pages/en/blog/[...slug].astro`).
 6. **Relecture confidentialité** : repasser l'article et le YAML contre la section "Confidentialité" ci-dessous.
-7. **Rendu, arrêt 2** : `npm run build` sans erreur, puis montrer à Pierre le rendu local (390 px et 1280 px) et la liste de ce qui reste ouvert (photos, faits à confirmer). Commit et PR seulement après son accord (voir "Git et déploiement").
+7. **Rendu, arrêt 2** : `npm run build` sans erreur, puis montrer à Pierre le rendu local (390 px et 1280 px) et la liste de ce qui reste ouvert (photos, faits à confirmer). Commit et push sur `main` seulement après son accord (voir "Git et déploiement").
 
 ## Ton et style
 
@@ -95,9 +95,10 @@ Vigilance haute sur l'électricité (encastrement, 230 V, tableau), les batterie
 
 ## Git et déploiement
 
-- Ne jamais pousser directement sur `main` : tout push sur `main` déploie en production.
-- Travailler sur une branche (`article/<slug>`, `fix/...`, `docs/...`), puis ouvrir une PR vers `main`.
-- `npm run build` doit passer avant d'ouvrir la PR. Vérifier la preview Vercel de la PR.
+- Pas de branche ni de PR : on commite et on pousse directement sur `main` (décision de Pierre, comme sur Guibolles). Une PR ajoutait un build de preview, la revue Codex, l'attente du merge et un mail à chaque commentaire de bot.
+- Tout push sur `main` déploie en production (build Vercel d'environ 20 s) : `npm run build` doit passer en local avant chaque push, et une modif visible se vérifie dans le rendu local (`npm run dev`) avant de pousser.
+- Workflow : modifier, `npm run build`, vérifier, puis `git add <fichiers> && git commit -m "..." && git push origin main`. Si `main` a bougé entre-temps : `git pull --rebase origin main` avant de pousser.
+- `vercel.json` porte `"github": {"silent": true}` : le bot Vercel ne commente plus les commits ni les PR (c'étaient des mails à chaque fois).
 - Messages de commit courts, en français, à l'impératif ("Ajoute l'article...", "Corrige le lien...").
 - Ne commiter ni brouillon contenant des données privées, ni fichier `.env`.
 
