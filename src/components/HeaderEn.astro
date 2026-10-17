@@ -340,6 +340,19 @@ const { langHref = '/' } = Astro.props;
 		}
 	}
 
+	/* Petits écrans : le logo et les trois boutons doivent tenir sans débordement */
+	@media (max-width: 480px) {
+		.nav {
+			gap: 0.5rem;
+		}
+		.nav-right {
+			gap: 0.5em;
+		}
+		.brand {
+			font-size: 0.95em;
+		}
+	}
+
 	@media (min-width: 901px) {
 		.mobile-menu {
 			display: none !important;

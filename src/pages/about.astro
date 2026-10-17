@@ -1,15 +1,30 @@
 ---
+export const prerender = true;
+
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import AuthorBox from '../components/AuthorBox.astro';
 import '../styles/global.css';
+import '../styles/about.css';
 
 const siteUrl = Astro.site?.href ?? Astro.url.origin;
 const alternates = [
 	{ hreflang: 'fr', href: new URL('/about/', siteUrl).href },
 	{ hreflang: 'en', href: new URL('/en/about/', siteUrl).href },
 ];
+
+// Articles conseillés pour découvrir le blog, dans l'ordre d'affichage
+const startHereIds = [
+	'tado-retour-2-ans-economies-gaz',
+	'home-assistant-erreurs-a-eviter',
+	'tablette-murale-home-assistant',
+];
+const posts = await getCollection('blog', ({ id, data }) => startHereIds.includes(id) && data.draft !== true);
+const startHere = startHereIds
+	.map((id) => posts.find((post) => post.id === id))
+	.filter((post) => post !== undefined);
 ---
 
 <!doctype html>
@@ -19,18 +34,14 @@ const alternates = [
 	</head>
 	<body>
 		<Header langHref="/en/about" />
-		<main>
-			<article>
-				<div class="hero-image">
-					<img src="/hannibal.jpg" alt="Qui suis-je ?" />
-				</div>
-				<div class="prose">
-					<div class="title">
-						<h1>Qui suis-je ? 👨‍💻</h1>
-						<hr />
-					</div>
-					<p>
-						👋 Passionné de domotique, d'optimisation du quotidien et de (petit) bricolage, j'ai d'abord voulu "juste" mieux gérer mon chauffage… puis j'ai mis le doigt dans Home Assistant, et je n'en suis jamais vraiment ressorti.
+		<main class="about">
+			<section class="about-hero">
+				<div class="about-hero__text">
+					<p class="about-eyebrow">À propos</p>
+					<h1>Qui suis-je ?</h1>
+					<p class="about-hero__name">Pierre, alias <em>The Optimization Guy</em></p>
+					<p class="about-hero__lead">
+						Passionné de domotique, d'optimisation du quotidien et de (petit) bricolage, j'ai d'abord voulu "juste" mieux gérer mon chauffage… puis j'ai mis le doigt dans Home Assistant, et je n'en suis jamais vraiment ressorti.
 					</p>
 					<p>
 						Ici, je partage ce que je mets en place chez moi : automatisations, intégrations, suivi de l'énergie et réglages fins pour le confort.
@@ -38,112 +49,208 @@ const alternates = [
 					<p>
 						Vous trouverez des cas d'usage détaillés, du code prêt à adapter et des retours honnêtes sur ce qui fonctionne… et sur ce qui fonctionne moins bien, avec une obsession : optimiser sans compliquer.
 					</p>
-
-					<h2>🚀 La genèse : de la domotique à l'optimisation globale</h2>
-					<p>
-						Mon parcours dans la domotique a commencé de façon très pragmatique, par deux besoins essentiels : la sécurité et le pilotage du chauffage.
-					</p>
-					<p>
-						J'ai commencé avec des solutions grand public comme <strong>Blink</strong>, puis <strong>Tapo</strong>.
-					</p>
-					<p>
-						Ces outils m'ont permis de découvrir le potentiel de la maison connectée… mais aussi ses limites :
-					</p>
-					<ul>
-						<li>automatisations restreintes,</li>
-						<li>dépendance au cloud,</li>
-						<li>écosystèmes fermés,</li>
-						<li>interopérabilité quasi inexistante entre marques.</li>
-					</ul>
-
-					<h2>🔁 Le tournant : reprendre le contrôle</h2>
-					<p>
-						Très vite, ces limites sont devenues bloquantes. J'ai alors fait le choix de migrer vers <strong>Home Assistant</strong>, et de remplacer progressivement mes équipements par des solutions <strong>Zigbee</strong>, locales et interopérables.
-					</p>
-					<p>Ce changement a marqué un vrai tournant :</p>
-					<ul>
-						<li>un système centralisé,</li>
-						<li>des automatisations avancées,</li>
-						<li>une logique cohérente,</li>
-						<li>plus de fiabilité,</li>
-						<li>moins de dépendance aux services cloud.</li>
-					</ul>
-					<div class="callout callout--note">
-						<p class="callout__content">Depuis, mon installation n'a cessé d'évoluer.</p>
+					<div class="about-actions">
+						<a class="about-btn about-btn--primary" href="/">Lire les articles</a>
+						<a class="about-btn about-btn--ghost" href="/mon-materiel/">Voir mon matériel</a>
 					</div>
-
-					<h2>❤️ Mes automatisations préférées</h2>
-					<p>
-						Certaines automatisations sont devenues si naturelles que je n'y pense même plus et c'est précisément le signe qu'elles sont réussies.
-					</p>
-
-					<div class="automation-grid">
-						<div class="callout callout--tip">
-							<p class="callout__title">🎷 Réveil en musique</p>
-							<p class="callout__content">
-								Cinq minutes après mon réveil, mon ampli s'allume automatiquement et lance une playlist Jazz en lecture aléatoire. Aucune action manuelle, aucun écran : juste la bonne ambiance pour commencer la journée.
-							</p>
-						</div>
-						<div class="callout callout--tip">
-							<p class="callout__title">💡 Éclairage extérieur intelligent</p>
-							<p class="callout__content">
-								J'ai détourné des capteurs de mouvement prévus pour l'intérieur, installés dans des boîtes de dérivation étanches à l'extérieur. Ils déclenchent automatiquement l'éclairage autour de la maison dès qu'un mouvement est détecté. Simple, fiable, et extrêmement pratique au quotidien.
-							</p>
-						</div>
-						<div class="callout callout--tip">
-							<p class="callout__title">📬 Détection intelligente du courrier</p>
-							<p class="callout__content">
-								Ma boîte aux lettres est connectée : dépôt de courrier = notification immédiate sur mon téléphone, retrait du courrier = la notification disparaît automatiquement. Pas de rappel inutile, pas de doute : l'information est juste et contextualisée.
-							</p>
-						</div>
-					</div>
-
-					<h2>🏗️ Ma stack &amp; ma façon de travailler</h2>
-					<ul>
-						<li><strong>Home Assistant Green</strong> comme cœur du système</li>
-						<li>une approche <strong>local-first</strong></li>
-						<li>des automatisations pensées comme de vrais <strong>process</strong>, pas comme des gadgets</li>
-					</ul>
-					<p>J'ai également développé un agent expert dédié à Home Assistant, utilisé comme copilote pour :</p>
-					<ul>
-						<li>concevoir,</li>
-						<li>maintenir,</li>
-						<li>optimiser les automatisations.</li>
-					</ul>
-					<p>Aujourd'hui, une grande partie de mon travail repose sur :</p>
-					<ul>
-						<li><strong>Claude Code</strong>,</li>
-						<li>et son <strong>MCP</strong>, utilisé comme outil d'ingénierie d'automatisation.</li>
-					</ul>
-					<div class="callout callout--note">
-						<p class="callout__content">L'IA n'est pas là pour "faire à ma place", mais pour améliorer la qualité des décisions et la cohérence du système.</p>
-					</div>
-
-					<h2>🧠 La vraie difficulté en domotique (WAF inside)</h2>
-					<p>
-						Le plus gros challenge en domotique n'est pas l'installation, la maintenance ou les correctifs… mais de la faire accepter et utiliser par son entourage.
-					</p>
-					<p>Une automatisation techniquement parfaite ne vaut rien si :</p>
-					<ul>
-						<li>elle surprend,</li>
-						<li>elle complique l'usage,</li>
-						<li>ou elle génère de la frustration.</li>
-					</ul>
-					<div class="callout callout--warning">
-						<p class="callout__content">L'expérience utilisateur passe toujours avant la performance technique.</p>
-					</div>
-
-					<h2>🔮 Projets en cours &amp; à venir</h2>
-					<ul>
-						<li>Création d'une <strong>mangeoire à oiseaux connectée</strong>, capable de détecter et reconnaître les espèces</li>
-						<li>Amélioration du <strong>monitoring du système</strong>, avec hiérarchisation intelligente des alertes</li>
-						<li>Intégration de <strong>Discord</strong> comme outil central de notification et de supervision</li>
-						<li>Utilisation de <strong>n8n</strong> pour des workflows d'optimisation et d'alerting complexe</li>
-					</ul>
-
-					<AuthorBox />
 				</div>
-			</article>
+				<figure class="about-hero__media">
+					<img
+						src="/hannibal.jpg"
+						alt="Hannibal de L'Agence tous risques, cigare aux lèvres, lève le pouce en souriant"
+						width="720"
+						height="360"
+						class="no-lightbox"
+					/>
+				</figure>
+			</section>
+
+			<section class="about-section" id="parcours">
+				<h2><span class="about-icon" aria-hidden="true">🚀</span>Mon parcours</h2>
+				<ol class="about-timeline">
+					<li>
+						<span class="about-timeline__dot" aria-hidden="true">1</span>
+						<p class="about-timeline__label">La genèse</p>
+						<h3>De la domotique à l'optimisation globale</h3>
+						<p>
+							Mon parcours dans la domotique a commencé de façon très pragmatique, par deux besoins essentiels : la sécurité et le pilotage du chauffage.
+						</p>
+						<p>
+							J'ai commencé avec des solutions grand public comme <strong>Blink</strong>, puis <strong>Tapo</strong>. Ces outils m'ont permis de découvrir le potentiel de la maison connectée… mais aussi ses limites :
+						</p>
+						<ul class="about-chips about-chips--minus">
+							<li>automatisations restreintes</li>
+							<li>dépendance au cloud</li>
+							<li>écosystèmes fermés</li>
+							<li>interopérabilité quasi inexistante entre marques</li>
+						</ul>
+					</li>
+					<li>
+						<span class="about-timeline__dot" aria-hidden="true">2</span>
+						<p class="about-timeline__label">Le tournant</p>
+						<h3>Reprendre le contrôle</h3>
+						<p>
+							Très vite, ces limites sont devenues bloquantes. J'ai alors fait le choix de migrer vers <strong>Home Assistant</strong>, et de remplacer progressivement mes équipements par des solutions <strong>Zigbee</strong>, locales et interopérables. Ce changement a marqué un vrai tournant :
+						</p>
+						<ul class="about-chips about-chips--plus">
+							<li>un système centralisé</li>
+							<li>des automatisations avancées</li>
+							<li>une logique cohérente</li>
+							<li>plus de fiabilité</li>
+							<li>moins de dépendance aux services cloud</li>
+						</ul>
+					</li>
+					<li>
+						<span class="about-timeline__dot" aria-hidden="true">3</span>
+						<p class="about-timeline__label">Aujourd'hui</p>
+						<h3>Une installation qui évolue en continu</h3>
+						<p>Depuis, mon installation n'a cessé d'évoluer.</p>
+					</li>
+				</ol>
+			</section>
+
+			<section class="about-section" id="automatisations">
+				<h2><span class="about-icon" aria-hidden="true">❤️</span>Mes automatisations préférées</h2>
+				<p class="about-section__intro">
+					Certaines automatisations sont devenues si naturelles que je n'y pense même plus, et c'est précisément le signe qu'elles sont réussies.
+				</p>
+				<div class="about-grid about-grid--3">
+					<article class="about-card">
+						<span class="about-icon" aria-hidden="true">🎷</span>
+						<h3>Réveil en musique</h3>
+						<p>
+							Cinq minutes après mon réveil, mon ampli s'allume automatiquement et lance une playlist Jazz en lecture aléatoire. Aucune action manuelle, aucun écran : juste la bonne ambiance pour commencer la journée.
+						</p>
+					</article>
+					<article class="about-card">
+						<span class="about-icon" aria-hidden="true">💡</span>
+						<h3>Éclairage extérieur intelligent</h3>
+						<p>
+							J'ai détourné des capteurs de mouvement prévus pour l'intérieur, installés dans des boîtes de dérivation étanches à l'extérieur. Ils déclenchent automatiquement l'éclairage autour de la maison dès qu'un mouvement est détecté. Simple, fiable, et extrêmement pratique au quotidien.
+						</p>
+					</article>
+					<article class="about-card">
+						<span class="about-icon" aria-hidden="true">📬</span>
+						<h3>Détection du courrier</h3>
+						<p>
+							Ma boîte aux lettres est connectée : dépôt de courrier = notification immédiate sur mon téléphone, retrait du courrier = la notification disparaît automatiquement. Pas de rappel inutile, pas de doute : l'information est juste et contextualisée.
+						</p>
+					</article>
+				</div>
+			</section>
+
+			<section class="about-section" id="stack">
+				<h2><span class="about-icon" aria-hidden="true">🏗️</span>Ma stack &amp; ma façon de travailler</h2>
+				<div class="about-grid about-grid--2">
+					<div class="about-card">
+						<span class="about-icon" aria-hidden="true">🏠</span>
+						<h3>Le socle</h3>
+						<ul class="about-list">
+							<li><strong>Home Assistant Green</strong> comme cœur du système</li>
+							<li>une approche <strong>local-first</strong></li>
+							<li>des automatisations pensées comme de vrais <strong>process</strong>, pas comme des gadgets</li>
+						</ul>
+					</div>
+					<div class="about-card">
+						<span class="about-icon" aria-hidden="true">🤖</span>
+						<h3>Le copilote IA</h3>
+						<p>
+							J'ai développé un agent expert dédié à Home Assistant, utilisé comme copilote pour concevoir, maintenir et optimiser les automatisations.
+						</p>
+						<p>
+							Aujourd'hui, une grande partie de mon travail repose sur <strong>Claude Code</strong> et son <strong>MCP</strong>, utilisé comme outil d'ingénierie d'automatisation.
+						</p>
+					</div>
+				</div>
+				<div class="about-quote">
+					<p>L'IA n'est pas là pour "faire à ma place", mais pour améliorer la qualité des décisions et la cohérence du système.</p>
+				</div>
+			</section>
+
+			<section class="about-section" id="waf">
+				<h2><span class="about-icon" aria-hidden="true">🧠</span>La vraie difficulté en domotique (WAF inside)</h2>
+				<p>
+					Le plus gros challenge en domotique n'est pas l'installation, la maintenance ou les correctifs… mais de la faire accepter et utiliser par son entourage. Une automatisation techniquement parfaite ne vaut rien si :
+				</p>
+				<ul class="about-chips about-chips--minus">
+					<li>elle surprend</li>
+					<li>elle complique l'usage</li>
+					<li>elle génère de la frustration</li>
+				</ul>
+				<div class="about-quote">
+					<p>L'expérience utilisateur passe toujours avant la performance technique.</p>
+				</div>
+			</section>
+
+			<section class="about-section" id="projets">
+				<h2><span class="about-icon" aria-hidden="true">🔮</span>Projets en cours &amp; à venir</h2>
+				<div class="about-grid about-grid--2">
+					<div class="about-card about-card--compact">
+						<span class="about-icon" aria-hidden="true">🐦</span>
+						<h3>Mangeoire à oiseaux connectée</h3>
+						<p>Capable de détecter et de reconnaître les espèces.</p>
+					</div>
+					<div class="about-card about-card--compact">
+						<span class="about-icon" aria-hidden="true">📊</span>
+						<h3>Monitoring du système</h3>
+						<p>Avec une hiérarchisation intelligente des alertes.</p>
+					</div>
+					<div class="about-card about-card--compact">
+						<span class="about-icon" aria-hidden="true">💬</span>
+						<h3>Discord</h3>
+						<p>Comme outil central de notification et de supervision.</p>
+					</div>
+					<div class="about-card about-card--compact">
+						<span class="about-icon" aria-hidden="true">⚙️</span>
+						<h3>n8n</h3>
+						<p>Pour des workflows d'optimisation et d'alerting complexe.</p>
+					</div>
+				</div>
+			</section>
+
+			{startHere.length > 0 && (
+				<section class="about-section" id="commencer">
+					<h2><span class="about-icon" aria-hidden="true">📚</span>Par où commencer ?</h2>
+					<p class="about-section__intro">Trois articles pour découvrir le blog, du chauffage aux erreurs à ne pas reproduire.</p>
+					<div class="about-grid about-grid--3">
+						{startHere.map((post) => (
+							<a class="about-card about-card-link" href={`/blog/${post.id}/`}>
+								{post.data.heroImage && (
+									<Image src={post.data.heroImage} alt="" width={480} height={270} class="no-lightbox" />
+								)}
+								<div class="about-card-link__body">
+									<h3>{post.data.h1 ?? post.data.title}</h3>
+									<p>{post.data.description}</p>
+									<p class="about-card-link__more" aria-hidden="true">Lire l'article →</p>
+								</div>
+							</a>
+						))}
+					</div>
+				</section>
+			)}
+
+			<section class="about-cta">
+				<img src="/hannibal-cercle.png" alt="" width="72" height="72" class="about-cta__avatar no-lightbox" />
+				<div>
+					<h2>Une question sur votre installation ?</h2>
+					<p>Une idée d'article, un retour sur une automatisation : écrivez-moi.</p>
+				</div>
+				<div class="about-cta__actions">
+					<a class="about-btn about-btn--primary" href="/contact/">Me contacter</a>
+					<div class="about-social">
+						<a href="https://x.com/OptimizGuy" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+								<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+							</svg>
+						</a>
+						<a href="https://www.reddit.com/user/Patient-Gene703/" target="_blank" rel="noopener noreferrer" aria-label="Reddit">
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+								<path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+							</svg>
+						</a>
+					</div>
+				</div>
+			</section>
 		</main>
 		<Footer />
 
@@ -166,104 +273,3 @@ const alternates = [
 		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PTBBTWQV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	</body>
 </html>
-<style>
-	main {
-		width: calc(100% - 2em);
-		max-width: 100%;
-		margin: 0;
-	}
-	.hero-image {
-		width: 100%;
-	}
-	.hero-image img {
-		display: block;
-		margin: 0 auto;
-		border-radius: 12px;
-		box-shadow: var(--box-shadow);
-	}
-	.prose {
-		width: 720px;
-		max-width: calc(100% - 2em);
-		margin: auto;
-		padding: 1em;
-		color: rgb(var(--gray-dark));
-	}
-	.title {
-		margin-bottom: 1em;
-		padding: 1em 0;
-		text-align: center;
-		line-height: 1;
-	}
-	.title h1 {
-		margin: 0;
-		margin-bottom: 1em;
-	}
-	hr {
-		border-top: 1px solid rgb(var(--gray-light));
-		border-bottom: none;
-		margin: 0;
-	}
-	/* Typographie */
-	.prose p {
-		margin-top: 0;
-		margin-bottom: 1.25rem;
-		line-height: 1.75;
-	}
-	.prose h2 {
-		margin-top: 2.25rem;
-		margin-bottom: 0.75rem;
-	}
-	/* Paragraphe qui précède directement une liste : marge réduite */
-	.prose p + ul,
-	.prose p + ol {
-		margin-top: -0.5rem;
-	}
-	/* Listes */
-	.prose ul,
-	.prose ol {
-		margin-top: 0;
-		margin-bottom: 1.5rem;
-		padding-left: 1.5rem;
-	}
-	.prose li {
-		margin-bottom: 0.3rem;
-		line-height: 1.7;
-	}
-	/* Callouts - mêmes styles que les articles */
-	.prose .callout {
-		margin: 1.5rem 0;
-		padding: 1.25rem;
-		border-radius: 12px;
-		border-left: 5px solid;
-	}
-	.prose .callout p {
-		margin: 0;
-	}
-	.prose .callout__title {
-		font-weight: 700;
-		font-size: 1.0625rem;
-		margin: 0 0 0.5rem 0;
-	}
-	.prose .callout--warning {
-		background: linear-gradient(to right, rgba(255, 208, 77, 0.12), rgba(255, 208, 77, 0.04));
-		border-color: #ffd04d;
-	}
-	.prose .callout--note {
-		background: linear-gradient(to right, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.04));
-		border-color: #3b82f6;
-	}
-	.prose .callout--tip {
-		background: linear-gradient(to right, rgba(34, 197, 94, 0.12), rgba(34, 197, 94, 0.04));
-		border-color: #22c55e;
-	}
-	/* Grille d'automatisations */
-	.automation-grid {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		margin: 1.25rem 0 1.5rem;
-	}
-	.automation-grid .callout {
-		margin: 0;
-	}
-</style>
