@@ -1,0 +1,608 @@
+---
+interface Props {
+	lang: 'fr' | 'en';
+}
+
+const { lang } = Astro.props;
+
+const MESSAGE_MAX = 5000;
+
+const t = {
+	fr: {
+		topicLegend: 'De quoi voulez-vous parler ?',
+		topics: ['Question sur un article', 'Aide sur mon installation', "Idée d'article", 'Autre chose'],
+		name: 'Nom',
+		namePlaceholder: 'Facultatif',
+		email: 'E-mail',
+		emailPlaceholder: 'vous@exemple.fr',
+		emailHint: 'Uniquement pour vous répondre, jamais partagé.',
+		emailError: 'Indiquez une adresse e-mail valide.',
+		message: 'Message',
+		messagePlaceholder: 'Décrivez votre question ou votre idée. Si ça concerne votre installation, précisez votre matériel et ce que vous avez déjà essayé.',
+		messageError: 'Votre message doit faire au moins 10 caractères.',
+		required: 'obligatoire',
+		send: 'Envoyer le message',
+		sending: 'Envoi en cours…',
+		shortcut: 'ou Ctrl + Entrée',
+		okTitle: 'Message envoyé !',
+		okText: 'Merci, je vous réponds dès que possible à l’adresse indiquée.',
+		again: 'Envoyer un autre message',
+		invalid: 'Vérifiez les champs signalés ci-dessus.',
+		error: "L'envoi a échoué. Réessayez dans un instant : votre message n'a pas été effacé.",
+	},
+	en: {
+		topicLegend: 'What would you like to talk about?',
+		topics: ['Question about an article', 'Help with my setup', 'Article idea', 'Something else'],
+		name: 'Name',
+		namePlaceholder: 'Optional',
+		email: 'Email',
+		emailPlaceholder: 'you@example.com',
+		emailHint: 'Only used to reply to you, never shared.',
+		emailError: 'Please enter a valid email address.',
+		message: 'Message',
+		messagePlaceholder: "Describe your question or idea. If it's about your setup, mention your hardware and what you've already tried.",
+		messageError: 'Your message must be at least 10 characters long.',
+		required: 'required',
+		send: 'Send message',
+		sending: 'Sending…',
+		shortcut: 'or Ctrl + Enter',
+		okTitle: 'Message sent!',
+		okText: "Thanks, I'll get back to you as soon as possible at the address you provided.",
+		again: 'Send another message',
+		invalid: 'Please check the highlighted fields above.',
+		error: "Sending failed. Please try again in a moment: your message hasn't been erased.",
+	},
+}[lang];
+
+// Retour du formulaire envoyé sans JavaScript (redirection depuis /api/contact).
+const status = Astro.url.searchParams.get('status');
+const sent = status === 'ok';
+const initialAlert = status === 'invalid' || status === 'error' ? t[status] : '';
+---
+
+<div class="contact-card" id="contact-form">
+	<form
+		class="contact-form"
+		action="/api/contact"
+		method="post"
+		novalidate
+		hidden={sent}
+		data-sending={t.sending}
+		data-invalid={t.invalid}
+		data-error={t.error}
+	>
+		<input type="hidden" name="lang" value={lang} />
+		<input type="hidden" name="started_at" value="" />
+
+		<!-- Champ piège pour les robots, invisible pour les humains -->
+		<div class="hp" aria-hidden="true">
+			<label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+		</div>
+
+		<fieldset class="topics">
+			<legend>{t.topicLegend}</legend>
+			<div class="chips">
+				{t.topics.map((topic) => (
+					<label class="chip">
+						<input type="radio" name="subject" value={topic} />
+						<span>{topic}</span>
+					</label>
+				))}
+			</div>
+		</fieldset>
+
+		<div class="row">
+			<div class="field">
+				<label for="cf-name">{t.name}</label>
+				<input id="cf-name" name="name" type="text" maxlength="100" autocomplete="name" placeholder={t.namePlaceholder} />
+			</div>
+			<div class="field">
+				<label for="cf-email">
+					{t.email} <span class="req">({t.required})</span>
+				</label>
+				<input
+					id="cf-email"
+					name="email"
+					type="email"
+					required
+					maxlength="200"
+					autocomplete="email"
+					inputmode="email"
+					placeholder={t.emailPlaceholder}
+					aria-describedby="cf-email-hint cf-email-error"
+				/>
+				<p class="hint" id="cf-email-hint">{t.emailHint}</p>
+				<p class="error" id="cf-email-error" hidden>{t.emailError}</p>
+			</div>
+		</div>
+
+		<div class="field">
+			<div class="label-row">
+				<label for="cf-message">
+					{t.message} <span class="req">({t.required})</span>
+				</label>
+				<span class="counter" aria-hidden="true"><span data-count>0</span> / {MESSAGE_MAX}</span>
+			</div>
+			<textarea
+				id="cf-message"
+				name="message"
+				required
+				minlength="10"
+				maxlength={MESSAGE_MAX}
+				rows="7"
+				placeholder={t.messagePlaceholder}
+				aria-describedby="cf-message-error"></textarea>
+			<p class="error" id="cf-message-error" hidden>{t.messageError}</p>
+		</div>
+
+		<div class="actions">
+			<button type="submit">
+				<span class="spinner" aria-hidden="true"></span>
+				<span class="label">{t.send}</span>
+			</button>
+			<span class="shortcut">{t.shortcut}</span>
+		</div>
+
+		<p class="alert" role="alert" hidden={!initialAlert}>{initialAlert}</p>
+	</form>
+
+	<div class="success" role="status" tabindex="-1" hidden={!sent}>
+		<svg class="success-icon" viewBox="0 0 24 24" aria-hidden="true">
+			<circle cx="12" cy="12" r="11"></circle>
+			<path d="M7 12.5l3.2 3.2L17 9"></path>
+		</svg>
+		<h2>{t.okTitle}</h2>
+		<p>{t.okText}</p>
+		<button type="button" class="again">{t.again}</button>
+	</div>
+</div>
+
+<script>
+	const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+	const card = document.querySelector<HTMLDivElement>('.contact-card');
+	const form = card?.querySelector<HTMLFormElement>('form');
+
+	if (card && form) {
+		const startedAt = form.querySelector<HTMLInputElement>('input[name="started_at"]')!;
+		const email = form.querySelector<HTMLInputElement>('#cf-email')!;
+		const message = form.querySelector<HTMLTextAreaElement>('#cf-message')!;
+		const count = form.querySelector<HTMLSpanElement>('[data-count]')!;
+		const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+		const buttonLabel = button.querySelector<HTMLSpanElement>('.label')!;
+		const alertEl = form.querySelector<HTMLParagraphElement>('.alert')!;
+		const success = card.querySelector<HTMLDivElement>('.success')!;
+		const defaultLabel = buttonLabel.textContent;
+
+		startedAt.value = String(Date.now());
+
+		const checks: [HTMLInputElement | HTMLTextAreaElement, () => boolean][] = [
+			[email, () => EMAIL_RE.test(email.value.trim())],
+			[message, () => message.value.trim().length >= 10],
+		];
+
+		// L'erreur remplace le texte d'aide quand il y en a un, pour ne pas décaler le bouton d'envoi.
+		const validate = (el: HTMLInputElement | HTMLTextAreaElement, isValid: () => boolean) => {
+			const ok = isValid();
+			el.toggleAttribute('aria-invalid', !ok);
+			document.getElementById(`${el.id}-error`)!.hidden = ok;
+			const hint = document.getElementById(`${el.id}-hint`);
+			if (hint) hint.hidden = !ok;
+			return ok;
+		};
+
+		// L'e-mail est vérifié en quittant le champ, le message seulement à l'envoi ;
+		// ensuite, chaque erreur se met à jour pendant la saisie.
+		email.addEventListener('blur', () => {
+			if (email.value) {
+				email.dataset.touched = '';
+				validate(...checks[0]);
+			}
+		});
+		for (const [el, isValid] of checks) {
+			el.addEventListener('input', () => {
+				if ('touched' in el.dataset) validate(el, isValid);
+			});
+		}
+
+		const updateCount = () => {
+			count.textContent = String(message.value.length);
+		};
+		message.addEventListener('input', updateCount);
+
+		message.addEventListener('keydown', (event) => {
+			if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) form.requestSubmit();
+		});
+
+		const showAlert = (text: string) => {
+			alertEl.textContent = text;
+			alertEl.hidden = !text;
+		};
+
+		const setSending = (sending: boolean) => {
+			button.disabled = sending;
+			button.toggleAttribute('data-sending', sending);
+			buttonLabel.textContent = sending ? (form.dataset.sending ?? '') : defaultLabel;
+		};
+
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			showAlert('');
+
+			const results = checks.map(([el, isValid]) => {
+				el.dataset.touched = '';
+				return validate(el, isValid);
+			});
+			const firstInvalid = checks[results.indexOf(false)]?.[0];
+			if (firstInvalid) {
+				firstInvalid.focus();
+				return;
+			}
+
+			setSending(true);
+			try {
+				const res = await fetch(form.action, {
+					method: 'POST',
+					body: new FormData(form),
+					headers: { Accept: 'application/json' },
+				});
+				const { status } = await res.json();
+				if (status === 'ok') {
+					form.hidden = true;
+					success.hidden = false;
+					success.focus();
+				} else {
+					showAlert((status === 'invalid' ? form.dataset.invalid : form.dataset.error) ?? '');
+				}
+			} catch {
+				showAlert(form.dataset.error ?? '');
+			} finally {
+				setSending(false);
+			}
+		});
+
+		card.querySelector('.again')!.addEventListener('click', () => {
+			form.reset();
+			for (const [el] of checks) {
+				delete el.dataset.touched;
+				el.removeAttribute('aria-invalid');
+				document.getElementById(`${el.id}-error`)!.hidden = true;
+			}
+			document.getElementById('cf-email-hint')!.hidden = false;
+			updateCount();
+			startedAt.value = String(Date.now());
+			success.hidden = true;
+			form.hidden = false;
+			form.querySelector<HTMLInputElement>('input[name="subject"]')?.focus();
+		});
+	}
+</script>
+
+<style>
+	.contact-card {
+		--cf-surface: #ffffff;
+		--cf-field: #ffffff;
+		--cf-border: rgb(196, 204, 218);
+		--cf-border-hover: rgb(148, 160, 184);
+		--cf-text: rgb(15, 18, 25);
+		--cf-muted: rgb(75, 85, 105);
+		--cf-placeholder: rgb(110, 120, 140);
+		--cf-chip: rgb(243, 245, 249);
+		--cf-chip-active: rgb(255, 243, 205);
+		--cf-chip-active-border: rgb(204, 160, 30);
+		--cf-focus: rgba(255, 208, 77, 0.55);
+		--cf-error: rgb(185, 28, 28);
+		--cf-error-bg: rgb(254, 242, 242);
+		--cf-success: rgb(21, 128, 61);
+		--cf-shadow: 0 1px 2px rgba(15, 18, 25, 0.06), 0 8px 24px rgba(15, 18, 25, 0.06);
+
+		padding: 2rem;
+		background: var(--cf-surface);
+		border: 1px solid var(--cf-border);
+		border-radius: 16px;
+		box-shadow: var(--cf-shadow);
+		color: var(--cf-text);
+		font-size: 1rem;
+		line-height: 1.5;
+	}
+	:global(.dark) .contact-card {
+		--cf-surface: rgb(26, 34, 52);
+		--cf-field: rgb(17, 24, 39);
+		--cf-border: rgb(71, 82, 104);
+		--cf-border-hover: rgb(110, 122, 146);
+		--cf-text: rgb(237, 240, 245);
+		--cf-muted: rgb(176, 184, 198);
+		--cf-placeholder: rgb(140, 150, 168);
+		--cf-chip: rgb(34, 44, 66);
+		--cf-chip-active: rgba(255, 208, 77, 0.16);
+		--cf-chip-active-border: rgb(255, 208, 77);
+		--cf-focus: rgba(255, 208, 77, 0.45);
+		--cf-error: rgb(252, 165, 165);
+		--cf-error-bg: rgba(248, 113, 113, 0.12);
+		--cf-success: rgb(134, 239, 172);
+		--cf-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
+	}
+	@media (max-width: 600px) {
+		.contact-card {
+			padding: 1.25rem;
+			border-radius: 12px;
+		}
+	}
+
+	.contact-form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+	.contact-form[hidden],
+	.success[hidden] {
+		display: none;
+	}
+
+	/* Sujets */
+	.topics {
+		margin: 0;
+		padding: 0;
+		border: none;
+	}
+	legend,
+	label {
+		font-weight: 700;
+		color: var(--cf-text);
+	}
+	legend {
+		padding: 0;
+		margin-bottom: 0.6rem;
+	}
+	.chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.chip {
+		position: relative;
+		font-weight: 400;
+		cursor: pointer;
+	}
+	.chip input {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+	.chip span {
+		display: inline-block;
+		padding: 0.45rem 0.9rem;
+		font-size: 0.95rem;
+		color: var(--cf-text);
+		background: var(--cf-chip);
+		border: 1px solid var(--cf-border);
+		border-radius: 999px;
+		transition: background 0.15s, border-color 0.15s;
+	}
+	.chip:hover span {
+		border-color: var(--cf-border-hover);
+	}
+	.chip input:checked + span {
+		background: var(--cf-chip-active);
+		border-color: var(--cf-chip-active-border);
+		font-weight: 700;
+	}
+	.chip input:focus-visible + span {
+		box-shadow: 0 0 0 3px var(--cf-focus);
+	}
+
+	/* Champs */
+	.row {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.5rem;
+	}
+	@media (max-width: 600px) {
+		.row {
+			grid-template-columns: 1fr;
+		}
+	}
+	.field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+	.label-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+	}
+	.req,
+	.counter {
+		font-weight: 400;
+		font-size: 0.85rem;
+		color: var(--cf-muted);
+	}
+	.counter {
+		font-variant-numeric: tabular-nums;
+	}
+	input[type='text'],
+	input[type='email'],
+	textarea {
+		width: 100%;
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0.75rem 0.9rem;
+		font: inherit;
+		font-size: 16px;
+		color: var(--cf-text);
+		background: var(--cf-field);
+		border: 1px solid var(--cf-border);
+		border-radius: 10px;
+		transition: border-color 0.15s, box-shadow 0.15s;
+	}
+	textarea {
+		resize: vertical;
+		min-height: 9rem;
+	}
+	input::placeholder,
+	textarea::placeholder {
+		color: var(--cf-placeholder);
+		opacity: 1;
+	}
+	input:hover,
+	textarea:hover {
+		border-color: var(--cf-border-hover);
+	}
+	input:focus,
+	textarea:focus {
+		outline: none;
+		border-color: var(--cf-chip-active-border);
+		box-shadow: 0 0 0 3px var(--cf-focus);
+	}
+	[aria-invalid] {
+		border-color: var(--cf-error) !important;
+	}
+	.hint,
+	.error {
+		margin: 0;
+		font-size: 0.85rem;
+	}
+	.hint[hidden],
+	.error[hidden] {
+		display: none;
+	}
+	.hint {
+		color: var(--cf-muted);
+	}
+	.error {
+		color: var(--cf-error);
+		font-weight: 700;
+	}
+
+	/* Envoi */
+	.actions {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+	button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.6rem;
+		padding: 0.85rem 1.6rem;
+		font: inherit;
+		font-weight: 700;
+		color: rgb(15, 18, 25);
+		background: rgb(255, 208, 77);
+		border: none;
+		border-radius: 10px;
+		cursor: pointer;
+		transition: transform 0.1s, filter 0.15s;
+	}
+	button:hover {
+		filter: brightness(0.95);
+	}
+	button:active {
+		transform: translateY(1px);
+	}
+	button:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 3px var(--cf-surface), 0 0 0 6px var(--cf-chip-active-border);
+	}
+	button:disabled {
+		cursor: wait;
+		filter: saturate(0.6);
+	}
+	.spinner {
+		display: none;
+		width: 1em;
+		height: 1em;
+		border: 2px solid currentColor;
+		border-right-color: transparent;
+		border-radius: 50%;
+		animation: spin 0.7s linear infinite;
+	}
+	button[data-sending] .spinner {
+		display: inline-block;
+	}
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	.shortcut {
+		font-size: 0.85rem;
+		color: var(--cf-muted);
+	}
+	@media (max-width: 600px) {
+		.actions button {
+			width: 100%;
+		}
+		.shortcut {
+			display: none;
+		}
+	}
+	.alert {
+		margin: 0;
+		padding: 0.75rem 1rem;
+		color: var(--cf-error);
+		background: var(--cf-error-bg);
+		border-radius: 10px;
+		font-weight: 700;
+	}
+	.alert[hidden] {
+		display: none;
+	}
+
+	/* Confirmation */
+	.success {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: 1.5rem 0.5rem;
+		outline: none;
+	}
+	.success-icon {
+		width: 56px;
+		height: 56px;
+		margin-bottom: 1rem;
+		fill: none;
+		stroke: var(--cf-success);
+		stroke-width: 1.8;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+	.success h2 {
+		margin: 0 0 0.5rem;
+		font-size: 1.6rem;
+		color: var(--cf-text);
+	}
+	.success p {
+		margin: 0 0 1.5rem;
+		color: var(--cf-muted);
+	}
+	.success .again {
+		color: var(--cf-text);
+		background: transparent;
+		border: 1px solid var(--cf-border);
+	}
+	.success .again:hover {
+		border-color: var(--cf-border-hover);
+		filter: none;
+	}
+
+	.hp {
+		position: absolute;
+		left: -10000px;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		* {
+			transition: none !important;
+			animation-duration: 1.5s !important;
+		}
+	}
+</style>
