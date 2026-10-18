@@ -1,0 +1,7 @@
+# Tous les robots sont les bienvenus, moteurs de recherche et moteurs de réponse IA compris.
+# /admin/ est exclu de l'index par l'en-tête X-Robots-Tag (vercel.json), pas par un Disallow :
+# un Disallow empêcherait Google de lire ce noindex.
+User-agent: *
+Allow: /
+
+Sitemap: https://www.the-optimization-guy.com/sitemap-index.xml

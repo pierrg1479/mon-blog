@@ -3,6 +3,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 import { frToEnPaths } from './src/translations.mjs';
+import markdownVersions from './src/integrations/markdown-versions.mjs';
 
 const site = 'https://www.the-optimization-guy.com';
 const enToFrPaths = Object.fromEntries(Object.entries(frToEnPaths).map(([fr, en]) => [en, fr]));
@@ -30,6 +31,7 @@ export default defineConfig({
       filter: (page) => new URL(page).pathname !== '/admin/',
       serialize: withHreflang,
     }),
+    markdownVersions(),
   ],
   output: 'server',
   adapter: vercel()

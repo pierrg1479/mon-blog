@@ -109,6 +109,16 @@ Vigilance haute sur l'électricité (encastrement, 230 V, tableau), les batterie
 - Schéma du frontmatter : `src/content.config.ts`.
 - Commandes : `npm run dev`, `npm run build`.
 
+## GEO : fichiers pour les moteurs de réponse IA
+
+Même principe que Guibolles. Tout est généré au build : un nouvel article publié y entre sans rien toucher.
+
+- **Version `.md`** des articles FR et EN, de la page matériel et de la page à propos (pas l'accueil), à l'URL de la page + `index.md`. Écrite en fin de build par `src/integrations/markdown-versions.mjs`, **à partir du HTML fini** : elle ne peut rien dire que la page ne dise pas. Ne jamais écrire ni corriger un `.md` à la main, il serait écrasé : on corrige l'article. Liste des pages concernées : `src/markdown-pages.mjs` (lue aussi par `BaseHead`, qui déclare le `.md` en `<link rel="alternate" type="text/markdown">`).
+- Ce que la conversion fait : YAML gardé en bloc de code, images remplacées par leur légende, FAQ en questions H3, `AffiliateInline` en ligne « Produit : nom, prix (lien affilié) », encadrés en citation. Table des matières, partage, auteur, articles liés et commentaires sortent. Un nouveau composant MDX doit être prévu dans `simplify()`, sinon il passe brut.
+- Les `.md` sont servis en `text/markdown` avec un en-tête `Link: rel="canonical"` vers la page (`vercel.json`), contre la duplication. Hors sitemap, pas de `Disallow`.
+- **`llms.txt`** : `src/pages/llms.txt.ts`, articles FR et EN avec leur `description`, puis les pages.
+- **`robots.txt`** : `public/robots.txt`, tout ouvert avec le lien vers le sitemap. Une page à exclure de l'index passe par un en-tête `X-Robots-Tag` dans `vercel.json` (cas de `/admin/`), pas par un `Disallow`, qui empêcherait Google de lire le `noindex`.
+
 ## Home Assistant (MCP)
 
 Le serveur MCP Home Assistant (outils `mcp__Home_Assistant__*`) donne accès à l'installation réelle de Pierre. Il est configuré dans l'app Claude, pas dans ce dépôt.

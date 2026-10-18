@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { SITE_TITLE } from '../consts';
 import { SITE_URL, canonicalFor, langFromPath, siteGraph } from '../schema';
+import { markdownKind } from '../markdown-pages.mjs';
 
 interface AlternateUrl {
 	hreflang: string;
@@ -30,6 +31,8 @@ const {
 
 const lang = langFromPath(Astro.url.pathname);
 const canonicalURL = canonicalFor(Astro.url.pathname);
+// Version Markdown pour les moteurs de réponse IA (générée en fin de build)
+const markdownURL = markdownKind(Astro.url.pathname) ? `${canonicalURL}index.md` : undefined;
 const resolvedImageUrl = image.startsWith('http')
 	? image
 	: new URL(image, Astro.site ?? Astro.url).href;
@@ -75,6 +78,7 @@ const hasTranslation = alternates.some((alt) => alt.hreflang !== lang);
 	<link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
 ))}
 {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
+{markdownURL && <link rel="alternate" type="text/markdown" href={markdownURL} />}
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
