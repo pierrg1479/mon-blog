@@ -1,22 +1,13 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPostEn from '../../../layouts/BlogPostEn.astro';
+import { enToFrSlugMap } from '../../../translations.mjs';
 import type { RelatedPost } from '../../../components/RelatedPosts.astro';
 
 export const prerender = true;
 
 
 export async function getStaticPaths() {
-	// Mapping EN slug → FR slug for hreflang
-	const enToFrSlugMap: Record<string, string> = {
-		'automating-ebike-charging-off-peak-hours': 'automatisation-recharge-velo-heures-creuses',
-		'ebike-charging-reminder-home-assistant': 'rappel-recharge-velo-electrique-home-assistant',
-		'home-assistant-mistakes-to-avoid': 'home-assistant-erreurs-a-eviter',
-		'smart-plugs-savings-automations': 'prises-connectees-economies-automatisations',
-		'tado-review-2-years-gas-savings': 'tado-retour-2-ans-economies-gaz',
-		'wall-mounted-home-assistant-tablet': 'tablette-murale-home-assistant',
-	};
-
 	const allPosts = (await getCollection('blogEn')).sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 	);
