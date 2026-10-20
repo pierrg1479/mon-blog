@@ -3,6 +3,7 @@ h1: 'E-Bike Charging Reminder: My Home Assistant Setup'
 title: 'E-bike Charging Reminder with Home Assistant (Bosch Smart System)'
 description: "Get a phone alert when your Bosch e-bike range won't cover tomorrow's commute, using Home Assistant and the Bosch eBike integration."
 pubDate: 'Oct 16 2026'
+updatedDate: 'Oct 20 2026'
 heroImage: '../../assets/hero-rappel-recharge-velo-electrique.jpg'
 author:
   name: Pierre
@@ -16,7 +17,7 @@ The second bike in our house is used for commuting: a 16 km round trip (about 10
 
 The bike's display shows the remaining range, but you have to think of checking it the night before. The result: stressful departures and a few unpleasant surprises.
 
-Now Home Assistant handles it. It reads the bike's range from the Bosch cloud and only sends a reminder when that range won't cover the next day's commute. Then charging starts on its own during off-peak hours. Here is the full setup: hardware, integration, battery percentage estimate, automation and real-world results.
+Now Home Assistant handles it. It reads the bike's range from the Bosch cloud and only sends a reminder when that range won't cover the next day's commute. Then charging starts on its own during off-peak hours. Here is the full setup: hardware, integration, battery percentage estimate, automation and real-world results. As a bonus, a weather alert the evening before tells you whether biking tomorrow is a good idea.
 
 ## The bike and the hardware
 
@@ -227,6 +228,176 @@ It hasn't saved us from a dead battery as such. But it removed the morning stres
 
 One limit to keep in mind: the reminder reads the last synced value. If the bike hasn't synced since its last ride, the range read at 8 pm may be higher than reality.
 
+## Bonus: will it rain on tomorrow's bike commute?
+
+A second Home Assistant automation also runs at 8 pm and reads tomorrow's hourly forecast for the commuting hours. If rain or frost is forecast, it sends a notification that says when, how heavy, and what gear to bring.
+
+Battery and weather are both checked at the same time, the evening before.
+
+<figure>
+  <img src="/images/rappel-recharge-velo/notification-meteo-velo-pluie.jpg" alt="Home Assistant notification on Android, in French: bike on Tuesday, light rain between 8 and 10 am, 0.5 mm in total and up to 0.3 mm/h, uncertain risk since only Météo-France forecasts it, a rain jacket should do" style="width: 100%; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">The notification received on a Monday evening (in French): light morning rain, forecast by only one of the two sources.</figcaption>
+</figure>
+
+### Two weather sources to judge reliability
+
+The automation queries two weather integrations with the [`weather.get_forecasts`](https://www.home-assistant.io/integrations/weather/) action (hourly forecasts): [Météo-France](https://www.home-assistant.io/integrations/meteo_france/), the French national weather service, and [Met.no](https://www.home-assistant.io/integrations/met/), the Norwegian Meteorological Institute. It looks at tomorrow from 8 am to 7 pm, which covers both legs of the commute. Outside France, swap Météo-France for any other weather integration.
+
+An hour counts as rainy if the forecast shows precipitation or a rain, snow or hail condition. Then:
+
+- if both sources forecast rain, the risk is "high";
+- if only one does, the risk is "uncertain" and the message says which one;
+- consecutive rainy hours are grouped: "all day", "between 8:00 and 10:00" or "for 1 hour from 17:00 to 18:00".
+
+### From rain intensity to the gear to bring
+
+Intensity is based on the wettest hour, not on the daily total. It decides the advice at the end of the notification:
+
+| Forecast (8 am to 7 pm) | Intensity | Advice in the notification |
+|---|---|---|
+| Peak below 1 mm/h | Light rain | A rain jacket should do |
+| Peak of 1 to 4 mm/h | Moderate rain | Full rain gear needed |
+| Peak of 4 mm/h or more | Heavy rain | Better leave the bike at home |
+| 0 °C (32 °F) or below | Frost | Risk of ice on the road |
+
+### Only on commuting days
+
+The automation only runs Sunday to Thursday, and only if an alarm is set for the next day on the rider's phone. The Home Assistant Android app reports that alarm in a [Next Alarm sensor](https://companion.home-assistant.io/docs/core/sensors/): no alarm, no commute, no notification.
+
+As with the charging reminder, silence means all is well: with no rain or frost forecast, nothing is sent.
+
+### A notification that clears itself
+
+The notification carries a [tag](https://companion.home-assistant.io/docs/notifications/notifications-basic/) (`weather_tomorrow`) and a timeout calculated so it disappears the next day at 7 pm, at the end of the analysed window. Tapping it opens the Météo-France weather card in the app.
+
+<details>
+<summary>View YAML code</summary>
+
+```yaml
+alias: E-bike - Rain or frost tomorrow
+description: >-
+  Sunday to Thursday at 8 pm, if an alarm is set for the next day.
+  Notify if rain or frost (≤ 0 °C) is forecast between 8 am and 7 pm
+  the next day. High risk if Météo-France and Met.no both forecast rain,
+  uncertain if only one does. Intensity from the hourly peak:
+  light < 1 mm/h, moderate 1 to 4 mm/h, heavy ≥ 4 mm/h.
+triggers:
+  - trigger: time
+    at: "20:00:00"
+conditions:
+  - condition: time
+    weekday: [sun, mon, tue, wed, thu]
+  - alias: Alarm set for tomorrow on the rider's phone
+    condition: template
+    value_template: >-
+      {% set r = states('sensor.rider_phone_next_alarm') | as_datetime(none) %}{{ r is not none and as_local(r).date() == (now() + timedelta(days=1)).date() }}
+actions:
+  - alias: Read hourly forecasts (unavailable weather entities are skipped)
+    action: weather.get_forecasts
+    target:
+      entity_id:
+        - weather.meteo_france
+        - weather.forecast_home
+    data:
+      type: hourly
+    response_variable: forecasts
+  - alias: Analyse tomorrow between 8 am and 7 pm
+    variables:
+      summary: |-
+        {% set tomorrow = (now() + timedelta(days=1)).date() %}
+        {% set rainy = ['rainy', 'pouring', 'lightning-rainy', 'snowy', 'snowy-rainy', 'hail'] %}
+        {% set res = namespace(l=[]) %}
+        {% for src in ['weather.meteo_france', 'weather.forecast_home'] if src in forecasts %}
+          {% set ns = namespace(rain=[], frost=[], mm=0, peak=0, tmin=none, n=0) %}
+          {% for f in forecasts[src].forecast %}
+            {% set t = as_local(as_datetime(f.datetime)) %}
+            {% if t.date() == tomorrow and 8 <= t.hour <= 18 %}
+              {% set ns.n = ns.n + 1 %}
+              {% set p = f.precipitation | float(0) %}
+              {% if p > 0 or f.condition in rainy %}
+                {% set ns.rain = ns.rain + [t.hour] %}
+                {% set ns.mm = ns.mm + p %}
+                {% if p > ns.peak %}{% set ns.peak = p %}{% endif %}
+              {% endif %}
+              {% if f.temperature is number %}
+                {% if ns.tmin is none or f.temperature < ns.tmin %}{% set ns.tmin = f.temperature %}{% endif %}
+                {% if f.temperature <= 0 %}{% set ns.frost = ns.frost + [t.hour] %}{% endif %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          {% if ns.n > 0 %}
+            {% set sp = namespace(out=[]) %}
+            {% for hours in [ns.rain, ns.frost] %}
+              {% set r = namespace(l=[], start=none, prev=none) %}
+              {% for h in hours %}
+                {% if r.start is none %}{% set r.start = h %}
+                {% elif h != r.prev + 1 %}{% set r.l = r.l + [[r.start, r.prev + 1]] %}{% set r.start = h %}{% endif %}
+                {% set r.prev = h %}
+              {% endfor %}
+              {% if r.start is not none %}{% set r.l = r.l + [[r.start, r.prev + 1]] %}{% endif %}
+              {% set sp.out = sp.out + [r.l] %}
+            {% endfor %}
+            {% set res.l = res.l + [{'name': 'Météo-France' if src == 'weather.meteo_france' else 'Met.no', 'rain': ns.rain | count > 0, 'rain_hours': ns.rain | count, 'rain_spans': sp.out[0], 'mm': ns.mm | round(1), 'peak': ns.peak | round(1), 'frost': ns.frost | count > 0, 'frost_hours': ns.frost | count, 'frost_spans': sp.out[1], 'tmin': ns.tmin}] %}
+          {% endif %}
+        {% endfor %}
+        {% set with_rain = res.l | selectattr('rain') | list %}
+        {% set ref = with_rain | first if with_rain else (res.l | first if res.l else none) %}
+        {% set peak = ref.peak if ref else 0 %}
+        {% set main = res.l | first if res.l else none %}
+        {{ {
+          'sources': res.l | count,
+          'rain': with_rain | count > 0,
+          'risk': none if res.l | count < 2 or not with_rain else ('high' if with_rain | count == 2 else 'uncertain'),
+          'only_source': with_rain[0].name if with_rain | count == 1 else '',
+          'intensity': 'heavy' if peak >= 4 else ('moderate' if peak >= 1 else 'light'),
+          'rain_hours': ref.rain_hours if ref else 0,
+          'rain_spans': ref.rain_spans if ref else [],
+          'mm': ref.mm if ref else 0,
+          'peak': peak,
+          'frost': main.frost if main else false,
+          'frost_hours': main.frost_hours if main else 0,
+          'frost_spans': main.frost_spans if main else [],
+          'tmin': main.tmin if main else none
+        } }}
+  - alias: Continue only if rain or frost
+    condition: template
+    value_template: "{{ summary.rain or summary.frost }}"
+  - alias: Notify the rider
+    action: notify.mobile_app_rider_phone
+    data:
+      title: >-
+        {% set days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}🚲 Bike {{ days[(now() + timedelta(days=1)).weekday()] }}: {{ ('🌧️ ' ~ summary.intensity ~ ' rain') if summary.rain }}{{ ' + ' if summary.rain and summary.frost }}{{ '❄️ frost' if summary.frost }}
+      message: |-
+        {%- macro when(spans, n) -%}
+        {%- if n >= 11 -%}all day, from 8:00 to 19:00
+        {%- else -%}
+        {%- set m = namespace(l=[]) -%}
+        {%- for p in spans -%}
+        {%- set m.l = m.l + [('for 1 hour from ' ~ p[0] ~ ':00 to ' ~ p[1] ~ ':00') if p[1] - p[0] == 1 else ('between ' ~ p[0] ~ ':00 and ' ~ p[1] ~ ':00')] -%}
+        {%- endfor -%}
+        {{ m.l | join(', then ') }}
+        {%- endif -%}
+        {%- endmacro -%}
+        {% set l = namespace(l=[]) %}{% if summary.rain %}{% set s = (summary.intensity | capitalize) ~ ' rain ' ~ when(summary.rain_spans, summary.rain_hours) %}{% if summary.mm > 0 %}{% set s = s ~ ' (' ~ summary.mm ~ ' mm in total, up to ' ~ summary.peak ~ ' mm/h)' %}{% endif %}{% set l.l = l.l + [s ~ '.'] %}{% if summary.risk == 'high' %}{% set l.l = l.l + ['High risk: Météo-France and Met.no both forecast it.'] %}{% elif summary.risk == 'uncertain' %}{% set l.l = l.l + ['Uncertain risk: only ' ~ summary.only_source ~ ' forecasts it.'] %}{% endif %}{% set l.l = l.l + ['Better leave the bike at home.' if summary.intensity == 'heavy' else ('Full rain gear needed.' if summary.intensity == 'moderate' else 'A rain jacket should do.')] %}{% endif %}{% if summary.frost %}{% set l.l = l.l + ['Frost ' ~ when(summary.frost_spans, summary.frost_hours) ~ ', down to ' ~ summary.tmin ~ ' °C: risk of ice on the road.'] %}{% endif %}{{ l.l | join('\n') }}
+      data:
+        tag: weather_tomorrow
+        channel: reminders
+        clickAction: entityId:weather.meteo_france
+        timeout: "{{ ((today_at('19:00') + timedelta(days=1)) - now()).total_seconds() | int }}"
+mode: single
+```
+
+</details>
+
+To adapt it, replace the two weather entities with yours (the code skips a source missing from the response) and the alarm sensor with your phone's. The 8 am to 7 pm window and the mm/h thresholds can be changed directly in the code.
+
+### My take: genuinely useful
+
+This notification passed the household approval test straight away. It helps in two situations:
+
+- deciding the night before to leave the bike at home when the forecast is a washout;
+- remembering to bring rain gear when it's only light rain in the morning.
+
 ## Conclusion
 
 The key to this setup is the threshold: a reminder sent only when needed is more likely to be read than a daily notification. If your Bosch e-bike runs the Smart System and your Bosch account is in the EU, the Bosch eBike integration gives you everything you need to build it. To go further, the README describes an ESP32 Bluetooth bridge that reports the state of charge live.
@@ -253,5 +424,9 @@ The key to this setup is the threshold: a reminder sent only when needed is more
   {
     question: "How do I know if the range is enough for my commute?",
     answer: "Take your round-trip distance and add about 25% margin. With a 16 km round trip, I end up with a 20 km threshold in Turbo."
+  },
+  {
+    question: "Can Home Assistant warn me the night before if it will rain on my bike commute?",
+    answer: "Yes. With the weather.get_forecasts action, Home Assistant reads tomorrow's hourly forecast and sends a notification if rain or frost is expected during commuting hours. In my setup, the forecast intensity decides the advice: rain jacket, full rain gear or leaving the bike at home."
   }
 ]} />

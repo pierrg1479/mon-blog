@@ -3,6 +3,7 @@ h1: 'Rappel de recharge du vélo électrique : ma solution avec Home Assistant'
 title: 'Rappel de recharge vélo électrique avec Home Assistant'
 description: "Recevez une alerte quand l'autonomie de votre vélo électrique Bosch ne suffit plus pour le trajet du lendemain, avec Home Assistant."
 pubDate: 'Oct 16 2026'
+updatedDate: 'Oct 20 2026'
 heroImage: '../../assets/hero-rappel-recharge-velo-electrique.jpg'
 author:
   name: Pierre
@@ -17,7 +18,7 @@ Le deuxième vélo de la maison sert à un trajet domicile-travail de 16 km alle
 
 L'écran du vélo affiche l'autonomie, encore faut-il penser à le regarder la veille. Résultat : du stress au moment de partir, et quelques mauvaises surprises.
 
-Aujourd'hui, Home Assistant s'en occupe. Il lit l'autonomie du vélo dans le cloud Bosch et envoie un rappel seulement si elle ne suffit pas pour le trajet du lendemain. Ensuite, la charge démarre seule en heures creuses. Voici l'installation complète : matériel, intégration, calcul du pourcentage, automatisation et retour d'expérience.
+Aujourd'hui, Home Assistant s'en occupe. Il lit l'autonomie du vélo dans le cloud Bosch et envoie un rappel seulement si elle ne suffit pas pour le trajet du lendemain. Ensuite, la charge démarre seule en heures creuses. Voici l'installation complète : matériel, intégration, calcul du pourcentage, automatisation et retour d'expérience. En bonus, une alerte météo la veille pour savoir si le vélo est une bonne idée le lendemain.
 
 ## Le vélo et le matériel utilisé
 
@@ -233,6 +234,176 @@ Il n'a pas évité de panne à proprement parler. Mais il a supprimé le stress 
 
 Une limite à connaître : le rappel lit la dernière valeur synchronisée. Si le vélo n'a pas synchronisé depuis le dernier trajet, l'autonomie lue à 20h peut être plus haute que la réalité.
 
+## Bonus : va-t-il pleuvoir demain sur le trajet à vélo ?
+
+Une deuxième automatisation Home Assistant tourne aussi à 20h et lit la météo du lendemain, heure par heure, sur la plage des trajets. Si de la pluie ou du gel est annoncé, elle envoie une notification qui dit quand, avec quelle intensité et quel équipement prévoir.
+
+Batterie et météo sont ainsi vérifiées au même moment, la veille au soir.
+
+<figure>
+  <img src="/images/rappel-recharge-velo/notification-meteo-velo-pluie.jpg" alt="Notification Home Assistant sur Android : Vélo mardi, pluie faible entre 8h et 10h, 0,5 mm au total et jusqu'à 0,3 mm/h, risque incertain car seul Météo-France l'annonce, un imperméable devrait suffire" style="width: 100%; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La notification reçue un lundi soir : une pluie faible le matin, annoncée par une seule des deux sources.</figcaption>
+</figure>
+
+### Deux sources météo pour juger de la fiabilité
+
+L'automatisation interroge deux intégrations météo avec l'action [`weather.get_forecasts`](https://www.home-assistant.io/integrations/weather/) (prévisions horaires) : [Météo-France](https://www.home-assistant.io/integrations/meteo_france/) et [Met.no](https://www.home-assistant.io/integrations/met/), l'institut météorologique norvégien. Elle analyse le lendemain de 8h à 19h, ce qui couvre l'aller et le retour.
+
+Une heure compte comme pluvieuse si la prévision annonce des précipitations ou une condition de pluie, de neige ou de grêle. Ensuite :
+
+- si les deux sources annoncent de la pluie, le risque est "élevé" ;
+- si une seule l'annonce, le risque est "incertain" et le message dit laquelle ;
+- les heures pluvieuses qui se suivent sont regroupées : "toute la journée", "entre 8h et 10h" ou "pendant 1 heure de 17h à 18h".
+
+### De l'intensité de la pluie à l'équipement à prendre
+
+L'intensité se base sur l'heure la plus pluvieuse, pas sur le cumul de la journée. C'est elle qui décide du conseil en fin de notification :
+
+| Prévision (8h-19h) | Intensité | Conseil dans la notification |
+|---|---|---|
+| Pic sous 1 mm/h | Pluie faible | Un imperméable devrait suffire |
+| Pic de 1 à 4 mm/h | Pluie modérée | Imperméable complet indispensable |
+| Pic de 4 mm/h ou plus | Pluie forte | Mieux vaut laisser le vélo |
+| 0 °C ou moins | Gel | Risque de verglas à vélo |
+
+### Seulement les jours de trajet
+
+L'automatisation ne s'exécute que du dimanche au jeudi, et seulement si un réveil est programmé pour le lendemain sur le téléphone de la personne qui prend le vélo. L'application Home Assistant pour Android remonte ce réveil dans un [capteur "Prochaine alarme"](https://companion.home-assistant.io/docs/core/sensors/) : pas de réveil, pas de trajet, pas de notification.
+
+Comme pour le rappel de recharge, le silence veut dire que tout va bien : sans pluie ni gel annoncé, rien ne part.
+
+### Une notification qui s'efface toute seule
+
+La notification porte un [tag](https://companion.home-assistant.io/docs/notifications/notifications-basic/) (`meteo_demain`) et un délai d'expiration calculé pour qu'elle disparaisse le lendemain à 19h, à la fin de la plage analysée. Un appui dessus ouvre la fiche météo Météo-France dans l'application.
+
+<details>
+<summary>Voir le code YAML</summary>
+
+```yaml
+alias: Vélo - Pluie ou gel demain
+description: >-
+  Du dimanche au jeudi à 20h, si un réveil est programmé pour le lendemain.
+  Notification s'il est prévu de la pluie ou du gel (≤ 0 °C) entre 8h et 19h
+  le lendemain. Risque élevé si Météo-France et Met.no annoncent la pluie,
+  incertain si une seule. Intensité selon le pic horaire : faible < 1 mm/h,
+  modérée 1 à 4 mm/h, forte ≥ 4 mm/h.
+triggers:
+  - trigger: time
+    at: "20:00:00"
+conditions:
+  - condition: time
+    weekday: [sun, mon, tue, wed, thu]
+  - alias: Réveil programmé pour demain sur le téléphone du cycliste
+    condition: template
+    value_template: >-
+      {% set r = states('sensor.smartphone_cycliste_next_alarm') | as_datetime(none) %}{{ r is not none and as_local(r).date() == (now() + timedelta(days=1)).date() }}
+actions:
+  - alias: Lire les prévisions horaires (les météos indisponibles sont ignorées)
+    action: weather.get_forecasts
+    target:
+      entity_id:
+        - weather.meteo_france
+        - weather.forecast_maison
+    data:
+      type: hourly
+    response_variable: previsions
+  - alias: Analyser demain entre 8h et 19h
+    variables:
+      bilan: |-
+        {% set demain = (now() + timedelta(days=1)).date() %}
+        {% set pluvieux = ['rainy', 'pouring', 'lightning-rainy', 'snowy', 'snowy-rainy', 'hail'] %}
+        {% set res = namespace(l=[]) %}
+        {% for src in ['weather.meteo_france', 'weather.forecast_maison'] if src in previsions %}
+          {% set ns = namespace(pluie=[], gel=[], mm=0, pic=0, tmin=none, nb=0) %}
+          {% for f in previsions[src].forecast %}
+            {% set t = as_local(as_datetime(f.datetime)) %}
+            {% if t.date() == demain and 8 <= t.hour <= 18 %}
+              {% set ns.nb = ns.nb + 1 %}
+              {% set p = f.precipitation | float(0) %}
+              {% if p > 0 or f.condition in pluvieux %}
+                {% set ns.pluie = ns.pluie + [t.hour] %}
+                {% set ns.mm = ns.mm + p %}
+                {% if p > ns.pic %}{% set ns.pic = p %}{% endif %}
+              {% endif %}
+              {% if f.temperature is number %}
+                {% if ns.tmin is none or f.temperature < ns.tmin %}{% set ns.tmin = f.temperature %}{% endif %}
+                {% if f.temperature <= 0 %}{% set ns.gel = ns.gel + [t.hour] %}{% endif %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          {% if ns.nb > 0 %}
+            {% set pl = namespace(out=[]) %}
+            {% for liste in [ns.pluie, ns.gel] %}
+              {% set r = namespace(l=[], debut=none, prec=none) %}
+              {% for h in liste %}
+                {% if r.debut is none %}{% set r.debut = h %}
+                {% elif h != r.prec + 1 %}{% set r.l = r.l + [[r.debut, r.prec + 1]] %}{% set r.debut = h %}{% endif %}
+                {% set r.prec = h %}
+              {% endfor %}
+              {% if r.debut is not none %}{% set r.l = r.l + [[r.debut, r.prec + 1]] %}{% endif %}
+              {% set pl.out = pl.out + [r.l] %}
+            {% endfor %}
+            {% set res.l = res.l + [{'nom': 'Météo-France' if src == 'weather.meteo_france' else 'Met.no', 'pluie': ns.pluie | count > 0, 'heures_pluie': ns.pluie | count, 'plages_pluie': pl.out[0], 'mm': ns.mm | round(1), 'pic': ns.pic | round(1), 'gel': ns.gel | count > 0, 'heures_gel': ns.gel | count, 'plages_gel': pl.out[1], 'tmin': ns.tmin}] %}
+          {% endif %}
+        {% endfor %}
+        {% set avec_pluie = res.l | selectattr('pluie') | list %}
+        {% set ref = avec_pluie | first if avec_pluie else (res.l | first if res.l else none) %}
+        {% set pic = ref.pic if ref else 0 %}
+        {% set principal = res.l | first if res.l else none %}
+        {{ {
+          'sources': res.l | count,
+          'pluie': avec_pluie | count > 0,
+          'risque': none if res.l | count < 2 or not avec_pluie else ('élevé' if avec_pluie | count == 2 else 'incertain'),
+          'seule_source': avec_pluie[0].nom if avec_pluie | count == 1 else '',
+          'intensite': 'forte' if pic >= 4 else ('modérée' if pic >= 1 else 'faible'),
+          'heures_pluie': ref.heures_pluie if ref else 0,
+          'plages_pluie': ref.plages_pluie if ref else [],
+          'mm': ref.mm if ref else 0,
+          'pic': pic,
+          'gel': principal.gel if principal else false,
+          'heures_gel': principal.heures_gel if principal else 0,
+          'plages_gel': principal.plages_gel if principal else [],
+          'tmin': principal.tmin if principal else none
+        } }}
+  - alias: Continuer seulement si pluie ou gel
+    condition: template
+    value_template: "{{ bilan.pluie or bilan.gel }}"
+  - alias: Prévenir le cycliste
+    action: notify.mobile_app_smartphone_cycliste
+    data:
+      title: >-
+        {% set jours = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'] %}🚲 Vélo {{ jours[(now() + timedelta(days=1)).weekday()] }} : {{ ('🌧️ pluie ' ~ bilan.intensite) if bilan.pluie }}{{ ' + ' if bilan.pluie and bilan.gel }}{{ '❄️ gel' if bilan.gel }}
+      message: |-
+        {%- macro quand(plages, n) -%}
+        {%- if n >= 11 -%}toute la journée, de 8h à 19h
+        {%- else -%}
+        {%- set m = namespace(l=[]) -%}
+        {%- for p in plages -%}
+        {%- set m.l = m.l + [('pendant 1 heure de ' ~ p[0] ~ 'h à ' ~ p[1] ~ 'h') if p[1] - p[0] == 1 else ('entre ' ~ p[0] ~ 'h et ' ~ p[1] ~ 'h')] -%}
+        {%- endfor -%}
+        {{ m.l | join(', puis ') }}
+        {%- endif -%}
+        {%- endmacro -%}
+        {% set l = namespace(l=[]) %}{% if bilan.pluie %}{% set s = 'Pluie ' ~ bilan.intensite ~ ' ' ~ quand(bilan.plages_pluie, bilan.heures_pluie) %}{% if bilan.mm > 0 %}{% set s = s ~ ' (' ~ (bilan.mm | string | replace('.', ',')) ~ " mm au total, jusqu'à " ~ (bilan.pic | string | replace('.', ',')) ~ ' mm/h)' %}{% endif %}{% set l.l = l.l + [s ~ '.'] %}{% if bilan.risque == 'élevé' %}{% set l.l = l.l + ["Risque élevé : Météo-France et Met.no l'annoncent tous les deux."] %}{% elif bilan.risque == 'incertain' %}{% set l.l = l.l + ['Risque incertain : seul ' ~ bilan.seule_source ~ " l'annonce."] %}{% endif %}{% set l.l = l.l + ['Mieux vaut laisser le vélo.' if bilan.intensite == 'forte' else ('Imperméable complet indispensable.' if bilan.intensite == 'modérée' else 'Un imperméable devrait suffire.')] %}{% endif %}{% if bilan.gel %}{% set l.l = l.l + ['Gel ' ~ quand(bilan.plages_gel, bilan.heures_gel) ~ ", jusqu'à " ~ (bilan.tmin | string | replace('.', ',')) ~ ' °C : risque de verglas à vélo.'] %}{% endif %}{{ l.l | join('\n') }}
+      data:
+        tag: meteo_demain
+        channel: rappels
+        clickAction: entityId:weather.meteo_france
+        timeout: "{{ ((today_at('19:00') + timedelta(days=1)) - now()).total_seconds() | int }}"
+mode: single
+```
+
+</details>
+
+Pour l'adapter, remplacez les deux entités météo par les vôtres (le code ignore une source absente de la réponse) et le capteur de réveil par celui de votre téléphone. La plage 8h-19h et les seuils en mm/h se changent directement dans le code.
+
+### Mon avis : un vrai service rendu
+
+Cette notification a été adoptée tout de suite à la maison : WAF validé. Elle sert dans deux cas :
+
+- renoncer au vélo la veille quand la météo annonce une vraie catastrophe ;
+- ne pas oublier de s'équiper quand il ne s'agit que d'une pluie faible le matin.
+
 ## Conclusion
 
 La clé de cette installation est le seuil : un rappel envoyé seulement quand il le faut a plus de chances d'être lu qu'une notification quotidienne. Si votre vélo Bosch est en Smart System, l'intégration Bosch eBike vous donne tout ce qu'il faut pour le construire. Pour aller plus loin, le README décrit un pont Bluetooth à base d'ESP32 qui remonte le niveau de charge en direct.
@@ -259,5 +430,9 @@ La clé de cette installation est le seuil : un rappel envoyé seulement quand i
   {
     question: "Comment savoir si l'autonomie suffit pour mon trajet ?",
     answer: "Prenez la distance de votre trajet aller-retour et ajoutez environ 25 % de marge. Avec 16 km aller-retour, j'arrive à un seuil de 20 km en Turbo."
+  },
+  {
+    question: "Peut-on être prévenu la veille s'il va pleuvoir sur le trajet à vélo ?",
+    answer: "Oui. Avec l'action weather.get_forecasts, Home Assistant lit les prévisions horaires du lendemain et envoie une notification s'il prévoit de la pluie ou du gel sur la plage des trajets. Chez moi, l'intensité prévue décide du conseil : imperméable, équipement complet ou vélo laissé au garage."
   }
 ]} />
