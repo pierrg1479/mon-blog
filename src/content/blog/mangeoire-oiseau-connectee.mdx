@@ -87,68 +87,7 @@ Trois réglages font toute la différence : une zone qui couvre la mangeoire et 
   <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La zone de détection en vert couvre le plateau et le perchoir. Le masque hachuré en rouge fait ignorer à Frigate les arbres et le romarin qui bougent avec le vent.</figcaption>
 </figure>
 
-<details>
-<summary>Voir le code YAML</summary>
-
-```yaml
-# Extrait de la config Frigate, partie mangeoire (identifiants et adresses remplacés)
-cameras:
-  mangeoire:
-    ffmpeg:
-      inputs:
-        # Petit flux pour la détection
-        - path: rtsp://UTILISATEUR:MOT_DE_PASSE@IP_DU_HUB:554/h264Preview_01_sub
-          roles: [detect]
-        # Flux 1440p relayé tel quel par go2rtc pour l'enregistrement
-        - path: rtsp://127.0.0.1:8554/mangeoire
-          input_args: preset-rtsp-restream
-          roles: [record]
-    detect:
-      width: 640
-      height: 360
-      fps: 5
-      max_disappeared: 50        # oiseau gardé 10 s quand Frigate le perd de vue
-    objects:
-      track: [bird]
-      filters:
-        bird:
-          min_score: 0.5
-          threshold: 0.65
-    zones:
-      autour_mangeoire:          # plateau, crochet et tige-perchoir
-        coordinates: 0,0.48,0.47,0.4,0.5,0.4,0.6,0.58,0.72,0.8,0.76,0.9,0.76,1,0,1
-        objects: [bird]
-    motion:
-      mask:
-        # arbres et romarin à droite, sauf une bande le long de la tige
-        - 0.62,0,1,0,1,1,0.84,1,0.84,0.95,0.7,0.62,0.62,0.45
-    review:
-      alerts:
-        required_zones: [autour_mangeoire]
-      detections:
-        required_zones: [autour_mangeoire]
-        cutoff_time: 120         # une visite se clôt après 2 min sans oiseau
-    record:
-      enabled: true
-      alerts:
-        retain:
-          days: 3
-          mode: active_objects
-      detections:
-        retain:
-          days: 3
-          mode: active_objects
-
-classification:
-  bird:
-    enabled: true
-```
-
-</details>
-
-<mark>À vérifier : syntaxe du masque de mouvement contre le config.yml réel de Frigate 0.18.3 (la doc récente nomme chaque masque).</mark>
-
-Un piège qui m'a coûté une soirée : dans Frigate 0.17, les coordonnées des zones sont comparées comme du texte. Écrire `1.000` au lieu de `1` fait planter la config. Écrivez `0` et `1`, sans décimales.
+Un piège à connaître : dans Frigate 0.17, les coordonnées des zones sont comparées comme du texte. Écrire `1.000` au lieu de `1` fait planter la config. Écrivez `0` et `1`, sans décimales.
 
 ### Le workflow n8n : une fiche Notion et un message Slack par visite
 
@@ -252,19 +191,6 @@ J'ai changé deux choses :
 
 1. Dans l'application Reolink (Paramètres de la caméra > Affichage > Flux > Clair), j'ai réglé 2560 × 1440, 4096 kbit/s et 15 images/s. Dans cette résolution, la Lumus Pro envoie directement du H.264.
 2. Dans Frigate, go2rtc copie maintenant ce flux tel quel au lieu de le recompresser.
-
-<details>
-<summary>Voir le code YAML</summary>
-
-```yaml
-go2rtc:
-  streams:
-    mangeoire:
-      # avant : ...h264Preview_01_main#video=h264#hardware=vaapi#width=1920
-      - ffmpeg:rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@IP_DU_HUB:554/h264Preview_01_main#video=copy
-```
-
-</details>
 
 La vidéo n'est plus compressée qu'une fois au lieu de deux. Elle est gardée en 1440p au lieu de 1080p, et la puce graphique du mini PC est presque au repos. J'ai gardé 15 images par seconde : le débit étant plafonné, plus d'images par seconde aurait voulu dire moins de détails dans chaque image.
 
