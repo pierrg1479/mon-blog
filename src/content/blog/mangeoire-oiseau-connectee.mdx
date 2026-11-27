@@ -71,7 +71,7 @@ La caméra filme la mangeoire en continu, Frigate repère les oiseaux dans une z
 
 Le trajet d'une visite, étape par étape :
 
-1. La caméra envoie deux flux au hub Reolink : un petit flux en 640 × 360 pour la détection, un flux 1080p pour l'enregistrement.
+1. La caméra envoie deux flux au hub Reolink : un petit flux en 640 × 360 pour la détection, un flux en 2560 × 1440 pour l'enregistrement.
 2. Frigate analyse le petit flux à 5 images par seconde et cherche l'objet « bird » dans la zone de la mangeoire.
 3. Quand un oiseau est vu, Frigate le passe à son [modèle de classification des oiseaux](https://docs.frigate.video/configuration/bird_classification), un MobileNet entraîné sur iNaturalist qui connaît 964 espèces. Il tourne sur le processeur, hors ligne une fois téléchargé. L'espèce n'est retenue que si le modèle est sûr à 90 % ou plus, le seuil par défaut.
 4. À la fin de la visite, Frigate publie l'événement sur MQTT.
@@ -99,7 +99,7 @@ cameras:
         # Petit flux pour la détection
         - path: rtsp://UTILISATEUR:MOT_DE_PASSE@IP_DU_HUB:554/h264Preview_01_sub
           roles: [detect]
-        # Flux 1080p relayé par go2rtc pour l'enregistrement
+        # Flux 1440p relayé tel quel par go2rtc pour l'enregistrement
         - path: rtsp://127.0.0.1:8554/mangeoire
           input_args: preset-rtsp-restream
           roles: [record]
@@ -190,7 +190,7 @@ Entre la mise en route de Frigate sur la caméra, le 26 octobre 2026, et la prem
 
 Mon premier réflexe a été de tout faire tourner sur le Home Assistant Green. Il est trop peu puissant pour analyser la vidéo en continu, et surtout il n'a pas assez d'espace disque pour stocker les enregistrements.
 
-Pour donner un ordre de grandeur : en 1080p, ma caméra produit environ 130 Mo par minute d'oiseau. Même sur le mini PC, j'ai dû limiter la conservation des vidéos à 3 jours. Le projet n'a vraiment démarré qu'avec le mini PC acheté pour mon homelab.
+Pour donner un ordre de grandeur : en 1080p, mes vidéos pesaient environ 130 Mo par minute d'oiseau. Même sur le mini PC, j'ai dû limiter la conservation des vidéos à 3 jours. Le projet n'a vraiment démarré qu'avec le mini PC acheté pour mon homelab.
 
 ### Le Wi-Fi trop faible dans la cabane de jardin
 
@@ -233,7 +233,7 @@ Avec la +4, posée le 26 novembre, les graines du plateau sont nettes et le fond
 
 **L'enregistrement sur mouvement.** Pour comprendre pourquoi aucun oiseau n'était détecté, j'ai fait enregistrer à Frigate tout ce qui bougeait. Avec les arbres, la haie et les insectes devant l'infrarouge la nuit, Frigate écrivait 2 à 3 Go par heure. Le disque est monté à 89 % et ne gardait que 8 heures de vidéo. La sauvegarde de la nuit contenait 17,6 Go de vidéos nocturnes, sans un seul oiseau.
 
-**La taille des vidéos.** En 1080p, la caméra produit environ 17 Mbit/s. Le 17 novembre, j'avais déjà 7,5 Go de vidéo pour 60 minutes de visites. J'ai réduit la conservation à 3 jours et je ne garde que les moments où l'oiseau est visible.
+**La taille des vidéos.** En 1080p, mes vidéos montaient à environ 17 Mbit/s. Le 17 novembre, j'avais déjà 7,5 Go de vidéo pour 60 minutes de visites. J'ai réduit la conservation à 3 jours et je ne garde que les moments où l'oiseau est visible.
 
 <div class="callout callout--warning">
   <p class="callout__title">Calculez le stockage avant d'activer l'enregistrement</p>
@@ -241,6 +241,30 @@ Avec la +4, posée le 26 novembre, les graines du plateau sont nettes et le fond
 </div>
 
 Les vidéos trop lourdes ont aussi fait planter n8n. Un rougegorge qui reste 2 à 5 minutes, c'est un clip de 260 à 375 Mo : n8n manquait de mémoire et redémarrait, sans fiche ni message. Depuis, n8n ne demande à Frigate qu'un extrait de 25 secondes au plus, autour de 60 Mo, et un bouton renvoie vers la visite entière.
+
+### Des vidéos plus nettes en changeant deux réglages
+
+Au début, mes vidéos d'oiseaux étaient un peu pâteuses dès que l'oiseau bougeait. La caméra filmait en 4K (H.265) avec un débit d'environ 4 Mbit/s. Frigate devait ensuite réduire l'image en 1080p et la recompresser en H.264 pour qu'un navigateur puisse la lire : deux compressions à la suite.
+
+J'ai changé deux choses :
+
+1. Dans l'application Reolink (Paramètres de la caméra > Affichage > Flux > Clair), j'ai réglé 2560 × 1440, 4096 kbit/s et 15 images/s. Dans cette résolution, la Lumus Pro envoie directement du H.264.
+2. Dans Frigate, go2rtc copie maintenant ce flux tel quel au lieu de le recompresser.
+
+<details>
+<summary>Voir le code YAML</summary>
+
+```yaml
+go2rtc:
+  streams:
+    mangeoire:
+      # avant : ...h264Preview_01_main#video=h264#hardware=vaapi#width=1920
+      - ffmpeg:rtsp://{FRIGATE_RTSP_USER}:{FRIGATE_RTSP_PASSWORD}@IP_DU_HUB:554/h264Preview_01_main#video=copy
+```
+
+</details>
+
+La vidéo n'est plus compressée qu'une fois au lieu de deux. Elle est gardée en 1440p au lieu de 1080p, et la puce graphique du mini PC est presque au repos. J'ai gardé 15 images par seconde : le débit étant plafonné, plus d'images par seconde aurait voulu dire moins de détails dans chaque image.
 
 ### Identification : l'IA payante, puis le modèle qui se trompe de continent
 
