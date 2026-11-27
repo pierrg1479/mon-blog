@@ -161,11 +161,6 @@ Pour chaque visite retenue, le workflow :
 3. attend 30 secondes que Frigate finisse la vidéo, puis récupère un extrait de 25 secondes ;
 4. publie dans Slack un message court, la photo, l'extrait et un bouton vers la visite entière dans Frigate.
 
-<figure style="margin: 1.5rem 0;">
-  <img src="/images/mangeoire-oiseau-connectee/message-slack-mesange-bleue.webp" alt="Message Slack d'une visite de mésange bleue à 11 h 50 : nom de l'espèce, lien vers la fiche Notion, bouton vers la visite entière dans Frigate et extrait vidéo de 7 secondes où une mésange bleue et une mésange charbonnière sont sur la mangeoire" style="display: block; width: 100%; max-width: 737px; margin: 0 auto; border-radius: 8px;" />
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Une visite telle qu'elle arrive dans Slack : l'espèce et l'heure, le lien vers la fiche Notion, le bouton vers la visite entière dans Frigate et l'extrait vidéo. Ici, une mésange charbonnière est venue en même temps sur la boule de graisse.</figcaption>
-</figure>
-
 Les noms d'oiseaux s'affichent en français. Frigate ne donne que le nom anglais, donc n8n le convertit avec une table qui couvre les 964 espèces du modèle, et refuse de produire le workflow si un nom manque.
 
 ### Le bilan du mois et le graphique des heures
@@ -243,6 +238,11 @@ Avec la +4, posée le 26 novembre, les graines du plateau sont nettes et le fond
 </div>
 
 Les vidéos trop lourdes ont aussi fait planter n8n. Un rougegorge qui reste 2 à 5 minutes, c'est un clip de 260 à 375 Mo : n8n manquait de mémoire et redémarrait, sans fiche ni message. Depuis, n8n ne demande à Frigate qu'un extrait de 25 secondes au plus, autour de 60 Mo, et un bouton renvoie vers la visite entière.
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/message-slack-mesange-bleue.webp" alt="Message Slack d'une visite de mésange bleue à 11 h 50 : nom de l'espèce, lien vers la fiche Notion, bouton vers la visite entière dans Frigate et extrait vidéo de 7 secondes où une mésange bleue et une mésange charbonnière sont sur la mangeoire" style="display: block; width: 100%; max-width: 737px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Une visite telle qu'elle arrive dans Slack : un extrait court, et le bouton vers la visite entière dans Frigate. Ici, une mésange charbonnière est venue en même temps sur la boule de graisse.</figcaption>
+</figure>
 
 ### Des vidéos plus nettes en changeant deux réglages
 
