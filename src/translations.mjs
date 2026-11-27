@@ -9,6 +9,7 @@ export const frToEnSlugMap = {
 	'prises-connectees-economies-automatisations': 'smart-plugs-savings-automations',
 	'tado-retour-2-ans-economies-gaz': 'tado-review-2-years-gas-savings',
 	'tablette-murale-home-assistant': 'wall-mounted-home-assistant-tablet',
+	'mangeoire-oiseau-connectee': 'smart-bird-feeder-camera',
 };
 
 /** Slug d'article EN → slug FR */

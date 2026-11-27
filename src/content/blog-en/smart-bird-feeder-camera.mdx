@@ -1,0 +1,298 @@
+---
+h1: "Smart bird feeder camera: I built my own Birdfy"
+title: 'Smart Bird Feeder Camera 🐦: DIY Birdfy with Frigate'
+description: 'Build a smart bird feeder camera that identifies birds locally: hardware, setup, Frigate settings and the mistakes to avoid.'
+pubDate: 'Nov 27 2026'
+unlisted: true
+heroImage: '../../assets/mangeoire-oiseau-connectee-hero.jpg'
+heroAlt: 'European robin perched on the smart bird feeder, above the seed tray, filmed by the Reolink camera'
+author:
+  name: Pierre
+  avatar: '/hannibal-cercle.png'
+  url: 'https://www.reddit.com/user/Patient-Gene703/'
+related: ['home-assistant-mistakes-to-avoid', 'wall-mounted-home-assistant-tablet']
+---
+
+import FaqBlock from '../../components/FaqBlock.astro';
+import ReadAlso from '../../components/ReadAlso.astro';
+import AffiliateInline from '../../components/AffiliateInline.astro';
+
+This smart bird feeder started as a gift for my partner. It took far longer than planned, and it turned into a family project: I also love watching the garden birds with my son.
+
+I also simply liked the idea. I wanted to try Frigate and build my own integration rather than buy something off the shelf.
+
+The goal was simple: know which birds visit, with a photo and a video of every visit, without going through a manufacturer's app. Commercial smart bird feeders like Birdfy or Bird Buddy do this very well, with their own app.
+
+I first tried to run everything on my Home Assistant Green, and it didn't work. Buying a mini PC for a homelab project is what let me finish it. Here is how my smart bird feeder works: a camera films the feeder, Frigate recognizes the bird and its species locally, and every visit lands in Slack with a photo and a video clip.
+
+I learned the hard way: plenty of mistakes and a lot of iterations before getting a result I'm happy with. This guide covers everything, step by step: where to put the feeder and the camera, how to install and connect them, the settings for filming birds, and a troubleshooting section with every mistake I made.
+
+## Why didn't I buy a Birdfy or a Bird Buddy?
+
+Because I wanted to build my own smart bird feeder with Frigate, and I had what it takes: a mini PC bought for my homelab, on which Frigate identifies species locally. Recognition happens at home, with no subscription, in exchange for doing the setup yourself.
+
+A commercial feeder goes up and works with the manufacturer's app. It's simpler, but I wouldn't have learned anything, and I couldn't have plugged the visits into my own tools (Notion, Slack, a monthly summary).
+
+If you're starting from scratch, with no server, the math is different: you need to add the cost of a mini PC.
+
+## The hardware I used
+
+- **Camera**: [Reolink Lumus Pro](https://reolink.com/fr/product/lumus-pro/), a mains-powered Wi-Fi camera, €60
+- **Hub**: Reolink Hub 1 Lite, which relays the camera's video stream, €50
+- **Close-up lenses**: a set of 37 mm macro filters (+1, +2, +4, +10), €15.40. I use the +4.
+- **Wi-Fi**: a Deco mesh access point added in the garden shed, right next to the camera
+- **Server**: a NiPoGi mini PC running Proxmox, €200, bought for my homelab. Frigate runs there in a container, alongside everything else.
+- **Home Assistant Green**: it hosts Mosquitto, the MQTT broker that carries Frigate's events
+- **Software**: [Frigate](https://frigate.video/) (free, open source), n8n for automation, Notion for the history, Slack for notifications
+- **Feeder**: [Garden Locker wall-mounted feeder](https://www.amazon.fr/dp/B091CZ8WS3), steel, with a roof, a perch and a large tray, €38.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Tip: a mains-powered camera, never a battery one</p>
+  <p class="callout__content">Frigate analyzes the video stream continuously, which a battery camera can't do: to save power, it sleeps and only wakes up on motion. A solar panel doesn't change that: I have other Reolink battery cameras with solar panels, but they aren't suitable for this project. The feeder camera, the Lumus Pro, uses Wi-Fi for video but is plugged into the mains.</p>
+</div>
+
+<AffiliateInline
+  href="https://amzn.to/3Nd9M3a"
+  title="Reolink Lumus Pro camera"
+  price="From €60"
+  imageSrc="/images/equipment/reolink-lumus-pro.jpg"
+  imageAlt="Reolink Lumus Pro Wi-Fi camera"
+  cta="View product"
+  dataAff="reolink-lumus-pro"
+/>
+
+<ReadAlso slug="home-assistant-mistakes-to-avoid" title="Home Assistant mistakes to avoid (including a Green too small for Frigate)" lang="en" />
+
+## How to set up a smart bird feeder camera, step by step
+
+### Where should you put a bird feeder camera?
+
+Pick a spot with mains power within reach and a good Wi-Fi signal, with the camera about 15 to 20 cm (6 to 8 in) from the feeder. Also choose a background that doesn't move much: trees or a hedge behind the feeder keep triggering motion detection.
+
+My first setup placed the camera facing the feeder: the vegetation behind it caused far too many false positives. Today the feeder is mounted against the garden shed, and the camera on the side of the feeder, facing the perch. I had to add a Wi-Fi access point in the shed, and mask the trees and the rosemary moving in the background in Frigate.
+
+<AffiliateInline
+  href="https://www.amazon.fr/dp/B091CZ8WS3"
+  title="Garden Locker wall-mounted bird feeder"
+  price="From €38"
+  imageSrc="/images/equipment/mangeoire-garden-locker.jpg"
+  imageAlt="Grey steel Garden Locker wall-mounted bird feeder with a roof, a seed tray and a wooden perch"
+  cta="View product"
+  dataAff="mangeoire-garden-locker"
+/>
+
+### Install and connect the feeder and the camera
+
+1. Mount the feeder on a wall or a support: mine is mounted against the garden shed.
+2. Mount the camera on the side of the feeder, facing the perch, about 15 to 20 cm (6 to 8 in) away, with the +4 close-up lens in front of the lens.
+3. Plug the camera into the mains.
+4. In the Reolink app, connect the camera to Wi-Fi and add it to the hub.
+5. In the Deco app, set the nearest access point as the camera's preferred one.
+6. In Frigate, add the camera using the hub's RTSP stream (port 554), then draw the zone and the mask.
+7. Enable bird classification in Frigate and connect n8n to MQTT for the Notion record and the Slack message.
+
+<div class="callout callout--tip">
+  <p class="callout__title">Tip: no microSD card needed</p>
+  <p class="callout__content">Frigate records the videos on the mini PC.</p>
+</div>
+
+### What settings should you use to film birds?
+
+On the camera side, a 2560 × 1440 stream at 15 frames per second for recording, and the small 640 × 360 stream for detection. On the Frigate side, a zone limited to the feeder, a mask over whatever moves, bird detection thresholds of 0.5 and 0.65, and a species kept only above 90% confidence.
+
+Each setting is detailed in the sections below: the Frigate configuration just after, and the video stream in the troubleshooting section.
+
+## How does the smart bird feeder work?
+
+The camera films the feeder continuously, Frigate spots birds in a defined zone and then identifies their species with a model that runs locally. At the end of each visit, n8n creates a record in Notion and posts the photo and a video clip in Slack.
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/schema-mangeoire-connectee.webp" alt="Diagram of the smart bird feeder (labels in French): the garden Reolink camera sends two streams to the Reolink hub; Frigate, on the mini PC, spots the bird, records and identifies the species locally, then publishes the end of the visit over MQTT to Mosquitto, hosted on the Home Assistant Green; n8n, on the mini PC, creates the Notion record, posts the visit in Slack and builds the monthly summary from the Notion records" style="display: block; width: 100%; max-width: 650px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">From the camera to the Slack message (diagram in French): no image leaves the house for identification.</figcaption>
+</figure>
+
+A visit, step by step:
+
+1. The camera sends two streams to the Reolink hub: a small 640 × 360 stream for detection and a 2560 × 1440 stream for recording.
+2. Frigate analyzes the small stream at 5 frames per second and looks for the "bird" object in the feeder zone.
+3. When a bird is seen, Frigate passes it to its [bird classification model](https://docs.frigate.video/configuration/bird_classification), a MobileNet trained on iNaturalist that knows 964 species. It runs on the CPU, offline once downloaded. The species is only kept if the model is at least 90% sure, the default threshold.
+4. At the end of the visit, Frigate publishes the event over MQTT.
+5. n8n receives the event, creates a record in Notion (species, photo, date, score) and posts the photo and a 25-second clip in Slack.
+6. On the last day of the month, a second n8n workflow posts the monthly summary.
+
+### Configuring Frigate for birds
+
+Three settings make all the difference: a zone covering the feeder and the perch, a mask over whatever moves around it (trees, rosemary), and detection thresholds slightly lower than the defaults for small birds.
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/frigate-zone-masque-mangeoire.webp" alt="Feeder camera image in Frigate: a European robin on the seed tray, the green detection zone around the tray and the perch, and the red hatched motion mask over the trees and rosemary on the right" style="width: 100%; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">The green detection zone covers the tray and the perch. The red hatched mask makes Frigate ignore the trees and rosemary moving in the wind.</figcaption>
+</figure>
+
+A trap I hit with Frigate 0.17: zone coordinates were compared as text. Writing `1.000` instead of `1` broke the config: write `0` and `1`, without decimals.
+
+### The n8n workflow: one Notion record and one Slack message per visit
+
+n8n listens to Frigate's MQTT events and only keeps finished visits where Frigate assigned a species. No species, nothing is created: it's the most effective filter against false alerts (leaves, shadows, a cat).
+
+For each visit it keeps, the workflow:
+
+1. checks that no record for the same species was created in the last 30 minutes, to avoid duplicates;
+2. fetches the photo from Frigate and creates the record in the Notion database;
+3. waits 30 seconds for Frigate to finish the video, then fetches a 25-second clip;
+4. posts a short message in Slack with the photo, the clip and a button to the full visit in Frigate.
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/message-slack-rougegorge.webp" alt="Slack message (in French) for a European robin visit: species name, link to the Notion record, button to the full visit in Frigate, a 17-second video clip and a photo of the robin on the perch framed by the bird detection at 98%" style="display: block; width: 100%; max-width: 796px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">A visit as it arrives in Slack (in French): a short clip, Frigate's photo and the button to the full visit. The "bird 98%" box is the bird detection; the species, European robin, then comes from the classification model.</figcaption>
+</figure>
+
+Bird names are shown in French. Frigate only gives the English name, so n8n converts it with a table covering the model's 964 species, and refuses to build the workflow if a name is missing.
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/base-notion-oiseaux.webp" alt="Notion database of the feeder birds (in French): one row per visit with the species (mostly European robins, a blue tit, a great tit), links to the Slack clip and the Frigate visit, confidence and date" style="width: 100%; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">The Notion database filled by n8n: one record per visit, with the species, the Slack clip, a link to the full visit in Frigate, the confidence and the date. Links are blurred.</figcaption>
+</figure>
+
+### The monthly summary and the visiting-hours chart
+
+On the last day of the month at 9:30 pm, a second workflow reads the Notion database and posts a summary in a dedicated Slack channel: number of visits and species, the ranking, the peak hour, the earliest and latest bird of the day, a chart of visiting hours and the photo of the month's rare bird. The chart is drawn directly in n8n, with no external service.
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/bilan-mois-slack.webp" alt="November summary in Slack (in French): 146 visits from 5 species over 11 visiting days, ranking with the European robin first at 68%, peak hour between 8 and 9 am, earliest and latest bird of the day" style="display: block; width: 100%; max-width: 660px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">The monthly summary in Slack (in French), here a test run: 146 visits from 5 species over 11 days, with the robin first at 68% of visits.</figcaption>
+</figure>
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/bilan-mois-graphique-heures-oiseau-rare.webp" alt="Chart of bird visiting hours, peaking at 1.6 visits per day between 8 and 9 am, followed by the photo of a feral pigeon, the rare bird of the month seen only once" style="display: block; width: 100%; max-width: 845px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">The rest of the summary: the visiting-hours chart drawn by n8n, then the month's rare bird with a link to its visit in Frigate.</figcaption>
+</figure>
+
+## Troubleshooting: the mistakes I made
+
+I started this project early in the year and only got a satisfying result several months later. In between, I had to fix hardware, installation and configuration problems. Four of them took most of the time: a Home Assistant Green too small, weak Wi-Fi in the garden shed, trees moving behind the feeder, and blurry birds.
+
+### The Home Assistant Green: not powerful enough, and above all not enough storage
+
+My first instinct was to run everything on the Home Assistant Green. It isn't powerful enough to analyze video continuously, and above all it doesn't have enough storage for the recordings.
+
+The Home Assistant Green only has 32 GB of eMMC storage ([official page](https://www.home-assistant.io/green/)), and with everything already installed on mine, I only had 8 GB free. For scale: in 1080p, my videos weighed about 130 MB per minute of bird, enough to fill those 8 GB in barely an hour of visits. Even on the mini PC, I had to limit video retention to 3 days. The project only really took off with the mini PC bought for my homelab.
+
+### Weak Wi-Fi in the garden shed
+
+The camera is near the garden shed, where the Wi-Fi was too weak and caused disruptions. So I added a Deco mesh access point in the shed.
+
+That wasn't enough right away. The first videos were choppy, with gaps of several seconds: the camera stayed connected to a distant access point, with 1.7% packet loss and spikes up to 460 ms. Setting the shed access point as the preferred one in the Deco app brought it down to 0% loss and 12 ms on average.
+
+### Framing: trees moving in the background
+
+Behind the feeder there are trees, a hedge and a rosemary bush. With the wind, Frigate saw motion 61% of the time and analyzed 17.2 frames per second for a 5 fps stream. Its CPU usage sat at 37%, for nothing.
+
+A motion mask over the trees and a zone limited to the feeder changed everything: 0.1 to 10.4 analyses per second depending on the wind, and CPU usage between 11 and 22%. I had to redo the mask every time I moved the camera.
+
+One last detail: the Frigate zone must cover the whole perch, where the birds land. Once I widened the zone to include all of it, the first great tit showed up the same day, identified with a 97% score.
+
+### Blurry birds: from the +1 lens to the +4
+
+To make the bird bigger in the frame, I moved the camera to about 30 cm (12 in) from the feeder. Result: zero detections in 7 days. In a daytime snapshot, the feeder was blurry and the background sharp.
+
+The Lumus Pro has a fixed focus set for distance: an object at 30 cm falls outside the sharp zone, and Frigate doesn't recognize a blurry bird. The fix: a close-up lens in front of the camera lens.
+
+I first bought a +1 lens on its own: wasted money, the bird stayed blurry. I then bought a full set (+1, +2, +4, +10), and the +4 is the right one. The best choice depends on the distance between the lens and where the bird lands:
+
+- **+4** at 15 to 20 cm (6 to 8 in), my distance, with a sharp zone of about 5 cm (2 in);
+- **+2** between 35 and 50 cm (14 to 20 in);
+- **+10**: avoid it, the sharp zone shrinks to about 1 cm.
+
+With the +4, the seeds on the tray are sharp and the background is blurred. Exactly the effect I wanted.
+
+I'm not the only one: on r/reolinkcam, a user who installed a Reolink E1 Outdoor Pro in a bird feeder explains that even its manual focus, set as close as possible, wasn't enough. He had to add a macro adapter in front of the lens ([his post on Reddit](https://www.reddit.com/r/reolinkcam/comments/1foffdp/i_made_a_reolink_bird_feeder_camera/)).
+
+A bit of DIY to plan for: the Lumus Pro has no mount for a lens. Mine is held in front of the camera lens with double-sided tape.
+
+### Video storage
+
+**Recording on motion.** To understand why no bird was being detected, I had Frigate record everything that moved. With the trees, the hedge and insects in front of the infrared at night, Frigate wrote 2 to 3 GB per hour. The disk climbed to 89% and only kept 8 hours of video. That night's backup contained 17.6 GB of night-time video, without a single bird.
+
+**Video size.** In 1080p, my videos reached about 17 Mbit/s. In a single day, I already had 7.5 GB of video for 60 minutes of visits. I cut retention to 3 days and only keep the moments when a bird is visible.
+
+<div class="callout callout--warning">
+  <p class="callout__title">Work out your storage before enabling recording</p>
+  <p class="callout__content">With my old 1080p setting, at 130 MB per minute of bird, a week of visits quickly went over 30 GB. Keep only alerts and detections, for a few days, and exclude Frigate's videos from your backups.</p>
+</div>
+
+Oversized videos also crashed n8n. A robin staying 2 to 5 minutes means a 260 to 375 MB clip: n8n ran out of memory and restarted, with no record and no message. Since then, n8n only asks Frigate for a clip of 25 seconds at most (about 60 MB with my old 1080p setting), and a button links to the full visit.
+
+### Sharper videos by changing two settings
+
+At first, my bird videos looked a bit mushy as soon as the bird moved. The camera recorded in 4K (H.265) at about 4 Mbit/s. Frigate then had to scale the image down to 1080p and re-encode it to H.264 so a browser could play it: two compressions in a row.
+
+I changed two things:
+
+1. In the Reolink app (camera settings > Display > Stream > Clear), I set 2560 × 1440, 4096 kbit/s and 15 fps. At this resolution, the Lumus Pro sends H.264 directly.
+2. In Frigate, go2rtc now copies this stream as is instead of re-encoding it.
+
+The video is now compressed once instead of twice. It's kept at 1440p instead of 1080p, and the mini PC's GPU is almost idle. I stayed at 15 frames per second: with a capped bitrate, more frames per second would have meant less detail in each frame. Others prefer to go above 15 fps because birds move fast: with a capped bitrate, it's a trade-off between smoothness and detail.
+
+### Species recognition
+
+My first version sent every photo to Claude Haiku, Anthropic's AI, to identify the species: about 930 input tokens and 400 output tokens per visit. It worked, but it cost money for a job Frigate can do on its own. I quickly switched to Frigate's local model, which is free and identifies the species without sending the image to an external service.
+
+The local model sometimes gets confused, in an easy-to-spot way. Of 13 species recorded in just under two weeks, 8 don't live in a French garden: Carolina chickadee, cedar waxwing, black phoebe, eastern bluebird... These are North American birds, the model's confusion on poorly seen birds. They only account for 11 records out of 171, and the monthly summary lists them separately as "to check".
+
+Another surprise: with Frigate 0.18, the species name changed from "Latin name (English name)" to the English name only. My French messages started announcing "Great Tit". To get the French name back, n8n works in two steps. It first finds the Latin name from the English one, using the species file that ships with Frigate's model. Then it looks up the French name: first in my list of 47 garden birds, otherwise in a table covering the model's 964 species.
+
+That complete table came late. Before, a species missing from my list kept its English name: 10 records out of 154 showed up that way, such as "Hermit Thrush". The names mostly come from iNaturalist (835) and Wikidata (86), and the remaining 43 were filled in by hand, favoring the names used in France. The workflow generator now refuses to run if a single French name is missing.
+
+Finally, Frigate splits a visit into several segments as soon as it loses the bird for a few seconds: a robin that stayed 4 minutes produced 9 segments. Two settings solved it: keeping the bird for 10 seconds when it disappears (`max_disappeared`) and closing a visit only after 2 minutes without a bird (`cutoff_time`).
+
+## The results in pictures
+
+<figure>
+  <video src="/images/mangeoire-oiseau-connectee/rougegorge-mangeoire.mp4" controls muted playsinline preload="metadata" style="width: 100%; border-radius: 8px;"></video>
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;"><mark>Robin video to come.</mark></figcaption>
+</figure>
+
+<figure>
+  <video src="/images/mangeoire-oiseau-connectee/mesanges-mangeoire.mp4" controls muted playsinline preload="metadata" style="width: 100%; border-radius: 8px;"></video>
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;"><mark>Tits video to come.</mark></figcaption>
+</figure>
+
+For the first few weeks, I was mostly disappointed: blurry images and detection I couldn't rely on. Today, I'm pretty proud of the result. The feeder runs reliably, and I check the visits on the dedicated Slack channel whenever I have a moment.
+
+What I like most is sharing it with my family. Seeing a robin show up in the middle of the day is pure feel-good.
+
+What still bugs me? Not much: everything runs smoothly and I'm happy with the result. A few birds are still blurry sometimes, and it took quite a few tries with the camera position and the lenses before getting a decent result.
+
+## What I took away from it
+
+This smart bird feeder took much longer than planned, and almost all of that time went into the hardware: the location, the Wi-Fi, the focus. If I did it again, I'd start with the image: a mains-powered camera, close to the feeder, with the right lens, and a background that doesn't move much.
+
+Today it runs without me thinking about it. Visits land in Slack, the summary arrives at the end of the month, and I watch the garden birds with my son. The gift was a little late, but the whole family enjoys it.
+
+<FaqBlock title="Frequently asked questions" items={[
+  {
+    question: "Can you have a smart bird feeder without a subscription?",
+    answer: "Yes, with a regular camera, Frigate and Home Assistant. Frigate identifies the species locally with its bird classification model, with no cloud and no subscription, but you need a server that can run it."
+  },
+  {
+    question: "Can Frigate identify a bird's species?",
+    answer: "Yes, Frigate has bird classification based on a model trained on iNaturalist that knows 964 species. At home, it recognizes robins and tits well, but it sometimes mistakes poorly seen birds for North American species."
+  },
+  {
+    question: "Where should you put a bird feeder camera?",
+    answer: "Somewhere with a power outlet within reach and a good Wi-Fi signal, with the camera about 15 to 20 cm (6 to 8 in) from the feeder. Avoid a background of trees or hedges that move: they keep triggering detection."
+  },
+  {
+    question: "Which camera should you choose for a bird feeder?",
+    answer: "A mains-powered camera, never a battery one: Frigate needs to analyze the stream continuously, and a battery camera sleeps between movements. It also needs an RTSP stream Frigate can read. Focus matters as much as resolution: with a fixed-focus camera like the Reolink Lumus Pro, you need a close-up lens to film sharply at 15 to 20 cm."
+  },
+  {
+    question: "Is a Home Assistant Green enough for a smart bird feeder?",
+    answer: "Not for me: I first tried on the Home Assistant Green, without success. Frigate now runs on a separate mini PC, and the Green only relays events over MQTT."
+  },
+  {
+    question: "Why doesn't my camera detect any birds?",
+    answer: "Most often, the bird is too small or blurry in the image. At home, the feeder was blurry up close: the close-up lens and a Frigate zone covering the perch solved the problem."
+  }
+]} />
