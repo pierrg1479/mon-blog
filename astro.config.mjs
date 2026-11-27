@@ -4,8 +4,19 @@ import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 import { frToEnPaths } from './src/translations.mjs';
 import markdownVersions from './src/integrations/markdown-versions.mjs';
+import { readdirSync, readFileSync } from 'node:fs';
 
 const site = 'https://www.the-optimization-guy.com';
+
+// Articles non répertoriés (`unlisted: true`) : hors sitemap
+const unlistedPaths = new Set(
+  [['src/content/blog', '/blog/'], ['src/content/blog-en', '/en/blog/']].flatMap(([dir, base]) =>
+    readdirSync(dir)
+      .filter((file) => /\.mdx?$/.test(file))
+      .filter((file) => /^unlisted:\s*true\s*$/m.test(readFileSync(`${dir}/${file}`, 'utf-8').split(/^---\s*$/m)[1] ?? ''))
+      .map((file) => `${base}${file.replace(/\.mdx?$/, '')}/`)
+  )
+);
 const enToFrPaths = Object.fromEntries(Object.entries(frToEnPaths).map(([fr, en]) => [en, fr]));
 
 // Hreflang dans le sitemap : mêmes paires que le <head> (BaseHead), x-default sur le FR
@@ -28,7 +39,10 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      filter: (page) => new URL(page).pathname !== '/admin/',
+      filter: (page) => {
+        const path = new URL(page).pathname;
+        return path !== '/admin/' && !unlistedPaths.has(path);
+      },
       serialize: withHreflang,
     }),
     markdownVersions(),

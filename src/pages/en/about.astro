@@ -21,7 +21,7 @@ const startHereIds = [
 	'home-assistant-mistakes-to-avoid',
 	'wall-mounted-home-assistant-tablet',
 ];
-const posts = await getCollection('blogEn', ({ id, data }) => startHereIds.includes(id) && data.draft !== true);
+const posts = await getCollection('blogEn', ({ id, data }) => startHereIds.includes(id) && data.draft !== true && data.unlisted !== true);
 const startHere = startHereIds
 	.map((id) => posts.find((post) => post.id === id))
 	.filter((post) => post !== undefined);

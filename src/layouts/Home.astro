@@ -48,7 +48,7 @@ const t = isEn
 		};
 
 const allPosts = (await getCollection(isEn ? 'blogEn' : 'blog', ({ data }) => {
-	return data.draft !== true;
+	return data.draft !== true && data.unlisted !== true;
 })).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );

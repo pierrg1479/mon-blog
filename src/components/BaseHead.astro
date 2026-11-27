@@ -17,6 +17,8 @@ interface Props {
 	type?: 'website' | 'article';
 	publishedTime?: Date;
 	modifiedTime?: Date;
+	// Page en ligne mais hors index (article non répertorié)
+	noindex?: boolean;
 }
 
 const {
@@ -27,12 +29,13 @@ const {
 	type = 'website',
 	publishedTime,
 	modifiedTime,
+	noindex = false,
 } = Astro.props;
 
 const lang = langFromPath(Astro.url.pathname);
 const canonicalURL = canonicalFor(Astro.url.pathname);
 // Version Markdown pour les moteurs de réponse IA (générée en fin de build)
-const markdownURL = markdownKind(Astro.url.pathname) ? `${canonicalURL}index.md` : undefined;
+const markdownURL = !noindex && markdownKind(Astro.url.pathname) ? `${canonicalURL}index.md` : undefined;
 const resolvedImageUrl = image.startsWith('http')
 	? image
 	: new URL(image, Astro.site ?? Astro.url).href;
@@ -81,6 +84,7 @@ const hasTranslation = alternates.some((alt) => alt.hreflang !== lang);
 {markdownURL && <link rel="alternate" type="text/markdown" href={markdownURL} />}
 
 <!-- Primary Meta Tags -->
+{noindex && <meta name="robots" content="noindex, nofollow" />}
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />

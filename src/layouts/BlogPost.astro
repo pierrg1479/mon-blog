@@ -31,6 +31,7 @@ type Props = {
 	relatedPosts?: RelatedPost[];
 	headings?: MarkdownHeading[];
 	enSlug?: string;
+	unlisted?: boolean;
 };
 
 const {
@@ -46,6 +47,7 @@ const {
 	relatedPosts = [],
 	headings = [],
 	enSlug,
+	unlisted,
 } = Astro.props;
 
 const siteBase = Astro.site?.href ?? Astro.url.origin;
@@ -117,6 +119,7 @@ if (translationUrl) {
 			type="article"
 			publishedTime={pubDate}
 			modifiedTime={updatedDate}
+			noindex={unlisted}
 		/>
 		<ArticleSchema
 			title={title}

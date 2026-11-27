@@ -207,6 +207,8 @@ export function toMarkdown(html, pathname) {
 	const kind = markdownKind(pathname);
 	if (!kind) return null;
 	const doc = parse(html, { comment: false });
+	// Page hors index (article non répertorié) : pas de version .md
+	if (/noindex/.test(doc.querySelector('meta[name="robots"]')?.getAttribute('content') ?? '')) return null;
 	const lang = doc.querySelector('html')?.getAttribute('lang') === 'en' ? 'en' : 'fr';
 	const url = doc.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? new URL(pathname, SITE).href;
 	const content = simplify(contentOf(doc, kind), { lang, url });
@@ -232,6 +234,7 @@ export default function markdownVersions() {
 					if (!markdownKind(pathname)) continue;
 					const htmlPath = `${outDir}${pathname}index.html`;
 					const markdown = toMarkdown(await readFile(htmlPath, 'utf-8'), pathname);
+					if (!markdown) continue;
 					await writeFile(`${outDir}${pathname}index.md`, markdown);
 					count += 1;
 				}

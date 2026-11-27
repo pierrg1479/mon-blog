@@ -5,7 +5,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 export const prerender = true;
 
 export async function GET(context) {
-	const posts = (await getCollection('blog', ({ data }) => data.draft !== true)).sort(
+	const posts = (await getCollection('blog', ({ data }) => data.draft !== true && data.unlisted !== true)).sort(
 		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 	);
 

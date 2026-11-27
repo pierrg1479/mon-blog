@@ -10,7 +10,7 @@ export const GET: APIRoute = async ({ site }) => {
 
 	const published = async (collection: 'blog' | 'blogEn') =>
 		(await getCollection(collection))
-			.filter(({ data }) => data.draft !== true)
+			.filter(({ data }) => data.draft !== true && data.unlisted !== true)
 			.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 	const line = (title: string, path: string, description?: string) =>

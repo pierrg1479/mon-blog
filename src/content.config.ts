@@ -18,6 +18,8 @@ const blogSchema = ({ image }) =>
 			url: z.string().url().optional(),
 		}),
 		draft: z.boolean().optional(),
+		// En ligne mais non répertorié : noindex, absent des listes, du flux, du sitemap, de llms.txt et des .md
+		unlisted: z.boolean().optional(),
 		// Slugs des articles à proposer en fin d'article (complétés par les plus récents)
 		related: z.array(z.string()).optional(),
 	});
