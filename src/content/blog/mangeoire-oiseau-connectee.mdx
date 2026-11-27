@@ -235,11 +235,11 @@ J'ai changé deux choses :
 
 La vidéo n'est plus compressée qu'une fois au lieu de deux. Elle est gardée en 1440p au lieu de 1080p, et la puce graphique du mini PC est presque au repos. J'ai gardé 15 images par seconde : le débit étant plafonné, plus d'images par seconde aurait voulu dire moins de détails dans chaque image.
 
-### Identification : l'IA payante, puis le modèle qui se trompe de continent
+### La reconnaissance des espèces
 
 Ma première version envoyait chaque photo à Claude Haiku, l'IA d'Anthropic, pour identifier l'espèce : environ 930 jetons en entrée et 400 en sortie par visite. Ça marchait, mais c'était payant pour un travail que Frigate sait faire seul. Le jour même, je suis passé au modèle local de Frigate, gratuit et sans envoi d'image hors de la maison.
 
-Le modèle local se trompe aussi, d'une façon très reconnaissable. Sur 13 espèces enregistrées en un peu moins de deux semaines, 8 n'existent pas dans un jardin en France : mésange de Caroline, jaseur d'Amérique, moucherolle noir, merlebleu de l'Est... Ce sont des oiseaux d'Amérique du Nord, une confusion du modèle sur des oiseaux mal vus. Elles ne représentent que 11 fiches sur 171, et le bilan mensuel les classe à part, « à vérifier ».
+Le modèle local fait parfois des confusions, faciles à repérer. Sur 13 espèces enregistrées en un peu moins de deux semaines, 8 n'existent pas dans un jardin en France : mésange de Caroline, jaseur d'Amérique, moucherolle noir, merlebleu de l'Est... Ce sont des oiseaux d'Amérique du Nord, une confusion du modèle sur des oiseaux mal vus. Elles ne représentent que 11 fiches sur 171, et le bilan mensuel les classe à part, « à vérifier ».
 
 Autre surprise : avec la version 0.18 de Frigate, le nom de l'espèce est passé du format « nom latin (nom anglais) » au nom anglais seul. Mes messages se sont mis à annoncer des « Great Tit ». D'où la table de traduction complète.
 
