@@ -38,7 +38,7 @@ If you're starting from scratch, with no server, the math is different: you need
 ## The hardware I used
 
 - **Camera**: [Reolink Lumus Pro](https://reolink.com/fr/product/lumus-pro/), a mains-powered Wi-Fi camera, €60
-- **Hub**: Reolink Hub 1 Lite, which relays the camera's video stream, €50
+- **Hub**: Reolink Hub 1 Lite, which relays the camera's video stream, €50. In my setup it's essential: the camera rejected Frigate's credentials when accessed directly (error 401), while the hub accepts them.
 - **Close-up lenses**: a set of 37 mm macro filters (+1, +2, +4, +10), €15.40. I use the +4.
 - **Wi-Fi**: a Deco mesh access point added in the garden shed, right next to the camera
 - **Server**: a NiPoGi mini PC running Proxmox, €200, bought for my homelab. Frigate runs there in a container, alongside everything else.
@@ -67,9 +67,9 @@ If you're starting from scratch, with no server, the math is different: you need
 
 ### Where should you put a bird feeder camera?
 
-Pick a spot with mains power within reach and a good Wi-Fi signal, with the camera about 15 to 20 cm (6 to 8 in) from the feeder. Also choose a background that doesn't move much: trees or a hedge behind the feeder keep triggering motion detection.
+Pick a spot with mains power within reach and a good Wi-Fi signal, with the camera lens 20 to 25 cm (8 to 10 in) from the perch, where the bird lands. Also choose a background that doesn't move much: trees or a hedge behind the feeder keep triggering motion detection. And avoid a cage feeder: the bars get in the way of detection.
 
-My first setup placed the camera facing the feeder: the vegetation behind it caused far too many false positives. Today the feeder is mounted against the garden shed, and the camera on the side of the feeder, facing the perch. I had to add a Wi-Fi access point in the shed, and mask the trees and the rosemary moving in the background in Frigate.
+My first setup placed the camera facing a cage feeder, with vegetation behind it: Frigate didn't detect a single bird there, and the moving trees kept its CPU busy for nothing. Today an open wall-mounted feeder is fixed against the garden shed, and the camera is on the side of the feeder, facing the perch. I had to add a Wi-Fi access point in the shed, and mask the trees and the rosemary moving in the background in Frigate.
 
 <AffiliateInline
   href="https://www.amazon.fr/dp/B091CZ8WS3"
@@ -84,7 +84,7 @@ My first setup placed the camera facing the feeder: the vegetation behind it cau
 ### Install and connect the feeder and the camera
 
 1. Mount the feeder on a wall or a support: mine is mounted against the garden shed.
-2. Mount the camera on the side of the feeder, facing the perch, about 15 to 20 cm (6 to 8 in) away, with the +4 close-up lens in front of the lens.
+2. Mount the camera on the side of the feeder, facing the perch, with its lens 20 to 25 cm (8 to 10 in) from where the bird lands and the +4 close-up lens in front of it.
 3. Plug the camera into the mains.
 4. In the Reolink app, connect the camera to Wi-Fi and add it to the hub.
 5. In the Deco app, set the nearest access point as the camera's preferred one.
@@ -98,7 +98,7 @@ My first setup placed the camera facing the feeder: the vegetation behind it cau
 
 ### What settings should you use to film birds?
 
-On the camera side, a 2560 × 1440 stream at 15 frames per second for recording, and the small 640 × 360 stream for detection. On the Frigate side, a zone limited to the feeder, a mask over whatever moves, bird detection thresholds of 0.5 and 0.65, and a species kept only above 90% confidence.
+On the camera side, a 2560 × 1440 stream at 15 frames per second for recording, and the small 640 × 360 stream for detection. On the Frigate side, a zone limited to the feeder, a mask over whatever moves, bird detection thresholds of 0.5 (the default) and 0.65 (instead of 0.7), and a species kept only above 90% confidence.
 
 Each setting is detailed in the sections below: the Frigate configuration just after, and the video stream in the troubleshooting section.
 
@@ -117,19 +117,19 @@ A visit, step by step:
 2. Frigate analyzes the small stream at 5 frames per second and looks for the "bird" object in the feeder zone.
 3. When a bird is seen, Frigate passes it to its [bird classification model](https://docs.frigate.video/configuration/bird_classification), a MobileNet trained on iNaturalist that knows 964 species. It runs on the CPU, offline once downloaded. The species is only kept if the model is at least 90% sure, the default threshold.
 4. At the end of the visit, Frigate publishes the event over MQTT.
-5. n8n receives the event, creates a record in Notion (species, photo, date, score) and posts the photo and a 25-second clip in Slack.
+5. n8n receives the event, creates a record in Notion (species, photo, date, score) and posts the photo and a clip of up to 25 seconds in Slack.
 6. On the last day of the month, a second n8n workflow posts the monthly summary.
 
 ### Configuring Frigate for birds
 
-Three settings make all the difference: a zone covering the feeder and the perch, a mask over whatever moves around it (trees, rosemary), and detection thresholds slightly lower than the defaults for small birds.
+Three settings make all the difference: a zone covering the feeder and the perch, a mask over whatever moves around it (trees, rosemary), and a detection threshold lowered slightly for small birds: 0.65 instead of the default 0.7. The first threshold, 0.5, stays at its default value.
 
 <figure style="margin: 1.5rem 0;">
   <img src="/images/mangeoire-oiseau-connectee/frigate-zone-masque-mangeoire.webp" alt="Feeder camera image in Frigate: a European robin on the seed tray, the green detection zone around the tray and the perch, and the red hatched motion mask over the trees and rosemary on the right" style="width: 100%; border-radius: 8px;" />
   <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">The green detection zone covers the tray and the perch. The red hatched mask makes Frigate ignore the trees and rosemary moving in the wind.</figcaption>
 </figure>
 
-A trap I hit with Frigate 0.17: zone coordinates were compared as text. Writing `1.000` instead of `1` broke the config: write `0` and `1`, without decimals.
+A trap I hit with Frigate 0.17, before moving to 0.18: zone coordinates were compared as text. For the edges of the image, `1.000` was read as pixels and broke the config: write `0` and `1` without decimals, not `0.000` or `1.000`. The other points keep their decimals.
 
 ### The n8n workflow: one Notion record and one Slack message per visit
 
@@ -139,7 +139,7 @@ For each visit it keeps, the workflow:
 
 1. checks that no record for the same species was created in the last 30 minutes, to avoid duplicates;
 2. fetches the photo from Frigate and creates the record in the Notion database;
-3. waits 30 seconds for Frigate to finish the video, then fetches a 25-second clip;
+3. waits 30 seconds for Frigate to finish the video, then fetches a clip of up to 25 seconds;
 4. posts a short message in Slack with the photo, the clip and a button to the full visit in Frigate.
 
 <figure style="margin: 1.5rem 0;">
@@ -170,7 +170,7 @@ On the last day of the month at 9:30 pm, a second workflow reads the Notion data
 
 ## Troubleshooting: the mistakes I made
 
-I started this project early in the year and only got a satisfying result several months later. In between, I had to fix hardware, installation and configuration problems. Four of them took most of the time: a Home Assistant Green too small, weak Wi-Fi in the garden shed, trees moving behind the feeder, and blurry birds.
+I started this project early in the year and only got a satisfying result several months later. In between, I had to fix hardware, installation and configuration problems. Five of them took most of the time: a Home Assistant Green too small, weak Wi-Fi in the garden shed, trees moving behind the feeder, a cage feeder, and blurry birds.
 
 ### The Home Assistant Green: not powerful enough, and above all not enough storage
 
@@ -186,27 +186,33 @@ That wasn't enough right away. The first videos were choppy, with gaps of severa
 
 ### Framing: trees moving in the background
 
-Behind the feeder there are trees, a hedge and a rosemary bush. With the wind, Frigate saw motion 61% of the time and analyzed 17.2 frames per second for a 5 fps stream. Its CPU usage sat at 37%, for nothing.
+Behind the feeder there are trees, a hedge and a rosemary bush. With the wind, Frigate saw motion 61% of the time and ran 17.2 analyses per second for a 5 fps stream: it examines several regions of each frame where something moves. Its CPU usage sat at 37%, for nothing.
 
-A motion mask over the trees and a zone limited to the feeder changed everything: 0.1 to 10.4 analyses per second depending on the wind, and CPU usage between 11 and 22%. I had to redo the mask every time I moved the camera.
+A motion mask over the trees and a zone limited to the feeder changed everything: 0.1 to 10.4 analyses per second, and CPU usage between 11 and 22%, over a first measurement of a few minutes, at night. I had to redo the mask every time I moved the camera.
 
-One last detail: the Frigate zone must cover the whole perch, where the birds land. Once I widened the zone to include all of it, the first great tit showed up the same day, identified with a 97% score.
+### The cage feeder: no birds detected
+
+My first feeder was a cage feeder, and I had moved the camera to about 30 cm (12 in) from it to make the bird bigger in the frame. Result: zero detections in 7 days. Two likely causes: the bars of the cage, which partly hide the bird, and the focus (in a daytime snapshot, the feeder was blurry and the background sharp).
+
+I replaced it with the Garden Locker wall-mounted feeder, which is open, fixed against the garden shed. The next day, I fitted the wooden rod that comes with the feeder as a perch, put seeds back, and widened the Frigate zone to cover the whole perch. An hour later, the first great tit was identified, with a 97% score, without any close-up lens. The perch is what mattered most: the birds finally had a clear spot to land, facing the camera.
+
+My advice: avoid cage feeders, and provide a clearly visible perch that sits entirely inside the Frigate zone.
 
 ### Blurry birds: from the +1 lens to the +4
 
-To make the bird bigger in the frame, I moved the camera to about 30 cm (12 in) from the feeder. Result: zero detections in 7 days. In a daytime snapshot, the feeder was blurry and the background sharp.
+Once the new feeder was up, Frigate recognized the birds, but the image stayed blurry: about 150 visits were identified with blurry birds before I fitted the right lens. So the lens didn't unlock detection: it makes the bird sharp.
 
-The Lumus Pro has a fixed focus set for distance: an object at 30 cm falls outside the sharp zone, and Frigate doesn't recognize a blurry bird. The fix: a close-up lens in front of the camera lens.
+The Lumus Pro has a fixed focus set for distance: a bird a few dozen centimeters from the lens falls outside the sharp zone. The fix: a close-up lens in front of the camera lens.
 
 I first bought a +1 lens on its own: wasted money, the bird stayed blurry. I then bought a full set (+1, +2, +4, +10), and the +4 is the right one. The best choice depends on the distance between the lens and where the bird lands:
 
-- **+4** at 15 to 20 cm (6 to 8 in), my distance, with a sharp zone of about 5 cm (2 in);
+- **+4** if the bird lands 20 to 25 cm (8 to 10 in) from the lens, with a sharp zone of about 5 cm (2 in);
 - **+2** between 35 and 50 cm (14 to 20 in);
 - **+10**: avoid it, the sharp zone shrinks to about 1 cm.
 
 With the +4, the seeds on the tray are sharp and the background is blurred. Exactly the effect I wanted.
 
-I'm not the only one: on r/reolinkcam, a user who installed a Reolink E1 Outdoor Pro in a bird feeder explains that even its manual focus, set as close as possible, wasn't enough. He had to add a macro adapter in front of the lens ([his post on Reddit](https://www.reddit.com/r/reolinkcam/comments/1foffdp/i_made_a_reolink_bird_feeder_camera/)).
+I'm not the only one: on r/reolinkcam, a user who installed a Reolink E1 Outdoor Pro in a bird feeder explains that even its manual focus, set as close as possible, wasn't enough. They had to add a macro adapter in front of the lens ([his post on Reddit](https://www.reddit.com/r/reolinkcam/comments/1foffdp/i_made_a_reolink_bird_feeder_camera/)).
 
 A bit of DIY to plan for: the Lumus Pro has no mount for a lens. Mine is held in front of the camera lens with double-sided tape.
 
@@ -221,7 +227,7 @@ A bit of DIY to plan for: the Lumus Pro has no mount for a lens. Mine is held in
   <p class="callout__content">With my old 1080p setting, at 130 MB per minute of bird, a week of visits quickly went over 30 GB. Keep only alerts and detections, for a few days, and exclude Frigate's videos from your backups.</p>
 </div>
 
-Oversized videos also crashed n8n. A robin staying 2 to 5 minutes means a 260 to 375 MB clip: n8n ran out of memory and restarted, with no record and no message. Since then, n8n only asks Frigate for a clip of 25 seconds at most (about 60 MB with my old 1080p setting), and a button links to the full visit.
+Oversized videos also crashed n8n. A robin staying several minutes means a clip of several hundred MB (over 500 MB for a 4-minute visit): n8n ran out of memory and restarted, with no record and no message. Since then, n8n only asks Frigate for a clip of 25 seconds at most (about 60 MB with my old 1080p setting), and a button links to the full visit.
 
 ### Sharper videos by changing two settings
 
@@ -234,29 +240,33 @@ I changed two things:
 
 The video is now compressed once instead of twice. It's kept at 1440p instead of 1080p, and the mini PC's GPU is almost idle. I stayed at 15 frames per second: with a capped bitrate, more frames per second would have meant less detail in each frame. Others prefer to go above 15 fps because birds move fast: with a capped bitrate, it's a trade-off between smoothness and detail.
 
+Another effect: with the bitrate capped at 4096 kbit/s, a minute of bird weighs about 30 MB at most, four times less than with my old 1080p setting.
+
 ### Species recognition
 
-My first version sent every photo to Claude Haiku, Anthropic's AI, to identify the species: about 930 input tokens and 400 output tokens per visit. It worked, but it cost money for a job Frigate can do on its own. I quickly switched to Frigate's local model, which is free and identifies the species without sending the image to an external service.
+Before the local model, I tried sending every photo to Claude Haiku, Anthropic's AI, to identify the species: about 930 input tokens and 400 output tokens per photo. I only tested it for one day, with no real bird in front of the camera: it answered correctly, but it cost money for a job Frigate can do on its own. I quickly switched to Frigate's local model, which is free and identifies the species without sending the image to an external service.
 
-The local model sometimes gets confused, in an easy-to-spot way. Of 13 species recorded in just under two weeks, 8 don't live in a French garden: Carolina chickadee, cedar waxwing, black phoebe, eastern bluebird... These are North American birds, the model's confusion on poorly seen birds. They only account for 11 records out of 171, and the monthly summary lists them separately as "to check".
+The local model sometimes gets confused, in an easy-to-spot way. Of 13 species recorded in just under two weeks, 8 don't live in a French garden: Carolina chickadee, cedar waxwing, black phoebe, eastern bluebird... These are North American birds, the model's confusion on poorly seen birds. They only account for 11 records out of 171. The monthly summary leaves them out of the ranking and doesn't mention them: they stay visible in Notion.
 
 Another surprise: with Frigate 0.18, the species name changed from "Latin name (English name)" to the English name only. My French messages started announcing "Great Tit". To get the French name back, n8n works in two steps. It first finds the Latin name from the English one, using the species file that ships with Frigate's model. Then it looks up the French name: first in my list of 47 garden birds, otherwise in a table covering the model's 964 species.
 
-That complete table came late. Before, a species missing from my list kept its English name: 10 records out of 154 showed up that way, such as "Hermit Thrush". The names mostly come from iNaturalist (835) and Wikidata (86), and the remaining 43 were filled in by hand, favoring the names used in France. The workflow generator now refuses to run if a single French name is missing.
+That complete table came late. Before, a species missing from my list kept its English name: after ten days of visits, 10 records out of 154 showed up that way, such as "Hermit Thrush". The names mostly come from iNaturalist (835) and Wikidata (86), and the remaining 43 were filled in by hand, favoring the names used in France. The workflow generator now refuses to run if a single French name is missing.
 
 Finally, Frigate splits a visit into several segments as soon as it loses the bird for a few seconds: a robin that stayed 4 minutes produced 9 segments. Two settings solved it: keeping the bird for 10 seconds when it disappears (`max_disappeared`) and closing a visit only after 2 minutes without a bird (`cutoff_time`).
 
-## The results in pictures
+## The results
 
+{/* MASQUÉ en attendant les vidéos de Pierre (fichiers absents, 404 en ligne). Remettre le titre « The results in pictures » et retirer ce commentaire quand les deux MP4 sont dans public/images/mangeoire-oiseau-connectee/.
 <figure>
   <video src="/images/mangeoire-oiseau-connectee/rougegorge-mangeoire.mp4" controls muted playsinline preload="metadata" style="width: 100%; border-radius: 8px;"></video>
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;"><mark>Robin video to come.</mark></figcaption>
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Robin video.</figcaption>
 </figure>
 
 <figure>
   <video src="/images/mangeoire-oiseau-connectee/mesanges-mangeoire.mp4" controls muted playsinline preload="metadata" style="width: 100%; border-radius: 8px;"></video>
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;"><mark>Tits video to come.</mark></figcaption>
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Tits video.</figcaption>
 </figure>
+*/}
 
 For the first few weeks, I was mostly disappointed: blurry images and detection I couldn't rely on. Today, I'm pretty proud of the result. The feeder runs reliably, and I check the visits on the dedicated Slack channel whenever I have a moment.
 
@@ -266,7 +276,7 @@ What still bugs me? Not much: everything runs smoothly and I'm happy with the re
 
 ## What I took away from it
 
-This smart bird feeder took much longer than planned, and almost all of that time went into the hardware: the location, the Wi-Fi, the focus. If I did it again, I'd start with the image: a mains-powered camera, close to the feeder, with the right lens, and a background that doesn't move much.
+This smart bird feeder took much longer than planned, and almost all of that time went into the hardware: the location, the feeder, the Wi-Fi, the focus. If I did it again, I'd start with the image: an open feeder with a perch, a mains-powered camera close to the perch, with the right lens, and a background that doesn't move much.
 
 Today it runs without me thinking about it. Visits land in Slack, the summary arrives at the end of the month, and I watch the garden birds with my son. The gift was a little late, but the whole family enjoys it.
 
@@ -281,11 +291,11 @@ Today it runs without me thinking about it. Visits land in Slack, the summary ar
   },
   {
     question: "Where should you put a bird feeder camera?",
-    answer: "Somewhere with a power outlet within reach and a good Wi-Fi signal, with the camera about 15 to 20 cm (6 to 8 in) from the feeder. Avoid a background of trees or hedges that move: they keep triggering detection."
+    answer: "Somewhere with a power outlet within reach and a good Wi-Fi signal, with the camera lens 20 to 25 cm (8 to 10 in) from the perch where the bird lands (with a +4 close-up lens). Avoid a background of trees or hedges that move, and prefer an open feeder to a cage feeder, whose bars get in the way of detection."
   },
   {
     question: "Which camera should you choose for a bird feeder?",
-    answer: "A mains-powered camera, never a battery one: Frigate needs to analyze the stream continuously, and a battery camera sleeps between movements. It also needs an RTSP stream Frigate can read. Focus matters as much as resolution: with a fixed-focus camera like the Reolink Lumus Pro, you need a close-up lens to film sharply at 15 to 20 cm."
+    answer: "A mains-powered camera, never a battery one: Frigate needs to analyze the stream continuously, and a battery camera sleeps between movements. It also needs an RTSP stream Frigate can read. Focus matters as much as resolution: with a fixed-focus camera like the Reolink Lumus Pro, you need a close-up lens to film a bird sharply when it lands 20 to 25 cm (8 to 10 in) from the lens."
   },
   {
     question: "Is a Home Assistant Green enough for a smart bird feeder?",
@@ -293,6 +303,6 @@ Today it runs without me thinking about it. Visits land in Slack, the summary ar
   },
   {
     question: "Why doesn't my camera detect any birds?",
-    answer: "Most often, the bird is too small or blurry in the image. At home, the feeder was blurry up close: the close-up lens and a Frigate zone covering the perch solved the problem."
+    answer: "Most often, the bird is too small, hidden or badly placed in the image. At home, nothing was detected with a cage feeder: detection came with an open feeder and a perch entirely inside the Frigate zone. The close-up lens, fitted later, mainly made the bird sharp."
   }
 ]} />
