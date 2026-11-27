@@ -40,7 +40,7 @@ Si vous partez de zéro, sans serveur, le calcul est différent : il faut compte
 ## Le matériel utilisé
 
 - **Caméra** : [Reolink Lumus Pro](https://reolink.com/fr/product/lumus-pro/), caméra Wi-Fi alimentée sur secteur, 60 €
-- **Hub** : Reolink Hub 1 Lite, qui relaie le flux vidéo de la caméra, 50 €
+- **Hub** : Reolink Hub 1 Lite, qui relaie le flux vidéo de la caméra, 50 €. Chez moi, il est indispensable : la caméra refusait l'identifiant de Frigate en direct (erreur 401), le hub l'accepte.
 - **Lentilles de rapprochement** : un jeu de filtres macro 37 mm (+1, +2, +4, +10), 15,40 €. J'utilise la +4.
 - **Wi-Fi** : une borne mesh Deco ajoutée dans la cabane de jardin, juste à côté de la caméra
 - **Serveur** : un mini PC NiPoGi sous Proxmox, 200 €, acheté pour mon homelab. Frigate y tourne dans un conteneur, à côté du reste.
@@ -69,9 +69,9 @@ Si vous partez de zéro, sans serveur, le calcul est différent : il faut compte
 
 ### Où placer une mangeoire avec caméra ?
 
-Placez-la à un endroit avec une alimentation sur secteur à portée et un bon signal Wi-Fi, avec la caméra à environ 15 à 20 cm de la mangeoire. Choisissez aussi un arrière-plan qui bouge peu : des arbres ou une haie derrière la mangeoire déclenchent la détection de mouvement en continu.
+Placez-la à un endroit avec une alimentation sur secteur à portée et un bon signal Wi-Fi, avec l'objectif de la caméra à 20 ou 25 cm du perchoir, là où l'oiseau se pose. Choisissez aussi un arrière-plan qui bouge peu : des arbres ou une haie derrière la mangeoire déclenchent la détection de mouvement en continu. Et évitez une mangeoire-cage : les barreaux gênent la détection.
 
-Ma première installation plaçait la caméra en face de la mangeoire : la végétation derrière créait trop de faux positifs. Aujourd'hui, la mangeoire est fixée contre la cabane de jardin, et la caméra sur le côté de la mangeoire, face au perchoir. Il a fallu ajouter une borne Wi-Fi dans la cabane, et masquer dans Frigate les arbres et le romarin qui bougent derrière.
+Ma première installation plaçait la caméra en face d'une mangeoire-cage, avec de la végétation derrière : Frigate n'y a détecté aucun oiseau, et les arbres qui bougeaient occupaient son processeur pour rien. Aujourd'hui, une mangeoire murale ouverte est fixée contre la cabane de jardin, et la caméra est sur le côté de la mangeoire, face au perchoir. Il a fallu ajouter une borne Wi-Fi dans la cabane, et masquer dans Frigate les arbres et le romarin qui bougent derrière.
 
 <AffiliateInline
   href="https://www.amazon.fr/dp/B091CZ8WS3"
@@ -86,7 +86,7 @@ Ma première installation plaçait la caméra en face de la mangeoire : la vég�
 ### Installer et connecter la mangeoire et la caméra
 
 1. Fixez la mangeoire contre un mur ou un support : la mienne est fixée contre la cabane de jardin.
-2. Fixez la caméra sur le côté de la mangeoire, face au perchoir, à environ 15 à 20 cm, avec la lentille de rapprochement +4 devant l'objectif.
+2. Fixez la caméra sur le côté de la mangeoire, face au perchoir, avec l'objectif à 20 ou 25 cm de l'endroit où l'oiseau se pose et la lentille de rapprochement +4 devant l'objectif.
 3. Branchez la caméra sur secteur.
 4. Dans l'application Reolink, connectez la caméra au Wi-Fi et ajoutez-la au hub.
 5. Dans l'application Deco, choisissez la borne la plus proche comme borne préférée de la caméra.
@@ -100,7 +100,7 @@ Ma première installation plaçait la caméra en face de la mangeoire : la vég�
 
 ### Quels réglages pour filmer les oiseaux ?
 
-Côté caméra, un flux en 2560 × 1440 à 15 images par seconde pour l'enregistrement, et le petit flux en 640 × 360 pour la détection. Côté Frigate, une zone limitée à la mangeoire, un masque sur ce qui bouge, des seuils de détection des oiseaux à 0,5 et 0,65, et l'espèce retenue à partir de 90 % de confiance.
+Côté caméra, un flux en 2560 × 1440 à 15 images par seconde pour l'enregistrement, et le petit flux en 640 × 360 pour la détection. Côté Frigate, une zone limitée à la mangeoire, un masque sur ce qui bouge, des seuils de détection des oiseaux à 0,5 (la valeur par défaut) et 0,65 (au lieu de 0,7), et l'espèce retenue à partir de 90 % de confiance.
 
 Le détail de chaque réglage est dans les sections suivantes : la configuration de Frigate juste en dessous, et le flux vidéo dans la partie dépannage.
 
@@ -119,19 +119,19 @@ Le trajet d'une visite, étape par étape :
 2. Frigate analyse le petit flux à 5 images par seconde et cherche l'objet « bird » dans la zone de la mangeoire.
 3. Quand un oiseau est vu, Frigate le passe à son [modèle de classification des oiseaux](https://docs.frigate.video/configuration/bird_classification), un MobileNet entraîné sur iNaturalist qui connaît 964 espèces. Il tourne sur le processeur, hors ligne une fois téléchargé. L'espèce n'est retenue que si le modèle est sûr à 90 % ou plus, le seuil par défaut.
 4. À la fin de la visite, Frigate publie l'événement sur MQTT.
-5. n8n reçoit l'événement, crée une fiche dans Notion (espèce, photo, date, score) et publie dans Slack la photo et un extrait de 25 secondes.
+5. n8n reçoit l'événement, crée une fiche dans Notion (espèce, photo, date, score) et publie dans Slack la photo et un extrait de 25 secondes au plus.
 6. Le dernier jour du mois, un second workflow n8n publie le bilan du mois.
 
 ### Configurer Frigate pour les oiseaux
 
-Trois réglages font toute la différence : une zone qui couvre la mangeoire et le perchoir, un masque sur ce qui bouge autour (arbres, romarin), et des seuils de détection un peu plus bas que ceux par défaut pour les petits oiseaux.
+Trois réglages font toute la différence : une zone qui couvre la mangeoire et le perchoir, un masque sur ce qui bouge autour (arbres, romarin), et un seuil de détection un peu abaissé pour les petits oiseaux : 0,65 au lieu de 0,7 par défaut. Le premier seuil, à 0,5, reste à sa valeur par défaut.
 
 <figure style="margin: 1.5rem 0;">
   <img src="/images/mangeoire-oiseau-connectee/frigate-zone-masque-mangeoire.webp" alt="Image de la caméra de la mangeoire dans Frigate : un rouge-gorge sur le plateau de graines, la zone de détection en vert autour du plateau et du perchoir, le masque de mouvement hachuré en rouge sur les arbres et le romarin à droite" style="width: 100%; border-radius: 8px;" />
   <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La zone de détection en vert couvre le plateau et le perchoir. Le masque hachuré en rouge fait ignorer à Frigate les arbres et le romarin qui bougent avec le vent.</figcaption>
 </figure>
 
-Un piège que j'ai rencontré avec Frigate 0.17 : les coordonnées des zones y étaient comparées comme du texte. Écrire `1.000` au lieu de `1` faisait planter la config : écrivez `0` et `1`, sans décimales.
+Un piège que j'ai rencontré avec Frigate 0.17, avant de passer à la 0.18 : les coordonnées des zones y étaient comparées comme du texte. Pour les bords de l'image, `1.000` était pris pour des pixels et faisait planter la config : écrivez `0` et `1` sans décimales, pas `0.000` ni `1.000`. Les autres points gardent leurs décimales.
 
 ### Le workflow n8n : une fiche Notion et un message Slack par visite
 
@@ -141,7 +141,7 @@ Pour chaque visite retenue, le workflow :
 
 1. vérifie qu'aucune fiche de la même espèce n'a été créée dans les 30 dernières minutes, pour éviter les doublons ;
 2. récupère la photo de Frigate et crée la fiche dans la base Notion ;
-3. attend 30 secondes que Frigate finisse la vidéo, puis récupère un extrait de 25 secondes ;
+3. attend 30 secondes que Frigate finisse la vidéo, puis récupère un extrait de 25 secondes au plus ;
 4. publie dans Slack un message court, la photo, l'extrait et un bouton vers la visite entière dans Frigate.
 
 <figure style="margin: 1.5rem 0;">
@@ -172,7 +172,7 @@ Le dernier jour du mois à 21 h 30, un second workflow lit la base Notion et pub
 
 ## Dépannage : les erreurs que j'ai faites
 
-J'ai commencé ce projet en début d'année, et je n'ai eu un résultat satisfaisant que plusieurs mois plus tard. Entre les deux, il a fallu régler des problèmes de matériel, d'installation et de réglages. Quatre d'entre eux m'ont pris l'essentiel du temps : le Home Assistant Green trop juste, le Wi-Fi de la cabane de jardin, les arbres qui bougent derrière la mangeoire et l'oiseau flou.
+J'ai commencé ce projet en début d'année, et je n'ai eu un résultat satisfaisant que plusieurs mois plus tard. Entre les deux, il a fallu régler des problèmes de matériel, d'installation et de réglages. Cinq d'entre eux m'ont pris l'essentiel du temps : le Home Assistant Green trop juste, le Wi-Fi de la cabane de jardin, les arbres qui bougent derrière la mangeoire, la mangeoire-cage et l'oiseau flou.
 
 ### Le Home Assistant Green : trop peu puissant et surtout trop peu de disque
 
@@ -188,21 +188,27 @@ La caméra est près de la cabane de jardin, où le Wi-Fi était trop faible et 
 
 ### Le cadrage : des arbres qui bougent derrière
 
-Derrière la mangeoire, il y a des arbres, une haie et un romarin. Avec le vent, Frigate voyait du mouvement 61 % du temps et analysait 17,2 images par seconde pour un flux de 5 images par seconde. Son processeur tournait à 37 %, pour rien.
+Derrière la mangeoire, il y a des arbres, une haie et un romarin. Avec le vent, Frigate voyait du mouvement 61 % du temps et faisait 17,2 analyses par seconde pour un flux de 5 images par seconde : il examine plusieurs morceaux de chaque image où quelque chose bouge. Son processeur tournait à 37 %, pour rien.
 
-Un masque de mouvement sur les arbres et une zone limitée à la mangeoire ont tout changé : 0,1 à 10,4 analyses par seconde selon le vent, et un processeur entre 11 et 22 %. J'ai dû refaire ce masque à chaque déplacement de la caméra.
+Un masque de mouvement sur les arbres et une zone limitée à la mangeoire ont tout changé : 0,1 à 10,4 analyses par seconde, et un processeur entre 11 et 22 %, sur une première mesure de quelques minutes, de nuit. J'ai dû refaire ce masque à chaque déplacement de la caméra.
 
-Dernier détail : la zone de Frigate doit couvrir tout le perchoir de la mangeoire, là où les oiseaux se posent. Une fois la zone élargie pour l'inclure en entier, la première mésange charbonnière est arrivée le jour même, reconnue avec un score de 97 %.
+### La mangeoire-cage : aucun oiseau détecté
+
+Ma première mangeoire était une mangeoire-cage, et j'avais rapproché la caméra à environ 30 cm pour que l'oiseau soit grand dans l'image. Résultat : 0 détection en 7 jours. Deux causes probables : les barreaux de la cage, derrière lesquels l'oiseau est en partie caché, et la mise au point (sur une capture de jour, la mangeoire était floue et le fond net).
+
+Je l'ai remplacée par la mangeoire murale Garden Locker, ouverte, fixée contre la cabane de jardin. Le lendemain, j'ai posé la tige en bois fournie avec la mangeoire, qui sert de perchoir, j'ai remis des graines, et j'ai élargi la zone de Frigate pour couvrir tout le perchoir. Une heure plus tard, la première mésange charbonnière était reconnue, avec un score de 97 %, sans lentille de rapprochement. C'est surtout le perchoir qui a compté : les oiseaux ont enfin un endroit dégagé où se poser, face à la caméra.
+
+Mon conseil : évitez les mangeoires-cages, et prévoyez un perchoir bien visible, entièrement dans la zone de Frigate.
 
 ### L'oiseau flou : de la lentille +1 à la +4
 
-Pour que l'oiseau soit grand dans l'image, j'ai rapproché la caméra à environ 30 cm de la mangeoire. Résultat : 0 détection en 7 jours. Sur une capture de jour, la mangeoire était floue et le fond net.
+Une fois la nouvelle mangeoire en place, Frigate reconnaissait les oiseaux, mais l'image restait floue : environ 150 visites ont été reconnues avec des oiseaux flous avant que je pose la bonne lentille. La lentille n'a donc pas débloqué la détection : elle rend l'oiseau net.
 
-La Lumus Pro a une mise au point fixe, réglée pour filmer loin : un objet à 30 cm sort de la zone nette, et Frigate ne reconnaît pas un oiseau flou. La solution : une lentille de rapprochement à placer devant l'objectif.
+La Lumus Pro a une mise au point fixe, réglée pour filmer loin : un oiseau à quelques dizaines de centimètres de l'objectif sort de la zone nette. La solution : une lentille de rapprochement à placer devant l'objectif.
 
 J'ai d'abord acheté une lentille +1 seule : achat inutile, l'oiseau restait flou. J'ai ensuite pris un kit complet (+1, +2, +4, +10), et c'est la +4 qui convient. Le bon choix dépend de la distance entre l'objectif et l'endroit où l'oiseau se pose :
 
-- **+4** à 15 ou 20 cm, ma distance, avec une zone nette d'environ 5 cm ;
+- **+4** si l'oiseau se pose à 20 ou 25 cm de l'objectif, avec une zone nette d'environ 5 cm ;
 - **+2** entre 35 et 50 cm ;
 - **+10** à éviter : la zone nette tombe à environ 1 cm.
 
@@ -223,7 +229,7 @@ Petit bricolage à prévoir : la Lumus Pro n'a aucun système d'accroche pour un
   <p class="callout__content">Avec mon ancien réglage en 1080p, à 130 Mo par minute d'oiseau, une semaine de visites dépassait vite 30 Go. Gardez seulement les alertes et les détections, sur quelques jours, et excluez les vidéos de Frigate de vos sauvegardes.</p>
 </div>
 
-Les vidéos trop lourdes ont aussi fait planter n8n. Un rouge-gorge qui reste 2 à 5 minutes, c'est un clip de 260 à 375 Mo : n8n manquait de mémoire et redémarrait, sans fiche ni message. Depuis, n8n ne demande à Frigate qu'un extrait de 25 secondes au plus (autour de 60 Mo avec mon ancien réglage en 1080p), et un bouton renvoie vers la visite entière.
+Les vidéos trop lourdes ont aussi fait planter n8n. Un rouge-gorge qui reste plusieurs minutes, c'est un clip de plusieurs centaines de Mo (plus de 500 Mo pour une visite de 4 minutes) : n8n manquait de mémoire et redémarrait, sans fiche ni message. Depuis, n8n ne demande à Frigate qu'un extrait de 25 secondes au plus (autour de 60 Mo avec mon ancien réglage en 1080p), et un bouton renvoie vers la visite entière.
 
 ### Des vidéos plus nettes en changeant deux réglages
 
@@ -236,29 +242,33 @@ J'ai changé deux choses :
 
 La vidéo n'est plus compressée qu'une fois au lieu de deux. Elle est gardée en 1440p au lieu de 1080p, et la puce graphique du mini PC est presque au repos. J'ai gardé 15 images par seconde : le débit étant plafonné, plus d'images par seconde aurait voulu dire moins de détails dans chaque image. D'autres préfèrent monter au-dessus de 15 images par seconde, parce que les oiseaux bougent vite : avec un débit plafonné, c'est un compromis entre fluidité et détail.
 
+Autre effet : avec un débit plafonné à 4096 kbit/s, une minute d'oiseau pèse au plus 30 Mo environ, quatre fois moins qu'avec mon ancien réglage en 1080p.
+
 ### La reconnaissance des espèces
 
-Ma première version envoyait chaque photo à Claude Haiku, l'IA d'Anthropic, pour identifier l'espèce : environ 930 jetons en entrée et 400 en sortie par visite. Ça marchait, mais c'était payant pour un travail que Frigate sait faire seul. Je suis vite passé au modèle local de Frigate, gratuit, qui identifie l'espèce sans envoyer l'image à un service extérieur.
+Avant le modèle local, j'ai essayé d'envoyer chaque photo à Claude Haiku, l'IA d'Anthropic, pour identifier l'espèce : environ 930 jetons en entrée et 400 en sortie par photo. Je ne l'ai testé qu'une journée, sans vrai oiseau devant la caméra : il répondait correctement, mais c'était payant pour un travail que Frigate sait faire seul. Je suis vite passé au modèle local de Frigate, gratuit, qui identifie l'espèce sans envoyer l'image à un service extérieur.
 
-Le modèle local fait parfois des confusions, faciles à repérer. Sur 13 espèces enregistrées en un peu moins de deux semaines, 8 n'existent pas dans un jardin en France : mésange de Caroline, jaseur d'Amérique, moucherolle noir, merlebleu de l'Est... Ce sont des oiseaux d'Amérique du Nord, une confusion du modèle sur des oiseaux mal vus. Elles ne représentent que 11 fiches sur 171, et le bilan mensuel les classe à part, « à vérifier ».
+Le modèle local fait parfois des confusions, faciles à repérer. Sur 13 espèces enregistrées en un peu moins de deux semaines, 8 n'existent pas dans un jardin en France : mésange de Caroline, jaseur d'Amérique, moucherolle noir, merlebleu de l'Est... Ce sont des oiseaux d'Amérique du Nord, une confusion du modèle sur des oiseaux mal vus. Elles ne représentent que 11 fiches sur 171. Le bilan mensuel les laisse hors du classement et ne les cite pas : elles restent visibles dans Notion.
 
 Autre surprise : avec la version 0.18 de Frigate, le nom de l'espèce est passé du format « nom latin (nom anglais) » au nom anglais seul. Mes messages se sont mis à annoncer des « Great Tit ». Pour retrouver le nom français, n8n procède en deux temps. Il retrouve d'abord le nom latin à partir du nom anglais, grâce au fichier des espèces fourni avec le modèle de Frigate. Puis il cherche le nom français : d'abord dans ma liste des 47 oiseaux de jardin, sinon dans une table qui couvre les 964 espèces du modèle.
 
-Cette table complète est arrivée tard. Avant, une espèce absente de ma liste gardait son nom anglais : 10 fiches sur 154 s'affichaient ainsi, comme « Hermit Thrush ». Les noms viennent pour l'essentiel d'iNaturalist (835) et de Wikidata (86), et les 43 restants ont été complétés à la main, en privilégiant l'usage en France. Le générateur du workflow refuse maintenant de se lancer s'il manque un seul nom français.
+Cette table complète est arrivée tard. Avant, une espèce absente de ma liste gardait son nom anglais : au bout de dix jours de visites, 10 fiches sur 154 s'affichaient ainsi, comme « Hermit Thrush ». Les noms viennent pour l'essentiel d'iNaturalist (835) et de Wikidata (86), et les 43 restants ont été complétés à la main, en privilégiant l'usage en France. Le générateur du workflow refuse maintenant de se lancer s'il manque un seul nom français.
 
 Enfin, Frigate découpe une visite en plusieurs passages dès qu'il perd l'oiseau quelques secondes : un rouge-gorge resté 4 minutes a donné 9 passages. Deux réglages ont résolu le problème : garder l'oiseau 10 secondes quand il disparaît (`max_disappeared`) et clore une visite seulement après 2 minutes sans oiseau (`cutoff_time`).
 
-## Le résultat en images
+## Le résultat
 
+{/* MASQUÉ en attendant les vidéos de Pierre (fichiers absents, 404 en ligne). Remettre le titre « Le résultat en images » et retirer ce commentaire quand les deux MP4 sont dans public/images/mangeoire-oiseau-connectee/.
 <figure>
   <video src="/images/mangeoire-oiseau-connectee/rougegorge-mangeoire.mp4" controls muted playsinline preload="metadata" style="width: 100%; border-radius: 8px;"></video>
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;"><mark>Vidéo du rouge-gorge à fournir (MP4, 720p, sans son, moins de 5 Mo).</mark></figcaption>
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Vidéo du rouge-gorge (MP4, 720p, sans son, moins de 5 Mo).</figcaption>
 </figure>
 
 <figure>
   <video src="/images/mangeoire-oiseau-connectee/mesanges-mangeoire.mp4" controls muted playsinline preload="metadata" style="width: 100%; border-radius: 8px;"></video>
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;"><mark>Vidéo des mésanges à fournir.</mark></figcaption>
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Vidéo des mésanges.</figcaption>
 </figure>
+*/}
 
 Les premières semaines, j'ai surtout été déçu : des images floues et une détection sur laquelle je ne pouvais pas compter. Aujourd'hui, je suis assez fier du résultat. La mangeoire tourne de façon fiable, et je jette un œil aux visites en passant, sur le canal Slack dédié, un peu comme on picore.
 
@@ -268,7 +278,7 @@ Ce qui m'agace encore ? Pas grand-chose : tout est fluide et je suis content du 
 
 ## Ce que je retiens
 
-Cette mangeoire connectée m'a pris bien plus de temps que prévu, et presque tout ce temps est parti dans le matériel : l'emplacement, le Wi-Fi, la mise au point. Si c'était à refaire, je commencerais par l'image : une caméra sur secteur, proche de la mangeoire, avec la bonne lentille, et un arrière-plan qui bouge peu.
+Cette mangeoire connectée m'a pris bien plus de temps que prévu, et presque tout ce temps est parti dans le matériel : l'emplacement, la mangeoire, le Wi-Fi, la mise au point. Si c'était à refaire, je commencerais par l'image : une mangeoire ouverte avec un perchoir, une caméra sur secteur proche du perchoir, avec la bonne lentille, et un arrière-plan qui bouge peu.
 
 Aujourd'hui, elle tourne sans que j'y pense. Les visites arrivent dans Slack, le bilan tombe à la fin du mois, et je regarde les oiseaux du jardin avec mon fils. Le cadeau a un peu tardé, mais il profite à toute la famille.
 
@@ -283,11 +293,11 @@ Aujourd'hui, elle tourne sans que j'y pense. Les visites arrivent dans Slack, le
   },
   {
     question: "Où placer une mangeoire avec caméra ?",
-    answer: "À un endroit avec une prise de courant à portée et un bon signal Wi-Fi, la caméra à environ 15 à 20 cm de la mangeoire. Évitez un arrière-plan d'arbres ou de haie qui bougent : ils déclenchent la détection en continu."
+    answer: "À un endroit avec une prise de courant à portée et un bon signal Wi-Fi, l'objectif de la caméra à 20 ou 25 cm du perchoir où l'oiseau se pose (avec une lentille +4). Évitez un arrière-plan d'arbres ou de haie qui bougent, et préférez une mangeoire ouverte à une mangeoire-cage, dont les barreaux gênent la détection."
   },
   {
     question: "Quelle caméra choisir pour une mangeoire à oiseaux ?",
-    answer: "Une caméra alimentée sur secteur, jamais sur batterie : Frigate doit analyser le flux en continu, et une caméra sur batterie dort entre deux mouvements. Il faut aussi un flux RTSP lisible par Frigate. La mise au point compte autant que la résolution : avec une caméra à mise au point fixe comme la Reolink Lumus Pro, il faut une lentille de rapprochement pour filmer net à 15 ou 20 cm."
+    answer: "Une caméra alimentée sur secteur, jamais sur batterie : Frigate doit analyser le flux en continu, et une caméra sur batterie dort entre deux mouvements. Il faut aussi un flux RTSP lisible par Frigate. La mise au point compte autant que la résolution : avec une caméra à mise au point fixe comme la Reolink Lumus Pro, il faut une lentille de rapprochement pour filmer net un oiseau posé à 20 ou 25 cm de l'objectif."
   },
   {
     question: "Un Home Assistant Green suffit-il pour une mangeoire connectée ?",
@@ -295,6 +305,6 @@ Aujourd'hui, elle tourne sans que j'y pense. Les visites arrivent dans Slack, le
   },
   {
     question: "Pourquoi ma caméra ne détecte aucun oiseau ?",
-    answer: "Le plus souvent, l'oiseau est trop petit ou flou dans l'image. Chez moi, la mangeoire était floue de près : la lentille de rapprochement et une zone Frigate qui couvre le perchoir ont réglé le problème."
+    answer: "Le plus souvent, l'oiseau est trop petit, caché ou mal placé dans l'image. Chez moi, rien n'était détecté avec une mangeoire-cage : la détection est venue avec une mangeoire ouverte et un perchoir entièrement dans la zone de Frigate. La lentille de rapprochement, posée ensuite, a surtout rendu l'oiseau net."
   }
 ]} />
