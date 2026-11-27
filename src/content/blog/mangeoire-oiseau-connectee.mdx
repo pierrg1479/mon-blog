@@ -146,6 +146,11 @@ Pour chaque visite retenue, le workflow :
 3. attend 30 secondes que Frigate finisse la vidéo, puis récupère un extrait de 25 secondes ;
 4. publie dans Slack un message court, la photo, l'extrait et un bouton vers la visite entière dans Frigate.
 
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/message-slack-rougegorge.webp" alt="Message Slack d'une visite de rouge-gorge familier : nom de l'espèce, lien vers la fiche Notion, bouton vers la visite entière dans Frigate, extrait vidéo de 17 secondes et photo du rouge-gorge sur le perchoir encadrée par la détection bird à 98 %" style="display: block; width: 100%; max-width: 796px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Une visite telle qu'elle arrive dans Slack : un extrait court, la photo de Frigate et le bouton vers la visite entière. Le cadre « bird 98 % » est la détection de l'oiseau ; l'espèce, rouge-gorge familier, vient ensuite du modèle de classification.</figcaption>
+</figure>
+
 Les noms d'oiseaux s'affichent en français. Frigate ne donne que le nom anglais, donc n8n le convertit avec une table qui couvre les 964 espèces du modèle, et refuse de produire le workflow si un nom manque.
 
 <figure style="margin: 1.5rem 0;">
@@ -223,11 +228,6 @@ Petit bricolage à prévoir : la Lumus Pro n'a aucun système d'accroche pour un
 </div>
 
 Les vidéos trop lourdes ont aussi fait planter n8n. Un rouge-gorge qui reste 2 à 5 minutes, c'est un clip de 260 à 375 Mo : n8n manquait de mémoire et redémarrait, sans fiche ni message. Depuis, n8n ne demande à Frigate qu'un extrait de 25 secondes au plus, autour de 60 Mo, et un bouton renvoie vers la visite entière.
-
-<figure style="margin: 1.5rem 0;">
-  <img src="/images/mangeoire-oiseau-connectee/message-slack-rougegorge.webp" alt="Message Slack d'une visite de rouge-gorge familier : nom de l'espèce, lien vers la fiche Notion, bouton vers la visite entière dans Frigate, extrait vidéo de 17 secondes et photo du rouge-gorge sur le perchoir encadrée par la détection bird à 98 %" style="display: block; width: 100%; max-width: 796px; margin: 0 auto; border-radius: 8px;" />
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Une visite telle qu'elle arrive dans Slack : un extrait court, la photo de Frigate et le bouton vers la visite entière. Le cadre « bird 98 % » est la détection de l'oiseau ; l'espèce, rouge-gorge familier, vient ensuite du modèle de classification.</figcaption>
-</figure>
 
 ### Des vidéos plus nettes en changeant deux réglages
 
