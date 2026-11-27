@@ -241,7 +241,9 @@ Ma première version envoyait chaque photo à Claude Haiku, l'IA d'Anthropic, po
 
 Le modèle local fait parfois des confusions, faciles à repérer. Sur 13 espèces enregistrées en un peu moins de deux semaines, 8 n'existent pas dans un jardin en France : mésange de Caroline, jaseur d'Amérique, moucherolle noir, merlebleu de l'Est... Ce sont des oiseaux d'Amérique du Nord, une confusion du modèle sur des oiseaux mal vus. Elles ne représentent que 11 fiches sur 171, et le bilan mensuel les classe à part, « à vérifier ».
 
-Autre surprise : avec la version 0.18 de Frigate, le nom de l'espèce est passé du format « nom latin (nom anglais) » au nom anglais seul. Mes messages se sont mis à annoncer des « Great Tit ». D'où la table de traduction complète.
+Autre surprise : avec la version 0.18 de Frigate, le nom de l'espèce est passé du format « nom latin (nom anglais) » au nom anglais seul. Mes messages se sont mis à annoncer des « Great Tit ». Pour retrouver le nom français, n8n procède en deux temps. Il retrouve d'abord le nom latin à partir du nom anglais, grâce au fichier des espèces fourni avec le modèle de Frigate. Puis il cherche le nom français : d'abord dans ma liste des 47 oiseaux de jardin, sinon dans une table qui couvre les 964 espèces du modèle.
+
+Cette table complète est arrivée tard. Avant, une espèce absente de ma liste gardait son nom anglais : 10 fiches sur 154 s'affichaient ainsi, comme « Hermit Thrush ». Les noms viennent pour l'essentiel d'iNaturalist (835) et de Wikidata (86), et les 43 restants ont été complétés à la main, en privilégiant l'usage en France. Le générateur du workflow refuse maintenant de se lancer s'il manque un seul nom français.
 
 Enfin, Frigate découpe une visite en plusieurs passages dès qu'il perd l'oiseau quelques secondes : un rouge-gorge resté 4 minutes a donné 9 passages. Deux réglages ont réglé le problème : garder l'oiseau 10 secondes quand il disparaît (`max_disappeared`) et clore une visite seulement après 2 minutes sans oiseau (`cutoff_time`).
 
