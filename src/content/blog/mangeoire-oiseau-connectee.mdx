@@ -170,18 +170,13 @@ J'ai commencé ce projet en début d'année 2026, et je n'ai eu un résultat sat
 
 Mon premier réflexe a été de tout faire tourner sur le Home Assistant Green. Il est trop peu puissant pour analyser la vidéo en continu, et surtout il n'a pas assez d'espace disque pour stocker les enregistrements.
 
-Le Home Assistant Green n'a que 32 Go de stockage eMMC ([fiche officielle](https://www.home-assistant.io/green/)), partagés avec Home Assistant lui-même. Pour donner un ordre de grandeur : en 1080p, mes vidéos pesaient environ 130 Mo par minute d'oiseau, de quoi remplir 32 Go en à peine plus de 4 heures de visites. Même sur le mini PC, j'ai dû limiter la conservation des vidéos à 3 jours. Le projet n'a vraiment démarré qu'avec le mini PC acheté pour mon homelab.
+Le Home Assistant Green n'a que 32 Go de stockage eMMC ([fiche officielle](https://www.home-assistant.io/green/)), et avec tout ce qui était déjà installé sur le mien, il ne me restait que 8 Go de libre. Pour donner un ordre de grandeur : en 1080p, mes vidéos pesaient environ 130 Mo par minute d'oiseau, de quoi remplir ces 8 Go en à peine une heure de visites. Même sur le mini PC, j'ai dû limiter la conservation des vidéos à 3 jours. Le projet n'a vraiment démarré qu'avec le mini PC acheté pour mon homelab.
 
 ### Le Wi-Fi trop faible dans la cabane de jardin
 
 La caméra est près de la cabane de jardin, où le Wi-Fi était trop faible et créait des perturbations. J'ai donc ajouté une borne Wi-Fi mesh Deco dans la cabane.
 
 Ça n'a pas suffi tout de suite. Les premières vidéos étaient saccadées, avec des trous de plusieurs secondes : la caméra restait accrochée à une borne lointaine, avec 1,7 % de pertes et des pointes à 460 ms. En choisissant la borne de la cabane comme borne préférée dans l'application Deco, je suis passé à 0 % de pertes et 12 ms en moyenne.
-
-La cabane reste le point fragile :
-
-- après une coupure de courant de la cabane, la caméra a redémarré plus vite que la borne et s'est rabattue sur celle du bureau ;
-- une nuit, la borne de la cabane a décroché cinq fois et la caméra est restée sans image jusqu'au matin. Redémarrer la borne a suffi.
 
 ### Le cadrage : trop loin, puis des arbres qui bougent derrière
 
