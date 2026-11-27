@@ -208,6 +208,8 @@ J'ai d'abord acheté une lentille +1 seule : achat inutile, l'oiseau restait flo
 
 Avec la +4, les graines du plateau sont nettes et le fond est flou. C'est exactement l'effet recherché.
 
+Je ne suis pas le seul dans ce cas : sur r/reolinkcam, un utilisateur qui a installé une Reolink E1 Outdoor Pro dans une mangeoire explique que même sa mise au point manuelle, réglée au plus près, ne suffisait pas. Il a dû ajouter un adaptateur macro devant l'objectif ([son retour sur Reddit](https://www.reddit.com/r/reolinkcam/comments/1foffdp/i_made_a_reolink_bird_feeder_camera/)).
+
 Petit bricolage à prévoir : la Lumus Pro n'a aucun système d'accroche pour une lentille. La mienne tient devant l'objectif avec de l'adhésif double face.
 
 ### Le stockage des vidéos
@@ -232,7 +234,7 @@ J'ai changé deux choses :
 1. Dans l'application Reolink (Paramètres de la caméra > Affichage > Flux > Clair), j'ai réglé 2560 × 1440, 4096 kbit/s et 15 images/s. Dans cette résolution, la Lumus Pro envoie directement du H.264.
 2. Dans Frigate, go2rtc copie maintenant ce flux tel quel au lieu de le recompresser.
 
-La vidéo n'est plus compressée qu'une fois au lieu de deux. Elle est gardée en 1440p au lieu de 1080p, et la puce graphique du mini PC est presque au repos. J'ai gardé 15 images par seconde : le débit étant plafonné, plus d'images par seconde aurait voulu dire moins de détails dans chaque image.
+La vidéo n'est plus compressée qu'une fois au lieu de deux. Elle est gardée en 1440p au lieu de 1080p, et la puce graphique du mini PC est presque au repos. J'ai gardé 15 images par seconde : le débit étant plafonné, plus d'images par seconde aurait voulu dire moins de détails dans chaque image. D'autres préfèrent monter au-dessus de 15 images par seconde, parce que les oiseaux bougent vite : avec un débit plafonné, c'est un compromis entre fluidité et détail.
 
 ### La reconnaissance des espèces
 
