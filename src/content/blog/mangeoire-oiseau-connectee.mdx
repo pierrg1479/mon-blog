@@ -5,7 +5,7 @@ description: 'Installez une mangeoire connectée avec caméra qui reconnaît les
 pubDate: 'Nov 27 2026'
 unlisted: true
 heroImage: '../../assets/mangeoire-oiseau-connectee-hero.jpg'
-heroAlt: 'Rougegorge familier posé sur le perchoir de la mangeoire connectée, au-dessus du plateau de graines, filmé par la caméra Reolink'
+heroAlt: 'Rouge-gorge familier posé sur le perchoir de la mangeoire connectée, au-dessus du plateau de graines, filmé par la caméra Reolink'
 author:
   name: Pierre
   avatar: '/hannibal-cercle.png'
@@ -129,7 +129,7 @@ Le trajet d'une visite, étape par étape :
 Trois réglages font toute la différence : une zone qui couvre la mangeoire et le perchoir, un masque sur ce qui bouge autour (arbres, romarin), et des seuils de détection un peu plus bas que ceux par défaut pour les petits oiseaux.
 
 <figure style="margin: 1.5rem 0;">
-  <img src="/images/mangeoire-oiseau-connectee/frigate-zone-masque-mangeoire.webp" alt="Image de la caméra de la mangeoire dans Frigate : un rougegorge sur le plateau de graines, la zone de détection en vert autour du plateau et du perchoir, le masque de mouvement hachuré en rouge sur les arbres et le romarin à droite" style="width: 100%; border-radius: 8px;" />
+  <img src="/images/mangeoire-oiseau-connectee/frigate-zone-masque-mangeoire.webp" alt="Image de la caméra de la mangeoire dans Frigate : un rouge-gorge sur le plateau de graines, la zone de détection en vert autour du plateau et du perchoir, le masque de mouvement hachuré en rouge sur les arbres et le romarin à droite" style="width: 100%; border-radius: 8px;" />
   <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La zone de détection en vert couvre le plateau et le perchoir. Le masque hachuré en rouge fait ignorer à Frigate les arbres et le romarin qui bougent avec le vent.</figcaption>
 </figure>
 
@@ -153,8 +153,8 @@ Les noms d'oiseaux s'affichent en français. Frigate ne donne que le nom anglais
 Le dernier jour du mois à 21 h 30, un second workflow lit la base Notion et publie un bilan dans un canal Slack dédié : le nombre de passages et d'espèces, le classement, l'heure de pointe, le premier et le dernier oiseau de la journée, un graphique des heures de visite et la photo de l'oiseau rare du mois. Le graphique est dessiné directement dans n8n, sans service extérieur.
 
 <figure style="margin: 1.5rem 0;">
-  <img src="/images/mangeoire-oiseau-connectee/bilan-mois-slack.webp" alt="Bilan du mois de novembre dans Slack : 146 passages de 5 espèces en 11 jours de visite, classement avec le rougegorge familier en tête à 68 %, heure de pointe entre 8 h et 9 h, premier et dernier oiseau de la journée" style="display: block; width: 100%; max-width: 660px; margin: 0 auto; border-radius: 8px;" />
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Le bilan du mois dans Slack, ici en version d'essai du 26 novembre : 146 passages de 5 espèces en 11 jours, le rougegorge en tête avec 68 % des passages.</figcaption>
+  <img src="/images/mangeoire-oiseau-connectee/bilan-mois-slack.webp" alt="Bilan du mois de novembre dans Slack : 146 passages de 5 espèces en 11 jours de visite, classement avec le rouge-gorge familier en tête à 68 %, heure de pointe entre 8 h et 9 h, premier et dernier oiseau de la journée" style="display: block; width: 100%; max-width: 660px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Le bilan du mois dans Slack, ici en version d'essai du 26 novembre : 146 passages de 5 espèces en 11 jours, le rouge-gorge en tête avec 68 % des passages.</figcaption>
 </figure>
 
 <figure style="margin: 1.5rem 0;">
@@ -188,7 +188,7 @@ Dernier détail : la zone de Frigate doit couvrir tout le perchoir de la mangeoi
 
 Les premières semaines, j'ai surtout été déçu : des images floues et une détection sur laquelle je ne pouvais pas compter. Aujourd'hui, je suis assez fier du résultat. La mangeoire tourne de façon fiable, et je jette un œil aux visites en passant, sur le canal Slack dédié, un peu comme on picore.
 
-Ce qui me plaît le plus, c'est de partager ça avec mes proches. Voir arriver un rougegorge au milieu de la journée, c'est du pur feel good.
+Ce qui me plaît le plus, c'est de partager ça avec mes proches. Voir arriver un rouge-gorge au milieu de la journée, c'est du pur feel good.
 
 ### L'oiseau flou : de la lentille +1 à la +4
 
@@ -217,11 +217,11 @@ Petit bricolage à prévoir : la Lumus Pro n'a aucun système d'accroche pour un
   <p class="callout__content">À 130 Mo par minute d'oiseau, une semaine de visites dépasse vite 30 Go. Gardez seulement les alertes et les détections, sur quelques jours, et excluez les vidéos de Frigate de vos sauvegardes.</p>
 </div>
 
-Les vidéos trop lourdes ont aussi fait planter n8n. Un rougegorge qui reste 2 à 5 minutes, c'est un clip de 260 à 375 Mo : n8n manquait de mémoire et redémarrait, sans fiche ni message. Depuis, n8n ne demande à Frigate qu'un extrait de 25 secondes au plus, autour de 60 Mo, et un bouton renvoie vers la visite entière.
+Les vidéos trop lourdes ont aussi fait planter n8n. Un rouge-gorge qui reste 2 à 5 minutes, c'est un clip de 260 à 375 Mo : n8n manquait de mémoire et redémarrait, sans fiche ni message. Depuis, n8n ne demande à Frigate qu'un extrait de 25 secondes au plus, autour de 60 Mo, et un bouton renvoie vers la visite entière.
 
 <figure style="margin: 1.5rem 0;">
-  <img src="/images/mangeoire-oiseau-connectee/message-slack-rougegorge.webp" alt="Message Slack d'une visite de rougegorge familier à 15 h 17 : nom de l'espèce, lien vers la fiche Notion, bouton vers la visite entière dans Frigate, extrait vidéo de 17 secondes et photo du rougegorge sur le perchoir encadrée par la détection bird à 98 %" style="display: block; width: 100%; max-width: 796px; margin: 0 auto; border-radius: 8px;" />
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Une visite telle qu'elle arrive dans Slack : un extrait court, la photo de Frigate et le bouton vers la visite entière. Le cadre « bird 98 % » est la détection de l'oiseau ; l'espèce, rougegorge familier, vient ensuite du modèle de classification.</figcaption>
+  <img src="/images/mangeoire-oiseau-connectee/message-slack-rougegorge.webp" alt="Message Slack d'une visite de rouge-gorge familier à 15 h 17 : nom de l'espèce, lien vers la fiche Notion, bouton vers la visite entière dans Frigate, extrait vidéo de 17 secondes et photo du rouge-gorge sur le perchoir encadrée par la détection bird à 98 %" style="display: block; width: 100%; max-width: 796px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Une visite telle qu'elle arrive dans Slack : un extrait court, la photo de Frigate et le bouton vers la visite entière. Le cadre « bird 98 % » est la détection de l'oiseau ; l'espèce, rouge-gorge familier, vient ensuite du modèle de classification.</figcaption>
 </figure>
 
 ### Des vidéos plus nettes en changeant deux réglages
@@ -243,13 +243,13 @@ Le modèle local se trompe aussi, d'une façon très reconnaissable. Sur 13 esp�
 
 Autre surprise : avec la version 0.18 de Frigate, le nom de l'espèce est passé du format « nom latin (nom anglais) » au nom anglais seul. Mes messages se sont mis à annoncer des « Great Tit ». D'où la table de traduction complète.
 
-Enfin, Frigate découpe une visite en plusieurs passages dès qu'il perd l'oiseau quelques secondes : un rougegorge resté 4 minutes a donné 9 passages. Deux réglages ont réglé le problème : garder l'oiseau 10 secondes quand il disparaît (`max_disappeared`) et clore une visite seulement après 2 minutes sans oiseau (`cutoff_time`).
+Enfin, Frigate découpe une visite en plusieurs passages dès qu'il perd l'oiseau quelques secondes : un rouge-gorge resté 4 minutes a donné 9 passages. Deux réglages ont réglé le problème : garder l'oiseau 10 secondes quand il disparaît (`max_disappeared`) et clore une visite seulement après 2 minutes sans oiseau (`cutoff_time`).
 
 ## Le résultat en images
 
 <figure>
   <video src="/images/mangeoire-oiseau-connectee/rougegorge-mangeoire.mp4" controls muted playsinline preload="metadata" style="width: 100%; border-radius: 8px;"></video>
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;"><mark>Vidéo du rougegorge à fournir (MP4, 720p, sans son, moins de 5 Mo).</mark></figcaption>
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;"><mark>Vidéo du rouge-gorge à fournir (MP4, 720p, sans son, moins de 5 Mo).</mark></figcaption>
 </figure>
 
 <figure>
@@ -258,7 +258,7 @@ Enfin, Frigate découpe une visite en plusieurs passages dès qu'il perd l'oisea
 </figure>
 
 <figure style="margin: 1.5rem 0;">
-  <img src="/images/mangeoire-oiseau-connectee/base-notion-oiseaux.webp" alt="Base Notion « Oiseaux de la mangeoire » : une ligne par visite avec l'espèce (surtout des rougegorges familiers, une mésange bleue, une mésange charbonnière), les liens vers l'extrait Slack et la visite Frigate, la confiance et la date" style="width: 100%; border-radius: 8px;" />
+  <img src="/images/mangeoire-oiseau-connectee/base-notion-oiseaux.webp" alt="Base Notion « Oiseaux de la mangeoire » : une ligne par visite avec l'espèce (surtout des rouge-gorges familiers, une mésange bleue, une mésange charbonnière), les liens vers l'extrait Slack et la visite Frigate, la confiance et la date" style="width: 100%; border-radius: 8px;" />
   <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La base Notion remplie par n8n : une fiche par visite, avec l'espèce, l'extrait Slack, le lien vers la visite entière dans Frigate, la confiance et la date. Les liens sont floutés.</figcaption>
 </figure>
 
@@ -277,7 +277,7 @@ Je ne testerais jamais l'enregistrement sur mouvement en 1080p sur un jardin ent
   },
   {
     question: "Frigate peut-il reconnaître l'espèce d'un oiseau ?",
-    answer: "Oui, Frigate a une classification des oiseaux basée sur un modèle entraîné sur iNaturalist, qui connaît 964 espèces. Chez moi, il reconnaît bien le rougegorge et les mésanges, mais il confond parfois des oiseaux mal vus avec des espèces d'Amérique du Nord."
+    answer: "Oui, Frigate a une classification des oiseaux basée sur un modèle entraîné sur iNaturalist, qui connaît 964 espèces. Chez moi, il reconnaît bien le rouge-gorge et les mésanges, mais il confond parfois des oiseaux mal vus avec des espèces d'Amérique du Nord."
   },
   {
     question: "Où placer une mangeoire avec caméra ?",
