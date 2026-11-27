@@ -81,14 +81,14 @@ J'ai d'abord essayé sans le mini PC, sur le Home Assistant Green, sans succès.
 
 ### Où placer une mangeoire avec caméra ?
 
-Placez-la à un endroit avec une alimentation sur secteur à portée et un bon signal Wi-Fi, avec la caméra à 20 ou 25 cm du perchoir. Choisissez aussi un arrière-plan qui bouge peu : des arbres ou une haie derrière la mangeoire déclenchent la détection de mouvement en continu.
+Placez-la à un endroit avec une alimentation sur secteur à portée et un bon signal Wi-Fi, avec la caméra à environ 15 à 20 cm de la mangeoire. Choisissez aussi un arrière-plan qui bouge peu : des arbres ou une haie derrière la mangeoire déclenchent la détection de mouvement en continu.
 
 Ma première installation plaçait la caméra en face de la mangeoire : la végétation derrière créait trop de faux positifs. Aujourd'hui, la mangeoire est fixée contre la cabane de jardin, et la caméra sur le côté de la mangeoire, face au perchoir. Il a fallu ajouter une borne Wi-Fi dans la cabane, et masquer dans Frigate les arbres et le romarin qui bougent derrière.
 
 ### Installer et connecter la mangeoire et la caméra
 
 1. Fixez la mangeoire contre un mur ou un support : la mienne est fixée contre la cabane de jardin.
-2. Fixez la caméra sur le côté de la mangeoire, face au perchoir, à 20 ou 25 cm, avec la lentille de rapprochement +4 devant l'objectif.
+2. Fixez la caméra sur le côté de la mangeoire, face au perchoir, à environ 15 à 20 cm, avec la lentille de rapprochement +4 devant l'objectif.
 3. Branchez la caméra sur secteur.
 4. Dans l'application Reolink, connectez la caméra au Wi-Fi et ajoutez-la au hub.
 5. Dans l'application Deco, choisissez la borne la plus proche comme borne préférée de la caméra.
@@ -198,7 +198,7 @@ La Lumus Pro a une mise au point fixe, réglée pour filmer loin : un objet à 3
 
 J'ai d'abord acheté une lentille +1 seule : achat inutile, l'oiseau restait flou. J'ai ensuite pris un kit complet (+1, +2, +4, +10) à 15,40 €, et c'est la +4 qui convient. Le bon choix dépend de la distance entre l'objectif et l'endroit où l'oiseau se pose :
 
-- **+4** à 20 ou 25 cm, avec une zone nette d'environ 5 cm ;
+- **+4** à 15 ou 20 cm, ma distance, avec une zone nette d'environ 5 cm ;
 - **+2** entre 35 et 50 cm ;
 - **+10** à éviter : la zone nette tombe à environ 1 cm.
 
@@ -266,7 +266,7 @@ Ce qui m'agace encore ? Pas grand-chose : tout est fluide et je suis content du 
 
 ## Ce que je ferais différemment
 
-Je commencerais par le placement, pas par le logiciel : la caméra à 20 ou 25 cm du perchoir, une lentille +4 dès le départ, et une borne Wi-Fi à côté.
+Je commencerais par le placement, pas par le logiciel : la caméra à environ 15 à 20 cm de la mangeoire, une lentille +4 dès le départ, et une borne Wi-Fi à côté.
 
 Je ne testerais jamais l'enregistrement sur mouvement en 1080p sur un jardin entier. Et j'aurais accepté plus tôt qu'un modèle de reconnaissance se trompe : un filtre « à vérifier » vaut mieux qu'une chasse aux erreurs.
 
@@ -281,11 +281,11 @@ Je ne testerais jamais l'enregistrement sur mouvement en 1080p sur un jardin ent
   },
   {
     question: "Où placer une mangeoire avec caméra ?",
-    answer: "À un endroit avec une prise de courant à portée et un bon signal Wi-Fi, la caméra à 20 ou 25 cm du perchoir. Évitez un arrière-plan d'arbres ou de haie qui bougent : ils déclenchent la détection en continu."
+    answer: "À un endroit avec une prise de courant à portée et un bon signal Wi-Fi, la caméra à environ 15 à 20 cm de la mangeoire. Évitez un arrière-plan d'arbres ou de haie qui bougent : ils déclenchent la détection en continu."
   },
   {
     question: "Quelle caméra choisir pour une mangeoire à oiseaux ?",
-    answer: "Une caméra alimentée sur secteur, jamais sur batterie : Frigate doit analyser le flux en continu, et une caméra sur batterie dort entre deux mouvements. Il faut aussi un flux RTSP lisible par Frigate. La mise au point compte autant que la résolution : avec une caméra à mise au point fixe comme la Reolink Lumus Pro, il faut une lentille de rapprochement pour filmer net à 20 ou 25 cm."
+    answer: "Une caméra alimentée sur secteur, jamais sur batterie : Frigate doit analyser le flux en continu, et une caméra sur batterie dort entre deux mouvements. Il faut aussi un flux RTSP lisible par Frigate. La mise au point compte autant que la résolution : avec une caméra à mise au point fixe comme la Reolink Lumus Pro, il faut une lentille de rapprochement pour filmer net à 15 ou 20 cm."
   },
   {
     question: "Un Home Assistant Green suffit-il pour une mangeoire connectée ?",
