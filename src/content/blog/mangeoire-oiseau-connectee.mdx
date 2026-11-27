@@ -154,7 +154,7 @@ Le dernier jour du mois à 21 h 30, un second workflow lit la base Notion et pub
 
 <figure style="margin: 1.5rem 0;">
   <img src="/images/mangeoire-oiseau-connectee/bilan-mois-slack.webp" alt="Bilan du mois de novembre dans Slack : 146 passages de 5 espèces en 11 jours de visite, classement avec le rouge-gorge familier en tête à 68 %, heure de pointe entre 8 h et 9 h, premier et dernier oiseau de la journée" style="display: block; width: 100%; max-width: 660px; margin: 0 auto; border-radius: 8px;" />
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Le bilan du mois dans Slack, ici en version d'essai du 26 novembre : 146 passages de 5 espèces en 11 jours, le rouge-gorge en tête avec 68 % des passages.</figcaption>
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Le bilan du mois dans Slack, ici en version d'essai : 146 passages de 5 espèces en 11 jours, le rouge-gorge en tête avec 68 % des passages.</figcaption>
 </figure>
 
 <figure style="margin: 1.5rem 0;">
@@ -164,7 +164,7 @@ Le dernier jour du mois à 21 h 30, un second workflow lit la base Notion et pub
 
 ## Dépannage : les erreurs que j'ai faites
 
-J'ai commencé ce projet en début d'année 2026, et je n'ai eu un résultat satisfaisant qu'en novembre. Entre les deux, il a fallu régler des problèmes de matériel, d'installation et de réglages. Quatre d'entre eux m'ont pris l'essentiel du temps : le Home Assistant Green trop juste, le Wi-Fi de la cabane de jardin, les arbres qui bougent derrière la mangeoire et l'oiseau flou.
+J'ai commencé ce projet en début d'année, et je n'ai eu un résultat satisfaisant que plusieurs mois plus tard. Entre les deux, il a fallu régler des problèmes de matériel, d'installation et de réglages. Quatre d'entre eux m'ont pris l'essentiel du temps : le Home Assistant Green trop juste, le Wi-Fi de la cabane de jardin, les arbres qui bougent derrière la mangeoire et l'oiseau flou.
 
 ### Le Home Assistant Green : trop peu puissant et surtout trop peu de disque
 
@@ -184,7 +184,7 @@ Derrière la mangeoire, il y a des arbres, une haie et un romarin. Avec le vent,
 
 Un masque de mouvement sur les arbres et une zone limitée à la mangeoire ont tout changé : 0,1 à 10,4 analyses par seconde selon le vent, et un processeur entre 11 et 22 %. J'ai dû refaire ce masque à chaque déplacement de la caméra.
 
-Dernier détail : la zone de Frigate doit couvrir tout le perchoir de la mangeoire, là où les oiseaux se posent. Le 16 novembre, je l'ai élargie pour l'inclure en entier. La première mésange charbonnière est arrivée le jour même, à 11 h 41, reconnue avec un score de 97 %.
+Dernier détail : la zone de Frigate doit couvrir tout le perchoir de la mangeoire, là où les oiseaux se posent. Une fois la zone élargie pour l'inclure en entier, la première mésange charbonnière est arrivée le jour même, reconnue avec un score de 97 %.
 
 Les premières semaines, j'ai surtout été déçu : des images floues et une détection sur laquelle je ne pouvais pas compter. Aujourd'hui, je suis assez fier du résultat. La mangeoire tourne de façon fiable, et je jette un œil aux visites en passant, sur le canal Slack dédié, un peu comme on picore.
 
@@ -202,7 +202,7 @@ J'ai d'abord acheté une lentille +1 seule : achat inutile, l'oiseau restait flo
 - **+2** entre 35 et 50 cm ;
 - **+10** à éviter : la zone nette tombe à environ 1 cm.
 
-Avec la +4, posée le 26 novembre, les graines du plateau sont nettes et le fond est flou. C'est exactement l'effet recherché.
+Avec la +4, les graines du plateau sont nettes et le fond est flou. C'est exactement l'effet recherché.
 
 Petit bricolage à prévoir : la Lumus Pro n'a aucun système d'accroche pour une lentille. La mienne tient devant l'objectif avec de l'adhésif.
 
@@ -210,7 +210,7 @@ Petit bricolage à prévoir : la Lumus Pro n'a aucun système d'accroche pour un
 
 **L'enregistrement sur mouvement.** Pour comprendre pourquoi aucun oiseau n'était détecté, j'ai fait enregistrer à Frigate tout ce qui bougeait. Avec les arbres, la haie et les insectes devant l'infrarouge la nuit, Frigate écrivait 2 à 3 Go par heure. Le disque est monté à 89 % et ne gardait que 8 heures de vidéo. La sauvegarde de la nuit contenait 17,6 Go de vidéos nocturnes, sans un seul oiseau.
 
-**La taille des vidéos.** En 1080p, mes vidéos montaient à environ 17 Mbit/s. Le 17 novembre, j'avais déjà 7,5 Go de vidéo pour 60 minutes de visites. J'ai réduit la conservation à 3 jours et je ne garde que les moments où l'oiseau est visible.
+**La taille des vidéos.** En 1080p, mes vidéos montaient à environ 17 Mbit/s. En une seule journée, j'avais déjà 7,5 Go de vidéo pour 60 minutes de visites. J'ai réduit la conservation à 3 jours et je ne garde que les moments où l'oiseau est visible.
 
 <div class="callout callout--warning">
   <p class="callout__title">Calculez le stockage avant d'activer l'enregistrement</p>
@@ -220,7 +220,7 @@ Petit bricolage à prévoir : la Lumus Pro n'a aucun système d'accroche pour un
 Les vidéos trop lourdes ont aussi fait planter n8n. Un rouge-gorge qui reste 2 à 5 minutes, c'est un clip de 260 à 375 Mo : n8n manquait de mémoire et redémarrait, sans fiche ni message. Depuis, n8n ne demande à Frigate qu'un extrait de 25 secondes au plus, autour de 60 Mo, et un bouton renvoie vers la visite entière.
 
 <figure style="margin: 1.5rem 0;">
-  <img src="/images/mangeoire-oiseau-connectee/message-slack-rougegorge.webp" alt="Message Slack d'une visite de rouge-gorge familier à 15 h 17 : nom de l'espèce, lien vers la fiche Notion, bouton vers la visite entière dans Frigate, extrait vidéo de 17 secondes et photo du rouge-gorge sur le perchoir encadrée par la détection bird à 98 %" style="display: block; width: 100%; max-width: 796px; margin: 0 auto; border-radius: 8px;" />
+  <img src="/images/mangeoire-oiseau-connectee/message-slack-rougegorge.webp" alt="Message Slack d'une visite de rouge-gorge familier : nom de l'espèce, lien vers la fiche Notion, bouton vers la visite entière dans Frigate, extrait vidéo de 17 secondes et photo du rouge-gorge sur le perchoir encadrée par la détection bird à 98 %" style="display: block; width: 100%; max-width: 796px; margin: 0 auto; border-radius: 8px;" />
   <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Une visite telle qu'elle arrive dans Slack : un extrait court, la photo de Frigate et le bouton vers la visite entière. Le cadre « bird 98 % » est la détection de l'oiseau ; l'espèce, rouge-gorge familier, vient ensuite du modèle de classification.</figcaption>
 </figure>
 
@@ -239,7 +239,7 @@ La vidéo n'est plus compressée qu'une fois au lieu de deux. Elle est gardée e
 
 Ma première version envoyait chaque photo à Claude Haiku, l'IA d'Anthropic, pour identifier l'espèce : environ 930 jetons en entrée et 400 en sortie par visite. Ça marchait, mais c'était payant pour un travail que Frigate sait faire seul. Le jour même, je suis passé au modèle local de Frigate, gratuit et sans envoi d'image hors de la maison.
 
-Le modèle local se trompe aussi, d'une façon très reconnaissable. Sur 13 espèces enregistrées au 27 novembre, 8 n'existent pas dans un jardin en France : mésange de Caroline, jaseur d'Amérique, moucherolle noir, merlebleu de l'Est... Ce sont des oiseaux d'Amérique du Nord, une confusion du modèle sur des oiseaux mal vus. Elles ne représentent que 11 fiches sur 171, et le bilan mensuel les classe à part, « à vérifier ».
+Le modèle local se trompe aussi, d'une façon très reconnaissable. Sur 13 espèces enregistrées en un peu moins de deux semaines, 8 n'existent pas dans un jardin en France : mésange de Caroline, jaseur d'Amérique, moucherolle noir, merlebleu de l'Est... Ce sont des oiseaux d'Amérique du Nord, une confusion du modèle sur des oiseaux mal vus. Elles ne représentent que 11 fiches sur 171, et le bilan mensuel les classe à part, « à vérifier ».
 
 Autre surprise : avec la version 0.18 de Frigate, le nom de l'espèce est passé du format « nom latin (nom anglais) » au nom anglais seul. Mes messages se sont mis à annoncer des « Great Tit ». D'où la table de traduction complète.
 
