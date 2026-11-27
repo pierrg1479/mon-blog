@@ -168,11 +168,16 @@ Les noms d'oiseaux s'affichent en français. Frigate ne donne que le nom anglais
 
 ### Le bilan du mois et le graphique des heures
 
-Le dernier jour du mois à 21 h 30, un second workflow lit la base Notion et publie un bilan dans un canal Slack dédié : le nombre de passages et d'espèces, le classement, l'heure de pointe, le premier et le dernier oiseau de la journée, et un graphique des heures de visite. Le graphique est dessiné directement dans n8n, sans service extérieur.
+Le dernier jour du mois à 21 h 30, un second workflow lit la base Notion et publie un bilan dans un canal Slack dédié : le nombre de passages et d'espèces, le classement, l'heure de pointe, le premier et le dernier oiseau de la journée, un graphique des heures de visite et la photo de l'oiseau rare du mois. Le graphique est dessiné directement dans n8n, sans service extérieur.
 
-<figure>
-  <img src="/images/mangeoire-oiseau-connectee/bilan-mois-graphique-heures.png" alt="Graphique des heures de visite des oiseaux à la mangeoire en novembre, en passages par jour en moyenne" style="width: 100%; border-radius: 8px;" />
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;"><mark>Capture du bilan de novembre (30/11) à fournir.</mark></figcaption>
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/bilan-mois-slack.webp" alt="Bilan du mois de novembre dans Slack : 146 passages de 5 espèces en 11 jours de visite, classement avec le rougegorge familier en tête à 68 %, heure de pointe entre 8 h et 9 h, premier et dernier oiseau de la journée" style="display: block; width: 100%; max-width: 660px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Le bilan du mois dans Slack, ici en version d'essai du 26 novembre : 146 passages de 5 espèces en 11 jours, le rougegorge en tête avec 68 % des passages.</figcaption>
+</figure>
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/bilan-mois-graphique-heures-oiseau-rare.webp" alt="Graphique des heures de visite des oiseaux, avec un pic de 1,6 passage par jour entre 8 h et 9 h, suivi de la photo du pigeon biset, oiseau rare du mois vu une seule fois" style="display: block; width: 100%; max-width: 845px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La suite du bilan : le graphique des heures de visite, dessiné par n8n, puis l'oiseau rare du mois avec le lien vers sa visite dans Frigate.</figcaption>
 </figure>
 
 ## Les erreurs que j'ai faites
