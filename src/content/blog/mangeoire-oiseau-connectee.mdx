@@ -29,7 +29,7 @@ J'ai d'abord voulu tout faire tourner sur mon Home Assistant Green, mais ça n'a
 
 J'ai essuyé les plâtres : beaucoup d'erreurs et pas mal d'itérations avant d'arriver à un résultat qui me convienne. Ce guide reprend tout, étape par étape : où placer la mangeoire et la caméra, comment les installer et les connecter, les réglages pour filmer les oiseaux, puis le dépannage avec chaque erreur que j'ai faite.
 
-## Pourquoi je n'ai pas acheté une mangeoire Bird Buddy ou Birdfy ?
+## Pourquoi je n'ai pas acheté une mangeoire Birdfy ou Bird Buddy ?
 
 Parce que je voulais construire ma propre mangeoire connectée avec Frigate, et que j'avais de quoi le faire : un mini PC acheté pour mon homelab, sur lequel Frigate reconnaît les espèces en local. La reconnaissance se fait chez moi, sans abonnement, en échange de réglages à faire soi-même.
 
@@ -131,7 +131,7 @@ Trois réglages font toute la différence : une zone qui couvre la mangeoire et 
   <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La zone de détection en vert couvre le plateau et le perchoir. Le masque hachuré en rouge fait ignorer à Frigate les arbres et le romarin qui bougent avec le vent.</figcaption>
 </figure>
 
-Un piège à connaître : dans Frigate 0.17, les coordonnées des zones sont comparées comme du texte. Écrire `1.000` au lieu de `1` fait planter la config. Écrivez `0` et `1`, sans décimales.
+Un piège que j'ai rencontré avec Frigate 0.17 : les coordonnées des zones y étaient comparées comme du texte. Écrire `1.000` au lieu de `1` faisait planter la config : écrivez `0` et `1`, sans décimales.
 
 ### Le workflow n8n : une fiche Notion et un message Slack par visite
 
@@ -218,10 +218,10 @@ Petit bricolage à prévoir : la Lumus Pro n'a aucun système d'accroche pour un
 
 <div class="callout callout--warning">
   <p class="callout__title">Calculez le stockage avant d'activer l'enregistrement</p>
-  <p class="callout__content">À 130 Mo par minute d'oiseau, une semaine de visites dépasse vite 30 Go. Gardez seulement les alertes et les détections, sur quelques jours, et excluez les vidéos de Frigate de vos sauvegardes.</p>
+  <p class="callout__content">Avec mon ancien réglage en 1080p, à 130 Mo par minute d'oiseau, une semaine de visites dépassait vite 30 Go. Gardez seulement les alertes et les détections, sur quelques jours, et excluez les vidéos de Frigate de vos sauvegardes.</p>
 </div>
 
-Les vidéos trop lourdes ont aussi fait planter n8n. Un rouge-gorge qui reste 2 à 5 minutes, c'est un clip de 260 à 375 Mo : n8n manquait de mémoire et redémarrait, sans fiche ni message. Depuis, n8n ne demande à Frigate qu'un extrait de 25 secondes au plus, autour de 60 Mo, et un bouton renvoie vers la visite entière.
+Les vidéos trop lourdes ont aussi fait planter n8n. Un rouge-gorge qui reste 2 à 5 minutes, c'est un clip de 260 à 375 Mo : n8n manquait de mémoire et redémarrait, sans fiche ni message. Depuis, n8n ne demande à Frigate qu'un extrait de 25 secondes au plus (autour de 60 Mo avec mon ancien réglage en 1080p), et un bouton renvoie vers la visite entière.
 
 ### Des vidéos plus nettes en changeant deux réglages
 
