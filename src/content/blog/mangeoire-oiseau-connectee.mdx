@@ -15,6 +15,7 @@ related: ['home-assistant-erreurs-a-eviter', 'tablette-murale-home-assistant']
 
 import FaqBlock from '../../components/FaqBlock.astro';
 import ReadAlso from '../../components/ReadAlso.astro';
+import AffiliateInline from '../../components/AffiliateInline.astro';
 
 {/* BROUILLON : tout ce qui est marqué « À compléter » attend une réponse de Pierre (vécu, prix, médias). */}
 
@@ -39,15 +40,25 @@ Si vous partez de zéro, sans serveur, le calcul est différent : il faut compte
 ## Le matériel utilisé
 
 - **Caméra** : [Reolink Lumus Pro](https://reolink.com/fr/product/lumus-pro/), caméra Wi-Fi alimentée sur secteur, 60 €
-- **Hub** : Reolink Hub 1 Lite, qui relaie le flux vidéo de la caméra, 50 € d'occasion sur leboncoin
-- **Lentilles de rapprochement** : un jeu de filtres macro 37 mm (+1, +2, +4, +10), 15,40 € sur AliExpress. J'utilise la +4.
+- **Hub** : Reolink Hub 1 Lite, qui relaie le flux vidéo de la caméra, 50 €
+- **Lentilles de rapprochement** : un jeu de filtres macro 37 mm (+1, +2, +4, +10), 15,40 €. J'utilise la +4.
 - **Wi-Fi** : une borne mesh Deco ajoutée dans la cabane de jardin, juste à côté de la caméra
 - **Serveur** : un mini PC NiPoGi sous Proxmox, 200 €, acheté pour mon homelab. Frigate y tourne dans un conteneur, à côté du reste.
 - **Home Assistant Green** : il héberge Mosquitto, le serveur MQTT qui transmet les événements de Frigate
 - **Logiciels** : [Frigate](https://frigate.video/) (gratuit, open source), n8n pour l'automatisation, Notion pour l'historique, Slack pour les messages
 - **Mangeoire** : [mangeoire murale Garden Locker](https://www.amazon.fr/dp/B091CZ8WS3) en acier, avec toit, perchoir et grand plateau, 38 €.
 
-{/* AffiliateInline Lumus Pro et kit de lentilles : à ajouter quand Pierre aura les liens d'affiliation (jamais de href="#"). */}
+<AffiliateInline
+  href="https://amzn.to/3Nd9M3a"
+  title="Caméra Reolink Lumus Pro"
+  price="À partir de 60 €"
+  imageSrc="/images/equipment/reolink-lumus-pro.jpg"
+  imageAlt="Caméra Wi-Fi Reolink Lumus Pro"
+  cta="Voir le produit"
+  dataAff="reolink-lumus-pro"
+/>
+
+{/* AffiliateInline mangeoire Garden Locker : en attente du lien d'affiliation de Pierre (jamais de href="#"). */}
 
 <div class="callout callout--tip">
   <p class="callout__title">Conseil : une caméra sur secteur, jamais sur batterie</p>
