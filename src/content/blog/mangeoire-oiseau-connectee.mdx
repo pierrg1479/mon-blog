@@ -48,6 +48,11 @@ Si vous partez de zéro, sans serveur, le calcul est différent : il faut compte
 - **Logiciels** : [Frigate](https://frigate.video/) (gratuit, open source), n8n pour l'automatisation, Notion pour l'historique, Slack pour les messages
 - **Mangeoire** : [mangeoire murale Garden Locker](https://www.amazon.fr/dp/B091CZ8WS3) en acier, avec toit, perchoir et grand plateau, 38 €.
 
+<div class="callout callout--tip">
+  <p class="callout__title">Conseil : une caméra sur secteur, jamais sur batterie</p>
+  <p class="callout__content">Frigate analyse le flux vidéo en continu, ce qu'une caméra sur batterie ne peut pas faire : pour économiser sa batterie, elle dort et ne se réveille qu'en cas de mouvement. Un panneau solaire n'y change rien : j'ai d'autres caméras Reolink sur batterie avec panneau solaire, mais elles ne sont pas compatibles avec ce projet. Celle de la mangeoire, la Lumus Pro, est en Wi-Fi pour la vidéo mais branchée sur secteur.</p>
+</div>
+
 <AffiliateInline
   href="https://amzn.to/3Nd9M3a"
   title="Caméra Reolink Lumus Pro"
@@ -57,21 +62,6 @@ Si vous partez de zéro, sans serveur, le calcul est différent : il faut compte
   cta="Voir le produit"
   dataAff="reolink-lumus-pro"
 />
-
-<AffiliateInline
-  href="https://www.amazon.fr/dp/B091CZ8WS3"
-  title="Mangeoire murale Garden Locker"
-  price="À partir de 38 €"
-  imageSrc="/images/equipment/mangeoire-garden-locker.jpg"
-  imageAlt="Mangeoire murale Garden Locker en acier gris avec toit, plateau de graines et perchoir en bois"
-  cta="Voir le produit"
-  dataAff="mangeoire-garden-locker"
-/>
-
-<div class="callout callout--tip">
-  <p class="callout__title">Conseil : une caméra sur secteur, jamais sur batterie</p>
-  <p class="callout__content">Frigate analyse le flux vidéo en continu, ce qu'une caméra sur batterie ne peut pas faire : pour économiser sa batterie, elle dort et ne se réveille qu'en cas de mouvement. Un panneau solaire n'y change rien : j'ai d'autres caméras Reolink sur batterie avec panneau solaire, mais elles ne sont pas compatibles avec ce projet. Celle de la mangeoire, la Lumus Pro, est en Wi-Fi pour la vidéo mais branchée sur secteur.</p>
-</div>
 
 J'ai d'abord essayé sans le mini PC, sur le Home Assistant Green, sans succès. Je raconte pourquoi dans les erreurs, plus bas.
 
@@ -84,6 +74,16 @@ J'ai d'abord essayé sans le mini PC, sur le Home Assistant Green, sans succès.
 Placez-la à un endroit avec une alimentation sur secteur à portée et un bon signal Wi-Fi, avec la caméra à environ 15 à 20 cm de la mangeoire. Choisissez aussi un arrière-plan qui bouge peu : des arbres ou une haie derrière la mangeoire déclenchent la détection de mouvement en continu.
 
 Ma première installation plaçait la caméra en face de la mangeoire : la végétation derrière créait trop de faux positifs. Aujourd'hui, la mangeoire est fixée contre la cabane de jardin, et la caméra sur le côté de la mangeoire, face au perchoir. Il a fallu ajouter une borne Wi-Fi dans la cabane, et masquer dans Frigate les arbres et le romarin qui bougent derrière.
+
+<AffiliateInline
+  href="https://www.amazon.fr/dp/B091CZ8WS3"
+  title="Mangeoire murale Garden Locker"
+  price="À partir de 38 €"
+  imageSrc="/images/equipment/mangeoire-garden-locker.jpg"
+  imageAlt="Mangeoire murale Garden Locker en acier gris avec toit, plateau de graines et perchoir en bois"
+  cta="Voir le produit"
+  dataAff="mangeoire-garden-locker"
+/>
 
 ### Installer et connecter la mangeoire et la caméra
 
@@ -147,6 +147,11 @@ Pour chaque visite retenue, le workflow :
 4. publie dans Slack un message court, la photo, l'extrait et un bouton vers la visite entière dans Frigate.
 
 Les noms d'oiseaux s'affichent en français. Frigate ne donne que le nom anglais, donc n8n le convertit avec une table qui couvre les 964 espèces du modèle, et refuse de produire le workflow si un nom manque.
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/base-notion-oiseaux.webp" alt="Base Notion « Oiseaux de la mangeoire » : une ligne par visite avec l'espèce (surtout des rouge-gorges familiers, une mésange bleue, une mésange charbonnière), les liens vers l'extrait Slack et la visite Frigate, la confiance et la date" style="width: 100%; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La base Notion remplie par n8n : une fiche par visite, avec l'espèce, l'extrait Slack, le lien vers la visite entière dans Frigate, la confiance et la date. Les liens sont floutés.</figcaption>
+</figure>
 
 ### Le bilan du mois et le graphique des heures
 
@@ -257,11 +262,6 @@ Enfin, Frigate découpe une visite en plusieurs passages dès qu'il perd l'oisea
 <figure>
   <video src="/images/mangeoire-oiseau-connectee/mesanges-mangeoire.mp4" controls muted playsinline preload="metadata" style="width: 100%; border-radius: 8px;"></video>
   <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;"><mark>Vidéo des mésanges à fournir.</mark></figcaption>
-</figure>
-
-<figure style="margin: 1.5rem 0;">
-  <img src="/images/mangeoire-oiseau-connectee/base-notion-oiseaux.webp" alt="Base Notion « Oiseaux de la mangeoire » : une ligne par visite avec l'espèce (surtout des rouge-gorges familiers, une mésange bleue, une mésange charbonnière), les liens vers l'extrait Slack et la visite Frigate, la confiance et la date" style="width: 100%; border-radius: 8px;" />
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La base Notion remplie par n8n : une fiche par visite, avec l'espèce, l'extrait Slack, le lien vers la visite entière dans Frigate, la confiance et la date. Les liens sont floutés.</figcaption>
 </figure>
 
 Ce qui m'agace encore ? Pas grand-chose : tout est fluide et je suis content du résultat. Quelques oiseaux restent parfois flous, et il m'a fallu pas mal d'essais de placement de la caméra et des lentilles avant d'obtenir un résultat correct.
