@@ -65,7 +65,7 @@ J'ai d'abord essayé sans le mini PC, sur le Home Assistant Green, sans succès.
 La caméra filme la mangeoire en continu, Frigate repère les oiseaux dans une zone précise puis reconnaît leur espèce avec un modèle qui tourne en local. À la fin de chaque visite, n8n crée une fiche dans Notion et publie la photo et un extrait vidéo dans Slack.
 
 <figure style="margin: 1.5rem 0;">
-  <img src="/images/mangeoire-oiseau-connectee/schema-mangeoire-connectee.svg" alt="Schéma de la mangeoire connectée : caméra Reolink, hub, Frigate sur le mini PC, MQTT sur Home Assistant, n8n, Notion et Slack" style="display: block; width: 100%; max-width: 480px; margin: 0 auto; border-radius: 8px;" />
+  <img src="/images/mangeoire-oiseau-connectee/schema-mangeoire-connectee.webp" alt="Schéma de la mangeoire connectée : la caméra Reolink du jardin envoie deux flux au hub Reolink ; Frigate, sur le mini PC, repère l'oiseau, enregistre et reconnaît l'espèce en local, puis publie la fin de visite en MQTT sur Mosquitto, hébergé par le Home Assistant Green ; n8n, sur le mini PC, crée la fiche Notion et publie la visite dans Slack, et prépare le bilan du mois à partir des fiches Notion" style="display: block; width: 100%; max-width: 650px; margin: 0 auto; border-radius: 8px;" />
   <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">De la caméra au message Slack : aucune image ne sort de la maison pour l'identification.</figcaption>
 </figure>
 
