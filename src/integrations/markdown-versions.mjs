@@ -145,8 +145,10 @@ function simplify(root, { lang, url }) {
 
 	// Images : leur légende, ou à défaut leur texte alternatif
 	root.querySelectorAll('figure').forEach((figure) => {
-		const caption = text(figure.querySelector('figcaption')) || figure.querySelector('img')?.getAttribute('alt') || '';
-		figure.replaceWith(parse(caption ? `<p><em>${t.image}${t.colon}${escapeHtml(caption)}</em></p>` : ''));
+		const video = figure.querySelector('video');
+		const caption = text(figure.querySelector('figcaption')) || figure.querySelector('img')?.getAttribute('alt') || video?.getAttribute('aria-label') || '';
+		const label = video ? t.video : t.image;
+		figure.replaceWith(parse(caption ? `<p><em>${label}${t.colon}${escapeHtml(caption)}</em></p>` : ''));
 	});
 	root.querySelectorAll('img').forEach((img) => {
 		const alt = img.getAttribute('alt');
