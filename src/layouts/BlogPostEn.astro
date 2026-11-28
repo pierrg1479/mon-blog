@@ -15,6 +15,7 @@ import RelatedPosts, { type RelatedPost } from '../components/RelatedPosts.astro
 import CodeCopy from '../components/CodeCopy.astro';
 import type { MarkdownHeading } from 'astro';
 import { canonicalFor } from '../schema';
+import { articleSchemaImages } from '../schema-images';
 import '../styles/article-ultra-clean.css';
 import '../styles/article-patch.css';
 
@@ -64,10 +65,13 @@ const heroImageSource = heroImage
 		: heroImage.src
 	: undefined;
 
-const schemaImage = heroImageSource
-	? heroImageSource.startsWith('http')
-		? heroImageSource
-		: new URL(heroImageSource, Astro.site).href
+// Données structurées : l'image principale aux formats 16:9, 4:3 et 1:1 (recommandation Google)
+const schemaImage = heroImage
+	? typeof heroImage === 'string'
+		? heroImage.startsWith('http')
+			? heroImage
+			: new URL(heroImage, Astro.site).href
+		: await articleSchemaImages(heroImage, siteBase)
 	: undefined;
 
 const calculateReadingTime = (text: string): number => {

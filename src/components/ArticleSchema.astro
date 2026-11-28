@@ -5,7 +5,8 @@ interface Props {
 	title: string;
 	headline?: string;
 	description: string;
-	image?: string;
+	// Une URL, ou plusieurs (mêmes image, formats différents)
+	image?: string | string[];
 	datePublished: Date | string;
 	dateModified?: Date | string;
 	author?: {

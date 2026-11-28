@@ -84,7 +84,11 @@ const hasTranslation = alternates.some((alt) => alt.hreflang !== lang);
 {markdownURL && <link rel="alternate" type="text/markdown" href={markdownURL} />}
 
 <!-- Primary Meta Tags -->
-{noindex && <meta name="robots" content="noindex, nofollow" />}
+{/* Pages indexables : grande vignette autorisée (Discover, résultats avec image), extraits et aperçus vidéo sans limite */}
+<meta
+	name="robots"
+	content={noindex ? 'noindex, nofollow' : 'max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+/>
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
