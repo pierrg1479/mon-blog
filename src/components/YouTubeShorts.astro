@@ -1,0 +1,25 @@
+---
+// Grille de YouTube Shorts : 2 colonnes sur téléphone, 4 sur grand écran.
+// À remplir avec des <YouTube short />.
+---
+
+<div class="yt-shorts not-prose">
+  <slot />
+</div>
+
+<style>
+  .yt-shorts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+  }
+  .yt-shorts :global(.yt) {
+    margin: 0;
+  }
+  @media (min-width: 720px) {
+    .yt-shorts {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>

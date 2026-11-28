@@ -1,0 +1,60 @@
+---
+// Vidéo YouTube intégrée en mode « sans cookie » (youtube-nocookie.com), chargée au défilement.
+// short : format vertical 9:16 (YouTube Shorts), sinon 16:9.
+// La version .md de la page remplace la vidéo par sa légende et son lien YouTube (markdown-versions.mjs).
+export interface Props {
+  id: string;
+  title: string;
+  caption?: string;
+  short?: boolean;
+}
+
+const { id, title, caption, short = false } = Astro.props;
+const src = `https://www.youtube-nocookie.com/embed/${id}?rel=0`;
+---
+
+<figure class="yt not-prose" data-youtube={id} data-youtube-title={title}>
+  <div class:list={['yt__frame', short ? 'yt__frame--short' : 'yt__frame--wide']}>
+    <iframe
+      src={src}
+      title={title}
+      loading="lazy"
+      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
+  </div>
+  {caption && <figcaption class="yt__caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .yt {
+    margin: 1.5rem 0;
+  }
+  .yt__frame {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #0f172a;
+  }
+  .yt__frame--wide {
+    aspect-ratio: 16 / 9;
+  }
+  .yt__frame--short {
+    aspect-ratio: 9 / 16;
+  }
+  .yt__frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .yt__caption {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+</style>

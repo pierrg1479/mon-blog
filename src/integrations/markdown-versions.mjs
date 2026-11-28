@@ -16,8 +16,8 @@ const escapeHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace
 const remove = (root, selector) => root.querySelectorAll(selector).forEach((el) => el.remove());
 
 const LABELS = {
-	fr: { colon: ' : ', image: 'Image', product: 'Produit', affiliate: 'lien affilié', readAlso: 'À lire aussi', rating: 'note' },
-	en: { colon: ': ', image: 'Image', product: 'Product', affiliate: 'affiliate link', readAlso: 'Read also', rating: 'rating' },
+	fr: { colon: ' : ', image: 'Image', video: 'Vidéo', product: 'Produit', affiliate: 'lien affilié', readAlso: 'À lire aussi', rating: 'note' },
+	en: { colon: ': ', image: 'Image', video: 'Video', product: 'Product', affiliate: 'affiliate link', readAlso: 'Read also', rating: 'rating' },
 };
 
 /** Délimite le contenu utile de la page, selon son type */
@@ -133,6 +133,15 @@ function simplify(root, { lang, url }) {
 		});
 		ol.replaceWith(parse(`<div>${steps.join('')}</div>`));
 	});
+
+	// Vidéos YouTube (composant YouTube) : leur légende ou leur titre, et le lien de la vidéo
+	root.querySelectorAll('figure[data-youtube]').forEach((figure) => {
+		const id = figure.getAttribute('data-youtube');
+		const label = text(figure.querySelector('figcaption')) || figure.getAttribute('data-youtube-title') || '';
+		const link = `https://www.youtube.com/watch?v=${id}`;
+		figure.replaceWith(parse(`<p><em>${t.video}${t.colon}${escapeHtml(label)} (<a href="${link}">${link}</a>)</em></p>`));
+	});
+	root.querySelectorAll('.yt-shorts').forEach((grid) => grid.replaceWith(parse(grid.innerHTML)));
 
 	// Images : leur légende, ou à défaut leur texte alternatif
 	root.querySelectorAll('figure').forEach((figure) => {
