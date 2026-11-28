@@ -40,7 +40,8 @@
       link.setAttribute('data-gallery', 'article-images');
 
       // Ajouter le alt comme description si disponible
-      if (img.alt) {
+      // (sauf images marquées data-lightbox-sans-legende : photo seule une fois agrandie)
+      if (img.alt && !img.hasAttribute('data-lightbox-sans-legende')) {
         link.setAttribute('data-glightbox', `description: ${img.alt}`);
       }
 
