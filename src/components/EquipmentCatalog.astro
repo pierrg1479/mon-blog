@@ -10,6 +10,8 @@ type Equipment = {
 	comment: string;
 	affiliateLink: string | null;
 	articleUrl: string | null;
+	// Lien optionnel posé sur un passage du commentaire (le texte doit figurer tel quel dans `comment`)
+	commentLink?: { text: string; href: string };
 };
 
 type Section = {
@@ -209,7 +211,9 @@ const hasValue = (value?: string) => Boolean(value && value.trim() !== '-' && va
 											</span>
 										)}
 									</div>
-									<p class="eq-card__comment">{item.comment}</p>
+									<p class="eq-card__comment">{item.commentLink && item.comment.includes(item.commentLink.text) ? (
+										<Fragment>{item.comment.split(item.commentLink.text)[0]}<a href={item.commentLink.href}>{item.commentLink.text}</a>{item.comment.split(item.commentLink.text).slice(1).join(item.commentLink.text)}</Fragment>
+									) : item.comment}</p>
 									{(item.articleUrl || item.affiliateLink) && (
 										<div class="eq-card__actions">
 											{item.articleUrl && (
