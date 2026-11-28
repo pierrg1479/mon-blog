@@ -15,6 +15,8 @@ related: ['home-assistant-erreurs-a-eviter', 'tablette-murale-home-assistant']
 import FaqBlock from '../../components/FaqBlock.astro';
 import ReadAlso from '../../components/ReadAlso.astro';
 import AffiliateInline from '../../components/AffiliateInline.astro';
+import YouTube from '../../components/YouTube.astro';
+import YouTubeShorts from '../../components/YouTubeShorts.astro';
 
 Au départ, cette mangeoire connectée devait être un cadeau pour ma conjointe. Elle a pris beaucoup plus de temps que prévu, et elle est devenue un projet pour toute la famille : j'aime aussi observer les oiseaux du jardin avec mon fils.
 
@@ -26,10 +28,7 @@ J'ai d'abord voulu tout faire tourner sur mon Home Assistant Green, mais ça n'a
 
 J'ai essuyé les plâtres : beaucoup d'erreurs et pas mal d'itérations avant d'arriver à un résultat qui me convienne. Ce guide reprend tout, étape par étape : où placer la mangeoire et la caméra, comment les installer et les connecter, les réglages pour filmer les oiseaux, puis le dépannage avec chaque erreur que j'ai faite.
 
-<figure style="margin: 1.5rem 0;">
-  <video src="/images/mangeoire-oiseau-connectee/video-rouge-gorge-mangeoire.mp4" poster="/images/mangeoire-oiseau-connectee/video-rouge-gorge-mangeoire-apercu.webp" controls muted playsinline preload="none" aria-label="Vidéo d'un rouge-gorge qui se pose sur le perchoir de la mangeoire connectée puis s'envole" style="width: 100%; border-radius: 8px; display: block;"></video>
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Un rouge-gorge se pose sur le perchoir, puis repart : la vidéo telle que Frigate l'enregistre en 1440p.</figcaption>
-</figure>
+<YouTube id="MbDXbIJ3S_c" title="Rouge-gorge qui se pose sur le perchoir de la mangeoire connectée puis s'envole" caption="Un rouge-gorge se pose sur le perchoir, puis repart : la vidéo telle que Frigate l'enregistre en 1440p." poster="/images/mangeoire-oiseau-connectee/video-rouge-gorge-mangeoire-apercu.webp" />
 
 ## Pourquoi je n'ai pas acheté une mangeoire Bird Buddy ou Birdfy ?
 
@@ -284,20 +283,14 @@ Enfin, Frigate découpe une visite en plusieurs passages dès qu'il perd l'oisea
 
 ## Le résultat en images
 
-<div class="not-prose" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; margin: 1.5rem 0;">
+<YouTubeShorts>
 <figure style="margin: 0;">
   <video src="/images/mangeoire-oiseau-connectee/short-mesange-bleue.mp4" poster="/images/mangeoire-oiseau-connectee/short-mesange-bleue-apercu.webp" controls muted playsinline preload="none" aria-label="Mésange bleue sur le perchoir de la mangeoire" style="width: 100%; border-radius: 8px; display: block; aspect-ratio: 9 / 16; object-fit: cover; background: #0f172a;"></video>
   <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Une mésange bleue sur le perchoir.</figcaption>
 </figure>
-<figure style="margin: 0;">
-  <video src="/images/mangeoire-oiseau-connectee/short-pie.mp4" poster="/images/mangeoire-oiseau-connectee/short-pie-apercu.webp" controls muted playsinline preload="none" aria-label="Pie bavarde qui emporte la boule de graisse de la mangeoire" style="width: 100%; border-radius: 8px; display: block; aspect-ratio: 9 / 16; object-fit: cover; background: #0f172a;"></video>
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La voleuse : une pie bavarde repart avec la boule de graisse.</figcaption>
-</figure>
-<figure style="margin: 0;">
-  <video src="/images/mangeoire-oiseau-connectee/short-rouge-gorge.mp4" poster="/images/mangeoire-oiseau-connectee/short-rouge-gorge-apercu.webp" controls muted playsinline preload="none" aria-label="Rouge-gorge sur le plateau de graines de la mangeoire" style="width: 100%; border-radius: 8px; display: block; aspect-ratio: 9 / 16; object-fit: cover; background: #0f172a;"></video>
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Un rouge-gorge fait le tour du plateau.</figcaption>
-</figure>
-</div>
+<YouTube short id="zIQktCxgm1c" title="Pie bavarde qui emporte la boule de graisse de la mangeoire" caption="La voleuse : une pie bavarde repart avec la boule de graisse." poster="/images/mangeoire-oiseau-connectee/short-pie-apercu.webp" />
+<YouTube short id="g4H6ZJalvLQ" title="Rouge-gorge sur le plateau de graines de la mangeoire" caption="Un rouge-gorge fait le tour du plateau." poster="/images/mangeoire-oiseau-connectee/short-rouge-gorge-apercu.webp" />
+</YouTubeShorts>
 
 Les premières semaines, j'ai surtout été déçu : des images floues et une détection sur laquelle je ne pouvais pas compter. Aujourd'hui, je suis assez fier du résultat. La mangeoire tourne de façon fiable, et je jette un œil aux visites en passant, sur le canal Slack dédié, un peu comme on picore.
 

@@ -15,6 +15,8 @@ related: ['home-assistant-mistakes-to-avoid', 'wall-mounted-home-assistant-table
 import FaqBlock from '../../components/FaqBlock.astro';
 import ReadAlso from '../../components/ReadAlso.astro';
 import AffiliateInline from '../../components/AffiliateInline.astro';
+import YouTube from '../../components/YouTube.astro';
+import YouTubeShorts from '../../components/YouTubeShorts.astro';
 
 This smart bird feeder started as a gift for my partner. It took far longer than planned, and it turned into a family project: I also love watching the garden birds with my son.
 
@@ -26,10 +28,7 @@ I first tried to run everything on my Home Assistant Green, and it didn't work. 
 
 I learned the hard way: plenty of mistakes and a lot of iterations before getting a result I'm happy with. This guide covers everything, step by step: where to put the feeder and the camera, how to install and connect them, the settings for filming birds, and a troubleshooting section with every mistake I made.
 
-<figure style="margin: 1.5rem 0;">
-  <video src="/images/mangeoire-oiseau-connectee/video-rouge-gorge-mangeoire.mp4" poster="/images/mangeoire-oiseau-connectee/video-rouge-gorge-mangeoire-apercu.webp" controls muted playsinline preload="none" aria-label="Video of a European robin landing on the smart bird feeder's perch and flying off" style="width: 100%; border-radius: 8px; display: block;"></video>
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">A robin lands on the perch, then flies off: the video as Frigate records it in 1440p.</figcaption>
-</figure>
+<YouTube id="MbDXbIJ3S_c" title="European robin landing on the smart bird feeder's perch and flying off" caption="A robin lands on the perch, then flies off: the video as Frigate records it in 1440p." poster="/images/mangeoire-oiseau-connectee/video-rouge-gorge-mangeoire-apercu.webp" lang="en" />
 
 ## Why didn't I buy a Bird Buddy or a Birdfy?
 
@@ -284,20 +283,14 @@ Finally, Frigate splits a visit into several segments as soon as it loses the bi
 
 ## The results in pictures
 
-<div class="not-prose" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; margin: 1.5rem 0;">
+<YouTubeShorts>
 <figure style="margin: 0;">
   <video src="/images/mangeoire-oiseau-connectee/short-mesange-bleue.mp4" poster="/images/mangeoire-oiseau-connectee/short-mesange-bleue-apercu.webp" controls muted playsinline preload="none" aria-label="Blue tit on the bird feeder's perch" style="width: 100%; border-radius: 8px; display: block; aspect-ratio: 9 / 16; object-fit: cover; background: #0f172a;"></video>
   <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">A blue tit on the perch.</figcaption>
 </figure>
-<figure style="margin: 0;">
-  <video src="/images/mangeoire-oiseau-connectee/short-pie.mp4" poster="/images/mangeoire-oiseau-connectee/short-pie-apercu.webp" controls muted playsinline preload="none" aria-label="Eurasian magpie flying off with the feeder's fat ball" style="width: 100%; border-radius: 8px; display: block; aspect-ratio: 9 / 16; object-fit: cover; background: #0f172a;"></video>
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">The thief: a magpie flies off with the fat ball.</figcaption>
-</figure>
-<figure style="margin: 0;">
-  <video src="/images/mangeoire-oiseau-connectee/short-rouge-gorge.mp4" poster="/images/mangeoire-oiseau-connectee/short-rouge-gorge-apercu.webp" controls muted playsinline preload="none" aria-label="European robin on the feeder's seed tray" style="width: 100%; border-radius: 8px; display: block; aspect-ratio: 9 / 16; object-fit: cover; background: #0f172a;"></video>
-  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">A robin walks around the seed tray.</figcaption>
-</figure>
-</div>
+<YouTube short id="zIQktCxgm1c" title="Eurasian magpie flying off with the feeder's fat ball" caption="The thief: a magpie flies off with the fat ball." poster="/images/mangeoire-oiseau-connectee/short-pie-apercu.webp" lang="en" />
+<YouTube short id="g4H6ZJalvLQ" title="European robin on the feeder's seed tray" caption="A robin walks around the seed tray." poster="/images/mangeoire-oiseau-connectee/short-rouge-gorge-apercu.webp" lang="en" />
+</YouTubeShorts>
 
 For the first few weeks, I was mostly disappointed: blurry images and detection I couldn't rely on. Today, I'm pretty proud of the result. The feeder runs reliably, and I check the visits on the dedicated Slack channel whenever I have a moment.
 

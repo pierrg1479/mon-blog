@@ -1,31 +1,71 @@
 ---
-// Vidéo YouTube intégrée en mode « sans cookie » (youtube-nocookie.com), chargée au défilement.
-// short : format vertical 9:16 (YouTube Shorts), sinon 16:9.
+// Vidéo YouTube intégrée sans rien charger de YouTube avant le clic (façade) :
+// la page affiche l'aperçu servi par le site et un bouton lecture ; au clic, le lecteur
+// youtube-nocookie.com remplace l'aperçu et démarre. Sans JavaScript, le lien ouvre YouTube.
+// Sans `poster`, repli sur le lecteur youtube-nocookie chargé au défilement.
+// short : format vertical 9:16 (YouTube Shorts), sinon 16:9. Le cadre a ses proportions
+// avant tout chargement : pas de saut de mise en page.
 // La version .md de la page remplace la vidéo par sa légende et son lien YouTube (markdown-versions.mjs).
 export interface Props {
   id: string;
   title: string;
   caption?: string;
   short?: boolean;
+  poster?: string;
+  lang?: 'fr' | 'en';
 }
 
-const { id, title, caption, short = false } = Astro.props;
-const src = `https://www.youtube-nocookie.com/embed/${id}?rel=0`;
+const { id, title, caption, short = false, poster, lang = 'fr' } = Astro.props;
+const embed = `https://www.youtube-nocookie.com/embed/${id}?rel=0&playsinline=1`;
+const watch = short ? `https://www.youtube.com/shorts/${id}` : `https://www.youtube.com/watch?v=${id}`;
+const playLabel = lang === 'en' ? `Play the video: ${title}` : `Lire la vidéo : ${title}`;
+const [width, height] = short ? [540, 960] : [1280, 720];
 ---
 
 <figure class="yt not-prose" data-youtube={id} data-youtube-title={title}>
   <div class:list={['yt__frame', short ? 'yt__frame--short' : 'yt__frame--wide']}>
-    <iframe
-      src={src}
-      title={title}
-      loading="lazy"
-      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen
-    ></iframe>
+    {poster ? (
+      <a class="yt__facade" href={watch} data-yt-embed={embed} data-yt-title={title} aria-label={playLabel}>
+        <img src={poster} alt="" width={width} height={height} loading="lazy" decoding="async" />
+        <span class="yt__play" aria-hidden="true">
+          <svg viewBox="0 0 68 48" width="68" height="48" focusable="false">
+            <path class="yt__play-bg" d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2.3 34 .3 34 .3s-21.2 0-26.5 1.4a8.5 8.5 0 0 0-6 6C.1 13 .1 24 .1 24s0 11 1.4 16.3a8.5 8.5 0 0 0 6 6C12.8 47.7 34 47.7 34 47.7s21.2 0 26.5-1.4a8.5 8.5 0 0 0 6-6C67.9 35 67.9 24 67.9 24s0-11-1.4-16.3z" />
+            <path d="M45 24 27 14v20z" fill="#fff" />
+          </svg>
+        </span>
+      </a>
+    ) : (
+      <iframe
+        src={embed}
+        title={title}
+        loading="lazy"
+        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    )}
   </div>
   {caption && <figcaption class="yt__caption">{caption}</figcaption>}
 </figure>
+
+<script>
+  // Au clic sur l'aperçu, le lecteur YouTube (sans cookie) remplace l'image et démarre.
+  // Ctrl/Cmd-clic ou clic milieu : on laisse le lien ouvrir YouTube dans un onglet.
+  document.addEventListener('click', (event) => {
+    const target = event.target as Element | null;
+    const facade = target?.closest<HTMLAnchorElement>('a[data-yt-embed]');
+    if (!facade || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    const iframe = document.createElement('iframe');
+    iframe.src = `${facade.dataset.ytEmbed}&autoplay=1`;
+    iframe.title = facade.dataset.ytTitle ?? '';
+    iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.allowFullscreen = true;
+    facade.replaceWith(iframe);
+    iframe.focus();
+  });
+</script>
 
 <style>
   .yt {
@@ -44,12 +84,55 @@ const src = `https://www.youtube-nocookie.com/embed/${id}?rel=0`;
   .yt__frame--short {
     aspect-ratio: 9 / 16;
   }
-  .yt__frame iframe {
+  .yt__frame :global(iframe),
+  .yt__facade {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     border: 0;
+  }
+  .yt__facade {
+    display: block;
+    cursor: pointer;
+  }
+  .yt__facade img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+    border-radius: 0;
+    transition: filter 0.2s ease;
+  }
+  .yt__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 0;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+  }
+  .yt__frame--short .yt__play svg {
+    width: 56px;
+    height: 40px;
+  }
+  .yt__play-bg {
+    fill: #212121;
+    fill-opacity: 0.8;
+    transition: fill 0.2s ease, fill-opacity 0.2s ease;
+  }
+  .yt__facade:hover .yt__play-bg,
+  .yt__facade:focus-visible .yt__play-bg {
+    fill: #ff0000;
+    fill-opacity: 1;
+  }
+  .yt__facade:hover img {
+    filter: brightness(1.05);
+  }
+  .yt__facade:focus-visible {
+    outline: 3px solid #ffd04d;
+    outline-offset: -3px;
   }
   .yt__caption {
     font-size: 0.85rem;
