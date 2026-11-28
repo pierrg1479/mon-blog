@@ -131,6 +131,20 @@ Three settings make all the difference: a zone covering the feeder and the perch
 
 A trap I hit with Frigate 0.17, before moving to 0.18: zone coordinates were compared as text. For the edges of the image, `1.000` was read as pixels and broke the config: write `0` and `1` without decimals, not `0.000` or `1.000`. The other points keep their decimals.
 
+Then you need to turn on species recognition. In Frigate, it's under Settings > Enrichments > Object classification, in the "Bird classification config" block: a switch to turn on, and the minimum score, 0.9 by default. You need an internet connection only once, to download the model.
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/frigate-activer-classification-oiseaux.webp" alt="Frigate Settings page (interface in French), Enrichments section, Object classification: the Bird classification config block expanded, with the Bird classification switch turned on and the minimum score at 0.9" style="width: 100%; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Species recognition is turned on in Settings > Enrichments > Object classification (my interface is in French). I kept the default minimum score, 0.9.</figcaption>
+</figure>
+
+Once classification is on, Frigate's Explore view shows the species found by the model for each tracked bird, along with the steps of its visit.
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/frigate-espece-reconnue-explorer.webp" alt="Tracked object details window in Frigate's Explore view (interface in French): the bird on the feeder perch, and on the right the species European Robin with the steps of the visit (detection, entering the autour_mangeoire zone, leaving) and their scores, from 96 to 99%" style="display: block; width: 100%; max-width: 989px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">A visit in Frigate's Explore view: at the top, the species found by the model (European Robin), then the bird's arrival, its entry into the feeder zone and its exit, each with its detection score.</figcaption>
+</figure>
+
 ### The n8n workflow: one Notion record and one Slack message per visit
 
 n8n listens to Frigate's MQTT events and only keeps finished visits where Frigate assigned a species. No species, nothing is created: it's the most effective filter against false alerts (leaves, shadows, a cat).

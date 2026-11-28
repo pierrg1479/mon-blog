@@ -133,6 +133,20 @@ Trois réglages font toute la différence : une zone qui couvre la mangeoire et 
 
 Un piège que j'ai rencontré avec Frigate 0.17, avant de passer à la 0.18 : les coordonnées des zones y étaient comparées comme du texte. Pour les bords de l'image, `1.000` était pris pour des pixels et faisait planter la config : écrivez `0` et `1` sans décimales, pas `0.000` ni `1.000`. Les autres points gardent leurs décimales.
 
+Reste à activer la reconnaissance des espèces. Dans Frigate, elle se trouve dans Paramètres > Enrichissements > Classification d'objets, bloc « Bird classification config » : un interrupteur à activer, et le score minimum, à 0,9 par défaut. Il faut une connexion internet une seule fois, pour télécharger le modèle.
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/frigate-activer-classification-oiseaux.webp" alt="Page Paramètres de Frigate, rubrique Enrichissements, Classification d'objets : le bloc Bird classification config déplié, avec l'interrupteur Bird classification activé et le score minimum à 0,9" style="width: 100%; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">La reconnaissance des espèces s'active dans Paramètres > Enrichissements > Classification d'objets. J'ai gardé le score minimum par défaut, 0,9.</figcaption>
+</figure>
+
+Une fois la classification activée, l'Explorer de Frigate affiche pour chaque oiseau suivi l'espèce trouvée par le modèle, avec les étapes de sa visite.
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/images/mangeoire-oiseau-connectee/frigate-espece-reconnue-explorer.webp" alt="Fenêtre Détails de l'objet suivi dans l'Explorer de Frigate : l'oiseau sur le perchoir de la mangeoire, et à droite l'espèce European Robin avec les étapes de la visite (détection, entrée dans la zone autour_mangeoire, sortie) et leurs scores, de 96 à 99 %" style="display: block; width: 100%; max-width: 989px; margin: 0 auto; border-radius: 8px;" />
+  <figcaption style="font-size: 0.85rem; color: #6b7280; margin-top: 0.5rem; text-align: center;">Une visite dans l'Explorer de Frigate : en tête, l'espèce trouvée par le modèle (European Robin, le nom anglais du rouge-gorge familier), puis l'arrivée de l'oiseau, son entrée dans la zone de la mangeoire et sa sortie, chacune avec son score de détection.</figcaption>
+</figure>
+
 ### Le workflow n8n : une fiche Notion et un message Slack par visite
 
 n8n écoute les événements MQTT de Frigate et ne garde que les visites terminées où Frigate a posé une espèce. Sans espèce, rien n'est créé : c'est le filtre le plus efficace contre les fausses alertes (feuilles, ombres, chat).
